@@ -7,7 +7,7 @@ async function delay(ms) {
 async function main() {
     const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
     const args = process.argv.slice(2);
-    const targetTankId = args[0] ? parseInt(args[0]) : null;
+    const targetTankId = args[0] ? (isNaN(args[0]) ? args[0] : parseInt(args[0])) : null;
     const totalMatches = 10;
     
     if (!targetTankId) {

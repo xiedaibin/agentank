@@ -13,7 +13,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "V16: Star Snatcher. Instantly teleports onto stars to secure win conditions against fast opponents.",
+            notes: "V28: Added heavy memoization to A* and BFS algorithms to eliminate runTime timeout errors.",
             submittedBy: "Gemini"
         })
     });

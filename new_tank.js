@@ -3,25 +3,46 @@ var xdbLastEnemyTank = null;
 var xdbLastEnemySeenFrame = -999;
 
 /**
- * AgenTank AI Agent - V21 (战术进化版)
+ * AgenTank AI Agent - V26 (全技能差异化对阵版)
  * 核心优化：
- * 1. 护盾博弈 (Shield Baiting)：检测到敌方护盾时停止射击并侧向机动。
- * 2. 精准传送 (Precision Teleport)：优先传送到曼哈顿距离为5的位置，避开火控锁定同时保持压制。
- * 3. 动作经济优化：在决策中增加对转向成本的考量。
+ * 1. 战术姿态引擎 (Tactical Stance Engine)：根据敌方技能类型自动切换对阵模式（Anti-Cloak, Anti-Shield, etc.）。
+ * 2. 盲区推演 (Shadow Prediction)：针对隐身坦克，即使不可见也通过历史轨迹估算其威胁区域。
+ * 3. 干扰走位 (Zig-Zag Maneuvering)：在面对隐身或高精度敌人时，强制执行非线性走位。
+ * 4. 传送节约策略：优化开局传送，为生存预留底牌。
  */
 
 var XDB_CONFIG = {
-    PRECISION_TELEPORT_DIST: 5,     // 理想传送距离（避开4格火控锁定）
+    PRECISION_TELEPORT_DIST: 5,     // 理想传送距离
     SHIELD_BAIT_RADIUS: 6,          // 触发护盾博弈的半径
-    TURN_COST_WEIGHT: 1.2           // 转向权重（用于动作经济优化）
+    TURN_COST_WEIGHT: 1.2,          // 转向权重
+    MAX_SEARCH_NODES: 300,          // A* 搜索节点数限制
+    MAX_OSCILLATION_LEN: 5,         // 震荡检测历史长度
+    CORRIDOR_THREAT_DIST: 4,        // 走廊内子弹预警距离
+    PATH_MAX_AGE: 3                 // 路径强制重用帧数
+};
+
+var XDB_CACHE = {
+    lastTarget: null,
+    path: [],
+    posHistory: [],
+    pathAge: 0,
+    stuckCounter: 0,
+    lastEnemyPos: null,
+    lastEnemyDir: null,
+    invisibleFrames: 0
 };
 
 function onIdle(me, enemy, game) {
   if (xdbPostTeleportFrames > 0) xdbPostTeleportFrames--;
+  XDB_CACHE.pathAge++;
 
   var myPos = me.tank.position;
   var myDir = me.tank.direction;
+  
+  // --- 0. 环境与姿态感知 ---
   rememberEnemyTank(enemy ? enemy.tank : null, game);
+  updatePosHistory(myPos);
+
   var enemyBullet = enemy ? enemy.bullet : null;
   var map = game.map;
   var isSkillReady = me.skill && me.skill.remainingCooldownFrames === 0;
@@ -29,232 +50,222 @@ function onIdle(me, enemy, game) {
   var enemyThreat = buildEnemyThreat(enemy, game);
   var enemyTank = enemyThreat ? enemyThreat.tank : null;
   var enemyVisible = !!(enemy && enemy.tank);
-  var shouldPreferStarTeleport = !!game.star && !hasStarLead && !shouldReserveTeleportForCombat(me, enemyThreat);
 
-  // --- 技能手册 (Skills Handbook) ---
-  // Freeze: 持续4帧, 冷却40帧
-  // Stun: 持续2帧, 冷却34帧
-  // Teleport: 传送后会有2帧火控锁定(fire-locked)
+  // --- 1. 差异化战术姿态判定 ---
+  var stance = determineTacticalStance(me, enemyThreat, game);
 
-  // --- 0. 状态自检 ---
-  if (me.status && (me.status.stunned || me.status.frozen)) {
-      return; // 被控制时无法行动
+  // 1.1 防御中断 (Defense Overrides) - 优先级最高
+  if (me.status && (me.status.stunned || me.status.frozen)) return;
+
+  var framesToHit = getFramesToThreat(myPos, enemyBullet, enemyThreat, map);
+  if (framesToHit !== Infinity) {
+    var dodgeInfo = getDodgeInfo(myPos, myDir, enemyBullet, enemyThreat, map, framesToHit);
+    if (isSkillReady && (!dodgeInfo || framesToHit <= 1 || (dodgeInfo.framesNeeded >= framesToHit))) {
+       if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, false, true)) return;
+    }
+    if (dodgeInfo && dodgeInfo.move) {
+      moveToward(me, myDir, myPos, dodgeInfo.move);
+      return;
+    }
   }
 
-  // --- 0.1 全局生存校验 (V20: 强制传送防御) ---
+  // 1.2 隐身反制走位 (Anti-Cloak Zig-Zag)
+  if (stance === "ANTI_CLOAK" && enemyThreat && enemyThreat.cloaked) {
+      if (game.frames % 3 === 0) {
+          var zigMove = getDodgeFromLineOfFire(myPos, myDir, myDir, map, enemyThreat, enemyBullet);
+          if (zigMove) {
+              moveToward(me, myDir, myPos, zigMove);
+              return;
+          }
+      }
+  }
+
+  // --- 2. 战术位移与自愈 ---
+  if (isOscillating() || XDB_CACHE.stuckCounter > 5) {
+      XDB_CACHE.stuckCounter = 0;
+      var escapeMove = safePatrol(myPos, myDir, map, enemyThreat);
+      if (escapeMove) {
+          moveToward(me, myDir, myPos, escapeMove);
+          return;
+      }
+  }
+
+  // 极近距离威胁感知
   if (enemyTank && enemyThreat) {
       var distToEnemy = getDistance(myPos, enemyTank.position);
-      var enemyHasControlReady = enemyThreat.control; // 技能画像统一预警
-
-      // 零距离反射逻辑：在极近距离（3格内）感知威胁时，强制瞬移
-      if (distToEnemy <= enemyThreat.closeRange) {
-          var enemyIsFacingUs = isEnemyThreatLine(myPos, enemyThreat, map);
-          if (enemyIsFacingUs || enemyBullet) {
-              if (isSkillReady) {
-                  var closeDodge = getDodgeFromLineOfFire(myPos, myDir, directionTo(enemyTank.position, myPos), map, enemyThreat, enemyBullet);
-                  if (hasImmediateTeleportThreat(myPos, myDir, enemyThreat, enemyBullet, map, closeDodge)) {
-                      if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, shouldPreferStarTeleport, true)) return;
-                  }
-              }
-          }
-      }
-
-      // 动态安全半径逻辑：如果敌人控制技能准备就绪，10格内均为危险区
-      var safetyThreshold = Math.max(enemyHasControlReady ? enemyThreat.controlRadius : 5, enemyThreat.closeRange + 1);
-      if (distToEnemy <= safetyThreshold) {
-          var inPotentalLoF = false;
-          var dirs = ["up", "right", "down", "left"];
-          for (var i=0; i<dirs.length; i++) {
-              if (isThreatLineFrom(myPos, enemyTank.position, dirs[i], enemyThreat, map)) {
-                  inPotentalLoF = true;
-                  break;
-              }
-          }
-
-          if (inPotentalLoF) {
-              // 潜在枪线优先普通横移，只有真实迫近威胁才消耗传送。
-              var escapeMove = getDodgeFromLineOfFire(myPos, myDir, directionTo(enemyTank.position, myPos), map, enemyThreat, enemyBullet);
-              if (escapeMove) {
-                  moveToward(me, myDir, myPos, escapeMove);
-                  return;
-              }
-              if (isSkillReady && hasImmediateTeleportThreat(myPos, myDir, enemyThreat, enemyBullet, map, escapeMove)) {
-                  if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, shouldPreferStarTeleport, true)) return;
+      if (distToEnemy <= enemyThreat.closeRange && (isEnemyThreatLine(myPos, enemyThreat, map) || enemyBullet)) {
+          if (isSkillReady) {
+              var closeDodge = getDodgeFromLineOfFire(myPos, myDir, directionTo(enemyTank.position, myPos), map, enemyThreat, enemyBullet);
+              if (hasImmediateTeleportThreat(myPos, myDir, enemyThreat, enemyBullet, map, closeDodge)) {
+                  if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, false, true)) return;
               }
           }
       }
   }
 
-  // --- 0.5 抢星逻辑 (星数未领先时才主动用传送抢星) ---
+  // 抢星传送 (V26 优化：除非距离超过8格或迫切需要反超，否则不轻易交开局传送)
+  var shouldPreferStarTeleport = !!game.star && !hasStarLead && getDistance(myPos, game.star) > 8;
   if (isSkillReady && game.star && shouldPreferStarTeleport) {
-      // 只有落点通过10格动态安全校验且不在敌人枪线上，才允许抢星
-      if (isLocationSafe(game.star, enemyThreat, map)) {
-          if (isPassable(game.star, map) && getFramesToThreat(game.star, enemyBullet, enemyThreat, map) === Infinity) {
+      if (isLocationSafe(game.star, enemyThreat, map) && isPassable(game.star, map)) {
+          if (getFramesToThreat(game.star, enemyBullet, enemyThreat, map) === Infinity) {
               performTeleport(me, game.star);
               return;
           }
       }
   }
 
-  // --- 0.6 传送后脱离模式：落地后先离开敌方预测枪线，不急着继续追星 ---
-  if (xdbPostTeleportFrames > 0 && enemyTank) {
-      var disengageMove = getDisengagePosition(myPos, myDir, enemyTank, map, enemyBullet, enemyThreat);
-      if (disengageMove) {
-          moveToward(me, myDir, myPos, disengageMove);
-          return;
-      }
-  }
-
-  // --- 0.7 针对危险技能的横向断轴：boost/overload/control 近身时不沿直线硬追 ---
-  if (enemyTank && getDistance(myPos, enemyTank.position) <= enemyThreat.closeRange && isHighPressureSkill(enemyThreat)) {
-      var breakAxisMove = getBreakAxisMove(myPos, myDir, enemyTank, map, enemyBullet, enemyThreat);
-      if (breakAxisMove) {
-          moveToward(me, myDir, myPos, breakAxisMove);
-          return;
-      }
-  }
-
-  // --- 1. 子弹闪避逻辑 ---
-  var framesToHit = getFramesToThreat(myPos, enemyBullet, enemyThreat, map);
-  if (framesToHit !== Infinity) {
-    var dodgeInfo = getDodgeInfo(myPos, myDir, enemyBullet, enemyThreat, map, framesToHit);
-    if (isSkillReady) {
-       // 如果常规躲避来不及，或者躲避点不安全，强制传送
-       if (!dodgeInfo && hasImmediateTeleportThreat(myPos, myDir, enemyThreat, enemyBullet, map, dodgeInfo)) {
-           if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, shouldPreferStarTeleport, true)) return;
-       }
-    }
-    if (dodgeInfo && dodgeInfo.move) {
-      moveToward(me, myDir, myPos, dodgeInfo.move);
-      return;
-    }
-    return;
-  }
-
-  // --- 2. 战术进攻逻辑 ---
-  if (enemyTank) {
-      var distToEnemy = getDistance(myPos, enemyTank.position);
-      var enemyIsFacing = isEnemyThreatLine(myPos, enemyThreat, map);
-      var canWeShoot = enemyVisible && canShoot(myPos, enemyTank.position, map);
-      var targetDir = directionTo(myPos, enemyTank.position);
+  // --- 3. 战术进攻逻辑 ---
+  if (enemyTank || (stance === "ANTI_CLOAK" && XDB_CACHE.lastEnemyPos)) {
+      var ePos = enemyTank ? enemyTank.position : XDB_CACHE.lastEnemyPos;
+      var canWeShoot = enemyVisible && canShoot(myPos, ePos, map);
+      var targetDir = directionTo(myPos, ePos);
       var iAmFacing = (myDir === targetDir);
 
-      if (tryPredictiveFire(me, myPos, myDir, enemyTank, enemyThreat, enemyBullet, map, game.star, hasStarLead, shouldPreferStarTeleport)) {
+      if (tryPredictiveFire(me, myPos, myDir, enemyTank, enemyThreat, enemyBullet, map, game.star, hasStarLead, shouldPreferStarTeleport)) return;
+      
+      if (enemyThreat && enemyThreat.shielded) {
+          var baitMove = getDodgeFromLineOfFire(myPos, myDir, targetDir, map, enemyThreat, enemyBullet);
+          if (baitMove) {
+              moveToward(me, myDir, myPos, baitMove);
+              return;
+          }
+      }
+
+      if (canWeShoot && iAmFacing && !(me.status && me.status.fireLocked) && !(enemyThreat && enemyThreat.shielded)) {
+          me.fire();
           return;
       }
       
-      if (enemyIsFacing) {
-          var amIStarAdvantaged = (me.stars !== undefined && enemy.stars !== undefined) ? (me.stars >= enemy.stars) : false;
-          var isHeadToHead = iAmFacing && canWeShoot;
-          
-          // 如果处于劣势且距离过近，强制寻求闪避或传送
-          if (!iAmFacing || (me.status && me.status.fireLocked) || distToEnemy <= 2 || (isHeadToHead && !amIStarAdvantaged)) {
-              var qdDodge = getDodgeFromLineOfFire(myPos, myDir, targetDir, map, enemyThreat, enemyBullet);
-              if (qdDodge) {
-                  moveToward(me, myDir, myPos, qdDodge);
-                  return;
-              }
-              if (isSkillReady && hasImmediateTeleportThreat(myPos, myDir, enemyThreat, enemyBullet, map, qdDodge)) {
-                  if (tryTeleportEscapes(me, game.star, enemyThreat, enemyBullet, map, myDir, shouldPreferStarTeleport, true)) return;
-              }
-          }
-      }
-      
-      // 战术策略：未领先时星星优先；领先且传送可用时，优先保留进攻/保命节奏。
-      var shouldSkipDuelForStar = false;
-      if (game.star) {
-          var myDistToStar = getDistance(myPos, game.star);
-          var enemyDistToStar = getDistance(enemyTank.position, game.star);
-          if (myDistToStar <= enemyDistToStar || (isSkillReady && shouldPreferStarTeleport)) {
-              shouldSkipDuelForStar = true;
-          }
-      }
-
-      if (!shouldSkipDuelForStar) {
-          // --- 核心优化 1: 护盾博弈 (Shield Baiting) ---
-          if (enemyThreat && enemyThreat.shielded) {
-              // 敌人开盾时，停止射击，并优先进行侧向位移，引诱敌人浪费子弹
-              var baitMove = getDodgeFromLineOfFire(myPos, myDir, targetDir, map, enemyThreat, enemyBullet);
-              if (baitMove) {
-                  moveToward(me, myDir, myPos, baitMove);
-                  return;
-              }
-          }
-
-          if (canWeShoot && iAmFacing && !(me.status && me.status.fireLocked) && !(enemyThreat && enemyThreat.shielded)) {
-              me.fire();
-              return;
-          }
-          if (canWeShoot && !iAmFacing && !(enemyThreat && enemyThreat.shielded)) {
-              me.turn(targetDir);
-              return;
-          }
+      if (canWeShoot && !iAmFacing && !(enemyThreat && enemyThreat.shielded)) {
+          me.turn(targetDir);
+          return;
       }
   }
 
-  // --- 3. 目标点设定 ---
+  // --- 4. 智能巡航与中场控制 ---
   var target = null;
-  var allowLoF = false;
-
   if (game.star) {
-      // 寻星逻辑
-      if (!enemyTank) {
-          target = game.star;
-      } else {
-          var myDistToStar = getDistance(myPos, game.star);
-          var blockPos = getStarBlockPosition(myPos, enemyTank, game.star, map, enemyBullet, enemyThreat);
-          if (blockPos && (hasStarLead || getDistance(enemyTank.position, game.star) < myDistToStar)) {
-              target = blockPos;
-              allowLoF = false;
-          } else if (isLocationSafe(game.star, enemyThreat, map)) {
-              // 只有确认寻路终点安全时，才将星星设为目标
-              target = game.star;
-              allowLoF = true;
-          } else {
-              // 如果星星不安全，寻找附近的伏击位
-              var ambushSpot = findAmbushSpot(game.star, map);
-              if (ambushSpot) target = ambushSpot;
-          }
-      }
-  }
-
-  // --- 4. 智能位移执行 ---
-  if (!target && enemyTank) {
-      var distToEnemy = getDistance(myPos, enemyTank.position);
-      var enemyIsFacingUs = isEnemyThreatLine(myPos, enemyThreat, map);
-      
-      // 猎杀逻辑：只有在安全的情况下才主动接近
-      if (isSkillReady || distToEnemy > 6) {
-          target = enemyTank.position;
-          allowLoF = true;
-      } else {
-          // 没技能时，保持距离
-          var fleePos = getFleePosition(myPos, enemyTank, map, enemyBullet, enemyThreat);
-          if (fleePos) {
-              moveToward(me, myDir, myPos, fleePos);
-              return;
-          }
-      }
+      target = game.star;
+  } else if (stance === "CENTER_CONTROL") {
+      var centerX = Math.floor(map.length / 2);
+      var centerY = Math.floor(map[0].length / 2);
+      target = [centerX, centerY];
+  } else if (enemyTank) {
+      target = enemyTank.position;
   }
 
   if (target) {
-      var next = bfs(myPos, target, map, enemyBullet, enemyThreat, true); 
-      if (!next && allowLoF) {
-          next = bfs(myPos, target, map, enemyBullet, enemyThreat, false); 
-      }
-      
-      if (next) {
-          moveToward(me, myDir, myPos, next);
+      var nextStep = getNextStepWithCache(myPos, target, map, enemyBullet, enemyThreat);
+      if (nextStep) {
+          if (samePos(myPos, nextStep)) XDB_CACHE.stuckCounter++;
+          else XDB_CACHE.stuckCounter = 0;
+          moveToward(me, myDir, myPos, nextStep);
           return;
       }
   }
 
-  // --- 5. 巡逻兜底 (稳健型) ---
+  // --- 5. 巡逻兜底 ---
   var pMove = safePatrol(myPos, myDir, map, enemyThreat);
-  if (pMove) {
-      moveToward(me, myDir, myPos, pMove);
-      return;
+  if (pMove) moveToward(me, myDir, myPos, pMove);
+}
+
+function determineTacticalStance(me, enemyThreat, game) {
+    if (!enemyThreat) return "DEFAULT";
+    if (enemyThreat.skillType === "cloak") return "ANTI_CLOAK";
+    if (enemyThreat.skillType === "shield") return "ANTI_SHIELD";
+    if (enemyThreat.skillType === "boost") return "ANTI_SPEED";
+    if (!game.star) return "CENTER_CONTROL";
+    return "DEFAULT";
+}
+
+function updatePosHistory(pos) {
+    XDB_CACHE.posHistory.push([pos[0], pos[1]]);
+    if (XDB_CACHE.posHistory.length > XDB_CONFIG.MAX_OSCILLATION_LEN) {
+        XDB_CACHE.posHistory.shift();
+    }
+}
+
+function isOscillating() {
+    if (XDB_CACHE.posHistory.length < 4) return false;
+    var h = XDB_CACHE.posHistory;
+    var last = h[h.length - 1];
+    var prev2 = h[h.length - 3];
+    return samePos(last, prev2);
+}
+
+function getNextStepWithCache(myPos, target, map, bullet, enemyThreat) {
+    // --- 极致缓存策略 ---
+    // 检查缓存路径是否依然有效
+    if (XDB_CACHE.lastTarget && samePos(target, XDB_CACHE.lastTarget) && XDB_CACHE.path.length > 0) {
+        var next = XDB_CACHE.path[0];
+        // 校验下一步是否依然安全通行。在 A* 模式下，我们更信任既定路径，除非真实危险
+        if (isPassable(next, map) && !isDangerousPosition(next, enemyThreat, bullet, map)) {
+            XDB_CACHE.path.shift();
+            return next;
+        }
+    }
+
+    // 缓存失效或震荡检测触发，重新规划
+    if (isOscillating()) {
+        XDB_CACHE.path = []; 
+    }
+
+    // 使用更高效的 A* 算法
+    var newPath = aStar(myPos, target, map, bullet, enemyThreat);
+    if (newPath && newPath.length > 0) {
+        XDB_CACHE.lastTarget = [target[0], target[1]];
+        XDB_CACHE.path = newPath;
+        return XDB_CACHE.path.shift();
+    }
+    return null;
+}
+
+function aStar(start, goal, map, bullet, enemyThreat) {
+  // 启发式寻路：优先级 = 已走代价(g) + 预估剩余代价(h)
+  var queue = [{ pos: start, path: [], g: 0, h: getDistance(start, goal), dir: null }];
+  var minG = {};
+  minG[key(start)] = 0;
+  var nodesSearched = 0;
+
+  while (queue.length > 0 && nodesSearched < XDB_CONFIG.MAX_SEARCH_NODES) {
+    // 找到 F 值最小的节点 (F = G + H)
+    var bestIdx = 0;
+    for (var i = 1; i < queue.length; i++) {
+        if ((queue[i].g + queue[i].h) < (queue[bestIdx].g + queue[bestIdx].h)) bestIdx = i;
+    }
+    
+    var current = queue.splice(bestIdx, 1)[0];
+    nodesSearched++;
+
+    if (samePos(current.pos, goal)) return current.path;
+
+    var dirs = ["up", "right", "down", "left"];
+    for (var i = 0; i < dirs.length; i++) {
+      var d = dirs[i];
+      var nextPos = add(current.pos, delta(d));
+      var k = key(nextPos);
+      
+      // 这里的危险判定是核心性能开销，A* 通过减少节点数来对冲
+      if (!isPassable(nextPos, map) || isDangerousPosition(nextPos, enemyThreat, bullet, map)) continue;
+      
+      var turnCost = (current.dir && current.dir !== d) ? XDB_CONFIG.TURN_COST_WEIGHT : 0;
+      var newG = current.g + 1 + turnCost;
+      
+      if (minG[k] === undefined || newG < minG[k]) {
+        minG[k] = newG;
+        var newPath = current.path.slice();
+        newPath.push(nextPos);
+        queue.push({ 
+            pos: nextPos, 
+            path: newPath, 
+            g: newG, 
+            h: getDistance(nextPos, goal), 
+            dir: d 
+        });
+      }
+    }
   }
+  return null;
 }
 
 // --- V20 核心逻辑库 ---
@@ -857,12 +868,30 @@ function getDodgeInfo(myPos, myDir, bullet, enemyThreat, map, framesToHit) {
   var dirs = ["up", "right", "down", "left"];
   var best = null;
   var minFrames = Infinity;
+  
+  // --- 核心优化: 走廊逃判 ---
+  var corridor = isTrappedInCorridor(myPos, map);
+  var bulletInCorridor = bullet && corridor && (
+      (corridor === "horizontal" && bullet.position[1] === myPos[1]) || 
+      (corridor === "vertical" && bullet.position[0] === myPos[0])
+  );
+
   for (var i = 0; i < dirs.length; i++) {
     var moveDir = dirs[i];
     var next = add(myPos, delta(moveDir));
     if (isPassable(next, map) && !isDangerousPosition(next, enemyThreat, bullet, map)) {
       var framesNeeded = (myDir === moveDir) ? 1 : 2;
       if (enemyThreat && (enemyThreat.control || enemyThreat.poisoned) && myDir !== moveDir) framesNeeded++;
+      
+      // 在走廊内，如果无法通过位移离开轴线，framesToHit 的判定需要极其严格
+      if (bulletInCorridor) {
+          // 如果位移后依然在走廊轴线上且子弹逼近，标记为不可逃避
+          if ((corridor === "horizontal" && next[1] === myPos[1]) || (corridor === "vertical" && next[0] === myPos[0])) {
+              // 走廊内只能前后移动，如果子弹速度快，位移基本没用
+              if (framesToHit <= XDB_CONFIG.CORRIDOR_THREAT_DIST) continue; 
+          }
+      }
+
       if (framesNeeded < framesToHit && framesNeeded < minFrames) {
         minFrames = framesNeeded;
         best = next;
@@ -870,6 +899,21 @@ function getDodgeInfo(myPos, myDir, bullet, enemyThreat, map, framesToHit) {
     }
   }
   return best ? { move: best, framesNeeded: minFrames } : null;
+}
+
+function isTrappedInCorridor(pos, map) {
+    var up = add(pos, delta("up"));
+    var down = add(pos, delta("down"));
+    var left = add(pos, delta("left"));
+    var right = add(pos, delta("right"));
+    
+    var upDownBlocked = !isPassable(up, map) && !isPassable(down, map);
+    var leftRightBlocked = !isPassable(left, map) && !isPassable(right, map);
+    
+    if (upDownBlocked && !leftRightBlocked) return "horizontal";
+    if (leftRightBlocked && !upDownBlocked) return "vertical";
+    if (upDownBlocked && leftRightBlocked) return "intersection"; // 十字路口或死角
+    return null;
 }
 
 function isEnemyLineOfFire(pos, enemyTank, map) {
