@@ -7,7 +7,7 @@ async function delay(ms) {
 
 async function main() {
     const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
-    const totalMatches = 5;
+    const totalMatches = 30;
     const baselineWinRate = parseFloat(process.argv[2]) || 0;
     const strategyName = process.argv[3] || 'Optimization';
     
@@ -69,11 +69,11 @@ async function main() {
             }
 
             const matchData = await res.json();
-            if (!myTankId) myTankId = matchData.attackerTankId; // 动态获取当前坦克ID
+            if (!myTankId) myTankId = matchData.challengerTankId || matchData.attackerTankId; // 动态获取当前坦克ID
 
             report.summary.total++;
             let resultType = "draw";
-            if (matchData.winnerTankId === myTankId) {
+            if (matchData.winnerTankId === myTankId || matchData.winner === "XDB") {
                 resultType = "win";
                 report.summary.wins++;
             } else if (matchData.winnerTankId) {
@@ -123,20 +123,21 @@ async function main() {
 
     fs.writeFileSync('evolution_report.json', JSON.stringify(report, null, 2));
 
-    if (diff >= 0.05) {
-        console.log("\n[Result] SIGNIFICANT IMPROVEMENT! Committing and Pushing...");
+    if (diff >= 0.10) {
+        console.log("\n[Result] SIGNIFICANT IMPROVEMENT (>= 10%)! Committing and Pushing...");
         try {
-            execSync('git add new_tank.js AGENTS.md STRATEGY.md');
+            execSync('git add new_tank.js STRATEGY.md batch_evolution.js');
             execSync(`git commit -m "feat: ${strategyName} (Win rate: ${(currentWinRate * 100).toFixed(0)}%)"`);
             execSync('git push');
             console.log("Git sync complete.");
         } catch (e) {
             console.error("Git command failed:", e.message);
         }
-    } else if (diff >= 0) {
-        console.log("\n[Result] Marginal improvement or parity. Retaining code for further analysis, no commit.");
+    } else if (diff > -0.05) {
+        console.log("\n[Result] FLUCTUATION ZONE (-5% to 10%). Retaining code for further analysis, no commit.");
+        console.log("Recommend running another batch of battles to accumulate more data.");
     } else {
-        console.log("\n[Result] PERFORMANCE DROP. Reverting changes...");
+        console.log("\n[Result] PERFORMANCE DROP (<= -5%). Reverting changes...");
         try {
             execSync('git restore new_tank.js');
             console.log("Rollback complete.");
