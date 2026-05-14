@@ -9,19 +9,8 @@ async function analyze(url) {
         console.log("Data keys:", Object.keys(data));
         const frames = data.replayData.replay.records;
         console.log("Frames count:", frames.length);
-        const lastFrames = frames.slice(-5);
-        lastFrames.forEach(f => {
-            if (!f.game) return;
-            console.log(`Frame ${f.frame}:`);
-            console.log(`  Me: pos=${f.game.me.tank.position}, dir=${f.game.me.tank.direction}`);
-            if (f.game.enemy && f.game.enemy.tank) {
-                 console.log(`  Enemy: pos=${f.game.enemy.tank.position}, dir=${f.game.enemy.tank.direction}, skill=${f.game.enemy.skill ? f.game.enemy.skill.type : 'none'}, effects=${JSON.stringify(f.game.enemy.effects || [])}`);
-            } else {
-                 console.log(`  Enemy: Not visible`);
-            }
-            if (f.game.bullet) console.log(`  Bullet: pos=${f.game.bullet.position}, dir=${f.game.bullet.direction}`);
-            console.log(`  Action Taken:`, f.action);
-        });
+        console.log("First frame:", JSON.stringify(frames[0]).substring(0, 500));
+        console.log("Last frame:", JSON.stringify(frames[frames.length - 1]).substring(0, 500));
     } catch (e) {
         console.error("Analysis Error:", e);
     }

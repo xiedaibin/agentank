@@ -2,8 +2,8 @@
   "targetId": 707,
   "summary": {
     "total": 10,
-    "wins": 7,
-    "losses": 3,
+    "wins": 5,
+    "losses": 5,
     "draws": 0
   },
   "matches": [
@@ -11,81 +11,81 @@
       "matchNum": 1,
       "status": "success",
       "result": "win",
-      "reason": "crashed",
-      "matchUrlId": "mat_22AyHqGRmQy4Hq4hb",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_22AyHqGRmQy4Hq4hb/agent.json"
+      "reason": "runTime",
+      "matchUrlId": "mat_JNy11qtHXam4ywikP",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_JNy11qtHXam4ywikP/agent.json"
     },
     {
       "matchNum": 2,
       "status": "success",
-      "result": "loss",
+      "result": "win",
       "reason": "star",
-      "matchUrlId": "mat_CJFVJ52HeJXG6A8Vq",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_CJFVJ52HeJXG6A8Vq/agent.json"
+      "matchUrlId": "mat_98fAhcGxDCiFCZdaQ",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_98fAhcGxDCiFCZdaQ/agent.json"
     },
     {
       "matchNum": 3,
       "status": "success",
-      "result": "win",
+      "result": "loss",
       "reason": "crashed",
-      "matchUrlId": "mat_F4rrCt2uGuj4nZKQW",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_F4rrCt2uGuj4nZKQW/agent.json"
+      "matchUrlId": "mat_3OOoW82IAqI2pKf65",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_3OOoW82IAqI2pKf65/agent.json"
     },
     {
       "matchNum": 4,
       "status": "success",
       "result": "win",
-      "reason": "crashed",
-      "matchUrlId": "mat_4zzeLzbLRZ0F8d2mU",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_4zzeLzbLRZ0F8d2mU/agent.json"
+      "reason": "star",
+      "matchUrlId": "mat_Bwy7HofQslZImvovQ",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Bwy7HofQslZImvovQ/agent.json"
     },
     {
       "matchNum": 5,
       "status": "success",
-      "result": "loss",
+      "result": "win",
       "reason": "star",
-      "matchUrlId": "mat_FDGDfqr8BoeFvE6ie",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_FDGDfqr8BoeFvE6ie/agent.json"
+      "matchUrlId": "mat_DuYQ9GfKSPO78Oq0r",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_DuYQ9GfKSPO78Oq0r/agent.json"
     },
     {
       "matchNum": 6,
       "status": "success",
-      "result": "win",
+      "result": "loss",
       "reason": "crashed",
-      "matchUrlId": "mat_6fPPlbWszp4K6yhcm",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_6fPPlbWszp4K6yhcm/agent.json"
+      "matchUrlId": "mat_CjwHUR30a9B3akPNt",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_CjwHUR30a9B3akPNt/agent.json"
     },
     {
       "matchNum": 7,
       "status": "success",
       "result": "loss",
-      "reason": "star",
-      "matchUrlId": "mat_3ZnVuGyHYw52ZSK9u",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_3ZnVuGyHYw52ZSK9u/agent.json"
+      "reason": "runTime",
+      "matchUrlId": "mat_J74VQyfEorH79nrN2",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_J74VQyfEorH79nrN2/agent.json"
     },
     {
       "matchNum": 8,
       "status": "success",
       "result": "win",
-      "reason": "crashed",
-      "matchUrlId": "mat_0J4l1zcjtjJIQhfdG",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_0J4l1zcjtjJIQhfdG/agent.json"
+      "reason": "runTime",
+      "matchUrlId": "mat_GuYI8YVQq4cDPw5DW",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_GuYI8YVQq4cDPw5DW/agent.json"
     },
     {
       "matchNum": 9,
       "status": "success",
-      "result": "win",
-      "reason": "crashed",
-      "matchUrlId": "mat_2V0CF0PZUYU4tSoXb",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_2V0CF0PZUYU4tSoXb/agent.json"
+      "result": "loss",
+      "reason": "runTime",
+      "matchUrlId": "mat_2d7xUBxjfKIBIZ59D",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_2d7xUBxjfKIBIZ59D/agent.json"
     },
     {
       "matchNum": 10,
       "status": "success",
-      "result": "win",
-      "reason": "crashed",
-      "matchUrlId": "mat_Jrl7dW2Buct9EeIEk",
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Jrl7dW2Buct9EeIEk/agent.json"
+      "result": "loss",
+      "reason": "runTime",
+      "matchUrlId": "mat_0OEbclQ3akUH05R3Y",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_0OEbclQ3akUH05R3Y/agent.json"
     }
   ]
 }
