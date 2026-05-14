@@ -1,17 +1,17 @@
 /**
  * AgenTank AI Agent - XDB (Strategic Assassin V5)
- * 架构：双层分析师系统 (STRATEGY.md / chonggou.md)
- * 战略：Kill (10000) > Stars (500) > Time
+ *  (STRATEGY.md / chonggou.md)
+ * Kill (10000) > Stars (500) > Time
  */
 
-// --- 全局静态缓存 (G_Blueprint) ---
+// ---  (G_Blueprint) ---
 var G_Blueprint = {
     enemyProfile: null,
     mapVision: null,
     initialized: false
 };
 
-// --- 全局持久状态 (G_History) ---
+// ---  (G_History) ---
 var G_History = {
     lastEnemyPos: null,
     lastEnemyDir: "up",
@@ -32,34 +32,34 @@ var CONFIG = {
     PRECISION_DIST: 5
 };
 
-// --- [主入口] ---
+// --- [] ---
 function onIdle(me, enemy, game) {
     try {
         G_History.frame = game.frames || game.frame || 0;
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
 
-        // 1. 战略分析师 (Strategic Analyst) - 静态初始化
+        // 1.  (Strategic Analyst) - 
         if (!G_Blueprint.initialized) {
             strategicInit(enemy, game.map);
         }
 
-        // 2. 环境感知 (Perception)
+        // 2.  (Perception)
         var ctx = buildExecutionContext(me, enemy, game);
 
-        // 3. 状态异常拦截
+        // 3. 
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
-        // 4. 紧急防御 (Emergency Defense) - 最高优先级动作评估
+        // 4.  (Emergency Defense) - 
         var defenseAction = tacticalDefense(ctx);
         if (defenseAction) {
             executeAction(me, defenseAction, ctx);
             return;
         }
 
-        // 5. 战术分析师 (Tactical Analyst) - 动作评估函数
+        // 5.  (Tactical Analyst) - 
         var bestAction = tacticalAnalysis(ctx);
 
-        // 6. 执行输出
+        // 6. 
         executeAction(me, bestAction, ctx);
 
     } catch (e) {
@@ -67,7 +67,7 @@ function onIdle(me, enemy, game) {
     }
 }
 
-// --- [1. 战略分析师] ---
+// --- [1. ] ---
 function strategicInit(enemy, map) {
     G_Blueprint.mapVision = analyzeMap(map);
     if (enemy) {
@@ -104,28 +104,28 @@ function buildEnemyProfile(enemy) {
     };
 }
 
-// --- [2. 战术分析师] ---
+// --- [2. ] ---
 function tacticalAnalysis(ctx) {
     var candidates = [];
 
-    // [评估：必杀刺杀]
+    // []
     if (ctx.canTeleport) {
         var assassinate = evalAssassination(ctx);
         if (assassinate) candidates.push(assassinate);
     }
 
-    // [评估：常规射击]
+    // []
     var shoot = evalShooting(ctx);
     if (shoot) candidates.push(shoot);
 
-    // [评估：高效抢星]
+    // []
     var star = evalStarCollection(ctx);
     if (star) candidates.push(star);
 
-    // [评估：中场巡逻/生存]
+    // [/]
     candidates.push(evalSurvival(ctx));
 
-    // 价值函数排序：Kill > Stars > Time
+    // Kill > Stars > Time
     candidates.sort(function(a, b) { return b.score - a.score; });
     return candidates[0];
 }
@@ -133,7 +133,7 @@ function tacticalAnalysis(ctx) {
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (G_Blueprint.enemyProfile && ctx.enemyShielded)) return null;
 
-    // 针对 Control 技能的战略规避：仅在对方僵直或我方必杀时进入危险区
+    //  Control 
     if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady && !ctx.enemyFireLocked) return null;
 
     var isVulnerable = ctx.enemyFireLocked || (G_History.frame - G_History.lastEnemySeenFrame < 2);
@@ -158,7 +158,7 @@ function evalShooting(ctx) {
         }
     }
 
-    // 预测射击 (针对 Boost/Cloak)
+    //  ( Boost/Cloak)
     var pShot = findPredictiveShot(ctx);
     if (pShot) {
         var pDir = directionTo(ctx.myPos, pShot.pos);
@@ -174,11 +174,11 @@ function evalStarCollection(ctx) {
     var dist = getDist(ctx.myPos, ctx.starPos);
     var score = CONFIG.STAR_PRIO - dist;
     
-    // 战略倾斜：落后时增加抢星权重
+    // 
     if (ctx.meStars <= ctx.enemyStars) score += 200;
-    if (dist <= 3) score += 300; // 临门一脚
+    if (dist <= 3) score += 300; // 
 
-    // 战略动作：远距离抢星传送
+    // 
     if (ctx.canTeleport && dist > 12 && !ctx.enemyVisible) {
         if (isSafe(ctx.starPos, ctx, false)) {
             return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 400 };
@@ -190,10 +190,10 @@ function evalStarCollection(ctx) {
 
 function evalSurvival(ctx) {
     var center = [Math.floor(G_Blueprint.mapVision.width/2), Math.floor(G_Blueprint.mapVision.height/2)];
-    return { action: "move", target: center, score: 0 }; // 基础权重最低
+    return { action: "move", target: center, score: 0 }; // 
 }
 
-// --- [3. 战术执行层] ---
+// --- [3. ] ---
 function executeAction(me, act, ctx) {
     if (!act) return;
     
@@ -237,12 +237,12 @@ function tacticalDefense(ctx) {
     return null;
 }
 
-// --- [4. 通用核心模块] ---
+// --- [4. ] ---
 
 function getNextStep(start, goal, ctx) {
     if (samePos(start, goal)) return null;
     
-    // 路径缓存
+    // 
     if (G_History.pathTarget && samePos(goal, G_History.pathTarget) && G_History.path.length > 0) {
         var next = G_History.path[0];
         if (isPassable(next, ctx.map) && isSafe(next, ctx, false)) {
@@ -257,7 +257,7 @@ function getNextStep(start, goal, ctx) {
         return G_History.path.shift();
     }
     
-    // 兜底策略：如果 A* 失败，尝试向目标方向盲移
+    //  A* 
     var blind = nextStepToward(start, goal, ctx.map);
     if (blind && isSafe(blind, ctx, false)) return blind;
     
@@ -295,32 +295,32 @@ function aStar(start, goal, ctx) {
 }
 
 function isSafe(pos, ctx, strict) {
-    // 1. 物理避弹
+    // 1. 
     if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
 
-    // 2. 敌方预测枪线
+    // 2. 
     if (isInThreatLine(pos, ctx)) {
-        if (strict) return false; // 目标点严禁进入
-        if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 4) return false; // 路径点有子弹必避
+        if (strict) return false; // 
+        if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 4) return false; // 
     }
 
-    // 3. 战略禁区 (Strategic Exclusion Zones)
+    // 3.  (Strategic Exclusion Zones)
     if (G_Blueprint.enemyProfile && ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
-        // 对抗控制技能：禁止无理由进入危险半径
+        // 
         if (G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady && d <= G_Blueprint.enemyProfile.controlRadius) {
             if (strict || isInThreatLine(pos, ctx)) return false;
         }
-        // 基础碰撞距离
+        // 
         if (d < G_Blueprint.enemyProfile.minSafeDist) return false;
-        // 传送后硬性保护（防止落地瞬间被后续伤害补刀，仅对目标点生效）
+        // 
         if (strict && G_History.postTeleportFrames > 0 && d <= 4) return false;
     }
 
     return true;
 }
 
-// --- [5. 辅助工具] ---
+// --- [5. ] ---
 
 function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
@@ -347,16 +347,16 @@ function buildExecutionContext(me, enemy, game) {
 
 function isInThreatLine(pos, ctx) {
     if (!ctx.enemyPos) return false;
-    // 基础枪线
+    // 
     if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return true;
-    // 针对 Overload (侧向枪线)
+    //  Overload ()
     if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isBurst) {
         var sideA = addPos(ctx.enemyPos, delta(getRightDir(ctx.enemyDir)));
         var sideB = addPos(ctx.enemyPos, delta(getLeftDir(ctx.enemyDir)));
         if (isLoS(sideA, pos, ctx.enemyDir, ctx.map)) return true;
         if (isLoS(sideB, pos, ctx.enemyDir, ctx.map)) return true;
     }
-    // 预测枪线 (敌方前移一步)
+    //  ()
     var p1 = addPos(ctx.enemyPos, delta(ctx.enemyDir));
     if (isPassable(p1, ctx.map) && isLoS(p1, pos, ctx.enemyDir, ctx.map)) return true;
     
@@ -377,13 +377,13 @@ function isLoS(start, end, dir, map) {
 function findPredictiveShot(ctx) {
     if (!ctx.enemyPos) return null;
     var p = ctx.enemyPos, dir = ctx.enemyDir, candidates = [];
-    // 1. 直线预测
+    // 1. 
     for (var i = 1; i <= 4; i++) {
         p = addPos(p, delta(dir));
         if (!isPassable(p, ctx.map)) break;
         candidates.push({ pos: p, frames: i, confidence: 2 });
     }
-    // 2. 星向预测
+    // 2. 
     if (ctx.starPos) {
         var step = nextStepToward(ctx.enemyPos, ctx.starPos, ctx.map);
         if (step) candidates.push({ pos: step, frames: 1, confidence: 4 });
