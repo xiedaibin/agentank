@@ -208,21 +208,49 @@ function executeAction(me, act, ctx) {
 
 function tacticalDefense(ctx) {
     var bullet = ctx.enemyBullet;
-    if (!bullet) return null;
+    
+    // 0. 防御锁处理 (Defense Lock)
+    // 如果处于防御锁定状态，且目标点仍然安全，强制延续该移动，防止震荡
+    if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
+        G_History.defenseLockTicks--;
+        if (isPassable(G_History.lastDefenseTarget, ctx.map) && isSafe(G_History.lastDefenseTarget, ctx, false)) {
+            return { action: "move", target: G_History.lastDefenseTarget, score: 12000 };
+        } else {
+            G_History.defenseLockTicks = 0; // 目标不再安全，提前解锁
+        }
+    }
 
+    // 1. 预判性枪线防御 (Proactive LoS Defense)
+    if (ctx.enemyVisible && !ctx.enemyShielded && !ctx.enemyFireLocked) {
+        var dist = getDist(ctx.myPos, ctx.enemyPos);
+        var safeDist = G_Blueprint.enemyProfile ? G_Blueprint.enemyProfile.losDefenseDist : 7;
+        
+        if (dist < safeDist && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
+            var sideStep = findBestDodge(ctx, 4); 
+            if (sideStep) {
+                G_History.defenseLockTicks = 3; // 锁定 3 帧
+                G_History.lastDefenseTarget = sideStep;
+                return { action: "move", target: sideStep, score: 9500 };
+            }
+        }
+    }
+
+    // 2. 物理避弹 (Physical Dodging)
     var framesToHit = getFramesToHit(ctx.myPos, bullet, ctx.map);
-    if (framesToHit <= 3) {
+    if (framesToHit <= 4) {
         var dodge = findBestDodge(ctx, framesToHit);
         if (ctx.canTeleport) {
             var moveFrames = (dodge && ctx.myDir === directionTo(ctx.myPos, dodge)) ? 1 : 2;
             if (!dodge || moveFrames >= framesToHit) {
                 var escapeSpot = findEscapeSpot(ctx);
                 if (escapeSpot) return { action: "teleport", target: escapeSpot, score: 99999 };
-                var fallback = findAnyPassableSpot(ctx);
-                if (fallback) return { action: "teleport", target: fallback, score: 99998 };
             }
         }
-        if (dodge) return { action: "move", target: dodge, score: 99999 };
+        if (dodge) {
+            G_History.defenseLockTicks = 2; // 物理避弹锁定 2 帧
+            G_History.lastDefenseTarget = dodge;
+            return { action: "move", target: dodge, score: 99999 };
+        }
     }
     return null;
 }
@@ -347,7 +375,10 @@ function findAssassinSpot(ctx) {
     var dirs = ["up", "right", "down", "left"];
     for (var i = 0; i < dirs.length; i++) {
         var d = dirs[i], p = [ePos[0] - delta(d)[0] * 5, ePos[1] - delta(d)[1] * 5];
-        if (isPassable(p, ctx.map) && !isLoS(ePos, p, eDir, ctx.map) && canShoot(p, ePos, ctx.map)) return p;
+        if (isPassable(p, ctx.map) && !isLoS(ePos, p, eDir, ctx.map) && canShoot(p, ePos, ctx.map)) {
+            // 落地二次校验：确保落点不在敌方当前的潜在枪线上
+            if (!isLoS(ePos, p, eDir, ctx.map)) return p;
+        }
     }
     return null;
 }
