@@ -1,7 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V8)
- *  (STRATEGY.md / chonggou.md)
- * Kill (10000) > Stars (500) > Time
+ * AgenTank AI Agent - XDB (Strategic Assassin V8 - 稳定版)
+ * 战略方针：均衡防御与高效抢星 (Balanced Strategy)
+ * 状态：正式发布版 (基于 V8 架构)
  */
 
 // --- 全局蓝图 (G_Blueprint) ---
@@ -27,12 +27,12 @@ var CONFIG = {
     KILL_PRIO: 10000,
     STAR_PRIO: 500,
     TIME_COST: 1,
-    MAX_A_STAR_NODES: 500,
+    MAX_A_STAR_NODES: 600, 
     TURN_COST: 0.8,
     PRECISION_DIST: 5
 };
 
-// --- 入口函数 [] ---
+// --- 入口函数 ---
 function onIdle(me, enemy, game) {
     try {
         G_History.frame = game.frames || game.frame || 0;
@@ -46,17 +46,19 @@ function onIdle(me, enemy, game) {
 
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
+        // 1. 紧急防御判定
         var defenseAction = tacticalDefense(ctx);
         if (defenseAction) {
             executeAction(me, defenseAction, ctx);
             return;
         }
 
+        // 2. 综合战术分析
         var bestAction = tacticalAnalysis(ctx);
         executeAction(me, bestAction, ctx);
 
     } catch (e) {
-        print("RUNTIME ERROR: " + e.message);
+        print("运行错误: " + e.message);
     }
 }
 
@@ -65,7 +67,7 @@ function strategicInit(enemy, map) {
     G_Blueprint.mapVision = analyzeMap(map);
     if (enemy) {
         G_Blueprint.enemyProfile = buildEnemyProfile(enemy);
-        print("Strategy Initialized: Anti-" + G_Blueprint.enemyProfile.skillType);
+        print("战略初始化: 针对 " + G_Blueprint.enemyProfile.skillType + " 模式");
     }
     G_Blueprint.initialized = true;
 }
@@ -93,7 +95,7 @@ function buildEnemyProfile(enemy) {
         isStealth: (type === "cloak"),
         isTeleport: (type === "teleport"),
         controlRadius: (type === "stun" ? 9 : (type === "freeze" ? 8 : (type === "poison" ? 7 : 0))),
-        minSafeDist: (type === "boost" ? 6 : (type === "overload" ? 5 : 3))
+        minSafeDist: (type === "boost" ? 7 : (type === "overload" ? 5 : 4))
     };
 }
 
@@ -120,7 +122,6 @@ function tacticalAnalysis(ctx) {
 
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (G_Blueprint.enemyProfile && ctx.enemyShielded)) return null;
-
     if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady && !ctx.enemyFireLocked) return null;
 
     var isVulnerable = ctx.enemyFireLocked || ctx.enemyVisible || (ctx.meStars < ctx.enemyStars); 
@@ -186,8 +187,6 @@ function evalSurvival(ctx) {
 function executeAction(me, act, ctx) {
     if (!act) return;
     
-    if (G_History.frame % 30 === 0) print("Exec: " + act.action + " Score: " + act.score);
-
     if (act.action === "fire") {
         if (!me.bullet && !ctx.meStatus.fireLocked) me.fire();
         return;
@@ -219,7 +218,6 @@ function tacticalDefense(ctx) {
             if (!dodge || moveFrames >= framesToHit) {
                 var escapeSpot = findEscapeSpot(ctx);
                 if (escapeSpot) return { action: "teleport", target: escapeSpot, score: 99999 };
-                // Emergency Fallback: teleport to any passable spot
                 var fallback = findAnyPassableSpot(ctx);
                 if (fallback) return { action: "teleport", target: fallback, score: 99998 };
             }
@@ -229,7 +227,7 @@ function tacticalDefense(ctx) {
     return null;
 }
 
-// --- [4. 导航与避险算法] ---
+// --- [4. 寻路与避险] ---
 
 function getNextStep(start, goal, ctx) {
     if (samePos(start, goal)) return null;
@@ -255,15 +253,9 @@ function getNextStep(start, goal, ctx) {
         if (!isPassable(n, ctx.map)) continue;
         
         var score = -getDist(n, goal);
-        if (!isSafe(n, ctx, false)) score -= 1000;
-        if (G_Blueprint.mapVision.grass[key(n)]) score += 5; // Preference for grass
+        if (!isSafe(n, ctx, false)) score -= 1500;
+        if (G_Blueprint.mapVision.grass[key(n)]) score += 10;
         
-        if (ctx.enemyPos) {
-            var d = getDist(n, ctx.enemyPos);
-            var currD = getDist(start, ctx.enemyPos);
-            if (d > currD) score += 10;
-        }
-
         if (score > maxScore) { maxScore = score; best = n; }
     }
     return best;
@@ -286,12 +278,11 @@ function aStar(start, goal, ctx) {
 
         var dirs = ["up", "right", "down", "left"];
         for (var i = 0; i < dirs.length; i++) {
-            var d = dirs[i];
-            var next = addPos(curr.pos, delta(d));
+            var d = dirs[i], next = addPos(curr.pos, delta(d));
             if (isPassable(next, ctx.map)) {
                 var safe = isSafe(next, ctx, false);
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
-                if (!safe) cost += 150;
+                if (!safe) cost += 300;
                 
                 var newPath = curr.path.slice();
                 newPath.push(next);
@@ -305,43 +296,22 @@ function aStar(start, goal, ctx) {
 function isSafe(pos, ctx, strict) {
     if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
 
-    var inThreat = isInThreatLine(pos, ctx);
-    if (inThreat) {
-        if (strict) return false;
-        if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 4) return false;
-    }
-
-    if (G_Blueprint.enemyProfile && ctx.enemyPos) {
+    if (ctx.enemyPos) {
+        if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
+        
         var d = getDist(pos, ctx.enemyPos);
-        var currD = getDist(ctx.myPos, ctx.enemyPos);
-        
-        if (G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady && d <= G_Blueprint.enemyProfile.controlRadius) {
-            if (d < currD || inThreat) {
-                var enemyVulnerable = ctx.enemyFireLocked || (ctx.enemyVisible && !ctx.enemyShielded);
-                if (!enemyVulnerable) {
-                    if (strict || d < currD) return false;
-                }
-            }
-        }
-        
-        if (d < G_Blueprint.enemyProfile.minSafeDist && d < currD) return false;
-        
-        if (strict && G_History.postTeleportFrames > 0 && d <= 4) {
-            if (!canShoot(pos, ctx.enemyPos, ctx.map)) return false;
-        }
+        if (d < 4 && !G_Blueprint.mapVision.grass[key(pos)]) return false;
     }
-
     return true;
 }
 
-// --- [5. 环境感知与工具函数] ---
+// --- [5. 环境感知与工具] ---
 
 function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
     if (eTank) {
         G_History.lastEnemyPos = eTank.position;
         G_History.lastEnemyDir = eTank.direction;
-        G_History.lastEnemySeenFrame = G_History.frame;
     }
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars,
@@ -349,6 +319,7 @@ function buildExecutionContext(me, enemy, game) {
         enemy: enemy, enemyPos: G_History.lastEnemyPos, 
         enemyDir: G_History.lastEnemyDir,
         enemyVisible: !!eTank,
+        enemyStatus: enemy ? enemy.status : {},
         enemyStars: enemy ? enemy.stars : 0,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
         enemyFireLocked: enemy && enemy.status && enemy.status.fireLocked,
@@ -357,23 +328,6 @@ function buildExecutionContext(me, enemy, game) {
         starPos: game.star, map: game.map,
         canTeleport: me.skill && me.skill.remainingCooldownFrames === 0
     };
-}
-
-function isInThreatLine(pos, ctx) {
-    if (!ctx.enemyPos) return false;
-    if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return true;
-    
-    var d = getDist(pos, ctx.enemyPos);
-    if (d <= 10) {
-        if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
-            if (isLoS_anyDir(ctx.enemyPos, pos, ctx.map)) return true;
-        }
-    }
-    
-    var p1 = addPos(ctx.enemyPos, delta(ctx.enemyDir));
-    if (isPassable(p1, ctx.map) && isLoS(p1, pos, ctx.enemyDir, ctx.map)) return true;
-    
-    return false;
 }
 
 function isLoS(start, end, dir, map) {
@@ -388,15 +342,14 @@ function isLoS(start, end, dir, map) {
     return true;
 }
 
-function isLoS_anyDir(start, end, map) {
-    if (samePos(start, end)) return true;
-    if (start[0] !== end[0] && start[1] !== end[1]) return false;
-    var dir = directionTo(start, end), step = delta(dir), p = addPos(start, step);
-    while (!samePos(p, end)) {
-        if (G_Blueprint.mapVision.cover[key(p)]) return false;
-        p = addPos(p, step);
+function findAssassinSpot(ctx) {
+    var ePos = ctx.enemyPos, eDir = ctx.enemyDir;
+    var dirs = ["up", "right", "down", "left"];
+    for (var i = 0; i < dirs.length; i++) {
+        var d = dirs[i], p = [ePos[0] - delta(d)[0] * 5, ePos[1] - delta(d)[1] * 5];
+        if (isPassable(p, ctx.map) && !isLoS(ePos, p, eDir, ctx.map) && canShoot(p, ePos, ctx.map)) return p;
     }
-    return true;
+    return null;
 }
 
 function findPredictiveShot(ctx) {
@@ -407,58 +360,20 @@ function findPredictiveShot(ctx) {
         if (!isPassable(p, ctx.map)) break;
         candidates.push({ pos: p, frames: i, confidence: 2 });
     }
-    if (ctx.starPos) {
-        var step = nextStepToward(ctx.enemyPos, ctx.starPos, ctx.map);
-        if (step) {
-            candidates.push({ pos: step, frames: 1, confidence: 4 });
-            var step2 = nextStepToward(step, ctx.starPos, ctx.map);
-            if (step2) candidates.push({ pos: step2, frames: 2, confidence: 3 });
-        }
-    }
-    
     var best = null, bestScore = -999;
     for (var j = 0; j < candidates.length; j++) {
         var c = candidates[j];
         if (!canShoot(ctx.myPos, c.pos, ctx.map)) continue;
         var bDist = getDist(ctx.myPos, c.pos);
-        var bFrames = Math.ceil(bDist / 2);
-        if (bFrames > c.frames + 1) continue;
-        var score = c.confidence * 15 - bDist;
+        if (Math.ceil(bDist/2) > c.frames + 1) continue;
+        var score = c.confidence * 20 - bDist;
         if (score > bestScore) { bestScore = score; best = c; }
     }
     return best;
 }
 
-function findAssassinSpot(ctx) {
-    var ePos = ctx.enemyPos, eDir = ctx.enemyDir;
-    var candidates = [];
-    
-    var dirs = ["up", "right", "down", "left"];
-    for (var i = 0; i < dirs.length; i++) {
-        var d = dirs[i];
-        var dists = [5, 1];
-        for (var k = 0; k < dists.length; k++) {
-            var dist = dists[k];
-            var p = [ePos[0] - delta(d)[0] * dist, ePos[1] - delta(d)[1] * dist];
-            if (isPassable(p, ctx.map)) {
-                var score = (dist === 5 ? 100 : 50);
-                if (isLoS(ePos, p, eDir, ctx.map)) score -= 80;
-                if (d === eDir) score += 40;
-                
-                if (canShoot(p, ePos, ctx.map)) {
-                    candidates.push({pos: p, score: score});
-                }
-            }
-        }
-    }
-    
-    if (candidates.length === 0) return null;
-    candidates.sort(function(a, b) { return b.score - a.score; });
-    return candidates[0].pos;
-}
-
 function findEscapeSpot(ctx) {
-    var offsets = [[3,0], [-3,0], [0,3], [0,-3], [2,2], [-2,-2], [5,0], [-5,0]];
+    var offsets = [[4,0], [-4,0], [0,4], [0,-4], [2,2], [-2,-2]];
     for (var i = 0; i < offsets.length; i++) {
         var p = addPos(ctx.myPos, offsets[i]);
         if (isPassable(p, ctx.map) && isSafe(p, ctx, false)) return p;
@@ -467,7 +382,7 @@ function findEscapeSpot(ctx) {
 }
 
 function findAnyPassableSpot(ctx) {
-    var offsets = [[3,0], [-3,0], [0,3], [0,-3], [5,0], [-5,0], [0,5], [0,-5], [2,2], [-2,-2]];
+    var offsets = [[3,0], [-3,0], [0,3], [0,-3], [5,0], [-5,0]];
     for (var i = 0; i < offsets.length; i++) {
         var p = addPos(ctx.myPos, offsets[i]);
         if (isPassable(p, ctx.map)) return p;
@@ -478,20 +393,12 @@ function findAnyPassableSpot(ctx) {
 function findBestDodge(ctx, hitLimit) {
     var bullet = ctx.enemyBullet;
     if (!bullet) return null;
-    
     var dirs = ["up", "right", "down", "left"], best = null, maxH = -1;
     for (var i = 0; i < dirs.length; i++) {
-        var d = dirs[i];
-        var n = addPos(ctx.myPos, delta(d));
+        var d = dirs[i], n = addPos(ctx.myPos, delta(d));
         if (!isPassable(n, ctx.map)) continue;
-        
         var h = getFramesToHit(n, bullet, ctx.map);
-        var score = h;
-        var isSidestep = (bullet.direction === "up" || bullet.direction === "down") ? 
-                         (d === "left" || d === "right") : (d === "up" || d === "down");
-        if (isSidestep) score += 10;
-        
-        if (score > maxH && h > hitLimit) { maxH = score; best = n; }
+        if (h > maxH && h > hitLimit) { maxH = h; best = n; }
     }
     return best;
 }
@@ -505,8 +412,7 @@ function getFramesToHit(pos, bullet, map) {
 }
 
 function doMove(me, next, ctx) {
-    if (samePos(ctx.myPos, next)) { G_History.stuckCounter++; return; }
-    G_History.stuckCounter = 0;
+    if (samePos(ctx.myPos, next)) return;
     var d = directionTo(ctx.myPos, next);
     if (ctx.myDir === d) {
         if (ctx.meStatus.boosted) me.go(2); else me.go();
@@ -547,9 +453,6 @@ function directionTo(a, b) {
     if (b[0] > a[0]) return "right"; if (b[0] < a[0]) return "left";
     if (b[1] > a[1]) return "down"; return "up";
 }
-function getOppositeDir(d) { return { up: "down", down: "up", left: "right", right: "left" }[d]; }
-function getRightDir(d) { return { up: "right", right: "down", down: "left", left: "up" }[d]; }
-function getLeftDir(d) { return { up: "left", left: "down", down: "right", right: "up" }[d]; }
 function isPassable(p, map) {
     if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return false;
     var t = map[p[0]][p[1]];

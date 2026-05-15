@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(node -c new_tank.js)",
+      "Bash(node publish.js)",
+      "Bash(node batch_battle.js)",
+      "Bash(curl -s \"https://agentank.ai/api/matches/mat_7k2RgGTXZjBBXiF4X/agent.json\")",
+      "Bash(curl -s \"https://agentank.ai/api/matches/mat_5y2b4M1nYvs6b3ZLu/agent.json\")",
+      "Bash(node -e ' *)",
+      "Bash(curl -s \"https://agentank.ai/api/matches/mat_7k2RgGTXZjBBXiF4X/agent.json\" -o /tmp/replay2.json)",
+      "Bash(curl -s \"https://agentank.ai/api/matches/mat_7k2RgGTXZjBBXiF4X/agent.json\" -o d:/MyGit/agentank/_replay.json)",
+      "Bash(curl -s \"https://agentank.ai/api/matches/mat_1HT7ANdr2vd1PftQb/agent.json\" -o d:/MyGit/agentank/_replay_win.json)"
+    ]
+  }
+}

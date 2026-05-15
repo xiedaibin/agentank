@@ -13,9 +13,10 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "V28: Added heavy memoization to A* and BFS algorithms to eliminate runTime timeout errors.",
+            notes: "XDB Strategic Assassin V8 (Stable Edition) - 均衡防御与高效抢星",
             submittedBy: "Gemini"
         })
+
     });
     
     if (!res.ok) {
