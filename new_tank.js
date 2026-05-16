@@ -1,8 +1,9 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.1 - Absolute Functional Isolation)
- * 核心原则：100% 逻辑墙。
- * 针对隐身坦克的“影子追踪”和“抖动走位”被完全封装在 ANTI_CLOAK 逻辑块内，不修改全局 context。
- * DEFAULT 模式下的参数和执行路径强制回滚至 V11.1 稳定版。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.3 - Shadow Tail)
+ * 核心优化：
+ * 1. 影子终点预测 (Shadow Tail)：预测隐身结束时对手可能抵达的坐标。
+ * 2. 动态衰减：比分领先时取消影子衰减，强制保持高压规避。
+ * 3. 现身防守：在预测隐身结束前 1 帧执行“防御性侧移”。
  */
 
 var G_Blueprint = {
@@ -37,7 +38,6 @@ function onIdle(me, enemy, game) {
         var ctx = buildExecutionContext(me, enemy, game);
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
-        // 1. 绝杀
         if (ctx.enemyVisible && !ctx.enemyShielded && canShoot(ctx.myPos, ctx.enemyPos, ctx.map)) {
             var dir = directionTo(ctx.myPos, ctx.enemyPos);
             if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
@@ -45,14 +45,11 @@ function onIdle(me, enemy, game) {
             }
         }
 
-        // 2. 紧急防御 (模块化路由)
         var defenseAction = tacticalDefense(me, ctx);
         if (defenseAction) { executeAction(me, defenseAction, ctx); return; }
 
-        // 3. 战术评估 (模块化路由)
         var bestAction = tacticalAnalysis(ctx);
         executeAction(me, bestAction, ctx);
-
     } catch (e) { print("Error: " + e.message); }
 }
 
@@ -71,7 +68,6 @@ function strategicInit(enemy, map) {
                 ENABLE_ASSASSINATION: true, MAX_NODES: 500, JITTER: true
             };
         } else {
-            // 严格镜像 V11.1 (基准 70%)
             G_Blueprint.Tactics = {
                 STANCE: "DEFAULT", DANGER_RADIUS: 3, ASTAR_UNSAFE_PENALTY: 800,
                 ENABLE_ASSASSINATION: true, MAX_NODES: 400
@@ -85,9 +81,9 @@ function analyzeMap(map) {
     var w = map.length, h = map[0].length, v = { width: w, height: h, cover: {}, grass: {} };
     for (var x = 0; x < w; x++) {
         for (var y = 0; y < h; y++) {
-            var tile = map[x][y];
-            if (tile === "x" || tile === "m") v.cover[x + "," + y] = true;
-            if (tile === "o") v.grass[x + "," + y] = true;
+            var t = map[x][y];
+            if (t === "x" || t === "m") v.cover[x + "," + y] = true;
+            if (t === "o") v.grass[x + "," + y] = true;
         }
     }
     return v;
@@ -96,14 +92,25 @@ function analyzeMap(map) {
 function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
     var visible = !!eTank;
+    var ePos = G_History.lastEnemyPos;
+    var eDir = G_History.lastEnemyDir;
+    
     if (visible) {
         G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
         if (enemy.status && enemy.status.cloaked) G_History.cloakFramesLeft = 8;
+        ePos = eTank.position; eDir = eTank.direction;
+    } else if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" && G_History.cloakFramesLeft > 0) {
+        // 预测影子当前位置
+        var np = addPos(G_History.lastEnemyPos, delta(G_History.lastEnemyDir));
+        if (isPassable(np, game.map)) G_History.lastEnemyPos = np;
+        ePos = G_History.lastEnemyPos;
     }
+
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
-        enemy: enemy, enemyPos: G_History.lastEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
+        enemy: enemy, enemyPos: ePos, enemyDir: eDir, enemyVisible: visible,
         enemyCloaked: G_History.cloakFramesLeft > 0,
+        invisibleTicks: G_History.frame - G_History.lastEnemySeenFrame,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
         enemyFireLocked: enemy && enemy.status && enemy.status.fireLocked,
         enemyShielded: enemy && enemy.status && enemy.status.shielded,
@@ -127,15 +134,18 @@ function tacticalAnalysis(ctx) {
 
 function evalPanicTeleport(ctx) {
     if (ctx.enemyCloaked && !isSafeForAntiCloak(ctx.myPos, ctx)) {
-        var esc = findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
-        if (esc) return { action: "teleport", target: esc, score: 99999 };
+        var d = getDist(ctx.myPos, ctx.enemyPos);
+        if (d < 8) {
+            var esc = findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
+            if (esc) return { action: "teleport", target: esc, score: 99999 };
+        }
     }
     return null;
 }
 
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
-    if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null; // 隐身时不主动送命
+    if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
     if (ctx.enemyFireLocked || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
         var spot = findAssassinSpot(ctx);
         if (spot && isSafe(spot, ctx, true)) return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100 };
@@ -181,21 +191,18 @@ function tacticalDefense(me, ctx) {
         if (fH <= 4) {
             var dodge = findBestDodge(ctx, fH);
             if (ctx.canTeleport && (!dodge || fH <= 2)) {
-                var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
-                if (esc) return { action: "teleport", target: esc, score: 99999 };
+                var jmp = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                if (jmp) return { action: "teleport", target: jmp, score: 99999 };
             }
             if (dodge) { G_History.defenseLockTicks = 2; G_History.lastDefenseTarget = dodge; return { action: "move", target: dodge, score: 99999 }; }
         }
     }
-    // 影子避让：仅针对 ANTI_CLOAK
     if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" && !isSafeForAntiCloak(ctx.myPos, ctx)) {
         var move = findOffAxisMove(ctx);
         if (move) return move;
     }
     return null;
 }
-
-// --- [4. 引擎核心 - 严格分治] ---
 
 function isSafe(pos, ctx, strict) {
     if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
@@ -212,8 +219,16 @@ function isSafeForAntiCloak(pos, ctx) {
     if (!ctx.enemyPos) return true;
     var d = getDist(pos, ctx.enemyPos);
     var onAxis = (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]);
-    if (onAxis && d <= 12 && canShoot(ctx.enemyPos, pos, ctx.map)) return false;
-    if (ctx.enemyCloaked && d <= 6) return false;
+    
+    // 动态衰减修正：比分领先时保持高警觉
+    var decayStartFrame = (ctx.meStars > ctx.enemyStars) ? 99 : 5;
+    var maxEvasionDist = ctx.invisibleTicks > decayStartFrame ? 6 : 13;
+    
+    var corridorWidth = d < 7 ? 1 : 0;
+    var inCorridor = (Math.abs(pos[0] - ctx.enemyPos[0]) <= corridorWidth || Math.abs(pos[1] - ctx.enemyPos[1]) <= corridorWidth);
+    
+    if (inCorridor && d <= maxEvasionDist && canShoot(ctx.enemyPos, pos, ctx.map)) return false;
+    if (ctx.enemyCloaked && d <= 5) return false;
     return true;
 }
 
@@ -232,8 +247,7 @@ function aStar(start, goal, ctx) {
             if (isPassable(next, ctx.map)) {
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
                 if (!isSafe(next, ctx, true)) cost += t.ASTAR_UNSAFE_PENALTY;
-                // 仅 ANTI_CLOAK 模式下的影子惩罚
-                if (t.STANCE === "ANTI_CLOAK" && !isSafeForAntiCloak(next, ctx)) cost += 2000;
+                if (t.STANCE === "ANTI_CLOAK" && !isSafeForAntiCloak(next, ctx)) cost += 3000;
                 if (t.JITTER && ctx.enemyCloaked && curr.dir && curr.dir !== d) cost -= 0.1;
                 var np = curr.path.slice(); np.push(next);
                 open.push({ pos: next, g: curr.g + cost, h: getDist(next, goal), path: np, dir: d });
@@ -242,8 +256,6 @@ function aStar(start, goal, ctx) {
     }
     return null;
 }
-
-// --- [5. 工具库] ---
 
 function executeAction(me, act, ctx) {
     if (!act) return;
@@ -281,17 +293,6 @@ function getNextStep(start, goal, ctx) {
     return best;
 }
 
-function findOffAxisMove(ctx) {
-    var neighbors = ["up", "right", "down", "left"], best = null, maxS = -1;
-    for (var i = 0; i < neighbors.length; i++) {
-        var n = addPos(ctx.myPos, delta(neighbors[i]));
-        if (isPassable(n, ctx.map) && isSafe(n, ctx, true)) {
-            var s = getDist(n, ctx.enemyPos); if (s > maxS) { maxS = s; best = n; }
-        }
-    }
-    return best ? { action: "move", target: best, score: 25000 } : null;
-}
-
 function findSafeGrassSpot(ctx) {
     var grass = [];
     for (var k in G_Blueprint.mapVision.grass) {
@@ -325,6 +326,17 @@ function canShoot(a, b, map) {
     var d = directionTo(a, b), st = delta(d), p = addPos(a, st);
     while (!samePos(p, b)) { if (G_Blueprint.mapVision.cover[key(p)]) return false; p = addPos(p, st); }
     return true;
+}
+
+function findOffAxisMove(ctx) {
+    var neighbors = ["up", "right", "down", "left"], best = null, maxS = -1;
+    for (var i = 0; i < neighbors.length; i++) {
+        var n = addPos(ctx.myPos, delta(neighbors[i]));
+        if (isPassable(n, ctx.map) && isSafe(n, ctx, true)) {
+            var s = getDist(n, ctx.enemyPos); if (s > maxS) { maxS = s; best = n; }
+        }
+    }
+    return best ? { action: "move", target: best, score: 25000 } : null;
 }
 
 function findAssassinSpot(ctx) {
