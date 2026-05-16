@@ -1,16 +1,28 @@
 const fs = require('fs');
 
-async function analyze(url) {
+async function analyze(input) {
     try {
-        console.log("Fetching:", url);
-        const res = await fetch(url);
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const data = await res.json();
+        let data;
+        if (input.startsWith('http')) {
+            console.log("Fetching URL:", input);
+            const res = await fetch(input);
+            if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+            data = await res.json();
+        } else {
+            console.log("Reading local file:", input);
+            const content = fs.readFileSync(input, 'utf8');
+            data = JSON.parse(content);
+        }
+        console.log("Participants:", JSON.stringify(data.participants, null, 2));
         console.log("Data keys:", Object.keys(data));
         const frames = data.replayData.replay.records;
         console.log("Frames count:", frames.length);
-        console.log("First frame:", JSON.stringify(frames[0]).substring(0, 500));
-        console.log("Last frame:", JSON.stringify(frames[frames.length - 1]).substring(0, 500));
+        for (let i = 0; i < Math.min(frames.length, 10); i++) {
+            console.log(`Frame ${i}:`, JSON.stringify(frames[i]));
+        }
+        for (let i = Math.max(0, frames.length - 5); i < frames.length; i++) {
+            console.log(`Frame ${i}:`, JSON.stringify(frames[i]));
+        }
     } catch (e) {
         console.error("Analysis Error:", e);
     }

@@ -1,0 +1,71 @@
+{
+  "replayData": {
+    "map": {
+      "map": [
+        ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"],
+        ["x", "o", "o", "x", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "x"],
+        ["x", "o", ".", "x", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "x"],
+        ["x", "o", "x", "x", ".", "x", ".", ".", ".", ".", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", ".", ".", ".", ".", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "x", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", "x", "x", "x", "x", "o", "o", "o", "x", "x", "x", "x", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "x", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", "x", "o", "o", "o", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", ".", ".", ".", ".", "x", ".", ".", ".", ".", "x"],
+        ["x", ".", ".", ".", ".", ".", ".", ".", ".", "x", ".", "x", "x", "o", "x"],
+        ["x", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "x", ".", "o", "x"],
+        ["x", ".", ".", ".", ".", ".", ".", ".", ".", ".", ".", "x", "o", "o", "x"],
+        ["x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x", "x"]
+      ]
+    },
+    "replay": {
+      "meta": {
+        "players": [
+          {"tank": {"id": "7c91fa9f"}},
+          {"tank": {"id": "882cb78f"}}
+        ]
+      },
+      "records": [
+        [{"action": "created", "position": [14, 3], "type": "star"}],
+        [{"action": "applied", "objectId": "7c91fa9f", "to": [14, 3], "type": "skill"}, {"action": "collected", "by": 0, "type": "star"}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [14, 4]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [14, 5]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [14, 6]}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [13, 6]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [12, 6]}],
+        [{"action": "created", "position": [4, 9], "type": "star"}, {"action": "go", "objectId": "7c91fa9f", "position": [11, 6]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [10, 6]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [9, 6]}],
+        [{"action": "go", "objectId": "7c91fa9f", "position": [8, 6]}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "go", "objectId": "882cb78f", "position": [10, 13]}],
+        [{"action": "go", "objectId": "882cb78f", "position": [9, 13]}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [8, 13]}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [8, 12]}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [8, 11]}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [8, 10]}],
+        [{"action": "turn", "direction": "left", "objectId": "882cb78f"}],
+        [{"action": "go", "objectId": "882cb78f", "position": [7, 10]}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [6, 10]}],
+        [{"action": "turn", "direction": "down", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [5, 10]}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [4, 10]}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}],
+        [{"action": "turn", "direction": "left", "objectId": "7c91fa9f"}, {"action": "go", "objectId": "882cb78f", "position": [4, 9]}, {"action": "collected", "by": 1, "type": "star"}]
+      ]
+    }
+  }
+}
