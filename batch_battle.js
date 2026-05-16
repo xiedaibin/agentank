@@ -6,7 +6,7 @@ async function delay(ms) {
 
 async function main() {
     const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
-    const totalMatches = 10;
+    const totalMatches = parseInt(process.argv[2]) || 10;
     const report = {
         summary: { total: totalMatches, wins: 0, losses: 0, draws: 0 },
         matches: []
