@@ -1,17 +1,24 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V8 - 稳定版)
- * 战略方针：均衡防御与高效抢星 (Balanced Strategy)
- * 状态：正式发布版 (基于 V8 架构)
+ * AgenTank AI Agent - XDB (Strategic Assassin V8.5)
+ * 修复清单：
+ * 1. isSafe 加入冻结轴线判断
+ * 2. 传送抢星改用 isTeleportSafe（只检查枪线和子弹）
+ * 3. 传送抢星阈值 10→5
+ * 4. 刺杀逻辑理清，用星数差驱动
+ * 5. losDefenseDist 补全
+ * 6. tacticalDefense 加入冻结轴线规避
+ * 7. G_History 补全所有字段初始化
+ * 8. 卡死检测（3帧原地强制突破）
+ * 9. findEscapeSpot 加 5×5 扫描兜底
+ * 10. A* 冻结轴线软性惩罚
  */
 
-// --- 全局蓝图 (G_Blueprint) ---
 var G_Blueprint = {
     enemyProfile: null,
     mapVision: null,
     initialized: false
 };
 
-// --- 历史记忆 (G_History) ---
 var G_History = {
     lastEnemyPos: null,
     lastEnemyDir: "up",
@@ -20,49 +27,43 @@ var G_History = {
     path: [],
     pathTarget: null,
     postTeleportFrames: 0,
-    frame: 0
+    frame: 0,
+    defenseLockTicks: 0,
+    lastDefenseTarget: null,
+    stuckCount: 0,
+    lastPos: null
 };
 
 var CONFIG = {
     KILL_PRIO: 10000,
     STAR_PRIO: 500,
     TIME_COST: 1,
-    MAX_A_STAR_NODES: 600, 
+    MAX_A_STAR_NODES: 600,
     TURN_COST: 0.8,
     PRECISION_DIST: 5
 };
 
-// --- 入口函数 ---
+// ── 入口 ──────────────────────────────────────────────────────
 function onIdle(me, enemy, game) {
     try {
         G_History.frame = game.frames || game.frame || 0;
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
-
-        if (!G_Blueprint.initialized) {
-            strategicInit(enemy, game.map);
-        }
+        if (!G_Blueprint.initialized) strategicInit(enemy, game.map);
 
         var ctx = buildExecutionContext(me, enemy, game);
-
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
-        // 1. 紧急防御判定
         var defenseAction = tacticalDefense(ctx);
-        if (defenseAction) {
-            executeAction(me, defenseAction, ctx);
-            return;
-        }
+        if (defenseAction) { executeAction(me, defenseAction, ctx); return; }
 
-        // 2. 综合战术分析
         var bestAction = tacticalAnalysis(ctx);
         executeAction(me, bestAction, ctx);
-
     } catch (e) {
         print("运行错误: " + e.message);
     }
 }
 
-// --- [1. 战略分析层] ---
+// ── 初始化 ────────────────────────────────────────────────────
 function strategicInit(enemy, map) {
     G_Blueprint.mapVision = analyzeMap(map);
     if (enemy) {
@@ -75,13 +76,12 @@ function strategicInit(enemy, map) {
 function analyzeMap(map) {
     var w = map.length, h = map[0].length;
     var vision = { width: w, height: h, cover: {}, grass: {} };
-    for (var x = 0; x < w; x++) {
+    for (var x = 0; x < w; x++)
         for (var y = 0; y < h; y++) {
             var t = map[x][y];
             if (t === "x" || t === "m") vision.cover[x + "," + y] = true;
             if (t === "o") vision.grass[x + "," + y] = true;
         }
-    }
     return vision;
 }
 
@@ -89,17 +89,18 @@ function buildEnemyProfile(enemy) {
     var s = enemy.skill, type = s ? s.type : "none";
     return {
         skillType: type,
-        isControl: (type === "stun" || type === "freeze" || type === "poison"),
-        isSpeed: (type === "boost"),
-        isBurst: (type === "overload"),
-        isStealth: (type === "cloak"),
+        isControl:  (type === "stun" || type === "freeze" || type === "poison"),
+        isSpeed:    (type === "boost"),
+        isBurst:    (type === "overload"),
+        isStealth:  (type === "cloak"),
         isTeleport: (type === "teleport"),
-        controlRadius: (type === "stun" ? 9 : (type === "freeze" ? 8 : (type === "poison" ? 7 : 0))),
-        minSafeDist: (type === "boost" ? 7 : (type === "overload" ? 5 : 4))
+        controlRadius: (type === "stun" ? 6 : type === "freeze" ? 6 : type === "poison" ? 5 : 0),
+        minSafeDist:   (type === "boost" ? 7 : type === "overload" ? 5 : 4),
+        losDefenseDist: 8
     };
 }
 
-// --- [2. 战术分析层] ---
+// ── 战术分析 ──────────────────────────────────────────────────
 function tacticalAnalysis(ctx) {
     var candidates = [];
 
@@ -115,21 +116,24 @@ function tacticalAnalysis(ctx) {
     if (star) candidates.push(star);
 
     candidates.push(evalSurvival(ctx));
-
     candidates.sort(function(a, b) { return b.score - a.score; });
     return candidates[0];
 }
 
 function evalAssassination(ctx) {
-    if (!ctx.enemyPos || (G_Blueprint.enemyProfile && ctx.enemyShielded)) return null;
-    if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady && !ctx.enemyFireLocked) return null;
+    if (!ctx.enemyPos) return null;
+    if (ctx.enemyShielded) return null;
+    // 冻结技能就绪时不冒进
+    if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl && ctx.enemySkillReady) return null;
+    // 星数落后或敌人虚弱时才刺杀
+    var shouldAssassinate = ctx.enemyFireLocked ||
+                            (ctx.meStars < ctx.enemyStars) ||
+                            (ctx.enemyStatus && ctx.enemyStatus.stunned);
+    if (!shouldAssassinate) return null;
 
-    var isVulnerable = ctx.enemyFireLocked || ctx.enemyVisible || (ctx.meStars < ctx.enemyStars); 
-    if (isVulnerable) {
-        var spot = findAssassinSpot(ctx);
-        if (spot && isSafe(spot, ctx, true)) {
-            return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100 };
-        }
+    var spot = findAssassinSpot(ctx);
+    if (spot && isSafe(spot, ctx, true)) {
+        return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100 };
     }
     return null;
 }
@@ -139,19 +143,16 @@ function evalShooting(ctx) {
 
     if (canShoot(ctx.myPos, ctx.enemyPos, ctx.map)) {
         var dir = directionTo(ctx.myPos, ctx.enemyPos);
-        if (ctx.myDir === dir) {
-            return { action: "fire", target: ctx.enemyPos, score: CONFIG.KILL_PRIO };
-        } else {
-            return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 50 };
-        }
+        if (ctx.myDir === dir) return { action: "fire", target: ctx.enemyPos, score: CONFIG.KILL_PRIO };
+        else                   return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 50 };
     }
 
     var pShot = findPredictiveShot(ctx);
     if (pShot) {
         var pDir = directionTo(ctx.myPos, pShot.pos);
         var score = CONFIG.STAR_PRIO + 160 + pShot.confidence * 30;
-        if (ctx.myDir === pDir) return { action: "fire", target: pShot.pos, score: score };
-        if (pShot.confidence >= 3) return { action: "turn", target: pShot.pos, score: score - 20 };
+        if (ctx.myDir === pDir)        return { action: "fire", target: pShot.pos, score: score };
+        if (pShot.confidence >= 3)     return { action: "turn", target: pShot.pos, score: score - 20 };
     }
     return null;
 }
@@ -160,21 +161,24 @@ function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
     var score = CONFIG.STAR_PRIO - dist;
-    
+
     if (ctx.meStars <= ctx.enemyStars) score += 300;
     if (dist <= 3) score += 400;
 
-    if (ctx.canTeleport && dist > 10) {
-        if (isSafe(ctx.starPos, ctx, false)) {
-            return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 500 };
+    // 传送抢星：只要落点不在枪线/子弹路径上就大胆传
+    if (ctx.canTeleport && dist > 5) {
+        if (isTeleportSafe(ctx.starPos, ctx)) {
+            return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 800 };
         }
     }
-
     return { action: "move", target: ctx.starPos, score: score };
 }
 
 function evalSurvival(ctx) {
-    var center = [Math.floor(G_Blueprint.mapVision.width/2), Math.floor(G_Blueprint.mapVision.height/2)];
+    var center = [
+        Math.floor(G_Blueprint.mapVision.width / 2),
+        Math.floor(G_Blueprint.mapVision.height / 2)
+    ];
     var score = 0;
     if (ctx.enemyVisible && G_Blueprint.enemyProfile) {
         var d = getDist(ctx.myPos, ctx.enemyPos);
@@ -183,10 +187,74 @@ function evalSurvival(ctx) {
     return { action: "move", target: center, score: score };
 }
 
-// --- [3. 执行输出层] ---
+// ── 防御层 ────────────────────────────────────────────────────
+function tacticalDefense(ctx) {
+    // 防御锁延续
+    if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
+        G_History.defenseLockTicks--;
+        if (isPassable(G_History.lastDefenseTarget, ctx.map) &&
+            isSafe(G_History.lastDefenseTarget, ctx, false)) {
+            return { action: "move", target: G_History.lastDefenseTarget, score: 12000 };
+        }
+        G_History.defenseLockTicks = 0;
+    }
+
+    // 1. 预判性枪线防御
+    if (ctx.enemyVisible && !ctx.enemyShielded && !ctx.enemyFireLocked) {
+        var dist = getDist(ctx.myPos, ctx.enemyPos);
+        var safeDist = G_Blueprint.enemyProfile ? G_Blueprint.enemyProfile.losDefenseDist : 7;
+        if (dist < safeDist && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
+            var sideStep = findBestDodge(ctx, 4);
+            if (sideStep) {
+                G_History.defenseLockTicks = 3;
+                G_History.lastDefenseTarget = sideStep;
+                return { action: "move", target: sideStep, score: 9500 };
+            }
+        }
+    }
+
+    // 2. 冻结轴线紧急规避
+    if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl &&
+        ctx.enemySkillReady && ctx.enemyPos) {
+        var onAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
+        var axisDist = getDist(ctx.myPos, ctx.enemyPos);
+        if (onAxis && axisDist <= 12 && canShoot(ctx.enemyPos, ctx.myPos, ctx.map)) {
+            if (ctx.canTeleport) {
+                var escSpot = findEscapeSpot(ctx);
+                if (escSpot) return { action: "teleport", target: escSpot, score: 99999 };
+            }
+            var offAxis = findOffAxisMove(ctx);
+            if (offAxis) {
+                G_History.defenseLockTicks = 2;
+                G_History.lastDefenseTarget = offAxis;
+                return { action: "move", target: offAxis, score: 15000 };
+            }
+        }
+    }
+
+    // 3. 物理避弹
+    var framesToHit = getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map);
+    if (framesToHit <= 4) {
+        var dodge = findBestDodge(ctx, framesToHit);
+        if (ctx.canTeleport) {
+            var moveFrames = (dodge && ctx.myDir === directionTo(ctx.myPos, dodge)) ? 1 : 2;
+            if (!dodge || moveFrames >= framesToHit) {
+                var escapeSpot = findEscapeSpot(ctx);
+                if (escapeSpot) return { action: "teleport", target: escapeSpot, score: 99999 };
+            }
+        }
+        if (dodge) {
+            G_History.defenseLockTicks = 2;
+            G_History.lastDefenseTarget = dodge;
+            return { action: "move", target: dodge, score: 99999 };
+        }
+    }
+    return null;
+}
+
+// ── 执行层 ────────────────────────────────────────────────────
 function executeAction(me, act, ctx) {
     if (!act) return;
-    
     if (act.action === "fire") {
         if (!me.bullet && !ctx.meStatus.fireLocked) me.fire();
         return;
@@ -201,89 +269,88 @@ function executeAction(me, act, ctx) {
         return;
     }
     if (act.action === "move") {
+        // 卡死检测
+        if (G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) {
+            G_History.stuckCount++;
+        } else {
+            G_History.stuckCount = 0;
+        }
+        G_History.lastPos = ctx.myPos.slice();
+
+        if (G_History.stuckCount >= 3) {
+            G_History.stuckCount = 0;
+            if (ctx.canTeleport && ctx.starPos) {
+                me.teleport(ctx.starPos[0], ctx.starPos[1]);
+                G_History.postTeleportFrames = 8;
+                return;
+            }
+            var dirs = ["up", "right", "down", "left"];
+            for (var i = 0; i < dirs.length; i++) {
+                var n = addPos(ctx.myPos, delta(dirs[i]));
+                if (isPassable(n, ctx.map)) {
+                    if (ctx.myDir === dirs[i]) me.go(); else me.turn(dirs[i]);
+                    return;
+                }
+            }
+        }
+
         var next = getNextStep(ctx.myPos, act.target, ctx);
         if (next) doMove(me, next, ctx);
     }
 }
 
-function tacticalDefense(ctx) {
-    var bullet = ctx.enemyBullet;
-    
-    // 0. 防御锁处理 (Defense Lock)
-    // 如果处于防御锁定状态，且目标点仍然安全，强制延续该移动，防止震荡
-    if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
-        G_History.defenseLockTicks--;
-        if (isPassable(G_History.lastDefenseTarget, ctx.map) && isSafe(G_History.lastDefenseTarget, ctx, false)) {
-            return { action: "move", target: G_History.lastDefenseTarget, score: 12000 };
-        } else {
-            G_History.defenseLockTicks = 0; // 目标不再安全，提前解锁
-        }
-    }
+// ── 安全判断 ──────────────────────────────────────────────────
 
-    // 1. 预判性枪线防御 (Proactive LoS Defense)
-    if (ctx.enemyVisible && !ctx.enemyShielded && !ctx.enemyFireLocked) {
-        var dist = getDist(ctx.myPos, ctx.enemyPos);
-        var safeDist = G_Blueprint.enemyProfile ? G_Blueprint.enemyProfile.losDefenseDist : 7;
-        
-        if (dist < safeDist && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
-            var sideStep = findBestDodge(ctx, 4); 
-            if (sideStep) {
-                G_History.defenseLockTicks = 3; // 锁定 3 帧
-                G_History.lastDefenseTarget = sideStep;
-                return { action: "move", target: sideStep, score: 9500 };
-            }
+// 通用安全检测（走路用）
+function isSafe(pos, ctx, strict) {
+    if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
+    if (ctx.enemyPos) {
+        if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
+        var d = getDist(pos, ctx.enemyPos);
+        if (d < 4 && !G_Blueprint.mapVision.grass[key(pos)]) return false;
+        // 冻结技能就绪时轴线视为不安全
+        if (strict && G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl &&
+            ctx.enemySkillReady) {
+            var onAxis = (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]);
+            if (onAxis && d <= G_Blueprint.enemyProfile.controlRadius &&
+                canShoot(ctx.enemyPos, pos, ctx.map)) return false;
         }
     }
-
-    // 2. 物理避弹 (Physical Dodging)
-    var framesToHit = getFramesToHit(ctx.myPos, bullet, ctx.map);
-    if (framesToHit <= 4) {
-        var dodge = findBestDodge(ctx, framesToHit);
-        if (ctx.canTeleport) {
-            var moveFrames = (dodge && ctx.myDir === directionTo(ctx.myPos, dodge)) ? 1 : 2;
-            if (!dodge || moveFrames >= framesToHit) {
-                var escapeSpot = findEscapeSpot(ctx);
-                if (escapeSpot) return { action: "teleport", target: escapeSpot, score: 99999 };
-            }
-        }
-        if (dodge) {
-            G_History.defenseLockTicks = 2; // 物理避弹锁定 2 帧
-            G_History.lastDefenseTarget = dodge;
-            return { action: "move", target: dodge, score: 99999 };
-        }
-    }
-    return null;
+    return true;
 }
 
-// --- [4. 寻路与避险] ---
+// 传送落点安全检测（只看枪线和子弹，忽略距离禁区）
+function isTeleportSafe(pos, ctx) {
+    if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
+    if (ctx.enemyPos) {
+        var onAxis = (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]);
+        if (onAxis && canShoot(ctx.enemyPos, pos, ctx.map)) return false;
+    }
+    return true;
+}
 
+// ── 寻路 ──────────────────────────────────────────────────────
 function getNextStep(start, goal, ctx) {
     if (samePos(start, goal)) return null;
-    
     if (G_History.pathTarget && samePos(goal, G_History.pathTarget) && G_History.path.length > 0) {
-        var next = G_History.path[0];
-        if (isPassable(next, ctx.map) && isSafe(next, ctx, false)) {
+        var cached = G_History.path[0];
+        if (isPassable(cached, ctx.map) && isSafe(cached, ctx, false))
             return G_History.path.shift();
-        }
     }
-
     var path = aStar(start, goal, ctx);
     if (path && path.length > 0) {
         G_History.pathTarget = goal;
         G_History.path = path;
         return G_History.path.shift();
     }
-    
-    var dirs = ["up", "right", "down", "left"];
-    var best = null, maxScore = -999999;
+    // A* 失败时贪心兜底
+    var dirs = ["up", "right", "down", "left"], best = null, maxScore = -999999;
     for (var i = 0; i < dirs.length; i++) {
         var n = addPos(start, delta(dirs[i]));
         if (!isPassable(n, ctx.map)) continue;
-        
         var score = -getDist(n, goal);
         if (!isSafe(n, ctx, false)) score -= 1500;
         if (G_Blueprint.mapVision.grass[key(n)]) score += 10;
-        
         if (score > maxScore) { maxScore = score; best = n; }
     }
     return best;
@@ -291,14 +358,11 @@ function getNextStep(start, goal, ctx) {
 
 function aStar(start, goal, ctx) {
     var open = [{ pos: start, g: 0, h: getDist(start, goal), path: [], dir: ctx.myDir }];
-    var closed = {};
-    var nodes = 0;
-
+    var closed = {}, nodes = 0;
     while (open.length > 0 && nodes < CONFIG.MAX_A_STAR_NODES) {
         open.sort(function(a, b) { return (a.g + a.h) - (b.g + b.h); });
         var curr = open.shift();
         nodes++;
-
         if (samePos(curr.pos, goal)) return curr.path;
         var k = key(curr.pos);
         if (closed[k] && closed[k] <= curr.g) continue;
@@ -308,10 +372,14 @@ function aStar(start, goal, ctx) {
         for (var i = 0; i < dirs.length; i++) {
             var d = dirs[i], next = addPos(curr.pos, delta(d));
             if (isPassable(next, ctx.map)) {
-                var safe = isSafe(next, ctx, false);
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
-                if (!safe) cost += 300;
-                
+                if (!isSafe(next, ctx, false)) cost += 300;
+                // 冻结轴线软性惩罚（不封路）
+                if (G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.isControl &&
+                    ctx.enemySkillReady && ctx.enemyPos) {
+                    var onAxisNext = (next[0] === ctx.enemyPos[0] || next[1] === ctx.enemyPos[1]);
+                    if (onAxisNext) cost += 800;
+                }
                 var newPath = curr.path.slice();
                 newPath.push(next);
                 open.push({ pos: next, g: curr.g + cost, h: getDist(next, goal), path: newPath, dir: d });
@@ -321,32 +389,15 @@ function aStar(start, goal, ctx) {
     return null;
 }
 
-function isSafe(pos, ctx, strict) {
-    if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
-
-    if (ctx.enemyPos) {
-        if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
-        
-        var d = getDist(pos, ctx.enemyPos);
-        if (d < 4 && !G_Blueprint.mapVision.grass[key(pos)]) return false;
-    }
-    return true;
-}
-
-// --- [5. 环境感知与工具] ---
-
+// ── 工具函数 ──────────────────────────────────────────────────
 function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
-    if (eTank) {
-        G_History.lastEnemyPos = eTank.position;
-        G_History.lastEnemyDir = eTank.direction;
-    }
+    if (eTank) { G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; }
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars,
         meStatus: me.status || {},
-        enemy: enemy, enemyPos: G_History.lastEnemyPos, 
-        enemyDir: G_History.lastEnemyDir,
-        enemyVisible: !!eTank,
+        enemy: enemy, enemyPos: G_History.lastEnemyPos,
+        enemyDir: G_History.lastEnemyDir, enemyVisible: !!eTank,
         enemyStatus: enemy ? enemy.status : {},
         enemyStars: enemy ? enemy.stars : 0,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
@@ -374,11 +425,9 @@ function findAssassinSpot(ctx) {
     var ePos = ctx.enemyPos, eDir = ctx.enemyDir;
     var dirs = ["up", "right", "down", "left"];
     for (var i = 0; i < dirs.length; i++) {
-        var d = dirs[i], p = [ePos[0] - delta(d)[0] * 5, ePos[1] - delta(d)[1] * 5];
-        if (isPassable(p, ctx.map) && !isLoS(ePos, p, eDir, ctx.map) && canShoot(p, ePos, ctx.map)) {
-            // 落地二次校验：确保落点不在敌方当前的潜在枪线上
-            if (!isLoS(ePos, p, eDir, ctx.map)) return p;
-        }
+        var p = [ePos[0] - delta(dirs[i])[0] * 5, ePos[1] - delta(dirs[i])[1] * 5];
+        if (isPassable(p, ctx.map) && !isLoS(ePos, p, eDir, ctx.map) && canShoot(p, ePos, ctx.map))
+            return p;
     }
     return null;
 }
@@ -396,7 +445,7 @@ function findPredictiveShot(ctx) {
         var c = candidates[j];
         if (!canShoot(ctx.myPos, c.pos, ctx.map)) continue;
         var bDist = getDist(ctx.myPos, c.pos);
-        if (Math.ceil(bDist/2) > c.frames + 1) continue;
+        if (Math.ceil(bDist / 2) > c.frames + 1) continue;
         var score = c.confidence * 20 - bDist;
         if (score > bestScore) { bestScore = score; best = c; }
     }
@@ -404,21 +453,30 @@ function findPredictiveShot(ctx) {
 }
 
 function findEscapeSpot(ctx) {
-    var offsets = [[4,0], [-4,0], [0,4], [0,-4], [2,2], [-2,-2]];
-    for (var i = 0; i < offsets.length; i++) {
-        var p = addPos(ctx.myPos, offsets[i]);
-        if (isPassable(p, ctx.map) && isSafe(p, ctx, false)) return p;
+    var offs = [[5,0],[-5,0],[0,5],[0,-5],[4,4],[-4,-4],[4,-4],[-4,4]];
+    for (var i = 0; i < offs.length; i++) {
+        var p = addPos(ctx.myPos, offs[i]);
+        if (isPassable(p, ctx.map) && isSafe(p, ctx, false) &&
+            getDist(p, ctx.enemyPos) >= 5) return p;
     }
+    for (var dx = -2; dx <= 2; dx++)
+        for (var dy = -2; dy <= 2; dy++) {
+            var p2 = [ctx.myPos[0] + dx, ctx.myPos[1] + dy];
+            if (isPassable(p2, ctx.map) && isSafe(p2, ctx, false)) return p2;
+        }
     return null;
 }
 
-function findAnyPassableSpot(ctx) {
-    var offsets = [[3,0], [-3,0], [0,3], [0,-3], [5,0], [-5,0]];
-    for (var i = 0; i < offsets.length; i++) {
-        var p = addPos(ctx.myPos, offsets[i]);
-        if (isPassable(p, ctx.map)) return p;
+function findOffAxisMove(ctx) {
+    var dirs = ["up", "right", "down", "left"], best = null, maxD = -1;
+    for (var i = 0; i < dirs.length; i++) {
+        var n = addPos(ctx.myPos, delta(dirs[i]));
+        if (isPassable(n, ctx.map) && isSafe(n, ctx, false)) {
+            var d = getDist(n, ctx.enemyPos);
+            if (d > maxD) { maxD = d; best = n; }
+        }
     }
-    return null;
+    return best;
 }
 
 function findBestDodge(ctx, hitLimit) {
@@ -426,7 +484,7 @@ function findBestDodge(ctx, hitLimit) {
     if (!bullet) return null;
     var dirs = ["up", "right", "down", "left"], best = null, maxH = -1;
     for (var i = 0; i < dirs.length; i++) {
-        var d = dirs[i], n = addPos(ctx.myPos, delta(d));
+        var n = addPos(ctx.myPos, delta(dirs[i]));
         if (!isPassable(n, ctx.map)) continue;
         var h = getFramesToHit(n, bullet, ctx.map);
         if (h > maxH && h > hitLimit) { maxH = h; best = n; }
@@ -434,34 +492,18 @@ function findBestDodge(ctx, hitLimit) {
     return best;
 }
 
-function getFramesToHit(pos, bullet, map) {
-    if (!bullet) return Infinity;
-    if (isLoS(bullet.position, pos, bullet.direction, map)) {
-        return Math.ceil(getDist(pos, bullet.position) / 2);
-    }
-    return Infinity;
-}
-
 function doMove(me, next, ctx) {
     if (samePos(ctx.myPos, next)) return;
     var d = directionTo(ctx.myPos, next);
-    if (ctx.myDir === d) {
-        if (ctx.meStatus.boosted) me.go(2); else me.go();
-    } else {
-        me.turn(d);
-    }
+    if (ctx.myDir === d) { if (ctx.meStatus.boosted) me.go(2); else me.go(); }
+    else me.turn(d);
 }
 
-function nextStepToward(start, goal, map) {
-    var dirs = ["up", "right", "down", "left"], best = null, minDist = getDist(start, goal);
-    for (var i = 0; i < dirs.length; i++) {
-        var n = addPos(start, delta(dirs[i]));
-        if (isPassable(n, map)) {
-            var d = getDist(n, goal);
-            if (d < minDist) { minDist = d; best = n; }
-        }
-    }
-    return best;
+function getFramesToHit(pos, bullet, map) {
+    if (!bullet) return Infinity;
+    if (isLoS(bullet.position, pos, bullet.direction, map))
+        return Math.ceil(getDist(pos, bullet.position) / 2);
+    return Infinity;
 }
 
 function canShoot(a, b, map) {

@@ -29,3 +29,11 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V8 | 2026-05-15 | Proactive LoS Defense & Teleport Safety | Proactive LoS Defense & Teleport Safety (自动生成) | 0.00% | Rejected | -58.00% |
 | V8 | 2026-05-15 | Proactive LoS Defense & Teleport Safety (Sequential Fix) | Proactive LoS Defense & Teleport Safety (Sequential Fix) (自动生成) | 53.33% | Pending | -4.67% |
 | V8 | 2026-05-15 | Dynamic LoS Dist & Defense Consistency | Dynamic LoS Dist & Defense Consistency (自动生成) | 80.00% | Adopted | 20.33% |
+| V8 | 2026-05-16 | 未命名策略 | 未命名策略 (自动生成) | 73.33% | Rejected | -6.67% |
+| V8 | 2026-05-16 | 未命名策略 | 未命名策略 (自动生成) | 73.33% | Rejected | -6.67% |
+| V8 | 2026-05-16 | 未命名策略 | 未命名策略 (自动生成) | 73.33% | Rejected | -6.67% |
+| V8 | 2026-05-16 | 未命名策略 | 未命名策略 (自动生成) | 43.33% | Rejected | -36.67% |
+| V8 | 2026-05-16 | 综合战术优化 (躲避+安全+后期+分治) | 综合战术优化 (躲避+安全+后期+分治) (自动生成) | 50.00% | Rejected | -17.00% |
+| V8 | 2026-05-16 | 精简战术优化 (躲避+预测安全+后期+分治) | 精简战术优化 (躲避+预测安全+后期+分治) (自动生成) | 56.67% | Rejected | -10.33% |
+| V8 | 2026-05-16 | Final_Surgical_Opt | Final_Surgical_Opt (自动生成) | 66.67% | Pending | -0.33% |
+| V8 | 2026-05-16 | Final_Micro_Adjustment | Final_Micro_Adjustment (自动生成) | 56.67% | Rejected | -10.33% |
