@@ -37,3 +37,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V8 | 2026-05-16 | 精简战术优化 (躲避+预测安全+后期+分治) | 精简战术优化 (躲避+预测安全+后期+分治) (自动生成) | 56.67% | Rejected | -10.33% |
 | V8 | 2026-05-16 | Final_Surgical_Opt | Final_Surgical_Opt (自动生成) | 66.67% | Pending | -0.33% |
 | V8 | 2026-05-16 | Final_Micro_Adjustment | Final_Micro_Adjustment (自动生成) | 56.67% | Rejected | -10.33% |
+| V12 | 2026-05-17 | V12.6 Optimize Dodge & Grass Silence | V12.6 Optimize Dodge & Grass Silence (自动生成) | 50.00% | Pending | 5.00% |
+| V12 | 2026-05-17 | V12.7 Precision Axis Evasion & Anti-Turn | V12.7 Precision Axis Evasion & Anti-Turn (自动生成) | 63.33% | Adopted | 13.33% |
