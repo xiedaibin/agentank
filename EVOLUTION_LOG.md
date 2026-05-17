@@ -72,3 +72,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-17 | 未命名策略 | 未命名策略 (自动生成) | 36.67% | Rejected | -26.66% |
 | V12 | 2026-05-17 | 未命名策略 | 未命名策略 (自动生成) | 50.00% | Rejected | -13.33% |
 | V12 | 2026-05-17 | V12.7 High-Rank Baseline | V12.7 High-Rank Baseline (自动生成) | 43.33% | Adopted | 43.33% |
+| V12 | 2026-05-17 | Star Safety & Bullet Interception | Star Safety & Bullet Interception (自动生成) | 50.00% | Pending | 6.67% |

@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.7 - Protocol Evolution)
- * 核心目标：解决近距离对开火延迟导致的死亡，强化轴线预判与逃逸。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.25 - Protocol Evolution)
+ * 核心目标：结合 V12.24 的预瞄逻辑，解决 V12.7 的子弹躲避优先级问题，强化轴线规避。
  */
 
 var G_Blueprint = {
@@ -24,7 +24,7 @@ var G_History = {
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null
 };
 
-var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.4 };
+var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 
 function onIdle(me, enemy, game) {
     try {
@@ -36,12 +36,14 @@ function onIdle(me, enemy, game) {
         var ctx = buildExecutionContext(me, enemy, game);
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
-        // 1. 绝杀
-        if (ctx.enemyVisible && !ctx.enemyShielded && canShoot(ctx.myPos, ctx.enemyPos, ctx.map) === true) {
-            var dir = directionTo(ctx.myPos, ctx.enemyPos);
-            // 只有当方向正确时才射击，否则交给防御逻辑（防止在枪线上原地转向被反杀）
-            if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
-                me.fire(); return;
+        // 1. 绝杀与 Mound 压制
+        if (ctx.enemyVisible && !ctx.enemyShielded) {
+            var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
+            if (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7)) {
+                var dir = directionTo(ctx.myPos, ctx.enemyPos);
+                if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
+                    me.fire(); return;
+                }
             }
         }
 
@@ -119,6 +121,7 @@ function tacticalAnalysis(ctx) {
         if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK") candidates.push(evalPanicTeleport(ctx));
     }
     candidates.push(evalShooting(ctx));
+    candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
     candidates.push(evalGrassAmbushAndSurvival(ctx));
     candidates.sort(function(a, b) { return (b?b.score:0) - (a?a.score:0); });
@@ -148,16 +151,27 @@ function evalShooting(ctx) {
     var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
     if (cs === true) {
         if (ctx.enemyShielded) return null;
-        // 如果我们还没朝向敌人，且在对方轴线上，绝对不在这里执行转向，让 tacticalDefense 决定是否闪避
         var dir = directionTo(ctx.myPos, ctx.enemyPos);
         if (ctx.myDir !== dir) {
             var onEnemyAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
-            if (onEnemyAxis && !ctx.enemyFireLocked) return null;
+            if (onEnemyAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
         }
         return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 100 };
     }
-    if (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) < 10) {
-        return { action: "fire", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 2000 };
+    return null;
+}
+
+function evalPreAim(ctx) {
+    if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
+    
+    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+    var recentlyTeleported = G_History.postTeleportFrames > 0;
+
+    if (isCurrentlyInGrass || recentlyTeleported) {
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.enemyPos, ctx.enemyDir, ctx.map);
+        if (preAimDir && ctx.myDir !== preAimDir) {
+            return { action: "turn", target: addPos(ctx.myPos, delta(preAimDir)), score: CONFIG.KILL_PRIO - 150 };
+        }
     }
     return null;
 }
@@ -171,7 +185,8 @@ function evalStarCollection(ctx) {
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
 
-    if (ctx.canTeleport && dist > 8 && safe) {
+    // 稍微激进：阈值 7
+    if (ctx.canTeleport && dist > 7 && safe) {
         return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 1000 };
     }
     
@@ -185,36 +200,45 @@ function evalGrassAmbushAndSurvival(ctx) {
 
     if (grass) {
         var starUnsafe = ctx.starPos && !isSafeForStarTeleport(ctx.starPos, ctx);
+        var score = 300;
+        
+        // Priority adjustment for bullet danger
+        if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
+
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
             if (ctx.enemyVisible && canShoot(ctx.myPos, ctx.enemyPos, ctx.map) === true) {
                 var d = directionTo(ctx.myPos, ctx.enemyPos);
-                if (ctx.myDir === d) return { action: "move", target: ctx.myPos, score: 400 }; 
-                // 在草丛里也不要轻易为了对射而转向，除非对方没看着我们
-                if (ctx.enemyDir !== reverseDir(d)) return { action: "turn", target: ctx.enemyPos, score: 350 };
+                if (ctx.myDir === d) return { action: "move", target: ctx.myPos, score: score + 100 }; 
+                if (ctx.enemyDir !== reverseDir(d)) return { action: "turn", target: ctx.enemyPos, score: score + 50 };
             }
-            return { action: "move", target: ctx.myPos, score: 300 }; 
+            return { action: "move", target: ctx.myPos, score: score }; 
         }
 
-        var score = 250 - getDist(ctx.myPos, grass) * 10;
+        score = 250 - getDist(ctx.myPos, grass) * 10;
         if (!ctx.starPos || starUnsafe) score += 550; 
+        if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
 
         return { action: "move", target: grass, score: score };
     }
 
-    return { action: "move", target: [9, 7], score: 0 };
+    // 草丛开局
+    var nearestGrass = null, minDist = 999;
+    for (var k in G_Blueprint.mapVision.grass) {
+        var p = k.split(",").map(Number);
+        var d = getDist(ctx.myPos, p); if (d < minDist) { minDist = d; nearestGrass = p; }
+    }
+    return { action: "move", target: nearestGrass || [9, 7], score: 0 };
 }
 
 function tacticalDefense(me, ctx) {
-    // 1. 致命子弹物理闪避
     if (ctx.enemyBullet) {
         var fH = getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map);
-        if (fH <= 4) {
-            // 极近距离且有传送，立刻闪现
-            if (fH <= 2 && ctx.canTeleport) {
+        if (fH <= 5) {
+            var dodge = findBestDodge(ctx, fH);
+            if (ctx.canTeleport && (fH <= 2 || !dodge)) {
                 var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                 if (esc) return { action: "teleport", target: esc, score: 99999 };
             }
-            var dodge = findBestDodge(ctx, fH);
             if (dodge) { G_History.defenseLockTicks = 2; G_History.lastDefenseTarget = dodge; return { action: "move", target: dodge, score: 99999 }; }
         }
     }
@@ -224,12 +248,10 @@ function tacticalDefense(me, ctx) {
         if (isSafe(G_History.lastDefenseTarget, ctx, true)) return { action: "move", target: G_History.lastDefenseTarget, score: 30000 };
     }
 
-    // 2. 轴线紧急规避 (即使没开火，在轴线上且近距离也必须躲)
     if (ctx.enemyPos && ctx.enemyVisible && !ctx.enemyFireLocked) {
         var d = getDist(ctx.myPos, ctx.enemyPos);
         var onAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
         if (onAxis && d <= 8 && canShoot(ctx.enemyPos, ctx.myPos, ctx.map) === true) {
-            // 如果对方看着我们，死局，必须横移
             if (isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
                 var escape = findOffAxisMove(ctx);
                 if (escape) { escape.score = 25000; return escape; }
@@ -241,7 +263,6 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    // 3. 影子避让 (针对 ANTI_CLOAK)
     if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" && !isSafeForAntiCloak(ctx.myPos, ctx)) {
         var move = findOffAxisMove(ctx);
         if (move) return move;
@@ -253,7 +274,8 @@ function tacticalDefense(me, ctx) {
 
 function isSafe(pos, ctx, strict) {
     if (!pos) return false;
-    if (getFramesToHit(pos, ctx.enemyBullet, ctx.map) <= 2) return false;
+    var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
+    if (fH <= (strict ? 4 : 2)) return false;
     if (ctx.enemyPos && ctx.enemyVisible) {
         if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
         var d = getDist(pos, ctx.enemyPos);
@@ -299,8 +321,17 @@ function aStar(start, goal, ctx) {
             var tile = getTile(next, ctx.map);
             if (tile && tile !== "x") {
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
-                if (tile === "m") cost += 200;
+                if (tile === "m") cost += 200; 
                 if (!isSafe(next, ctx, true)) cost += t.ASTAR_UNSAFE_PENALTY;
+                
+                // Smart Bullet Axis Penalty
+                if (ctx.enemyBullet && isLoS(ctx.enemyBullet.position, next, ctx.enemyBullet.direction, ctx.map)) {
+                    var dOld = getDist(curr.pos, ctx.enemyBullet.position);
+                    var dNew = getDist(next, ctx.enemyBullet.position);
+                    if (dNew < dOld) cost += 5000; // Penalize moving towards it
+                    else cost += 1000; // Penalize staying on axis
+                }
+
                 if (t.STANCE === "ANTI_CLOAK" && !isSafeForAntiCloak(next, ctx)) cost += 2000;
                 var np = curr.path.slice(); np.push(next);
                 open.push({ pos: next, g: curr.g + cost, h: getDist(next, goal), path: np, dir: d });
@@ -420,8 +451,43 @@ function canShoot(a, b, map) {
 
 function findAssassinSpot(ctx) {
     var e = ctx.enemyPos, offsets = [[-5,0], [5,0], [0,-5], [0,5]];
+    
+    // 1. 预测暗杀点 (结合预瞄逻辑)
+    if (ctx.enemyDir) {
+        var ed = delta(ctx.enemyDir);
+        var predE = addPos(e, [ed[0]*2, ed[1]*2]); // 预测 2 步
+        if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
+            for (var i = 0; i < offsets.length; i++) {
+                var p = addPos(predE, offsets[i]); 
+                if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true) {
+                    if (isSafe(p, ctx, true)) return p;
+                }
+            }
+        }
+    }
+
+    // 2. 兜底当前点
     for (var i = 0; i < offsets.length; i++) {
         var p = addPos(e, offsets[i]); if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true) return p;
+    }
+    return null;
+}
+
+function findPreAimDir(myPos, enemyPos, enemyDir, map) {
+    if (!myPos || !enemyPos || !enemyDir) return null;
+    var d = delta(enemyDir);
+    if (d[0] === 0 && d[1] === 0) return null;
+    
+    var p = enemyPos.slice();
+    for (var i = 1; i <= 6; i++) {
+        p = addPos(p, d);
+        if (!isPassable(p, map)) break; 
+        
+        if (p[0] === myPos[0] || p[1] === myPos[1]) {
+            if (canShoot(myPos, p, map) === true) {
+                return directionTo(myPos, p);
+            }
+        }
     }
     return null;
 }
