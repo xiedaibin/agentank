@@ -98,9 +98,13 @@ function analyzeMap(map) {
 function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
     var visible = !!eTank;
+    
+    if (enemy && enemy.status && enemy.status.cloaked) {
+        G_History.cloakFramesLeft = 8;
+    }
+
     if (visible) {
         G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
-        if (enemy.status && enemy.status.cloaked) G_History.cloakFramesLeft = 8;
     }
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
