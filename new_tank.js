@@ -183,18 +183,18 @@ function evalPreAim(ctx) {
 function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
-    var safe = isSafeForStarTeleport(ctx.starPos, ctx);
     
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
 
-    // 稍微激进：阈值 7
-    if (ctx.canTeleport && dist > 7 && safe) {
+    var safeForTeleport = isSafeForStarTeleport(ctx.starPos, ctx);
+    if (ctx.canTeleport && dist > 7 && safeForTeleport) {
         return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 1000 };
     }
     
-    if (!safe) score -= 1200;
+    var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
+    if (!safeForWalking) score -= 1200;
     return { action: "move", target: ctx.starPos, score: score };
 }
 
@@ -203,7 +203,7 @@ function evalGrassAmbushAndSurvival(ctx) {
     var grass = findNearestGrass(ctx.myPos);
 
     if (grass) {
-        var starUnsafe = ctx.starPos && !isSafeForStarTeleport(ctx.starPos, ctx);
+        var starUnsafe = ctx.starPos && !isSafeForStarWalking(ctx.starPos, ctx);
         var score = 300;
         
         // Priority adjustment for bullet danger
@@ -293,12 +293,49 @@ function isSafeForStarTeleport(pos, ctx) {
     if (!isSafe(pos, ctx, true)) return false;
     if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
-        if (d <= 8 && !ctx.enemyFireLocked && (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1])) {
-            if (canShoot(ctx.enemyPos, pos, ctx.map) === true) return false;
-        }
         if (d <= 2) return false;
+        if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
+            if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
+                if (d <= 5 && !ctx.enemyFireLocked) return false;
+            }
+        }
     }
     return true;
+}
+
+function isSafeForStarWalking(pos, ctx) {
+    if (!ctx.enemyPos) return true;
+    
+    var myDist = getDist(ctx.myPos, pos);
+    var enemyDist = getDist(ctx.enemyPos, pos);
+    
+    // Calculate enemy bullet arrival time at the star
+    var T_bullet = Infinity;
+    var onAxis = (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]);
+    if (onAxis && canShoot(ctx.enemyPos, pos, ctx.map) === true) {
+        if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
+            T_bullet = Math.ceil(enemyDist / 2);
+        } else {
+            T_bullet = 1 + Math.ceil(enemyDist / 2); // 1 frame to turn, then shoot
+        }
+    }
+    
+    // Calculate our arrival time at the star
+    var T_me = myDist;
+    if (directionTo(ctx.myPos, pos) !== ctx.myDir) {
+        T_me += 1;
+    }
+    
+    // If we can reach it before their bullet can hit it, it's safe
+    var requiredBuffer = ctx.canTeleport ? 0 : 1;
+    if (T_me + requiredBuffer < T_bullet) {
+        if (enemyDist <= 1) return false;
+        var bulletFH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
+        if (bulletFH <= T_me) return false;
+        return true;
+    }
+    
+    return isSafe(pos, ctx, true);
 }
 
 function isSafeForAntiCloak(pos, ctx) {

@@ -78,4 +78,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-22 | 未命名策略 | 未命名策略 (自动生成) | 43.33% | Rejected | -10.00% |
 | V12 | 2026-05-22 | V12.27 Star Teleport Fix | V12.27 Star Teleport Fix (自动生成) | 60.00% | Rejected | -16.00% |
 |   V 1 2 . 2 7   |   2 0 2 6 - 0 5 - 2 2   |   V 1 2 . 2 7   S t a r   T e l e p o r t   F i x   |   F i x   d e a t h   b y   s t a r   t e l e p o r t   &   c l o a k   s t a t e   b u g s .   |   6 0 . 0 0 %   |   A d o p t e d   |   - 1 6 . 0 0 %   |  
- 
+ | V12 | 2026-05-22 | Decouple star safety | Decouple star safety (自动生成) | 66.67% | Adopted | 11.67% |
