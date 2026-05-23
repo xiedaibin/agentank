@@ -83,3 +83,14 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-22 | A* Queue Pruning Only | A* Queue Pruning Only (自动生成) | 56.67% | Rejected | -10.00% |
 | V12 | 2026-05-22 | Safe Star Teleporting | Safe Star Teleporting (自动生成) | 60.71% | Rejected | -5.96% |
 | V12 | 2026-05-22 | Safe Star Teleporting | Safe Star Teleporting (自动生成) | 30.00% | Rejected | -36.67% |
+| V12 | 2026-05-23 | Safe Star Teleport V2 | Safe Star Teleport V2 (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-23 | Safe Star Teleport V2 | Safe Star Teleport V2 (自动生成) | 33.33% | Rejected | -26.67% |
+| V12 | 2026-05-23 | Decoupled Safety Fixes | Decoupled Safety Fixes (自动生成) | 56.67% | Pending | -3.33% |
+| V12 | 2026-05-23 | Decoupled Safety Null Guards | Decoupled Safety Null Guards (自动生成) | 51.72% | Pending | -4.95% |
+| V12 | 2026-05-23 | 步履后撤规避隐身突袭 | 步履后撤规避隐身突袭 (自动生成) | 58.62% | Pending | -1.38% |
+| V12 | 2026-05-23 | 步履后撤规避隐身突袭稳定性测试 | 步履后撤规避隐身突袭稳定性测试 (自动生成) | 63.33% | Pending | 3.33% |
+| V12 | 2026-05-23 | 同轴暴露自动规避 | 同轴暴露自动规避 (自动生成) | 43.33% | Rejected | -16.67% |
+| V12 | 2026-05-23 | 同轴暴露自动规避优化版 | 同轴暴露自动规避优化版 (自动生成) | 43.33% | Rejected | -16.67% |
+| V12 | 2026-05-23 | 安全函数同轴规避优化 | 安全函数同轴规避优化 (自动生成) | 66.67% | Pending | 6.67% |
+| V12 | 2026-05-23 | 安全函数同轴规避优化 | 安全函数同轴规避优化 (自动生成) | 56.67% | Pending | -3.33% |
+| V12 | 2026-05-23 | 安全函数同轴规避优化稳定性验证 | 安全函数同轴规避优化稳定性验证 (自动生成) | 56.67% | Pending | -3.33% |

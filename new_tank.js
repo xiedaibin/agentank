@@ -1,5 +1,5 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.25 - Protocol Evolution)
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.30 - Protocol Evolution)
  * 核心目标：结合 V12.24 的预瞄逻辑，解决 V12.7 的子弹躲避优先级问题，强化轴线规避。
  */
 
@@ -280,11 +280,25 @@ function isSafe(pos, ctx, strict) {
     if (!pos) return false;
     var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
     if (fH <= (strict ? 4 : 2)) return false;
-    if (ctx.enemyPos && ctx.enemyVisible) {
-        if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
+    
+    if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
-        if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
-        if (d < 2) return false;
+        if (ctx.enemyVisible) {
+            if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
+            if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
+            if (d < 2) return false;
+        } else {
+            // 针对近距离隐身敌人的同轴预判防御
+            var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < 15);
+            if (enemySeenRecently && d <= 5) {
+                var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+                if (!inGrass && (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1])) {
+                    if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) {
+                        return false;
+                    }
+                }
+            }
+        }
     }
     return true;
 }
