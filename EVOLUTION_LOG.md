@@ -96,3 +96,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-23 | 安全函数同轴规避优化稳定性验证 | 安全函数同轴规避优化稳定性验证 (自动生成) | 56.67% | Pending | -3.33% |
 | V13 | 2026-05-24 | Overload Evasion Strategy | Overload Evasion Strategy (自动生成) | 60.00% | Rejected | -6.67% |
 | V12 | 2026-05-24 | Base V12.30 baseline measurement | Base V12.30 baseline measurement (自动生成) | 53.33% | Adopted | 53.33% |
+| V13 | 2026-05-24 | Overload Evasion Strategy | Overload Evasion Strategy (自动生成) | 56.67% | Pending | 3.34% |
+| V13 | 2026-05-24 | Grass Evasion & Safe Targeting | Grass Evasion & Safe Targeting (自动生成) | 23.33% | Rejected | -30.00% |
