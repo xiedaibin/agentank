@@ -284,7 +284,9 @@ function isSafe(pos, ctx, strict) {
     if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
         if (ctx.enemyVisible) {
-            if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
+            // ✅ 草丛格豁免 LoS 检查——进去就隐身，不算危险
+            var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+            if (!isGrass && isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return false;
             if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
             if (d < 2) return false;
         } else {
