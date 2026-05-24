@@ -367,8 +367,14 @@ function aStar(start, goal, ctx) {
     var open = [{ pos: start, g: 0, h: getDist(start, goal), path: [], dir: ctx.myDir }], closed = {}, nodes = 0;
     var t = G_Blueprint.Tactics;
     while (open.length > 0 && nodes < t.MAX_NODES) {
-        open.sort(function (a, b) { return (a.g + a.h) - (b.g + b.h); });
-        var curr = open.shift();
+        var bestIdx = 0;
+        for (var i = 1; i < open.length; i++) {
+            if ((open[i].g + open[i].h) < (open[bestIdx].g + open[bestIdx].h)) {
+                bestIdx = i;
+            }
+        }
+        var curr = open[bestIdx];
+        open.splice(bestIdx, 1);
         if (samePos(curr.pos, goal)) return curr.path;
         if (closed[key(curr.pos)] && closed[key(curr.pos)] <= curr.g) continue;
         closed[key(curr.pos)] = curr.g; nodes++;
