@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.30 - Protocol Evolution)
- * 核心目标：结合 V12.24 的预瞄逻辑，解决 V12.7 的子弹躲避优先级问题，强化轴线规避。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.31 - Rear Priority Only)
+ * 核心目标：仅改暗杀落点排序（背后优先）+ 兜底安全校验，触发条件不动。
  */
 
 var G_Blueprint = {
@@ -513,7 +513,9 @@ function canShoot(a, b, map) {
 }
 
 function findAssassinSpot(ctx) {
-    var e = ctx.enemyPos, offsets = [[-5, 0], [5, 0], [0, -5], [0, 5]];
+    var e = ctx.enemyPos;
+    // 根据敌方朝向排序 offsets：背后 > 侧翼 > 正面（仍为 4 个候选）
+    var offsets = getAssassinOffsets(ctx.enemyDir);
 
     // 1. 预测暗杀点 (结合预瞄逻辑)
     if (ctx.enemyDir) {
@@ -529,11 +531,22 @@ function findAssassinSpot(ctx) {
         }
     }
 
-    // 2. 兜底当前点
+    // 2. 兜底当前点（加安全校查）
     for (var i = 0; i < offsets.length; i++) {
-        var p = addPos(e, offsets[i]); if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true) return p;
+        var p = addPos(e, offsets[i]);
+        if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false)) return p;
     }
     return null;
+}
+
+// 根据敌方朝向返回 4 个 offset，背后优先
+function getAssassinOffsets(enemyDir) {
+    var d = enemyDir || "up";
+    if (d === "up")    return [[0, 5], [-5, 0], [5, 0], [0, -5]];  // 背后(下) > 左右 > 正面(上)
+    if (d === "down")  return [[0, -5], [-5, 0], [5, 0], [0, 5]];  // 背后(上) > 左右 > 正面(下)
+    if (d === "left")  return [[5, 0], [0, -5], [0, 5], [-5, 0]];  // 背后(右) > 上下 > 正面(左)
+    if (d === "right") return [[-5, 0], [0, -5], [0, 5], [5, 0]];  // 背后(左) > 上下 > 正面(右)
+    return [[-5, 0], [5, 0], [0, -5], [0, 5]];
 }
 
 function findPreAimDir(myPos, enemyPos, enemyDir, map) {

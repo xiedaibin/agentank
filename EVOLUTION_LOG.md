@@ -98,3 +98,7 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-24 | Base V12.30 baseline measurement | Base V12.30 baseline measurement (自动生成) | 53.33% | Adopted | 53.33% |
 | V13 | 2026-05-24 | Overload Evasion Strategy | Overload Evasion Strategy (自动生成) | 56.67% | Pending | 3.34% |
 | V13 | 2026-05-24 | Grass Evasion & Safe Targeting | Grass Evasion & Safe Targeting (自动生成) | 23.33% | Rejected | -30.00% |
+| V12 | 2026-05-27 | Assassination Overhaul - Rear Priority & Direction Matching | Assassination Overhaul - Rear Priority & Direction Matching (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-27 | Rear Assassination V2 - Minimal Reorder + Fallback Safety | Rear Assassination V2 - Minimal Reorder + Fallback Safety (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-27 | Rear Priority Only - Offset Reorder + Fallback Safety | Rear Priority Only - Offset Reorder + Fallback Safety (自动生成) | 66.67% | Pending | 6.67% |
+| V12 | 2026-05-27 | Rear Priority Only - Stabilization Run | Rear Priority Only - Stabilization Run (自动生成) | 63.33% | Pending | 3.33% |
