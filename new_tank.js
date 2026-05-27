@@ -194,7 +194,7 @@ function evalStarCollection(ctx) {
     }
 
     var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
-    if (!safeForWalking) score -= 1200;
+    if (!safeForWalking) score = Math.min(score - 1200, -500);
     return { action: "move", target: ctx.starPos, score: score };
 }
 
@@ -345,7 +345,7 @@ function isSafeForStarWalking(pos, ctx) {
     // If we can reach it before their bullet can hit it, it's safe
     var requiredBuffer = ctx.canTeleport ? 0 : 1;
     if (T_me + requiredBuffer < T_bullet) {
-        if (enemyDist <= 1) return false;
+        if (enemyDist <= 3) return false;
         var bulletFH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
         if (bulletFH <= T_me) return false;
         return true;
