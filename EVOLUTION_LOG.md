@@ -102,3 +102,13 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-27 | Rear Assassination V2 - Minimal Reorder + Fallback Safety | Rear Assassination V2 - Minimal Reorder + Fallback Safety (自动生成) | 53.33% | Rejected | -6.67% |
 | V12 | 2026-05-27 | Rear Priority Only - Offset Reorder + Fallback Safety | Rear Priority Only - Offset Reorder + Fallback Safety (自动生成) | 66.67% | Pending | 6.67% |
 | V12 | 2026-05-27 | Rear Priority Only - Stabilization Run | Rear Priority Only - Stabilization Run (自动生成) | 63.33% | Pending | 3.33% |
+| V12 | 2026-05-27 | Fallback Fire - canShoot gated turn and fire | Fallback Fire - canShoot gated turn and fire (自动生成) | 53.33% | Rejected | -11.67% |
+| V12 | 2026-05-27 | Stuck Fix - Grass Ambush Tolerance + Safe Teleport | Stuck Fix - Grass Ambush Tolerance + Safe Teleport (自动生成) | 63.33% | Pending | -1.67% |
+| V12 | 2026-05-27 | Safe Teleport Distance 4 - Anti Close Range Death | Safe Teleport Distance 4 - Anti Close Range Death (自动生成) | 63.33% | Pending | -1.67% |
+| V12 | 2026-05-27 | Target Lock Anti-Oscillation - 4 Frame Lock + 500 Inertia | Target Lock Anti-Oscillation - 4 Frame Lock + 500 Inertia (自动生成) | 60.00% | Rejected | -5.00% |
+| V12 | 2026-05-27 | Gentle Target Lock - 200 Inertia 2 Frame | Gentle Target Lock - 200 Inertia 2 Frame (自动生成) | 56.67% | Rejected | -8.33% |
+| V12 | 2026-05-27 | Star Safety Fix - EnemyDist 3 + Hard Score Floor | Star Safety Fix - EnemyDist 3 + Hard Score Floor (自动生成) | 66.67% | Pending | 1.67% |
+| V12 | 2026-05-27 | Cloak Ambush Fix - Window 8 + Grass Hold on Cloak Nearby | Cloak Ambush Fix - Window 8 + Grass Hold on Cloak Nearby (自动生成) | 50.00% | Rejected | -15.00% |
+| V12 | 2026-05-27 | Cloak Grass Hold - Stay in Grass on Nearby Cloak | Cloak Grass Hold - Stay in Grass on Nearby Cloak (自动生成) | 53.33% | Rejected | -11.67% |
+| V12 | 2026-05-27 | Star Safety Fix Rebase - EnemyDist 3 + Score Floor (baseline 50%) | Star Safety Fix Rebase - EnemyDist 3 + Score Floor (baseline 50%) (自动生成) | 60.00% | Pending | 10.00% |
+| V12 | 2026-05-27 | No Greedy Fallback + Aim Enemy on Stuck | No Greedy Fallback + Aim Enemy on Stuck (自动生成) | 63.33% | Adopted | 13.33% |

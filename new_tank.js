@@ -430,6 +430,14 @@ function executeAction(me, act, ctx) {
             } else {
                 if (ctx.myDir === d) { if (ctx.meStatus.boosted) me.go(2); else me.go(); } else me.turn(d);
             }
+        } else {
+            if (ctx.enemyPos && ctx.enemyVisible) {
+                var fallbackDir = directionTo(ctx.myPos, ctx.enemyPos);
+                if (ctx.myDir === fallbackDir) {
+                    //me.fire(); 
+                }
+                else me.turn(fallbackDir);
+            }
         }
     }
 }
@@ -438,18 +446,19 @@ function getNextStep(start, goal, ctx) {
     if (samePos(start, goal)) return null;
     var path = aStar(start, goal, ctx);
     if (path && path.length > 0) return path[0];
-    var dirs = ["up", "right", "down", "left"], best = null, maxS = -9999999;
-    for (var i = 0; i < dirs.length; i++) {
-        var n = addPos(start, delta(dirs[i]));
-        var t = getTile(n, ctx.map);
-        if (t && t !== "x") {
-            var s = -getDist(n, goal);
-            if (t === "m") s -= 200;
-            if (!isSafe(n, ctx, true)) s -= 50000;
-            if (s > maxS) { maxS = s; best = n; }
-        }
-    }
-    return best;
+    //var dirs = ["up", "right", "down", "left"], best = null, maxS = -9999999;
+    // for (var i = 0; i < dirs.length; i++) {
+    //     var n = addPos(start, delta(dirs[i]));
+    //     var t = getTile(n, ctx.map);
+    //     if (t && t !== "x") {
+    //         var s = -getDist(n, goal);
+    //         if (t === "m") s -= 200;
+    //         if (!isSafe(n, ctx, true)) s -= 50000;
+    //         if (s > maxS) { maxS = s; best = n; }
+    //     }
+    // }
+    // return best;
+    return null;
 }
 
 function findOffAxisMove(ctx) {
@@ -542,9 +551,9 @@ function findAssassinSpot(ctx) {
 // 根据敌方朝向返回 4 个 offset，背后优先
 function getAssassinOffsets(enemyDir) {
     var d = enemyDir || "up";
-    if (d === "up")    return [[0, 5], [-5, 0], [5, 0], [0, -5]];  // 背后(下) > 左右 > 正面(上)
-    if (d === "down")  return [[0, -5], [-5, 0], [5, 0], [0, 5]];  // 背后(上) > 左右 > 正面(下)
-    if (d === "left")  return [[5, 0], [0, -5], [0, 5], [-5, 0]];  // 背后(右) > 上下 > 正面(左)
+    if (d === "up") return [[0, 5], [-5, 0], [5, 0], [0, -5]];  // 背后(下) > 左右 > 正面(上)
+    if (d === "down") return [[0, -5], [-5, 0], [5, 0], [0, 5]];  // 背后(上) > 左右 > 正面(下)
+    if (d === "left") return [[5, 0], [0, -5], [0, 5], [-5, 0]];  // 背后(右) > 上下 > 正面(左)
     if (d === "right") return [[-5, 0], [0, -5], [0, 5], [5, 0]];  // 背后(左) > 上下 > 正面(右)
     return [[-5, 0], [5, 0], [0, -5], [0, 5]];
 }
