@@ -112,3 +112,8 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-27 | Cloak Grass Hold - Stay in Grass on Nearby Cloak | Cloak Grass Hold - Stay in Grass on Nearby Cloak (自动生成) | 53.33% | Rejected | -11.67% |
 | V12 | 2026-05-27 | Star Safety Fix Rebase - EnemyDist 3 + Score Floor (baseline 50%) | Star Safety Fix Rebase - EnemyDist 3 + Score Floor (baseline 50%) (自动生成) | 60.00% | Pending | 10.00% |
 | V12 | 2026-05-27 | No Greedy Fallback + Aim Enemy on Stuck | No Greedy Fallback + Aim Enemy on Stuck (自动生成) | 63.33% | Adopted | 13.33% |
+| V12 | 2026-05-27 | Smart Shooting - Axis Guard 6 + Star Lead Score Reduction | Smart Shooting - Axis Guard 6 + Star Lead Score Reduction (自动生成) | 53.33% | Pending | 3.33% |
+| V12 | 2026-05-27 | Fix enemyStars and turn safety | Fix enemyStars and turn safety (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-27 | Fix enemyStars only | Fix enemyStars only (自动生成) | 43.33% | Rejected | -16.67% |
+| V12 | 2026-05-27 | Fix enemyStars and unify usage | Fix enemyStars and unify usage (自动生成) | 46.67% | Rejected | -13.33% |
+| V12 | 2026-05-27 | User current version V12.31 | User current version V12.31 (自动生成) | 70.00% | Adopted | 20.00% |

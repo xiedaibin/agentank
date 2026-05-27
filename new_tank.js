@@ -194,7 +194,7 @@ function evalStarCollection(ctx) {
     }
 
     var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
-    if (!safeForWalking) score = Math.min(score - 1200, -500);
+    if (!safeForWalking) score -= 1200;
     return { action: "move", target: ctx.starPos, score: score };
 }
 
@@ -345,7 +345,7 @@ function isSafeForStarWalking(pos, ctx) {
     // If we can reach it before their bullet can hit it, it's safe
     var requiredBuffer = ctx.canTeleport ? 0 : 1;
     if (T_me + requiredBuffer < T_bullet) {
-        if (enemyDist <= 3) return false;
+        if (enemyDist <= 1) return false;
         var bulletFH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
         if (bulletFH <= T_me) return false;
         return true;
@@ -430,14 +430,6 @@ function executeAction(me, act, ctx) {
             } else {
                 if (ctx.myDir === d) { if (ctx.meStatus.boosted) me.go(2); else me.go(); } else me.turn(d);
             }
-        } else {
-            if (ctx.enemyPos && ctx.enemyVisible) {
-                var fallbackDir = directionTo(ctx.myPos, ctx.enemyPos);
-                if (ctx.myDir === fallbackDir) {
-                    //me.fire(); 
-                }
-                else me.turn(fallbackDir);
-            }
         }
     }
 }
@@ -446,19 +438,18 @@ function getNextStep(start, goal, ctx) {
     if (samePos(start, goal)) return null;
     var path = aStar(start, goal, ctx);
     if (path && path.length > 0) return path[0];
-    //var dirs = ["up", "right", "down", "left"], best = null, maxS = -9999999;
-    // for (var i = 0; i < dirs.length; i++) {
-    //     var n = addPos(start, delta(dirs[i]));
-    //     var t = getTile(n, ctx.map);
-    //     if (t && t !== "x") {
-    //         var s = -getDist(n, goal);
-    //         if (t === "m") s -= 200;
-    //         if (!isSafe(n, ctx, true)) s -= 50000;
-    //         if (s > maxS) { maxS = s; best = n; }
-    //     }
-    // }
-    // return best;
-    return null;
+    var dirs = ["up", "right", "down", "left"], best = null, maxS = -9999999;
+    for (var i = 0; i < dirs.length; i++) {
+        var n = addPos(start, delta(dirs[i]));
+        var t = getTile(n, ctx.map);
+        if (t && t !== "x") {
+            var s = -getDist(n, goal);
+            if (t === "m") s -= 200;
+            if (!isSafe(n, ctx, true)) s -= 50000;
+            if (s > maxS) { maxS = s; best = n; }
+        }
+    }
+    return best;
 }
 
 function findOffAxisMove(ctx) {
