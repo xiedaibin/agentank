@@ -120,3 +120,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-27 | Re-test current version | Re-test current version (自动生成) | 60.00% | Rejected | -10.00% |
 | V12 | 2026-05-29 | Baseline Measurement V12.31 | Baseline Measurement V12.31 (自动生成) | 36.67% | Pending | -3.33% |
 | V12 | 2026-05-29 | Ghost Bullet Axis Defense V12.32 | Ghost Bullet Axis Defense V12.32 (自动生成) | 60.00% | Adopted | 23.33% |
+| V12 | 2026-05-29 | V12.32 Stability Verification | V12.32 Stability Verification (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-29 | Ghost Bullet Tightened V12.33 | Ghost Bullet Tightened V12.33 (自动生成) | 56.67% | Adopted | 20.00% |

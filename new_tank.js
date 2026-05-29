@@ -1,7 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.32 - Ghost Bullet Axis Defense)
- * 新增：幽灵子弹轴线预判。当 enemy.bullet 因遮挡/隐身不可见时，
- * 若与上次已知敌方位置同轴且枪口朝向我方，强制离轴规避。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.33 - Ghost Bullet Tightened)
+ * V12.33: 收窄幽灵子弹预判条件：6帧内、≤7格、我方无飞行子弹时才触发，
+ * 减少误判导致的无效离轴，保持进攻节奏。
  */
 
 var G_Blueprint = {
@@ -248,14 +248,13 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    // [方案B] 幽灵子弹轴线预判：enemy.bullet 不可见时的盲区防御
-    // 当子弹因地形遮挡或敌人隐身而不可见，但已知敌方历史位置且我方处于其枪口轴线上时
-    // 主动预判为"可能存在子弹"，触发离轴规避（得分22000 < LoS防御25000 < 真实弹道99999）
-    if (!ctx.enemyBullet && ctx.enemyPos) {
-        var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 12);
+    // [方案B v2] 幽灵子弹轴线预判（收窄版）：减少误触发
+    // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时） + LoS枪口对准
+    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet) {
+        var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 6);
         if (recentlySeen || ctx.enemyCloaked) {
             var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
-            if (ghostDist <= 10) {
+            if (ghostDist <= 7) {
                 var ghostOnAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
                 if (ghostOnAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
                     var ghostEscape = findOffAxisMove(ctx);
