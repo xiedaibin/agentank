@@ -1,5 +1,16 @@
 const fs = require('fs');
 
+const logFile = 'battle_first.log';
+// Clear the log file on startup
+fs.writeFileSync(logFile, '');
+
+function log(msg) {
+    const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
+    const line = `[${timestamp}] ${msg}`;
+    console.log(msg);
+    fs.appendFileSync(logFile, line + '\n');
+}
+
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
@@ -104,17 +115,17 @@ async function main() {
     let targetOpponent = null;
     let matchCount = 0;
 
-    console.log('=== 挂机第一模式启动 ===');
-    console.log('正在初始化坦克数据...');
+    log('=== 挂机第一模式启动 ===');
+    log('正在初始化坦克数据...');
 
     try {
         const tankContext = await getTankContext(token);
         myTankId = tankContext.tank && tankContext.tank.id ? tankContext.tank.id : myTankId;
         previousScore = getScore(tankContext);
         previousRankPoints = getRankPoints(tankContext);
-        console.log(`我的坦克 ID: ${myTankId} | 当前分数: ${previousScore} | 当前点数: ${previousRankPoints}`);
+        log(`我的坦克 ID: ${myTankId} | 当前分数: ${previousScore} | 当前点数: ${previousRankPoints}`);
     } catch (e) {
-        console.warn(`初始化获取坦克数据失败，将使用默认配置: ${e.message}`);
+        log(`[警告] 初始化获取坦克数据失败，将使用默认配置: ${e.message}`);
     }
 
     // Infinite loop
@@ -123,25 +134,25 @@ async function main() {
 
         // Refresh/Find the #1 opponent every 10 matches or if we don't have one
         if (!targetOpponent || matchCount % 10 === 1) {
-            console.log('\n正在搜寻全服最高分合格对手...');
+            log('正在搜寻全服最高分合格对手...');
             try {
                 const opponents = await discoverTopEligibleOpponents(token, myTankId);
                 if (opponents.length > 0) {
                     targetOpponent = opponents[0];
-                    console.log(`[搜寻成功] 锁定对手 #1: ${targetOpponent.name}#${targetOpponent.id} (分数: ${targetOpponent.rankScore})`);
+                    log(`[搜寻成功] 锁定对手 #1: ${targetOpponent.name}#${targetOpponent.id} (分数: ${targetOpponent.rankScore})`);
                 } else {
-                    console.warn('[警告] 未搜寻到合格的对手，将在 5 秒后重试...');
+                    log('[警告] 未搜寻到合格的对手，将在 5 秒后重试...');
                     await delay(cooldownMs);
                     continue;
                 }
             } catch (e) {
-                console.error(`[搜索对手异常]: ${e.message}，将在 5 秒后重试...`);
+                log(`[搜索对手异常]: ${e.message}，将在 5 秒后重试...`);
                 await delay(cooldownMs);
                 continue;
             }
         }
 
-        console.log(`\n[第 ${matchCount} 场对战] 正在挑战第一名: ${targetOpponent.name}#${targetOpponent.id} (${targetOpponent.rankScore})`);
+        log(`[第 ${matchCount} 场对战] 正在挑战第一名: ${targetOpponent.name}#${targetOpponent.id} (${targetOpponent.rankScore})`);
 
         try {
             const matchData = await fetchJson('https://agentank.ai/api/agent/tank/challenge', {
@@ -178,7 +189,7 @@ async function main() {
                 // Ignore API warning
             }
 
-            console.log(
+            log(
                 `[第 ${matchCount} 场] 结果: ${resultType.toUpperCase()} | ` +
                 `得分: ${currentScore} (${formatDelta(rankDelta)}) | ` +
                 `点数: ${currentRankPoints} | ` +
@@ -190,10 +201,10 @@ async function main() {
             previousRankPoints = currentRankPoints;
 
         } catch (e) {
-            console.error(`[第 ${matchCount} 场] 运行异常:`, e.message);
+            log(`[第 ${matchCount} 场] 运行异常: ${e.message}`);
         }
 
-        console.log(`等待 ${cooldownMs / 1000} 秒后发起下一次挑战...`);
+        log(`等待 ${cooldownMs / 1000} 秒后发起下一次挑战...\n`);
         await delay(cooldownMs);
     }
 }
