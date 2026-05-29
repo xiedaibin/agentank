@@ -118,3 +118,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-27 | Fix enemyStars and unify usage | Fix enemyStars and unify usage (自动生成) | 46.67% | Rejected | -13.33% |
 | V12 | 2026-05-27 | User current version V12.31 | User current version V12.31 (自动生成) | 70.00% | Adopted | 20.00% |
 | V12 | 2026-05-27 | Re-test current version | Re-test current version (自动生成) | 60.00% | Rejected | -10.00% |
+| V12 | 2026-05-29 | Baseline Measurement V12.31 | Baseline Measurement V12.31 (自动生成) | 36.67% | Pending | -3.33% |
+| V12 | 2026-05-29 | Ghost Bullet Axis Defense V12.32 | Ghost Bullet Axis Defense V12.32 (自动生成) | 60.00% | Adopted | 23.33% |

@@ -1,6 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.31 - Rear Priority Only)
- * 核心目标：仅改暗杀落点排序（背后优先）+ 兜底安全校验，触发条件不动。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.32 - Ghost Bullet Axis Defense)
+ * 新增：幽灵子弹轴线预判。当 enemy.bullet 因遮挡/隐身不可见时，
+ * 若与上次已知敌方位置同轴且枪口朝向我方，强制离轴规避。
  */
 
 var G_Blueprint = {
@@ -244,6 +245,23 @@ function tacticalDefense(me, ctx) {
                 if (esc) return { action: "teleport", target: esc, score: 99999 };
             }
             if (dodge) { G_History.defenseLockTicks = 2; G_History.lastDefenseTarget = dodge; return { action: "move", target: dodge, score: 99999 }; }
+        }
+    }
+
+    // [方案B] 幽灵子弹轴线预判：enemy.bullet 不可见时的盲区防御
+    // 当子弹因地形遮挡或敌人隐身而不可见，但已知敌方历史位置且我方处于其枪口轴线上时
+    // 主动预判为"可能存在子弹"，触发离轴规避（得分22000 < LoS防御25000 < 真实弹道99999）
+    if (!ctx.enemyBullet && ctx.enemyPos) {
+        var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 12);
+        if (recentlySeen || ctx.enemyCloaked) {
+            var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
+            if (ghostDist <= 10) {
+                var ghostOnAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
+                if (ghostOnAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
+                    var ghostEscape = findOffAxisMove(ctx);
+                    if (ghostEscape) { ghostEscape.score = 22000; return ghostEscape; }
+                }
+            }
         }
     }
 
