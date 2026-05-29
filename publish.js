@@ -1,10 +1,24 @@
 const fs = require('fs');
+const { execSync } = require('child_process');
 
 async function main() {
     const code = fs.readFileSync('new_tank.js', 'utf8');
     const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
     
-    console.log("Publishing code...");
+    let branch = process.argv[2];
+    if (!branch) {
+        try {
+            branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
+            console.log(`Detected git branch: ${branch}`);
+        } catch (e) {
+            console.warn("Could not detect git branch, falling back to 'main'");
+            branch = 'main';
+        }
+    } else {
+        console.log(`Using branch specified in argument: ${branch}`);
+    }
+
+    console.log(`Publishing code to AgenTank branch '${branch}'...`);
     const res = await fetch('https://agentank.ai/api/agent/tank/code', {
         method: 'POST',
         headers: {
@@ -13,10 +27,10 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V8 (Stable Edition) - 均衡防御与高效抢星",
-            submittedBy: "Gemini"
+            notes: `XDB Strategic Assassin V13.0 - Multiplayer & Team Optimized (${branch})`,
+            submittedBy: "Gemini",
+            branch: branch
         })
-
     });
     
     if (!res.ok) {

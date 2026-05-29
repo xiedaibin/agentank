@@ -7,8 +7,8 @@
 ## AI 代理初始化与学习要求（启动必做）
 
 在第一次使用或启动本代理时，**必须**按照以下顺序执行初始化操作，方可开启任何后续工作：
-1. **同步坦克规则**：首先执行“同步坦克规则”技能，将最新规则覆盖保存至本地的 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md)。
-2. **熟读与理解核心文档**：同步规则后，必须熟读并完全理解 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md)（坦克 API 与游戏机制）和 [STRATEGY.md](file:///d:/MyGit/agentank/STRATEGY.md)（技能博弈与具体战术），在后续开发中严格遵循。
+1. **同步坦克规则**：首先执行“同步坦克规则”技能，将最新 1v1 规则与多人对战规则分别覆盖保存至本地的 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md) 和 [MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md)。
+2. **熟读与理解核心文档**：同步规则后，必须熟读并完全理解 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md)（坦克 API 与 1v1 游戏机制）、[MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md)（多人对战与 3v3 机制）和 [STRATEGY.md](file:///d:/MyGit/agentank/STRATEGY.md)（技能博弈与具体战术），在后续开发中严格遵循。
 3. **开启后续工作**：在完成上述步骤后，方可开展代码优化、对战复盘、排位赛等其他开发与测试任务。
 
 ## 核心评价函数与架构约束（最高准则）
@@ -21,7 +21,7 @@
 
 ## 核心框架与机制
 
-- **官方指南：** 详细的 API 参考和游戏规则请参阅本地文件 `AGENT_GUIDE.md`。
+- **官方指南：** 详细的 1v1 API 参考和多人对战机制请参阅本地文件 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md) 和 [MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md)。
 - **代码入口：** 坦克的全部逻辑均包含在 `new_tank.js` 文件的 `onIdle(me, enemy, game)` 函数中。
 - **坐标系统：** 地图上的所有位置必须严格使用数组 `[x, y]` 表示，**绝不能**使用对象 `{x, y}`。
 - **动作经济学：** 像 `me.turn()`、`me.go()` 和 `me.fire()` 这样的指令会将动作加入队列。转向（Turn）需要消耗 1 帧，移动（Move）需要消耗 1 帧。
@@ -79,7 +79,7 @@
 
 用户可以通过指令 **“同步坦克规则”** 来触发此技能。
 
-1. **获取最新规则**：访问 `https://agentank.ai/agent-guide`。
+1. **获取最新规则**：访问 `https://agentank.ai/agent-guide` 和 `https://agentank.ai/battle-rooms/multiplayer-agent-guide`。
 2. **格式化与保存**：将抓取到的内容格式化为 Markdown。
-3. **覆盖本地文件**：将最新的规则保存到本地 `AGENT_GUIDE.md` 文件中，确保本地开发参考始终与官方平台保持同步。
+3. **覆盖本地文件**：将最新的规则分别保存到本地 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md) 和 [MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md) 文件中，确保本地开发参考始终与官方平台保持同步。
 4. **确认更新**：告知用户同步完成。
