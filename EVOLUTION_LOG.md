@@ -126,3 +126,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-29 | Safety Override V12.34 non-strict | Safety Override V12.34 non-strict (自动生成) | 53.33% | Pending | -3.34% |
 | V12 | 2026-05-29 | Safety Speak Debug V12.35 | Safety Speak Debug V12.35 (自动生成) | 50.00% | Rejected | -6.67% |
 | V12 | 2026-05-29 | Baseline V12.33 Verification | Baseline V12.33 Verification (自动生成) | 62.07% | Adopted | 12.07% |
+| V12 | 2026-05-29 | Turn Bug Fix V12.36 | Turn Bug Fix V12.36 (自动生成) | 41.38% | Rejected | -20.69% |
+| V12 | 2026-05-29 | Turn Translation V12.36 | Turn Translation V12.36 (自动生成) | 63.33% | Adopted | 1.26% |

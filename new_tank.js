@@ -1,7 +1,8 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.33 - Ghost Bullet Tightened)
- * V12.33: 收窄幽灵子弹预判条件：6帧内、≤7格、我方无飞行子弹时才触发，
- * 减少误判导致的无效离轴，保持进攻节奏。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.36 - Turn Bug Fix)
+ * V12.36: 拦截并修正 me.turn() 指令。平台底层仅支持相对转向 "left" / "right"，
+ * 当脚本传 cardinal (如 "down") 时，平台会默认右转（顺时针），导致向左转 90 度的指令被执行成向右转 270 度（浪费 2 帧）。
+ * 此版本在 onIdle 入口全局拦截 me.turn 并将其换算为最优相对旋转指令。
  */
 
 var G_Blueprint = {
@@ -29,6 +30,14 @@ var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 
 function onIdle(me, enemy, game) {
     try {
+        var originalTurn = me.turn;
+        me.turn = function(dir) {
+            var turnDir = getTurnDir(me.tank.direction, dir);
+            if (turnDir) {
+                originalTurn.call(me, turnDir);
+            }
+        };
+
         G_History.frame = game.frames || 0;
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
         if (G_History.cloakFramesLeft > 0) G_History.cloakFramesLeft--;
@@ -626,3 +635,14 @@ function directionTo(a, b) { if (b[0] > a[0]) return "right"; if (b[0] < a[0]) r
 function reverseDir(d) { return { up: "down", down: "up", left: "right", right: "left" }[d]; }
 function isPassable(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return false; var t = map[p[0]][p[1]]; return t !== "x" && t !== "m"; }
 function getTile(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return null; return map[p[0]][p[1]]; }
+function getTurnDir(currentDir, targetDir) {
+    if (!targetDir || currentDir === targetDir) return null;
+    var dirs = ["up", "right", "down", "left"];
+    var curIdx = dirs.indexOf(currentDir);
+    var tarIdx = dirs.indexOf(targetDir);
+    if (curIdx === -1 || tarIdx === -1) return null;
+    var diff = (tarIdx - curIdx + 4) % 4;
+    if (diff === 1) return "right";
+    if (diff === 3) return "left";
+    return "right";
+}
