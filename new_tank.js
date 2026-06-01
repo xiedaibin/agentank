@@ -1,6 +1,8 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.31 - Rear Priority Only)
- * 核心目标：仅改暗杀落点排序（背后优先）+ 兜底安全校验，触发条件不动。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.36 - Turn Bug Fix)
+ * V12.36: 拦截并修正 me.turn() 指令。平台底层仅支持相对转向 "left" / "right"，
+ * 当脚本传 cardinal (如 "down") 时，平台会默认右转（顺时针），导致向左转 90 度的指令被执行成向右转 270 度（浪费 2 帧）。
+ * 此版本在 onIdle 入口全局拦截 me.turn 并将其换算为最优相对旋转指令。
  */
 
 var G_Blueprint = {
@@ -28,6 +30,14 @@ var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 
 function onIdle(me, enemy, game) {
     try {
+        var originalTurn = me.turn;
+        me.turn = function(dir) {
+            var turnDir = getTurnDir(me.tank.direction, dir);
+            if (turnDir) {
+                originalTurn.call(me, turnDir);
+            }
+        };
+
         G_History.frame = game.frames || 0;
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
         if (G_History.cloakFramesLeft > 0) G_History.cloakFramesLeft--;
@@ -244,6 +254,22 @@ function tacticalDefense(me, ctx) {
                 if (esc) return { action: "teleport", target: esc, score: 99999 };
             }
             if (dodge) { G_History.defenseLockTicks = 2; G_History.lastDefenseTarget = dodge; return { action: "move", target: dodge, score: 99999 }; }
+        }
+    }
+
+    // [方案B v2] 幽灵子弹轴线预判（收窄版）：减少误触发
+    // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时） + LoS枪口对准
+    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet) {
+        var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 6);
+        if (recentlySeen || ctx.enemyCloaked) {
+            var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
+            if (ghostDist <= 7) {
+                var ghostOnAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
+                if (ghostOnAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
+                    var ghostEscape = findOffAxisMove(ctx);
+                    if (ghostEscape) { ghostEscape.score = 22000; return ghostEscape; }
+                }
+            }
         }
     }
 
@@ -609,3 +635,14 @@ function directionTo(a, b) { if (b[0] > a[0]) return "right"; if (b[0] < a[0]) r
 function reverseDir(d) { return { up: "down", down: "up", left: "right", right: "left" }[d]; }
 function isPassable(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return false; var t = map[p[0]][p[1]]; return t !== "x" && t !== "m"; }
 function getTile(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return null; return map[p[0]][p[1]]; }
+function getTurnDir(currentDir, targetDir) {
+    if (!targetDir || currentDir === targetDir) return null;
+    var dirs = ["up", "right", "down", "left"];
+    var curIdx = dirs.indexOf(currentDir);
+    var tarIdx = dirs.indexOf(targetDir);
+    if (curIdx === -1 || tarIdx === -1) return null;
+    var diff = (tarIdx - curIdx + 4) % 4;
+    if (diff === 1) return "right";
+    if (diff === 3) return "left";
+    return "right";
+}
