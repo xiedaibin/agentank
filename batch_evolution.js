@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { getToken } = require('./config');
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -42,8 +43,13 @@ function getLatestAdoptedWinRate() {
 }
 
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
     const totalMatches = 30;
+
     
     let baselineWinRate = parseFloat(process.argv[2]);
     if (isNaN(baselineWinRate)) {

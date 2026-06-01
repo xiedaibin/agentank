@@ -357,7 +357,7 @@
         "players": [
           {
             "tank": {
-              "id": "c74f4537",
+              "id": "25d21f20",
               "position": [
                 2,
                 2
@@ -367,7 +367,7 @@
           },
           {
             "tank": {
-              "id": "114a44ee",
+              "id": "66c7a9c0",
               "position": [
                 16,
                 12
@@ -382,16 +382,16 @@
           "type": "game",
           "winner": 1
         },
-        "excitementScore": 17,
-        "matchSeed": 8737172519539848000
+        "excitementScore": 3,
+        "matchSeed": 678268813368356400
       },
       "records": [
         [
           {
             "action": "created",
             "position": [
-              6,
-              2
+              4,
+              6
             ],
             "type": "star"
           }
@@ -399,7 +399,7 @@
         [
           {
             "action": "go",
-            "objectId": "c74f4537",
+            "objectId": "25d21f20",
             "position": [
               2,
               1
@@ -409,7 +409,7 @@
           },
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               16,
               13
@@ -422,7 +422,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -430,7 +430,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               15,
               13
@@ -442,7 +442,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               14,
               13
@@ -454,7 +454,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               13,
               13
@@ -466,7 +466,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               12,
               13
@@ -478,7 +478,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               11,
               13
@@ -490,7 +490,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               10,
               13
@@ -502,7 +502,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               9,
               13
@@ -514,7 +514,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               13
@@ -526,7 +526,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               13
@@ -538,7 +538,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               13
@@ -550,7 +550,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               13
@@ -562,7 +562,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               13
@@ -574,7 +574,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               13
@@ -586,7 +586,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               13
@@ -598,7 +598,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               13
@@ -611,7 +611,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -619,7 +619,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               12
@@ -631,7 +631,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               11
@@ -643,7 +643,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               10
@@ -655,7 +655,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               9
@@ -667,7 +667,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               8
@@ -679,7 +679,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               7
@@ -691,7 +691,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               6
@@ -703,7 +703,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               5
@@ -715,7 +715,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -728,7 +728,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -736,7 +736,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -748,7 +748,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -760,7 +760,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -772,7 +772,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -784,7 +784,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -796,7 +796,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -808,7 +808,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -821,7 +821,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -830,7 +830,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -838,7 +838,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -850,7 +850,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -862,7 +862,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -874,7 +874,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -886,7 +886,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -898,7 +898,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -910,7 +910,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -923,7 +923,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -932,7 +932,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -940,7 +940,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -952,7 +952,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -964,7 +964,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -976,7 +976,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -988,7 +988,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1000,7 +1000,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1012,7 +1012,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -1025,7 +1025,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1034,7 +1034,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1042,7 +1042,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1054,7 +1054,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1066,7 +1066,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1078,7 +1078,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1090,7 +1090,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1102,7 +1102,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1114,7 +1114,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -1127,7 +1127,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1136,7 +1136,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1144,7 +1144,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1156,7 +1156,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1168,7 +1168,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1180,7 +1180,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1192,7 +1192,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1204,7 +1204,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1216,7 +1216,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -1229,7 +1229,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1238,7 +1238,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1246,7 +1246,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1258,7 +1258,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1270,7 +1270,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1282,7 +1282,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1294,7 +1294,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1306,7 +1306,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1318,7 +1318,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -1331,7 +1331,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1340,7 +1340,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1348,7 +1348,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1360,7 +1360,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1372,7 +1372,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1384,7 +1384,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1396,7 +1396,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1408,7 +1408,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1420,7 +1420,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -1433,7 +1433,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1442,7 +1442,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1450,7 +1450,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1462,7 +1462,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1474,7 +1474,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1486,7 +1486,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1498,7 +1498,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1510,7 +1510,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1522,7 +1522,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -1535,7 +1535,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1544,7 +1544,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1552,7 +1552,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1564,7 +1564,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1576,7 +1576,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1588,7 +1588,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1600,7 +1600,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1612,7 +1612,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1624,7 +1624,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -1637,7 +1637,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1646,7 +1646,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1654,7 +1654,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1666,7 +1666,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1678,7 +1678,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1690,7 +1690,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1702,7 +1702,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1714,7 +1714,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1726,7 +1726,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               1,
               4
@@ -1739,7 +1739,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1748,7 +1748,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1756,7 +1756,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               2,
               4
@@ -1768,7 +1768,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               3,
               4
@@ -1780,7 +1780,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               4,
               4
@@ -1792,7 +1792,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               5,
               4
@@ -1804,7 +1804,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               6,
               4
@@ -1816,7 +1816,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               7,
               4
@@ -1828,7 +1828,7 @@
         [
           {
             "action": "go",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "position": [
               8,
               4
@@ -1841,7 +1841,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1850,7 +1850,7 @@
           {
             "action": "turn",
             "direction": "right",
-            "objectId": "114a44ee",
+            "objectId": "66c7a9c0",
             "stunReversed": false,
             "type": "tank"
           }
@@ -1861,12 +1861,12 @@
       "XDB",
       "Nova Scout"
     ],
-    "excitementScore": 17,
-    "matchSeed": 8737172519539848000
+    "excitementScore": 3,
+    "matchSeed": 678268813368356400
   },
-  "simulationAt": "2026-05-24T14:32:53.93920322Z",
+  "simulationAt": "2026-06-01T07:45:51.674273264Z",
   "simulationCooldownSeconds": 2,
-  "nextSimulationAt": "2026-05-24T14:32:55.449731Z",
+  "nextSimulationAt": "2026-06-01T07:45:53.441724Z",
   "trainingBots": [
     {
       "id": "nova-scout",
