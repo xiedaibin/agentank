@@ -1,5 +1,11 @@
-const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+const { getToken } = require('../config');
+const token = getToken();
+if (!token) {
+    console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+    process.exit(1);
+}
 const matchId = 'mat_GGGmOjJPozRBh9nv2';
+
 
 async function main() {
     const res = await fetch(`https://agentank.ai/api/matches/${matchId}/agent.json?view=events`, {

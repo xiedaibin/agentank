@@ -1,8 +1,10 @@
 const fs = require('fs');
+const { getToken } = require('./config');
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 async function fetchJson(url, options = {}) {
     const res = await fetch(url, options);
@@ -96,13 +98,18 @@ async function discoverTopEligibleOpponents(token, myTankId) {
 }
 
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
     const cooldownMs = 5000;
     let myTankId = 230;
     let previousScore = 0;
     let previousRankPoints = 0;
     let targetOpponent = null;
     let matchCount = 0;
+
 
     console.log('=== 挂机第一模式启动 ===');
     console.log('正在初始化坦克数据...');

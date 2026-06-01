@@ -1,8 +1,10 @@
 const fs = require('fs');
+const { getToken } = require('./config');
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
+
 
 async function fetchJson(url, options = {}) {
     const res = await fetch(url, options);
@@ -139,11 +141,16 @@ async function discoverTopEligibleOpponents(token, myTankId) {
 }
 
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
     const totalMatches = parseInt(process.argv[2], 10) || 10;
     const opponentMode = (process.argv[3] || 'random').toLowerCase();
     const mapMode = (process.argv[4] || 'random').toLowerCase();
     const cooldownMs = parseInt(process.argv[5], 10) || 5000;
+
     const report = {
         summary: { requested: totalMatches, total: 0, wins: 0, losses: 0, draws: 0 },
         mapRotation: [],
