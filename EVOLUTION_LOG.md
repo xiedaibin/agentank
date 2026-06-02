@@ -129,3 +129,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-29 | Turn Bug Fix V12.36 | Turn Bug Fix V12.36 (自动生成) | 41.38% | Rejected | -20.69% |
 | V12 | 2026-05-29 | Turn Translation V12.36 | Turn Translation V12.36 (自动生成) | 63.33% | Adopted | 1.26% |
 | V12 | 2026-06-02 | LoS Penalty Evasion | LoS Penalty Evasion (自动生成) | 56.67% | Adopted | 6.67% |
+| V12 | 2026-06-02 | Grass Blind Fire | Grass Blind Fire (自动生成) | 51.72% | Pending | 1.72% |
+| V12 | 2026-06-02 | Evasion Tie-Breaker | Evasion Tie-Breaker (自动生成) | 60.00% | Adopted | 10.00% |

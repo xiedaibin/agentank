@@ -1,9 +1,8 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.39 - LoS Close-Range Penalty)
- * V12.39: 回滚轴线横穿惩罚（V12.37/38 引入，前者错误地惩罚了逃距离行为）。
- * 改为更精准的修复：A* 中进入近距离（≤5格）敌人枪口 LoS 直线格时，
- * 惩罚由原 2000 提升至 9000，远距离保持 2000 不变。
- * 不干扰横穿行为，只针对踏入枪口直线格本身。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.40 - Evasion Tie-Breaker & Off-Axis Focus)
+ * V12.40: 优化避弹逻辑中的打平判定，当多个邻居脱离轴线的格得分相同时，
+ * 优先选择不需转向（与当前朝向一致）的格子，并且优先选择真正的非共轴格子，
+ * 解决被避开一次后因转向开销过大而在原地待机受击的问题。
  */
 
 var G_Blueprint = {
@@ -22,6 +21,7 @@ var G_Blueprint = {
 
 var G_History = {
     lastEnemyPos: null, lastEnemyDir: "up", lastEnemySeenFrame: -99,
+    lastEnemyVisible: false, wasEnemyVisible: false, lastUpdatedFrame: -99,
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null
@@ -57,6 +57,18 @@ function onIdle(me, enemy, game) {
             if (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7)) {
                 var dir = directionTo(ctx.myPos, ctx.enemyPos);
                 if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
+                    me.fire(); return;
+                }
+            }
+        }
+
+        // 1.5. 草丛盲射 (Blind Fire)
+        if (!ctx.enemyVisible && ctx.wasEnemyVisible && G_History.lastEnemyPos) {
+            var prevPos = G_History.lastEnemyPos;
+            if (isNearGrass(prevPos)) {
+                var targetGrass = findTargetGrassForBlindFire(ctx.myPos, ctx.myDir, prevPos, ctx.map);
+                if (targetGrass && !me.bullet && !ctx.meStatus.fireLocked) {
+                    me.speak("Blind Fire");
                     me.fire(); return;
                 }
             }
@@ -118,12 +130,20 @@ function buildExecutionContext(me, enemy, game) {
         G_History.cloakFramesLeft = 8;
     }
 
+    if (G_History.lastUpdatedFrame !== G_History.frame) {
+        G_History.wasEnemyVisible = G_History.lastEnemyVisible;
+        G_History.lastEnemyVisible = visible;
+        G_History.lastUpdatedFrame = G_History.frame;
+    }
+
     if (visible) {
         G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
     }
+
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
         enemy: enemy, enemyPos: G_History.lastEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
+        wasEnemyVisible: G_History.wasEnemyVisible,
         enemyCloaked: G_History.cloakFramesLeft > 0,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
         enemyFireLocked: enemy && enemy.status && enemy.status.fireLocked,
@@ -502,7 +522,17 @@ function findOffAxisMove(ctx) {
     for (var i = 0; i < neighbors.length; i++) {
         var n = addPos(ctx.myPos, delta(neighbors[i]));
         if (isPassable(n, ctx.map) && isSafe(n, ctx, true)) {
-            var s = getDist(n, ctx.enemyPos); if (s > maxS) { maxS = s; best = n; }
+            var s = getDist(n, ctx.enemyPos);
+            // Prioritize true off-axis moves over co-axial moves
+            var isNeighborOnAxis = (n[0] === ctx.enemyPos[0] || n[1] === ctx.enemyPos[1]);
+            if (!isNeighborOnAxis) {
+                s += 0.5;
+            }
+            // Tie-breaker: prefer moving straight to avoid turning overhead
+            if (directionTo(ctx.myPos, n) === ctx.myDir) {
+                s += 0.1;
+            }
+            if (s > maxS) { maxS = s; best = n; }
         }
     }
     return best ? { action: "move", target: best, score: 25000 } : null;
@@ -664,4 +694,44 @@ function getTurnDir(currentDir, targetDir) {
     if (diff === 1) return "right";
     if (diff === 3) return "left";
     return "right";
+}
+
+function isNearGrass(pos) {
+    if (!pos || !G_Blueprint.mapVision || !G_Blueprint.mapVision.grass) return false;
+    var x = pos[0], y = pos[1];
+    var keys = [
+        x + "," + y,
+        (x + 1) + "," + y,
+        (x - 1) + "," + y,
+        x + "," + (y + 1),
+        x + "," + (y - 1)
+    ];
+    for (var i = 0; i < keys.length; i++) {
+        if (G_Blueprint.mapVision.grass[keys[i]]) return true;
+    }
+    return false;
+}
+
+function findTargetGrassForBlindFire(myPos, myDir, enemyPrevPos, map) {
+    var candidates = [
+        enemyPrevPos,
+        [enemyPrevPos[0] + 1, enemyPrevPos[1]],
+        [enemyPrevPos[0] - 1, enemyPrevPos[1]],
+        [enemyPrevPos[0], enemyPrevPos[1] + 1],
+        [enemyPrevPos[0], enemyPrevPos[1] - 1]
+    ];
+    for (var i = 0; i < candidates.length; i++) {
+        var p = candidates[i];
+        if (!isPassable(p, map)) continue;
+        var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]];
+        if (!isGrass) continue;
+        if (p[0] === myPos[0] || p[1] === myPos[1]) {
+            if (directionTo(myPos, p) === myDir) {
+                if (canShoot(myPos, p, map) === true) {
+                    return p;
+                }
+            }
+        }
+    }
+    return null;
 }
