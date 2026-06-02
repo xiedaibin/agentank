@@ -128,3 +128,10 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-29 | Baseline V12.33 Verification | Baseline V12.33 Verification (自动生成) | 62.07% | Adopted | 12.07% |
 | V12 | 2026-05-29 | Turn Bug Fix V12.36 | Turn Bug Fix V12.36 (自动生成) | 41.38% | Rejected | -20.69% |
 | V12 | 2026-05-29 | Turn Translation V12.36 | Turn Translation V12.36 (自动生成) | 63.33% | Adopted | 1.26% |
+| V12 | 2026-06-02 | V12.36 Baseline | V12.36 Baseline (自动生成) | 60.00% | Pending | 10.00% |
+| V12 | 2026-06-02 | Star Suppression | Star Suppression (自动生成) | 50.00% | Rejected | -10.00% |
+| V12 | 2026-06-02 | Star Suppression | Star Suppression (自动生成) | 56.67% | Pending | 6.67% |
+| V12 | 2026-06-02 | Star Suppression relaxed | Star Suppression relaxed (自动生成) | 50.00% | Pending | 0.00% |
+| V12 | 2026-06-02 | Star Suppression fixed | Star Suppression fixed (自动生成) | 60.00% | Pending | 10.00% |
+| V12 | 2026-06-02 | Star Suppression & Grass Safety | Star Suppression & Grass Safety (自动生成) | 46.67% | Rejected | -8.33% |
+| V12 | 2026-06-02 | Star Suppression & Grass Pathing V12.40 | Star Suppression & Grass Pathing V12.40 (自动生成) | 50.00% | Rejected | -5.00% |

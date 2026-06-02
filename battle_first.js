@@ -74,7 +74,7 @@ function formatDelta(delta) {
 function uniqueSearchTerms() {
     const letters = 'abcdefghijklmnopqrstuvwxyz'.split('');
     const digits = '0123456789'.split('');
-    const extras = ['tank', 'debug', 'rank', 'bot', 'ai', 'king', '666', '王', '战', '坦克'];
+    const extras = ['tank', 'debug', 'rank', 'bot', 'ai', 'king', '666', 'A', '战', '坦克', "光", "小"];
     return [...new Set([...letters, ...digits, ...extras])];
 }
 

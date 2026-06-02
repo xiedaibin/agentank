@@ -72,7 +72,8 @@
 ### 3. 超时与安全策略 (Late Game & Safety)
 
 * **超时判优 (Late Game Aggression)**：在 900 帧后，大幅提升抢星权重。若我方星星落后或持平，采取激进的 Teleport 抢星策略。
-* **瞬移安全预测 (Predictive Teleport Safety)**：在 Teleport 落地前，不仅检查当前枪线，还预测未来 3 帧的轨迹以及敌方潜在的瞬间转向攻击。落地邻近区域必须通过安全性校验。
+* **瞬移安全预测 (Predictive Teleport Safety)**：在 Teleport 落地前，不仅检查当前枪线，还预测未来 3 帧 of 敌方潜在的瞬间转向攻击。落地邻近区域必须通过安全性校验。
+* **星线压制 (Star Suppression)**：当我方星数领先且无法安全吃星时，如果星星位于枪线上且背后紧邻障碍物（子弹生命周期极短，连发率极高），通过高频射击在星星周围制造死亡禁区，剥夺对方吃星机会并规避无弹期空档。
 
 ## 四、 编码性能与复杂度约束 (Performance Standards)
 
