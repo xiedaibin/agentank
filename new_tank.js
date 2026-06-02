@@ -1,8 +1,9 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.36 - Turn Bug Fix)
- * V12.36: 拦截并修正 me.turn() 指令。平台底层仅支持相对转向 "left" / "right"，
- * 当脚本传 cardinal (如 "down") 时，平台会默认右转（顺时针），导致向左转 90 度的指令被执行成向右转 270 度（浪费 2 帧）。
- * 此版本在 onIdle 入口全局拦截 me.turn 并将其换算为最优相对旋转指令。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.39 - LoS Close-Range Penalty)
+ * V12.39: 回滚轴线横穿惩罚（V12.37/38 引入，前者错误地惩罚了逃距离行为）。
+ * 改为更精准的修复：A* 中进入近距离（≤5格）敌人枪口 LoS 直线格时，
+ * 惩罚由原 2000 提升至 9000，远距离保持 2000 不变。
+ * 不干扰横穿行为，只针对踏入枪口直线格本身。
  */
 
 var G_Blueprint = {
@@ -39,6 +40,10 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
+        if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
+            me.speak("V12.39: LoS Penalty");
+            G_History.hasSpokenInit = true;
+        }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
         if (G_History.cloakFramesLeft > 0) G_History.cloakFramesLeft--;
         if (!G_Blueprint.initialized || (enemy && !G_Blueprint.enemySeen)) strategicInit(enemy, game.map);
@@ -267,7 +272,7 @@ function tacticalDefense(me, ctx) {
                 var ghostOnAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
                 if (ghostOnAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
                     var ghostEscape = findOffAxisMove(ctx);
-                    if (ghostEscape) { ghostEscape.score = 22000; return ghostEscape; }
+                    if (ghostEscape) { me.speak("Ghost Evasion"); ghostEscape.score = 22000; return ghostEscape; }
                 }
             }
         }
@@ -284,7 +289,7 @@ function tacticalDefense(me, ctx) {
         if (onAxis && d <= 8 && canShoot(ctx.enemyPos, ctx.myPos, ctx.map) === true) {
             if (isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map)) {
                 var escape = findOffAxisMove(ctx);
-                if (escape) { escape.score = 25000; return escape; }
+                if (escape) { me.speak("SO: Evasion"); escape.score = 25000; return escape; }
                 if (ctx.canTeleport) {
                     var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                     if (esc) return { action: "teleport", target: esc, score: 99999 };
@@ -411,7 +416,14 @@ function aStar(start, goal, ctx) {
             if (tile && tile !== "x") {
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
                 if (tile === "m") cost += 200;
-                if (!isSafe(next, ctx, true)) cost += t.ASTAR_UNSAFE_PENALTY;
+                if (!isSafe(next, ctx, true)) {
+                    // 近距离（≤5格）枪口 LoS 直线格：大幅提升代价（近似禁止但保留兜底）
+                    var isCloseLoS = ctx.enemyVisible && !ctx.enemyFireLocked && ctx.enemyPos &&
+                        getDist(next, ctx.enemyPos) <= 5 &&
+                        !G_Blueprint.mapVision.grass[next[0] + "," + next[1]] &&
+                        isLoS(ctx.enemyPos, next, ctx.enemyDir, ctx.map);
+                    cost += isCloseLoS ? 9000 : t.ASTAR_UNSAFE_PENALTY;
+                }
 
                 // Smart Bullet Axis Penalty
                 if (ctx.enemyBullet && isLoS(ctx.enemyBullet.position, next, ctx.enemyBullet.direction, ctx.map)) {
@@ -449,6 +461,13 @@ function executeAction(me, act, ctx) {
         }
         var next = getNextStep(ctx.myPos, act.target, ctx);
         if (next) {
+            var isCloseLoS = ctx.enemyVisible && !ctx.enemyFireLocked && ctx.enemyPos &&
+                getDist(next, ctx.enemyPos) <= 5 &&
+                !G_Blueprint.mapVision.grass[next[0] + "," + next[1]] &&
+                isLoS(ctx.enemyPos, next, ctx.enemyDir, ctx.map);
+            if (isCloseLoS) {
+                me.speak("LoS: Close Danger");
+            }
             var tile = getTile(next, ctx.map);
             var d = directionTo(ctx.myPos, next);
             if (tile === "m") {
