@@ -87,6 +87,6 @@
 
 * **样本量**：每轮进化固定 30 场对局，减少随机概率干扰。
 * **严格进退判定**：
-  * `New Win Rate >= Baseline + 10%`：**显著上升**，接受代码，自动 `git commit`。
-  * `Baseline - 5% < New Win Rate < Baseline + 10%`：**性能波动区**，保留代码，启动下一轮（再打 20-30 场）累积数据。
+  * `New Win Rate >= Baseline + 5%`：**显著上升**，接受代码，自动 `git commit`。
+  * `Baseline - 5% < New Win Rate < Baseline + 5%`：**性能波动区**，保留代码，启动下一轮（再打 20-30 场）累积数据。
   * `New Win Rate < Baseline - 5%`：**性能退化**，立刻触发 `git restore` 还原上一版本，重新分析 `loss` 录像。

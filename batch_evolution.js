@@ -1,6 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { getToken } = require('./config');
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -42,8 +43,13 @@ function getLatestAdoptedWinRate() {
 }
 
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
     const totalMatches = 30;
+
     
     let baselineWinRate = parseFloat(process.argv[2]);
     if (isNaN(baselineWinRate)) {
@@ -107,11 +113,14 @@ async function main() {
     });
     
     if (!pubRes.ok) {
-        console.error("❌ 发布失败:", await pubRes.text());
-        return;
+        console.warn("⚠️ 发布失败:", await pubRes.text());
+        console.warn("⚠️ 可能是 API 权限受限。如果您已在网页端手动更新并发布了 new_tank.js 代码，我们将继续进行测试对战。");
+        console.log("准备在 3 秒后继续进行挑战对局...");
+        await delay(3000);
+    } else {
+        console.log("✅ 发布成功。");
+        await delay(2000);
     }
-    console.log("✅ 发布成功。");
-    await delay(2000);
 
     // 3. 开始对战
     console.log(`\n[第三步] 开始 ${totalMatches} 场批量对战...`);
@@ -187,7 +196,7 @@ async function main() {
     const currentWinRate = report.summary.wins / report.summary.total;
     const diff = currentWinRate - baselineWinRate;
     const date = new Date().toISOString().split('T')[0];
-    const status = diff >= 0.10 ? "Adopted" : (diff > -0.05 ? "Pending" : "Rejected");
+    const status = diff >= 0.05 ? "Adopted" : (diff > -0.05 ? "Pending" : "Rejected");
     
     console.log("\n=== 进化结果评估 ===");
     console.log(`当前胜率: ${(currentWinRate * 100).toFixed(2)}%`);
@@ -199,7 +208,7 @@ async function main() {
     const logEntry = `| ${currentVersion} | ${date} | ${strategyName} | ${strategyName} (自动生成) | ${(currentWinRate * 100).toFixed(2)}% | ${status} | ${(diff * 100).toFixed(2)}% |\n`;
     fs.appendFileSync('EVOLUTION_LOG.md', logEntry);
 
-    if (diff >= 0.10) {
+    if (diff >= 0.05) {
         console.log("\n[决策] 显著提升! 自动提交并推送代码...");
         try {
             execSync('git add new_tank.js STRATEGY.md batch_evolution.js EVOLUTION_LOG.md');

@@ -1,1120 +1,130 @@
 {
   "summary": {
-    "requested": 50,
-    "total": 50,
-    "wins": 30,
-    "losses": 20,
-    "draws": 0,
-    "initialRankScore": 2710,
-    "initialRankPoints": 910,
-    "finalRankScore": 2764,
-    "finalRankPoints": 964,
-    "rankScoreDelta": 54
+    "total": 10,
+    "wins": 4,
+    "losses": 6,
+    "draws": 0
   },
-  "mapRotation": [
-    "random",
-    "classic",
-    "arena",
-    "public-map-53",
-    "public-map-16",
-    "public-map-15",
-    "public-map-6",
-    "public-map-1"
-  ],
-  "opponentMode": "best",
-  "mapMode": "random",
-  "topEligibleOpponents": [
-    {
-      "id": 8,
-      "name": "DKAGENT",
-      "rankScore": 2797,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 997,
-      "skillType": "shield"
-    },
-    {
-      "id": 1972,
-      "name": "DETHGORF 1",
-      "rankScore": 2776,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 976,
-      "skillType": "overload"
-    },
-    {
-      "id": 3204,
-      "name": "缓称王",
-      "rankScore": 2766,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 966,
-      "skillType": "teleport"
-    },
-    {
-      "id": 3214,
-      "name": "Saiyan",
-      "rankScore": 2728,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 928,
-      "skillType": "boost"
-    },
-    {
-      "id": 1905,
-      "name": "KAI",
-      "rankScore": 2716,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 916,
-      "skillType": "overload"
-    },
-    {
-      "id": 1631,
-      "name": "AngelLost",
-      "rankScore": 2693,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 893,
-      "skillType": "poison"
-    },
-    {
-      "id": 1894,
-      "name": "keith",
-      "rankScore": 2684,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 884,
-      "skillType": "teleport"
-    },
-    {
-      "id": 1414,
-      "name": "Taoqi",
-      "rankScore": 2666,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 866,
-      "skillType": "cloak"
-    },
-    {
-      "id": 1148,
-      "name": "Bolun",
-      "rankScore": 2660,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 860,
-      "skillType": "overload"
-    },
-    {
-      "id": 1610,
-      "name": "occupation-a",
-      "rankScore": 2656,
-      "rankTier": "champion",
-      "rankDivision": 1,
-      "rankPoints": 856,
-      "skillType": "overload"
-    }
-  ],
   "matches": [
     {
       "matchNum": 1,
       "status": "success",
       "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
       "reason": "crashed",
-      "matchUrlId": "mat_ETx3v9XYHekD7Hseg",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 8,
-      "winnerTankName": "DKAGENT",
-      "rankDelta": -15,
-      "rankScoreAfter": 2695,
-      "rankPointsAfter": 895,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_ETx3v9XYHekD7Hseg/agent.json"
+      "matchUrlId": "mat_HFer24VU7UYEyuKAR",
+      "opponent": "AngelLost",
+      "opponentTankId": 1631,
+      "winnerTankId": 1631,
+      "winnerTankName": "AngelLost",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_HFer24VU7UYEyuKAR/agent.json"
     },
     {
       "matchNum": 2,
       "status": "success",
       "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
       "reason": "crashed",
-      "matchUrlId": "mat_HSP5N9nXmOlGUUGaG",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 1972,
-      "winnerTankName": "DETHGORF 1",
-      "rankDelta": -14,
-      "rankScoreAfter": 2681,
-      "rankPointsAfter": 881,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_HSP5N9nXmOlGUUGaG/agent.json"
+      "matchUrlId": "mat_6iUG9pHpAKSJK0Uz5",
+      "opponent": "Allan",
+      "opponentTankId": 606,
+      "winnerTankId": 606,
+      "winnerTankName": "Allan",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_6iUG9pHpAKSJK0Uz5/agent.json"
     },
     {
       "matchNum": 3,
       "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
+      "result": "loss",
       "reason": "crashed",
-      "matchUrlId": "mat_1nPBQdFsBHN2UOcFm",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 25,
-      "rankScoreAfter": 2706,
-      "rankPointsAfter": 906,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_1nPBQdFsBHN2UOcFm/agent.json"
+      "matchUrlId": "mat_Jcn0UW19I8IAqCarW",
+      "opponent": "Taoqi",
+      "opponentTankId": 1414,
+      "winnerTankId": 1414,
+      "winnerTankName": "Taoqi",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Jcn0UW19I8IAqCarW/agent.json"
     },
     {
       "matchNum": 4,
       "status": "success",
       "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_6hJeAOpaJC3GA4DdK",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
+      "reason": "crashed",
+      "matchUrlId": "mat_G7773H5NA861F0Xkp",
+      "opponent": "巧乐兹",
+      "opponentTankId": 2148,
       "winnerTankId": 230,
       "winnerTankName": "XDB",
-      "rankDelta": 23,
-      "rankScoreAfter": 2729,
-      "rankPointsAfter": 929,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_6hJeAOpaJC3GA4DdK/agent.json"
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_G7773H5NA861F0Xkp/agent.json"
     },
     {
       "matchNum": 5,
       "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_3BHAW7jAOAtCYPGcM",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 1905,
-      "winnerTankName": "KAI",
-      "rankDelta": -26,
-      "rankScoreAfter": 2703,
-      "rankPointsAfter": 903,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_3BHAW7jAOAtCYPGcM/agent.json"
+      "result": "win",
+      "reason": "star",
+      "matchUrlId": "mat_3Y19ajjBA6k7JMsLy",
+      "opponent": "巨猿啼魂",
+      "opponentTankId": 2828,
+      "winnerTankId": 230,
+      "winnerTankName": "XDB",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_3Y19ajjBA6k7JMsLy/agent.json"
     },
     {
       "matchNum": 6,
       "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
+      "result": "win",
       "reason": "star",
-      "matchUrlId": "mat_6GsSGbpaaC70kuoP7",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 8,
-      "winnerTankName": "DKAGENT",
-      "rankDelta": -13,
-      "rankScoreAfter": 2666,
-      "rankPointsAfter": 866,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_6GsSGbpaaC70kuoP7/agent.json"
+      "matchUrlId": "mat_I1vfj3UqppD1jxCzz",
+      "opponent": "时光",
+      "opponentTankId": 1663,
+      "winnerTankId": 230,
+      "winnerTankName": "XDB",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_I1vfj3UqppD1jxCzz/agent.json"
     },
     {
       "matchNum": 7,
       "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_6Bp3XDIRnOD1EdyYE",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 1972,
-      "winnerTankName": "DETHGORF 1",
-      "rankDelta": -13,
-      "rankScoreAfter": 2673,
-      "rankPointsAfter": 873,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_6Bp3XDIRnOD1EdyYE/agent.json"
+      "result": "win",
+      "reason": "star",
+      "matchUrlId": "mat_EdtawpX4mCy0Dot38",
+      "opponent": "疯跑拆迁仔",
+      "opponentTankId": 1869,
+      "winnerTankId": 230,
+      "winnerTankName": "XDB",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_EdtawpX4mCy0Dot38/agent.json"
     },
     {
       "matchNum": 8,
       "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
+      "result": "loss",
       "reason": "crashed",
-      "matchUrlId": "mat_9JonzrRrgKA6iLj12",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 24,
-      "rankScoreAfter": 2697,
-      "rankPointsAfter": 897,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_9JonzrRrgKA6iLj12/agent.json"
+      "matchUrlId": "mat_BTcHL2B4qJa6GCLQl",
+      "opponent": "Taoqi",
+      "opponentTankId": 1414,
+      "winnerTankId": 1414,
+      "winnerTankName": "Taoqi",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_BTcHL2B4qJa6GCLQl/agent.json"
     },
     {
       "matchNum": 9,
       "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_JVpJkYY1zAeHRy8zZ",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 21,
-      "rankScoreAfter": 2718,
-      "rankPointsAfter": 918,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_JVpJkYY1zAeHRy8zZ/agent.json"
+      "result": "loss",
+      "reason": "crashed",
+      "matchUrlId": "mat_J7fco9KqDby4AlNRF",
+      "opponent": "保时捷911",
+      "opponentTankId": 3293,
+      "winnerTankId": 3293,
+      "winnerTankName": "保时捷911",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_J7fco9KqDby4AlNRF/agent.json"
     },
     {
       "matchNum": 10,
       "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_IRt6Ti3cPDj1BZd6d",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2736,
-      "rankPointsAfter": 936,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_IRt6Ti3cPDj1BZd6d/agent.json"
-    },
-    {
-      "matchNum": 11,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_2f5DRKi9IwxBHCvcN",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 25,
-      "rankScoreAfter": 2761,
-      "rankPointsAfter": 961,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_2f5DRKi9IwxBHCvcN/agent.json"
-    },
-    {
-      "matchNum": 12,
-      "status": "success",
       "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "runTime",
-      "matchUrlId": "mat_Ku10GqWC7NlGPkFzc",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 1972,
-      "winnerTankName": "DETHGORF 1",
-      "rankDelta": -16,
-      "rankScoreAfter": 2745,
-      "rankPointsAfter": 945,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Ku10GqWC7NlGPkFzc/agent.json"
-    },
-    {
-      "matchNum": 13,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
       "reason": "crashed",
-      "matchUrlId": "mat_9KkyWrBYraZ8TkVmO",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2763,
-      "rankPointsAfter": 963,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_9KkyWrBYraZ8TkVmO/agent.json"
-    },
-    {
-      "matchNum": 14,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_KOtqPw1f9vc38zvg6",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 3214,
-      "winnerTankName": "Saiyan",
-      "rankDelta": -23,
-      "rankScoreAfter": 2740,
-      "rankPointsAfter": 940,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_KOtqPw1f9vc38zvg6/agent.json"
-    },
-    {
-      "matchNum": 15,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_4UnzCvLfKQB4a64mX",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 1905,
-      "winnerTankName": "KAI",
-      "rankDelta": -27,
-      "rankScoreAfter": 2713,
-      "rankPointsAfter": 913,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_4UnzCvLfKQB4a64mX/agent.json"
-    },
-    {
-      "matchNum": 16,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_30Xmh9Y5cb2CWkX5e",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 8,
-      "winnerTankName": "DKAGENT",
-      "rankDelta": -15,
-      "rankScoreAfter": 2698,
-      "rankPointsAfter": 898,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_30Xmh9Y5cb2CWkX5e/agent.json"
-    },
-    {
-      "matchNum": 17,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_BqQZ1Fu0xsjAxCZy8",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 29,
-      "rankScoreAfter": 2727,
-      "rankPointsAfter": 927,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_BqQZ1Fu0xsjAxCZy8/agent.json"
-    },
-    {
-      "matchNum": 18,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_0ie9UNvTI9sFbt8S1",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 20,
-      "rankScoreAfter": 2747,
-      "rankPointsAfter": 947,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_0ie9UNvTI9sFbt8S1/agent.json"
-    },
-    {
-      "matchNum": 19,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_E65Q4Ys09R4Eum5lR",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 3214,
-      "winnerTankName": "Saiyan",
-      "rankDelta": -21,
-      "rankScoreAfter": 2726,
-      "rankPointsAfter": 926,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_E65Q4Ys09R4Eum5lR/agent.json"
-    },
-    {
-      "matchNum": 20,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_7q95bg19Qmj5Rd65v",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2744,
-      "rankPointsAfter": 944,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_7q95bg19Qmj5Rd65v/agent.json"
-    },
-    {
-      "matchNum": 21,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_CtvUOFnF2zLDpmWXE",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 23,
-      "rankScoreAfter": 2767,
-      "rankPointsAfter": 967,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_CtvUOFnF2zLDpmWXE/agent.json"
-    },
-    {
-      "matchNum": 22,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_Cj9HK79Hzy80F72d3",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 1972,
-      "winnerTankName": "DETHGORF 1",
-      "rankDelta": -14,
-      "rankScoreAfter": 2753,
-      "rankPointsAfter": 953,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Cj9HK79Hzy80F72d3/agent.json"
-    },
-    {
-      "matchNum": 23,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_D3RkkYwZk0u4nWLnR",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 3204,
-      "winnerTankName": "缓称王",
-      "rankDelta": -23,
-      "rankScoreAfter": 2730,
-      "rankPointsAfter": 930,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_D3RkkYwZk0u4nWLnR/agent.json"
-    },
-    {
-      "matchNum": 24,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_F9b3QxEUPc7FN3o8G",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 21,
-      "rankScoreAfter": 2751,
-      "rankPointsAfter": 951,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_F9b3QxEUPc7FN3o8G/agent.json"
-    },
-    {
-      "matchNum": 25,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_39DNGGiI7JbFelhsK",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 13,
-      "rankScoreAfter": 2764,
-      "rankPointsAfter": 964,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_39DNGGiI7JbFelhsK/agent.json"
-    },
-    {
-      "matchNum": 26,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_G8N2SyD4olR8rrj5o",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 21,
-      "rankScoreAfter": 2785,
-      "rankPointsAfter": 985,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_G8N2SyD4olR8rrj5o/agent.json"
-    },
-    {
-      "matchNum": 27,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_HlQbX9stQqGFEZrtw",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 26,
-      "rankScoreAfter": 2811,
-      "rankPointsAfter": 1011,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_HlQbX9stQqGFEZrtw/agent.json"
-    },
-    {
-      "matchNum": 28,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_C4ipN8K49byIi8f50",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 3204,
-      "winnerTankName": "缓称王",
-      "rankDelta": -25,
-      "rankScoreAfter": 2767,
-      "rankPointsAfter": 967,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_C4ipN8K49byIi8f50/agent.json"
-    },
-    {
-      "matchNum": 29,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_03NDpfUgLsIGWeo1O",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 3214,
-      "winnerTankName": "Saiyan",
-      "rankDelta": -22,
-      "rankScoreAfter": 2728,
-      "rankPointsAfter": 928,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_03NDpfUgLsIGWeo1O/agent.json"
-    },
-    {
-      "matchNum": 30,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_7dMmfwam0HqEJlsMB",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 14,
-      "rankScoreAfter": 2760,
-      "rankPointsAfter": 960,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_7dMmfwam0HqEJlsMB/agent.json"
-    },
-    {
-      "matchNum": 31,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_IS69pzJ3VxqJLJBQ0",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 20,
-      "rankScoreAfter": 2780,
-      "rankPointsAfter": 980,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_IS69pzJ3VxqJLJBQ0/agent.json"
-    },
-    {
-      "matchNum": 32,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_KMRp5BjQSTwJz5dGj",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 24,
-      "rankScoreAfter": 2804,
-      "rankPointsAfter": 1004,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_KMRp5BjQSTwJz5dGj/agent.json"
-    },
-    {
-      "matchNum": 33,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_7LBBH2NrLGFCKm8Tc",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2822,
-      "rankPointsAfter": 1022,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_7LBBH2NrLGFCKm8Tc/agent.json"
-    },
-    {
-      "matchNum": 34,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_CtZBeOILUBS5RYicF",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2840,
-      "rankPointsAfter": 1040,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_CtZBeOILUBS5RYicF/agent.json"
-    },
-    {
-      "matchNum": 35,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_79K8OA1lg9cCMzJOg",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 10,
-      "rankScoreAfter": 2827,
-      "rankPointsAfter": 1027,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_79K8OA1lg9cCMzJOg/agent.json"
-    },
-    {
-      "matchNum": 36,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_4UWvYQjbZzo1sOy9E",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 14,
-      "rankScoreAfter": 2861,
-      "rankPointsAfter": 1061,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_4UWvYQjbZzo1sOy9E/agent.json"
-    },
-    {
-      "matchNum": 37,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_JWPvTTZl8Z1J2Q1xm",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 1972,
-      "winnerTankName": "DETHGORF 1",
-      "rankDelta": -22,
-      "rankScoreAfter": 2816,
-      "rankPointsAfter": 1016,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_JWPvTTZl8Z1J2Q1xm/agent.json"
-    },
-    {
-      "matchNum": 38,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_1lfEQaPGFl49EWLhY",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 14,
-      "rankScoreAfter": 2851,
-      "rankPointsAfter": 1051,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_1lfEQaPGFl49EWLhY/agent.json"
-    },
-    {
-      "matchNum": 39,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_EoznbxRPPxiBunL6C",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 3214,
-      "winnerTankName": "Saiyan",
-      "rankDelta": -26,
-      "rankScoreAfter": 2803,
-      "rankPointsAfter": 1003,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_EoznbxRPPxiBunL6C/agent.json"
-    },
-    {
-      "matchNum": 40,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_A0TNb3EZeI9AUJqeu",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 10,
-      "rankScoreAfter": 2813,
-      "rankPointsAfter": 1013,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_A0TNb3EZeI9AUJqeu/agent.json"
-    },
-    {
-      "matchNum": 41,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_8zJehmQvOAHI6RoiK",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 14,
-      "rankScoreAfter": 2848,
-      "rankPointsAfter": 1048,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_8zJehmQvOAHI6RoiK/agent.json"
-    },
-    {
-      "matchNum": 42,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_C2UyWEKCKOABuaCDy",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 18,
-      "rankScoreAfter": 2884,
-      "rankPointsAfter": 1084,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_C2UyWEKCKOABuaCDy/agent.json"
-    },
-    {
-      "matchNum": 43,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "star",
-      "matchUrlId": "mat_2MSl69CMZlY6lKh16",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 12,
-      "rankScoreAfter": 2871,
-      "rankPointsAfter": 1071,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_2MSl69CMZlY6lKh16/agent.json"
-    },
-    {
-      "matchNum": 44,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_EPiWWadi7dxK6R2sE",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 14,
-      "rankScoreAfter": 2856,
-      "rankPointsAfter": 1056,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_EPiWWadi7dxK6R2sE/agent.json"
-    },
-    {
-      "matchNum": 45,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_CXym7U90TBs2UmK7H",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 1905,
-      "winnerTankName": "KAI",
-      "rankDelta": -31,
-      "rankScoreAfter": 2825,
-      "rankPointsAfter": 1025,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_CXym7U90TBs2UmK7H/agent.json"
-    },
-    {
-      "matchNum": 46,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 8,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_EqGgz9FWbdzKjzexF",
-      "opponent": "DKAGENT",
-      "opponentTankId": 8,
-      "winnerTankId": 8,
-      "winnerTankName": "DKAGENT",
-      "rankDelta": -26,
-      "rankScoreAfter": 2799,
-      "rankPointsAfter": 999,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_EqGgz9FWbdzKjzexF/agent.json"
-    },
-    {
-      "matchNum": 47,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1972,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_7eGN7Vew1JL9boSnp",
-      "opponent": "DETHGORF 1",
-      "opponentTankId": 1972,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 19,
-      "rankScoreAfter": 2818,
-      "rankPointsAfter": 1018,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_7eGN7Vew1JL9boSnp/agent.json"
-    },
-    {
-      "matchNum": 48,
-      "status": "success",
-      "result": "win",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3204,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_Ldd7BqL3EUJAVvEq1",
-      "opponent": "缓称王",
-      "opponentTankId": 3204,
-      "winnerTankId": 230,
-      "winnerTankName": "XDB",
-      "rankDelta": 20,
-      "rankScoreAfter": 2838,
-      "rankPointsAfter": 1038,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_Ldd7BqL3EUJAVvEq1/agent.json"
-    },
-    {
-      "matchNum": 49,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 3214,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_3kz3jKJB2kFHphtWZ",
-      "opponent": "Saiyan",
-      "opponentTankId": 3214,
-      "winnerTankId": 3214,
-      "winnerTankName": "Saiyan",
-      "rankDelta": -26,
-      "rankScoreAfter": 2790,
-      "rankPointsAfter": 990,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_3kz3jKJB2kFHphtWZ/agent.json"
-    },
-    {
-      "matchNum": 50,
-      "status": "success",
-      "result": "loss",
-      "mapId": "random",
-      "challengeBody": {
-        "opponentTankId": 1905,
-        "mapId": "random"
-      },
-      "reason": "crashed",
-      "matchUrlId": "mat_IxAqWY7bXEJ0Q3lyG",
-      "opponent": "KAI",
-      "opponentTankId": 1905,
-      "winnerTankId": 1905,
-      "winnerTankName": "KAI",
-      "rankDelta": -26,
-      "rankScoreAfter": 2764,
-      "rankPointsAfter": 964,
-      "agentReplayUrl": "https://agentank.ai/api/matches/mat_IxAqWY7bXEJ0Q3lyG/agent.json"
+      "matchUrlId": "mat_IjZCjdoLWuX48DqFu",
+      "opponent": "小强",
+      "opponentTankId": 1394,
+      "winnerTankId": 1394,
+      "winnerTankName": "小强",
+      "agentReplayUrl": "https://agentank.ai/api/matches/mat_IjZCjdoLWuX48DqFu/agent.json"
     }
   ]
 }
