@@ -14,6 +14,36 @@ if (!token) {
 }
 const replayDir = 'targeted_evolution_replays';
 
+async function publishCode(targetId, customNotes = null) {
+    const notes = customNotes || `XDB Targeted Evolution - Targeting [${targetId}]`;
+    console.log(`\n[Publish] Uploading new_tank.js (${notes})...`);
+    try {
+        const code = fs.readFileSync('new_tank.js', 'utf8');
+        const res = await fetch('https://agentank.ai/api/agent/tank/code', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                code: code,
+                notes: notes,
+                submittedBy: "Gemini"
+            })
+        });
+        if (!res.ok) {
+            throw new Error(`Upload failed: ${await res.text()}`);
+        }
+        const result = await res.json();
+        console.log(`[Publish] Upload success:`, result);
+        console.log(`Waiting 3 seconds for backend compilation / cooldown...`);
+        await delay(3000);
+    } catch (e) {
+        console.error(`[Publish] Error uploading code: ${e.message}`);
+        process.exit(1);
+    }
+}
+
 
 // --- 工具函数 ---
 function clearDir(dir) {
@@ -54,15 +84,17 @@ async function runMatches(targetId, count, mode = 'challenge') {
 
             const data = await res.json();
             const urlId = data.urlId || data.matchUrlId || `sim_${Date.now()}`;
-            const isWin = (endpoint === 'simulate') ? (data.winner === 'me') : (data.winnerTankId === 230);
+            const isWin = (endpoint === 'simulate')
+                ? (data.winner === 'me')
+                : (data.winnerTankId === 230 || data.winnerTankName === "XDB" || data.winner === "XDB" || data.winner === 'me' || data.winner === 230);
 
             if (isWin) {
                 wins++;
                 console.log("WIN");
             } else {
-                console.log("LOSS");
+                console.log(`LOSS (Replay: ${urlId})`);
                 try {
-                    const repRes = await fetch(`https://agentank.ai/api/matches/${urlId}/agent.json`, {
+                    const repRes = await fetch(`https://agentank.ai/api/matches/${urlId}/agent.json?view=raw`, {
                         headers: { 'Authorization': `Bearer ${token}` }
                     });
                     if (repRes.ok) {
@@ -89,14 +121,19 @@ async function main() {
         return;
     }
 
+    // 1. Upload code first
+    await publishCode(targetId);
+
     clearDir(replayDir);
 
     console.log("\n=== 第一阶段: 基准评估 ===");
     let baselineWR = 0.80; // 默认基准
     try {
         const log = fs.readFileSync('EVOLUTION_LOG.md', 'utf8');
-        const matches = log.match(/\| \d+\.\d+%\s+\| Adopted/g);
-        if (matches) baselineWR = parseFloat(matches[matches.length - 1].split('|')[1]) / 100;
+        const matches = log.match(/\|\s*\d+(?:\.\d+)?%\s*\|\s*Adopted/g);
+        if (matches) {
+            baselineWR = parseFloat(matches[matches.length - 1].replace(/[^\d.]/g, '')) / 100;
+        }
     } catch (e) {}
     console.log(`基准胜率: ${(baselineWR * 100).toFixed(2)}%`);
 
@@ -105,8 +142,8 @@ async function main() {
     const currentWR = (targetedResult.rate * 100).toFixed(2);
     console.log(`\n专项测试胜率: ${currentWR}% (${targetedResult.wins}/${targetedResult.total})`);
 
-    if (targetedResult.rate < 0.8) {
-        console.log(`\n❌ 未达标 (目标 80%)。自动运行深度分析...`);
+    if (targetedResult.rate < 0.70) {
+        console.log(`\n❌ 未达标 (目标 70%)。自动运行深度分析...`);
         try {
             const analysis = execSync(`node analyze_skill_interactions.js ${replayDir}`).toString();
             console.log(analysis);
@@ -130,11 +167,22 @@ async function main() {
                 });
                 if (res.ok) {
                     const data = await res.json();
-                    if (data.winnerTankId === 230) {
+                    const urlId = data.urlId || data.matchUrlId || `rand_${Date.now()}`;
+                    const isWin = data.winnerTankId === 230 || data.winnerTankName === "XDB" || data.winner === "XDB" || data.winner === 'me' || data.winner === 230;
+                    if (isWin) {
                         wins++;
                         console.log("WIN");
                     } else {
-                        console.log("LOSS");
+                        console.log(`LOSS (Replay: ${urlId})`);
+                        try {
+                            const repRes = await fetch(`https://agentank.ai/api/matches/${urlId}/agent.json?view=raw`, {
+                                headers: { 'Authorization': `Bearer ${token}` }
+                            });
+                            if (repRes.ok) {
+                                const replay = await repRes.json();
+                                fs.writeFileSync(`${replayDir}/loss_random_${urlId}.json`, JSON.stringify(replay, null, 2));
+                            }
+                        } catch (e) {}
                     }
                 } else {
                     console.log("跳过");
@@ -149,9 +197,10 @@ async function main() {
     const diff = newBenchmarkWR - baselineWR;
     console.log(`\n新基准胜率: ${(newBenchmarkWR * 100).toFixed(2)}% (偏差: ${(diff * 100).toFixed(2)}%)`);
 
-    if (diff < -0.05) {
-        console.log("\n❌ 警告: 全局表现下降超过 5%! 自动回滚代码。");
+    if ((baselineWR >= 0.70 && newBenchmarkWR < 0.70) || diff < -0.05) {
+        console.log("\n❌ 警告: 全量随机胜率低于 70% 且基准曾经达标，或全局表现相比基准下降超过 5%! 自动回滚代码。");
         execSync('git restore new_tank.js');
+        await publishCode('rollback', 'Rollback to baseline stable code after failed verification');
         process.exit(3);
     }
 

@@ -111,10 +111,12 @@ async function main() {
         enemyId = raw.replayData.replay.meta.players[1].tank.id;
         enemyName = participants.defender.tankName;
     }
+    const meIndex = raw.replayData.replay.meta.players[0].tank.id === meId ? 0 : 1;
+    const enemyIndex = 1 - meIndex;
 
     console.log(`\n=================== Simulation Config ===================`);
-    console.log(`  My Tank (XDB) ID : ${meId}`);
-    console.log(`  Enemy (${enemyName}) ID : ${enemyId}`);
+    console.log(`  My Tank (XDB) ID : ${meId} (Index: ${meIndex})`);
+    console.log(`  Enemy (${enemyName}) ID : ${enemyId} (Index: ${enemyIndex})`);
     console.log(`=========================================================\n`);
 
     // Extract starting positions & directions
@@ -221,8 +223,8 @@ async function main() {
 
         // Parse events for this frame to update simulator state
         for (const ev of frameEvents) {
-            const isMe = (ev.objectId === meId || ev.sourceObjectId === meId || ev.targetObjectId === meId || ev.by === 1);
-            const isEnemy = (ev.objectId === enemyId || ev.sourceObjectId === enemyId || ev.targetObjectId === enemyId || ev.by === 0);
+            const isMe = (ev.objectId === meId || ev.sourceObjectId === meId || ev.targetObjectId === meId || ev.by === meIndex);
+            const isEnemy = (ev.objectId === enemyId || ev.sourceObjectId === enemyId || ev.targetObjectId === enemyId || ev.by === enemyIndex);
 
             // 1. Movement and turning
             if (isMe) {
@@ -239,7 +241,7 @@ async function main() {
                     meFireLockTimer = 2; // firelocked for 2 frames
                 } else if (ev.event === "fire" || ev.action === "fire" || ev.action === "created" && ev.type === "bullet") {
                     meActualActionStr = `FIRE direction ${ev.direction || meDir}`;
-                } else if (ev.event === "crashed") {
+                } else if (ev.event === "crashed" || ev.action === "crashed") {
                     meActualActionStr = `CRASHED`;
                 }
             } else if (isEnemy) {
@@ -256,7 +258,7 @@ async function main() {
                     enemyFireLockTimer = 2;
                 } else if (ev.event === "fire" || ev.action === "fire" || ev.action === "created" && ev.type === "bullet") {
                     enemyActualActionStr = `FIRE direction ${ev.direction || enemyDir}`;
-                } else if (ev.event === "crashed") {
+                } else if (ev.event === "crashed" || ev.action === "crashed") {
                     enemyActualActionStr = `CRASHED`;
                 }
             }
@@ -318,7 +320,7 @@ async function main() {
                 if (sType === "stun" || dType === "stunned") updateStatus(stat, "stunned", true);
                 if (sType === "poison" || dType === "poisoned") updateStatus(stat, "poisoned", true);
             }
-            if (ev.action === "removed") {
+            if (ev.action === "removed" || ev.action === "expired") {
                 const sType = ev.skillType;
                 const dType = ev.debuffType;
                 const targetObj = ev.targetObjectId;
