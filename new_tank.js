@@ -1,8 +1,8 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.40 - Evasion Tie-Breaker & Off-Axis Focus)
- * V12.40: 优化避弹逻辑中的打平判定，当多个邻居脱离轴线的格得分相同时，
- * 优先选择不需转向（与当前朝向一致）的格子，并且优先选择真正的非共轴格子，
- * 解决被避开一次后因转向开销过大而在原地待机受击的问题。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.41 - Overload 3-Wide Gun Line Fix)
+ * V12.41: 修复 overload 枪线宽度判断——之前只检查主线+右偏（2格），
+ * 根据 STRATEGY.md overload 为 3 格宽（左偏+主线+右偏），
+ * 补全左偏线检测，防止 [13,6] 类型的左侧被击中场景。
  */
 
 var G_Blueprint = {
@@ -45,7 +45,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.39: LoS Penalty");
+            me.speak("V12.41: OL 3-Wide");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -168,10 +168,12 @@ function buildExecutionContext(me, enemy, game) {
             }
         }
         var dirs = ["up", "down", "left", "right"];
+        var hasOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
         for (var i = 0; i < potentialGrass.length; i++) {
             var g = potentialGrass[i];
             for (var j = 0; j < dirs.length; j++) {
-                var d = delta(dirs[j]);
+                var dirStr = dirs[j];
+                var d = delta(dirStr);
                 var p = [g[0] + d[0], g[1] + d[1]];
                 var safety = 0;
                 while (safety < 30) {
@@ -182,6 +184,23 @@ function buildExecutionContext(me, enemy, game) {
                     }
                     p = [p[0] + d[0], p[1] + d[1]];
                     safety++;
+                }
+
+                if (hasOverload) {
+                    var rightDir = { up: "right", right: "up", down: "left", left: "down" }[dirStr];
+                    var rDelta = delta(rightDir);
+                    var offsetOrigin = [g[0] + rDelta[0], g[1] + rDelta[1]];
+                    var p2 = [offsetOrigin[0] + d[0], offsetOrigin[1] + d[1]];
+                    var safety2 = 0;
+                    while (safety2 < 30) {
+                        var tile2 = getTile(p2, game.map);
+                        if (!tile2 || tile2 === "x" || tile2 === "m") break;
+                        if (tile2 !== "o") {
+                            unsafeCoAxialTiles[p2[0] + "," + p2[1]] = true;
+                        }
+                        p2 = [p2[0] + d[0], p2[1] + d[1]];
+                        safety2++;
+                    }
                 }
             }
         }
@@ -293,12 +312,18 @@ function evalGrassAmbushAndSurvival(ctx) {
         //if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
-            if (ctx.enemyVisible && canShoot(ctx.myPos, ctx.enemyPos, ctx.map) === true) {
-                var d = directionTo(ctx.myPos, ctx.enemyPos);
-                if (ctx.myDir === d) return { action: "move", target: ctx.myPos, score: score + 100 };
-                if (ctx.enemyDir !== reverseDir(d)) return { action: "turn", target: ctx.enemyPos, score: score + 50 };
+            // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
+            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 3;
+            if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
+                // 不在此处 return，让它fall-through到下面的grass寻路
+            } else {
+                if (ctx.enemyVisible && canShoot(ctx.myPos, ctx.enemyPos, ctx.map) === true) {
+                    var d = directionTo(ctx.myPos, ctx.enemyPos);
+                    if (ctx.myDir === d) return { action: "move", target: ctx.myPos, score: score + 100 };
+                    if (ctx.enemyDir !== reverseDir(d)) return { action: "turn", target: ctx.enemyPos, score: score + 50 };
+                }
+                return { action: "move", target: ctx.myPos, score: score };
             }
-            return { action: "move", target: ctx.myPos, score: score };
         }
 
         score = 250 - getDist(ctx.myPos, grass) * 10;
@@ -403,9 +428,13 @@ function isOnEnemyGunLine(pos, ctx, checkOverload) {
     if (!ctx.enemyPos || !ctx.enemyDir) return false;
     if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return true;
     if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
+        // Overload 枪线为 3 格宽：主线 + 右偏 + 左偏
         var rightDir = { up: "right", right: "down", down: "left", left: "up" }[ctx.enemyDir];
+        var leftDir  = { up: "left",  right: "up",   down: "right", left: "down" }[ctx.enemyDir];
         var rightOrigin = addPos(ctx.enemyPos, delta(rightDir));
+        var leftOrigin  = addPos(ctx.enemyPos, delta(leftDir));
         if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;
+        if (isLoS(leftOrigin,  pos, ctx.enemyDir, ctx.map)) return true;
     }
     return false;
 }
@@ -418,9 +447,10 @@ function isSafe(pos, ctx, strict) {
     if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
         if (ctx.enemyVisible) {
-            // ✅ 草丛格豁免 LoS 检查——进去就隐身，不算危险
             var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-            if (!isGrass && isOnEnemyGunLine(pos, ctx, true)) return false;
+            // Overload 近距离（≤3格）取消草丛豁免：子弹穿草，草丛无法提供物理防护
+            var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 3;
+            if ((!isGrass || overloadNearby) && isOnEnemyGunLine(pos, ctx, true)) return false;
             if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
             if (d < 2) return false;
         } else {
