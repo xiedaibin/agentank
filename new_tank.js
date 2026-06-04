@@ -927,8 +927,7 @@ function hasWalkableExit(pos, map) {
     var dirs = ["up", "down", "left", "right"];
     for (var i = 0; i < dirs.length; i++) {
         var np = addPos(pos, delta(dirs[i]));
-        var tile = getTile(np, map);
-        if (tile && tile !== "x") return true;
+        if (isPassable(np, map)) return true;
     }
     return false;
 }
