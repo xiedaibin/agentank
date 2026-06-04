@@ -25,7 +25,8 @@ var G_History = {
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
-    lastEnemyOverloadedFrame: null
+    lastEnemyOverloadedFrame: null,
+    killModeActive: false  // 单挑期落后≥2星时触发，一旦开启延续到局结束
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -60,6 +61,17 @@ function onIdle(me, enemy, game) {
         if (!G_Blueprint.initialized || (target && !G_Blueprint.enemySeen)) strategicInit(target, game.map);
 
         var ctx = buildExecutionContext(me, target, game);
+
+        // Kill Mode 触发检测：单挑期落后≥2星就启动击杀模式（一旦触发不可逆）
+        if (ctx.alivePlayers <= 2 && !G_History.killModeActive && ctx.enemy) {
+            var enemyStars = ctx.enemy.stars || 0;
+            if (ctx.meStars <= enemyStars - 2) {
+                G_History.killModeActive = true;
+                me.speak("Kill Mode!");
+            }
+        }
+        ctx.killMode = G_History.killModeActive;
+
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
 
         // 1. 绝杀与 Mound 压制
@@ -263,8 +275,8 @@ function evalPanicTeleport(ctx) {
 
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
-    // 单挑期：禁止主动传送暗杀，让坦克专注于吃星而不是主动寻战击杀
-    if (ctx.alivePlayers <= 2) return null;
+    // 单挑期：禁止主动传送暗杀（Kill Mode 展开击杀时除外）
+    if (ctx.alivePlayers <= 2 && !ctx.killMode) return null;
     if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
     if (ctx.enemyFireLocked || (ctx.enemy && ctx.meStars < ctx.enemy.stars && !ctx.enemySkillReady)) {
         var spot = findAssassinSpot(ctx);
@@ -285,9 +297,10 @@ function evalShooting(ctx) {
         }
         // 单挑期且场上有星星：将「转炮瞄准」权重压低到 500，让坦克优先去吃星
         // 注：直接顺手开炮（已对准）由 onIdle 第一步处理，不依赖此函数
-        // 例外：敌人贴身（≤2格）时恢复高权重自保（逃跑优先由 evalCloseEnemyEscape 处理）
+        // 例外1：敌人贴身（≤2格）时恢复高权重自保
+        // 例外2：Kill Mode 启动后恢复全力击杀
         var killScore = CONFIG.KILL_PRIO - 100;
-        if (ctx.alivePlayers <= 2 && ctx.starPos) {
+        if (ctx.alivePlayers <= 2 && ctx.starPos && !ctx.killMode) {
             var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 2;
             killScore = enemyClose ? (CONFIG.KILL_PRIO - 100) : 500;
         }
@@ -300,8 +313,9 @@ function evalPreAim(ctx) {
     if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
 
     // 单挑期且场上有星星：禁止预瞄转炮，避免浪费行动帧对准敌人
-    // 例外：敌人贴身（≤2格）时恢复高权重自保（逃跑优先由 evalCloseEnemyEscape 处理）
-    if (ctx.alivePlayers <= 2 && ctx.starPos) {
+    // 例外1：敌人贴身（≤2格）时恢复高权重自保
+    // 例外2：Kill Mode 启动后恢复全力击杀
+    if (ctx.alivePlayers <= 2 && ctx.starPos && !ctx.killMode) {
         var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 2;
         if (!enemyClose) return null;
     }
@@ -319,9 +333,11 @@ function evalPreAim(ctx) {
 }
 
 // 单挑期贴身逃跑：当敌人 <=2 格时，优先找安全相邻格步行脱离，而非硬刚转炮
+// Kill Mode 下禁用（正面硬刚，不逃跑）
 function evalCloseEnemyEscape(ctx) {
     if (!ctx.enemyPos || !ctx.enemyVisible) return null;
     if (!(ctx.alivePlayers <= 2 && ctx.starPos)) return null;
+    if (ctx.killMode) return null;  // Kill Mode 不逃
     if (getDist(ctx.myPos, ctx.enemyPos) > 2) return null;
 
     var dirs = ["up", "down", "left", "right"];
