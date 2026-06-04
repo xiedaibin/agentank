@@ -408,7 +408,7 @@ function evalStarCollection(ctx) {
 }
 
 function evalGrassAmbushAndSurvival(ctx) {
-    if (ctx.killMode && ctx.enemyPos) return null; // 击杀模式下积极和对方搏杀，不躲草丛逃避
+    if (ctx.alivePlayers <= 2) return null; // 单挑模式下关闭进入草丛策略
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var grass = findNearestSafeGrass(ctx.myPos, ctx);
