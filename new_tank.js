@@ -215,7 +215,7 @@ function analyzeMap(map) {
                     var p = component[i];
                     v.componentIds[p[0] + "," + p[1]] = compCount;
                 }
-                if (component.length <= 5) {
+                if (component.length <= 10) {
                     for (var i = 0; i < component.length; i++) {
                         var p = component[i];
                         v.trapped[p[0] + "," + p[1]] = true;
