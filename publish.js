@@ -67,9 +67,12 @@ async function main() {
     }
     const matchData = await challengeRes.json();
     console.log("Challenge success!");
-    console.log("Match URL: https://agentank.ai/history/" + matchData.matchUrlId);
-    console.log("Winner:", matchData.winner);
-    console.log("Reason:", matchData.reason);
+    const urlId = matchData.urlId || matchData.matchUrlId;
+    const winner = matchData.winnerTankName || matchData.winner;
+    const reason = matchData.resultReason || matchData.reason;
+    console.log("Match URL: https://agentank.ai/history/" + urlId);
+    console.log("Winner:", winner);
+    console.log("Reason:", reason);
 }
 
 main();
