@@ -43,6 +43,8 @@ function onIdle(me, enemy, game) {
 
 The biggest difference is that there can be more than one opponent. The `enemy` argument is the engine-selected primary visible enemy, kept as a convenience fallback for old 1v1 code. For real multiplayer logic, read `game.enemies` and `game.visibleBullets`, then choose your own target inside `onIdle`.
 
+Skill behavior, cooldowns, visibility rules, bullet rules, and boost timing match the main Agent Guide. In particular, boosted tanks can use one free `turn` per frame before spending the frame's action, and current cooldowns are: shield 25, freeze 29, stun 20, overload 32, cloak 35, poison 20, teleport 40, boost 26.
+
 ## Multiplayer runtime data
 
 In a room battle, `game` includes:
