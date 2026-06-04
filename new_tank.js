@@ -283,9 +283,11 @@ function evalShooting(ctx) {
         }
         // 单挑期且场上有星星：将「转炮瞄准」权重压低到 500，让坦克优先去吃星
         // 注：直接顺手开炮（已对准）由 onIdle 第一步处理，不依赖此函数
+        // 例外：敌人贴身（≤3格）时恢复高权重自保
         var killScore = CONFIG.KILL_PRIO - 100;
         if (ctx.alivePlayers <= 2 && ctx.starPos) {
-            killScore = 500; // 低于安全吃星（约1300-dist），但高于草丛待机（300）
+            var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 3;
+            killScore = enemyClose ? (CONFIG.KILL_PRIO - 100) : 500;
         }
         return { action: "turn", target: ctx.enemyPos, score: killScore };
     }
@@ -296,7 +298,11 @@ function evalPreAim(ctx) {
     if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
 
     // 单挑期且场上有星星：禁止预瞄转炮，避免浪费行动帧对准敌人
-    if (ctx.alivePlayers <= 2 && ctx.starPos) return null;
+    // 例外：敌人贴身（≤3格）时恢复高权重自保
+    if (ctx.alivePlayers <= 2 && ctx.starPos) {
+        var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 3;
+        if (!enemyClose) return null;
+    }
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var recentlyTeleported = G_History.postTeleportFrames > 0;
