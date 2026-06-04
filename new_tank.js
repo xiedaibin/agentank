@@ -534,15 +534,19 @@ function isSafe(pos, ctx, strict) {
 
 function isSafeForStarTeleport(pos, ctx) {
     if (!isSafe(pos, ctx, true)) return false;
+    // 如果有任何可见子弹正飞向该位置，禁止传送
+    if (getMinFramesToHit(pos, ctx.visibleBullets, ctx.map) !== Infinity) return false;
+
     if (ctx.trackedEnemies) {
         for (var idx in ctx.trackedEnemies) {
             var hEnemy = ctx.trackedEnemies[idx];
             if (!hEnemy || !hEnemy.pos) continue;
             var d = getDist(pos, hEnemy.pos);
             if (d <= 2) return false;
+            // 判断是否在对方坦克的潜在直射枪线上（同轴且无障碍物阻挡）
             if (pos[0] === hEnemy.pos[0] || pos[1] === hEnemy.pos[1]) {
-                if (isLoS(hEnemy.pos, pos, hEnemy.dir, ctx.map)) {
-                    if (d <= 5 && !hEnemy.fireLocked) return false;
+                if (canShoot(hEnemy.pos, pos, ctx.map) !== false) {
+                    if (d <= 6 && !hEnemy.fireLocked) return false;
                 }
             }
         }
@@ -690,7 +694,19 @@ function executeAction(me, act, ctx) {
         G_History.lastPos = ctx.myPos.slice();
         if (G_History.stuckTurnCount >= 4) {
             G_History.stuckTurnCount = 0;
-            if (ctx.canTeleport && ctx.starPos) { me.teleport(ctx.starPos[0], ctx.starPos[1]); return; }
+            if (ctx.canTeleport) {
+                if (ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
+                    me.teleport(ctx.starPos[0], ctx.starPos[1]);
+                    G_History.postTeleportFrames = 8;
+                    return;
+                }
+                var esc = findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
+                if (esc) {
+                    me.teleport(esc[0], esc[1]);
+                    G_History.postTeleportFrames = 8;
+                    return;
+                }
+            }
         }
         var next = getNextStep(ctx.myPos, act.target, ctx);
         if (next) {
