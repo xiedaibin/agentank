@@ -613,10 +613,57 @@ function isSafe(pos, ctx, strict) {
     return true;
 }
 
+// 子弹路径追踪：判断从 from 向 fireDir 发射的子弹是否能打到 target
+// 盳头永远阻挡；土堆在敌人当前枪线且 <=4 格内可穿透，其余情况阻挡
+function bulletCanReachPos(from, target, fireDir, map, enemyFacingDir) {
+    var d = delta(fireDir);
+    var curr = [from[0] + d[0], from[1] + d[1]];
+    var steps = 0;
+    while (steps < 30) {
+        if (samePos(curr, target)) return true;
+        var tile = getTile(curr, map);
+        if (!tile || tile === "x") return false; // 盳头永远阻挡
+        if (tile === "m") {
+            var distToMound = getDist(from, curr);
+            // 土堆在敌人当前枪线方向且距离 <=4：子弹可穿透
+            if (fireDir === enemyFacingDir && distToMound <= 4) {
+                // 穿透，继续追踪
+            } else {
+                return false; // 土堆阻挡
+            }
+        }
+        curr = [curr[0] + d[0], curr[1] + d[1]];
+        steps++;
+    }
+    return false;
+}
+
+// 判断 pos 是否处于「物理封闭」状态：任何敌人在任何方向都射不到这里
+function isPhysicallySafeForStar(pos, ctx) {
+    if (!ctx.trackedEnemies) return false;
+    var dirs4 = ["up", "down", "left", "right"];
+    for (var idx in ctx.trackedEnemies) {
+        var hEnemy = ctx.trackedEnemies[idx];
+        if (!hEnemy || !hEnemy.pos) continue;
+        var recentEnough = hEnemy.visible || (G_History.frame - hEnemy.frame < 35);
+        if (!recentEnough) continue;
+        // 判断该敌人是否能从任意方向射到 pos
+        for (var i = 0; i < dirs4.length; i++) {
+            if (bulletCanReachPos(hEnemy.pos, pos, dirs4[i], ctx.map, hEnemy.dir || "up")) {
+                return false; // 有敌人能射到，不是物理封闭
+            }
+        }
+    }
+    return true; // 所有敌人均打不到，物理封闭
+}
+
 function isSafeForStarTeleport(pos, ctx) {
     if (!isSafe(pos, ctx, true)) return false;
     // 如果有任何可见子弹正飞向该位置，禁止传送
     if (getMinFramesToHit(pos, ctx.visibleBullets, ctx.map) !== Infinity) return false;
+
+    // 物理封闭豁免：子弹物理上打不到此处，跳过所有距离检查
+    if (isPhysicallySafeForStar(pos, ctx)) return true;
 
     if (ctx.trackedEnemies) {
         for (var idx in ctx.trackedEnemies) {
@@ -632,6 +679,7 @@ function isSafeForStarTeleport(pos, ctx) {
             }
         }
     }
+    // 常规检查全通过
     return true;
 }
 
@@ -641,6 +689,9 @@ function isSafeForStarWalking(pos, ctx) {
     if (directionTo(ctx.myPos, pos) !== ctx.myDir) {
         T_me += 1;
     }
+
+    // 物理封闭豁免：子弹物理上打不到此处，跳过所有距离检查
+    if (isPhysicallySafeForStar(pos, ctx)) return true;
 
     if (ctx.trackedEnemies) {
         for (var idx in ctx.trackedEnemies) {
