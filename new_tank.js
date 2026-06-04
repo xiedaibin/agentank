@@ -613,39 +613,48 @@ function isSafe(pos, ctx, strict) {
     return true;
 }
 
-// 判断 pos 是否处于「物理封闭」状态：四周均是边界、石头或土堆（且土堆不处于4格内敌人的直射枪线上）
-function isPhysicallySafeForStar(pos, ctx) {
-    var dirs = ["up", "down", "left", "right"];
-    for (var i = 0; i < dirs.length; i++) {
-        var np = addPos(pos, delta(dirs[i]));
-        var tile = getTile(np, ctx.map);
-        if (!tile || tile === "x") {
-            continue; // 边界或石墙，始终是安全屏障
-        }
+// 子弹路径追踪：判断从 from 向 fireDir 发射的子弹是否能打到 target
+// 盳头永远阻挡；土堆在敌人当前枪线且 <=4 格内可穿透，其余情况阻挡
+function bulletCanReachPos(from, target, fireDir, map, enemyFacingDir) {
+    var d = delta(fireDir);
+    var curr = [from[0] + d[0], from[1] + d[1]];
+    var steps = 0;
+    while (steps < 30) {
+        if (samePos(curr, target)) return true;
+        var tile = getTile(curr, map);
+        if (!tile || tile === "x") return false; // 盳头永远阻挡
         if (tile === "m") {
-            var moundDestroyable = false;
-            if (ctx.trackedEnemies) {
-                for (var idx in ctx.trackedEnemies) {
-                    var hEnemy = ctx.trackedEnemies[idx];
-                    if (!hEnemy || !hEnemy.pos) continue;
-                    // 只考虑 4 格内的敌方坦克
-                    if (getDist(pos, hEnemy.pos) <= 4) {
-                        // 且该土堆在对方当前枪线上（同轴、朝向正确且无石墙阻挡）
-                        var onEnemyLine = (np[0] === hEnemy.pos[0] || np[1] === hEnemy.pos[1]);
-                        if (onEnemyLine && isLoS(hEnemy.pos, np, hEnemy.dir, ctx.map)) {
-                            moundDestroyable = true;
-                            break;
-                        }
-                    }
-                }
-            }
-            if (!moundDestroyable) {
-                continue; // 土堆没有受到近距离枪线威胁，是安全屏障
+            var distToMound = getDist(from, curr);
+            // 土堆在敌人当前枪线方向且距离 <=4：子弹可穿透
+            if (fireDir === enemyFacingDir && distToMound <= 4) {
+                // 穿透，继续追踪
+            } else {
+                return false; // 土堆阻挡
             }
         }
-        return false; // 存在任何一个方向不是安全屏障，说明并非物理封闭
+        curr = [curr[0] + d[0], curr[1] + d[1]];
+        steps++;
     }
-    return true; // 物理封闭
+    return false;
+}
+
+// 判断 pos 是否处于「物理封闭」状态：任何敌人在任何方向都射不到这里
+function isPhysicallySafeForStar(pos, ctx) {
+    if (!ctx.trackedEnemies) return false;
+    var dirs4 = ["up", "down", "left", "right"];
+    for (var idx in ctx.trackedEnemies) {
+        var hEnemy = ctx.trackedEnemies[idx];
+        if (!hEnemy || !hEnemy.pos) continue;
+        var recentEnough = hEnemy.visible || (G_History.frame - hEnemy.frame < 35);
+        if (!recentEnough) continue;
+        // 判断该敌人是否能从任意方向射到 pos
+        for (var i = 0; i < dirs4.length; i++) {
+            if (bulletCanReachPos(hEnemy.pos, pos, dirs4[i], ctx.map, hEnemy.dir || "up")) {
+                return false; // 有敌人能射到，不是物理封闭
+            }
+        }
+    }
+    return true; // 所有敌人均打不到，物理封闭
 }
 
 function isSafeForStarTeleport(pos, ctx) {
@@ -661,7 +670,7 @@ function isSafeForStarTeleport(pos, ctx) {
             var hEnemy = ctx.trackedEnemies[idx];
             if (!hEnemy || !hEnemy.pos) continue;
             var d = getDist(pos, hEnemy.pos);
-            if (d <= 4) return false;
+            if (d <= 2) return false;
             // 判断是否在对方坦克的潜在直射枪线上（同轴且无障碍物阻挡）
             if (pos[0] === hEnemy.pos[0] || pos[1] === hEnemy.pos[1]) {
                 if (canShoot(hEnemy.pos, pos, ctx.map) !== false) {
