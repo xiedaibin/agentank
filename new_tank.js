@@ -243,6 +243,8 @@ function tacticalAnalysis(ctx) {
         if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) candidates.push(evalAssassination(ctx));
         if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK") candidates.push(evalPanicTeleport(ctx));
     }
+    // 单挑期敌人贴身（<=2格）时，先尝试安全步行脱离，得分高于转炮（9950 > 9900）
+    candidates.push(evalCloseEnemyEscape(ctx));
     candidates.push(evalShooting(ctx));
     candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
@@ -283,10 +285,10 @@ function evalShooting(ctx) {
         }
         // 单挑期且场上有星星：将「转炮瞄准」权重压低到 500，让坦克优先去吃星
         // 注：直接顺手开炮（已对准）由 onIdle 第一步处理，不依赖此函数
-        // 例外：敌人贴身（≤3格）时恢复高权重自保
+        // 例外：敌人贴身（≤2格）时恢复高权重自保（逃跑优先由 evalCloseEnemyEscape 处理）
         var killScore = CONFIG.KILL_PRIO - 100;
         if (ctx.alivePlayers <= 2 && ctx.starPos) {
-            var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 3;
+            var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 2;
             killScore = enemyClose ? (CONFIG.KILL_PRIO - 100) : 500;
         }
         return { action: "turn", target: ctx.enemyPos, score: killScore };
@@ -298,9 +300,9 @@ function evalPreAim(ctx) {
     if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
 
     // 单挑期且场上有星星：禁止预瞄转炮，避免浪费行动帧对准敌人
-    // 例外：敌人贴身（≤3格）时恢复高权重自保
+    // 例外：敌人贴身（≤2格）时恢复高权重自保（逃跑优先由 evalCloseEnemyEscape 处理）
     if (ctx.alivePlayers <= 2 && ctx.starPos) {
-        var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 3;
+        var enemyClose = getDist(ctx.myPos, ctx.enemyPos) <= 2;
         if (!enemyClose) return null;
     }
 
@@ -314,6 +316,38 @@ function evalPreAim(ctx) {
         }
     }
     return null;
+}
+
+// 单挑期贴身逃跑：当敌人 <=2 格时，优先找安全相邻格步行脱离，而非硬刚转炮
+function evalCloseEnemyEscape(ctx) {
+    if (!ctx.enemyPos || !ctx.enemyVisible) return null;
+    if (!(ctx.alivePlayers <= 2 && ctx.starPos)) return null;
+    if (getDist(ctx.myPos, ctx.enemyPos) > 2) return null;
+
+    var dirs = ["up", "down", "left", "right"];
+    var safeTiles = [];
+    for (var i = 0; i < dirs.length; i++) {
+        var np = addPos(ctx.myPos, delta(dirs[i]));
+        // 不能踩到敌人格
+        if (samePos(np, ctx.enemyPos)) continue;
+        // 必须可行走且安全
+        var tile = getTile(np, ctx.map);
+        if (!tile || tile === "x" || tile === "m") continue;
+        if (!isSafe(np, ctx, true)) continue;
+        safeTiles.push(np);
+    }
+    if (safeTiles.length === 0) return null;
+
+    // 优先选不在对方当前朝向 LoS 上的格子
+    var best = null;
+    for (var j = 0; j < safeTiles.length; j++) {
+        if (!isLoS(ctx.enemyPos, safeTiles[j], ctx.enemyDir, ctx.map)) {
+            best = safeTiles[j]; break;
+        }
+    }
+    if (!best) best = safeTiles[0];
+
+    return { action: "move", target: best, score: 9950, tag: "CloseEsc" };
 }
 
 function evalStarCollection(ctx) {
@@ -714,6 +748,8 @@ function aStar(start, goal, ctx) {
 
 function executeAction(me, act, ctx) {
     if (!act) return;
+    // \u8c03\u8bd5\u6807\u8bb0\uff1a\u82e5 action \u643a\u5e26 tag\uff0c\u5728\u6b64\u8f93\u51fa\uff08me \u5728\u4f5c\u7528\u57df\u5185\uff09
+    if (act.tag) me.speak(act.tag);
     if (act.action === "fire") {
         var d = directionTo(ctx.myPos, act.target);
         if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
