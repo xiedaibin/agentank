@@ -62,12 +62,14 @@ function onIdle(me, enemy, game) {
 
         var ctx = buildExecutionContext(me, target, game);
 
-        // Kill Mode 触发检测：单挑期落后≥2星就启动击杀模式（一旦触发不可逆）
+        // Kill Mode 触发检测：单挑期落后≥2星，或者超时临近（>=110帧）且落后或持平时启动（不可逆）
         if (ctx.alivePlayers <= 2 && !G_History.killModeActive && ctx.enemy) {
             var enemyStars = ctx.enemy.stars || 0;
-            if (ctx.meStars <= enemyStars - 2) {
+            var isBehindOrTied = (ctx.meStars <= enemyStars);
+            var isTimeoutImminent = (G_History.frame >= 110);
+            if (ctx.meStars <= enemyStars - 2 || (isTimeoutImminent && isBehindOrTied)) {
                 G_History.killModeActive = true;
-                me.speak("Kill Mode!");
+                me.speak("Kill Mode: All-In!");
             }
         }
         ctx.killMode = G_History.killModeActive;
@@ -260,6 +262,7 @@ function tacticalAnalysis(ctx) {
     candidates.push(evalShooting(ctx));
     candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
+    candidates.push(evalHunting(ctx));
     candidates.push(evalGrassAmbushAndSurvival(ctx));
     candidates.sort(function (a, b) { return (b ? b.score : 0) - (a ? a.score : 0); });
     return candidates[0];
@@ -394,6 +397,8 @@ function evalStarCollection(ctx) {
 }
 
 function evalGrassAmbushAndSurvival(ctx) {
+    if (ctx.killMode && ctx.enemyPos) return null; // 击杀模式下积极和对方搏杀，不躲草丛逃避
+
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var grass = findNearestSafeGrass(ctx.myPos, ctx);
 
@@ -443,6 +448,11 @@ function evalGrassAmbushAndSurvival(ctx) {
     // Default survival fallback
     var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx) || [9, 7];
     return { action: "move", target: esc, score: 100 };
+}
+
+function evalHunting(ctx) {
+    if (!ctx.killMode || !ctx.enemyPos) return null;
+    return { action: "move", target: ctx.enemyPos, score: 750 }; // 优先级高于躲草丛与低分吃星
 }
 
 // 单挑期逃跑优先目标：若星星安全则用传送吃星代替传送去草丛（一举两得）
@@ -881,7 +891,7 @@ function getNextStep(start, goal, ctx) {
         }
         res = best;
     }
-    if (res && !isSafe(res, ctx, true) && isSafe(start, ctx, true)) {
+    if (res && !isSafe(res, ctx, true) && isSafe(start, ctx, true) && !ctx.killMode) {
         return null;
     }
     return res;
