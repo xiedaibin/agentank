@@ -215,7 +215,7 @@ function analyzeMap(map) {
                     var p = component[i];
                     v.componentIds[p[0] + "," + p[1]] = compCount;
                 }
-                if (component.length <= 10) {
+                if (component.length <= 30) {
                     for (var i = 0; i < component.length; i++) {
                         var p = component[i];
                         v.trapped[p[0] + "," + p[1]] = true;
@@ -1066,7 +1066,7 @@ function findAssassinSpot(ctx) {
         if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
             for (var i = 0; i < offsets.length; i++) {
                 var p = addPos(predE, offsets[i]);
-                if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true) {
+                if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true && hasWalkableExit(p, ctx.map)) {
                     if (isSafe(p, ctx, true)) return p;
                 }
             }
@@ -1076,7 +1076,7 @@ function findAssassinSpot(ctx) {
     // 2. 兜底当前点（加安全校查）
     for (var i = 0; i < offsets.length; i++) {
         var p = addPos(e, offsets[i]);
-        if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false)) return p;
+        if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false) && hasWalkableExit(p, ctx.map)) return p;
     }
     return null;
 }
