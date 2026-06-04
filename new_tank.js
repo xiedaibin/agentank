@@ -289,6 +289,7 @@ function tacticalAnalysis(ctx) {
     candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
     candidates.push(evalHunting(ctx));
+    candidates.push(evalThreatPreAim(ctx));
     candidates.push(evalGrassAmbushAndSurvival(ctx));
     candidates.sort(function (a, b) { return (b ? b.score : 0) - (a ? a.score : 0); });
     return candidates[0];
@@ -479,6 +480,41 @@ function evalGrassAmbushAndSurvival(ctx) {
 function evalHunting(ctx) {
     if (!ctx.killMode || !ctx.enemyPos) return null;
     return { action: "move", target: ctx.enemyPos, score: 750 }; // 优先级高于躲草丛与低分吃星
+}
+
+function getNearestEnemyPos(ctx) {
+    var nearestPos = null;
+    var minDist = 999;
+    if (ctx.trackedEnemies) {
+        for (var idx in ctx.trackedEnemies) {
+            var hEnemy = ctx.trackedEnemies[idx];
+            if (hEnemy && hEnemy.pos) {
+                var d = getDist(ctx.myPos, hEnemy.pos);
+                if (d < minDist) {
+                    minDist = d;
+                    nearestPos = hEnemy.pos;
+                }
+            }
+        }
+    }
+    if (!nearestPos && ctx.enemyPos) {
+        nearestPos = ctx.enemyPos;
+    }
+    return nearestPos;
+}
+
+function evalThreatPreAim(ctx) {
+    if (ctx.starPos) return null; // 场上有星时优先抢星，不预瞄转向
+    
+    var nearestEnemyPos = getNearestEnemyPos(ctx);
+    if (!nearestEnemyPos) return null;
+    
+    var dir = directionTo(ctx.myPos, nearestEnemyPos);
+    if (ctx.myDir !== dir) {
+        var targetPos = addPos(ctx.myPos, delta(dir));
+        return { action: "turn", target: targetPos, score: 350 }; // 评分设为350，高于草丛停驻的分数300，使其待机时自动转头
+    }
+    return null;
 }
 
 // 单挑期逃跑优先目标：若星星安全则用传送吃星代替传送去草丛（一举两得）

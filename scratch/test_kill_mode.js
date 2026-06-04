@@ -3,9 +3,9 @@ const vm = require('vm');
 
 const code = fs.readFileSync('new_tank.js', 'utf8');
 
-function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisible) {
+function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisible, starPos, enemyPos) {
     console.log(`\n=== TEST CASE: ${testName} ===`);
-    console.log(`  (frame: ${frames}, stars: ${meStars} vs ${enemyStars}, alivePlayers: ${alivePlayers}, enemyVisible: ${enemyVisible})`);
+    console.log(`  (frame: ${frames}, stars: ${meStars} vs ${enemyStars}, alivePlayers: ${alivePlayers}, enemyVisible: ${enemyVisible}, star: ${starPos ? JSON.stringify(starPos) : 'null'})`);
     
     const printLogs = [];
     const mockMe = {
@@ -20,7 +20,7 @@ function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisib
     };
 
     const mockEnemy = {
-        tank: enemyVisible ? { id: 1414, position: [6, 13], direction: 'down', crashed: false } : null,
+        tank: enemyVisible ? { id: 1414, position: enemyPos || [6, 13], direction: 'down', crashed: false } : null,
         bullet: null,
         stars: enemyStars,
         skill: { type: 'freeze', remainingCooldownFrames: 0 }
@@ -30,10 +30,13 @@ function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisib
     map[5][5] = 'o'; // Our current grass
     map[4][5] = 'x';
     map[5][4] = 'x';
+    if (testName.includes("Threat Pre-Aiming")) {
+        map[5][8] = 'x';
+    }
 
     const mockGame = {
         frames: frames,
-        star: null, // No star on map
+        star: starPos || null,
         enemies: enemyVisible ? [mockEnemy] : [],
         map: map,
         alivePlayers: alivePlayers
@@ -60,9 +63,9 @@ function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisib
     sandbox.G_History.enemies = {
         '0': {
             index: 0,
-            pos: [6, 13],
+            pos: enemyPos || [6, 13],
             dir: 'down',
-            frame: frames - 5, // Seen 5 frames ago
+            frame: frames - 5,
             visible: enemyVisible,
             skillReady: true,
             skillType: 'freeze',
@@ -70,8 +73,8 @@ function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisib
             overloaded: false
         }
     };
-    sandbox.G_History.lastEnemyStars = enemyStars; // Set historical star count
-    sandbox.G_History.lastEnemyPos = [6, 13];
+    sandbox.G_History.lastEnemyStars = enemyStars;
+    sandbox.G_History.lastEnemyPos = enemyPos || [6, 13];
 
     sandbox.onIdle(mockMe, mockEnemy, mockGame);
 
@@ -85,7 +88,7 @@ function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisib
     console.log('Best Action Decision:', best);
 }
 
-// Case 1: Early frame, equal stars. Should NOT trigger.
+// Case 1: Early frame, equal stars. Should NOT trigger Kill Mode.
 runTest("Early Frame Equal Stars", 115, 3, 3, 2, true);
 
 // Case 2: Frame 120, lagging stars, enemy invisible. Should trigger and record.
@@ -96,3 +99,6 @@ runTest("Frame 120 Equal Stars (3 Players Alive)", 120, 3, 3, 3, true);
 
 // Case 4: Frame 150 (extreme timeout), equal stars, 3 players alive. Should trigger.
 runTest("Frame 150 Equal Stars (3 Players Alive - Extreme Timeout)", 150, 3, 3, 3, true);
+
+// Case 5: Threat Pre-Aiming. No stars, early game, enemy below at [5, 13]. Should turn down.
+runTest("Threat Pre-Aiming (No Stars, Enemy Below)", 50, 3, 3, 2, true, null, [5, 13]);
