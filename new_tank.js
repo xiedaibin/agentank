@@ -77,9 +77,7 @@ function onIdle(me, enemy, game) {
         if (!G_Blueprint.initialized || (target && !G_Blueprint.enemySeen)) strategicInit(target, game.map);
 
         var ctx = buildExecutionContext(me, target, game);
-        if (G_History.frame % 10 === 0) {
-            me.speak("F:" + G_History.frame);
-        }
+
         // 120帧星星记录器
         if (G_History.frame >= 120 && !G_History.starsAt120) {
             G_History.starsAt120 = {
@@ -175,12 +173,55 @@ function strategicInit(enemy, map) {
 }
 
 function analyzeMap(map) {
-    var w = map.length, h = map[0].length, v = { width: w, height: h, cover: {}, grass: {} };
+    var w = map.length, h = map[0].length, v = { width: w, height: h, cover: {}, grass: {}, trapped: {}, componentIds: {} };
     for (var x = 0; x < w; x++) {
         for (var y = 0; y < h; y++) {
             var tile = map[x][y];
             if (tile === "x") v.cover[x + "," + y] = true;
             if (tile === "o") v.grass[x + "," + y] = true;
+        }
+    }
+
+    var visited = {};
+    var compCount = 0;
+    for (var x = 0; x < w; x++) {
+        for (var y = 0; y < h; y++) {
+            var key = x + "," + y;
+            var tile = map[x][y];
+            if (tile !== "x" && tile !== "m" && !visited[key]) {
+                var component = [];
+                var queue = [[x, y]];
+                visited[key] = true;
+                var head = 0;
+                while (head < queue.length) {
+                    var curr = queue[head++];
+                    component.push(curr);
+                    var dirs = [[0, -1], [0, 1], [-1, 0], [1, 0]];
+                    for (var i = 0; i < dirs.length; i++) {
+                        var nx = curr[0] + dirs[i][0];
+                        var ny = curr[1] + dirs[i][1];
+                        if (nx >= 0 && nx < w && ny >= 0 && ny < h) {
+                            var nTile = map[nx][ny];
+                            var nKey = nx + "," + ny;
+                            if (nTile !== "x" && nTile !== "m" && !visited[nKey]) {
+                                visited[nKey] = true;
+                                queue.push([nx, ny]);
+                            }
+                        }
+                    }
+                }
+                compCount++;
+                for (var i = 0; i < component.length; i++) {
+                    var p = component[i];
+                    v.componentIds[p[0] + "," + p[1]] = compCount;
+                }
+                if (component.length <= 5) {
+                    for (var i = 0; i < component.length; i++) {
+                        var p = component[i];
+                        v.trapped[p[0] + "," + p[1]] = true;
+                    }
+                }
+            }
         }
     }
     return v;
@@ -415,8 +456,16 @@ function evalStarCollection(ctx) {
         score += 500;
     }
 
+    var myComp = G_Blueprint.mapVision.componentIds[ctx.myPos[0] + "," + ctx.myPos[1]];
+    var starComp = G_Blueprint.mapVision.componentIds[ctx.starPos[0] + "," + ctx.starPos[1]];
+    var isUnreachable = (myComp !== undefined && starComp !== undefined && myComp !== starComp);
+
     var safeForTeleport = isSafeForStarTeleport(ctx.starPos, ctx);
-    if (ctx.canTeleport && dist > 7 && safeForTeleport && isSingleEnemy) {
+    var shouldTeleport = ctx.canTeleport && safeForTeleport && (
+        (dist > 7 && isSingleEnemy) || isUnreachable
+    );
+
+    if (shouldTeleport) {
         return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 1000 + 500 };
     }
 
@@ -507,10 +556,10 @@ function getNearestEnemyPos(ctx) {
 
 function evalThreatPreAim(ctx) {
     if (ctx.starPos) return null; // 场上有星时优先抢星，不预瞄转向
-    
+
     var nearestEnemyPos = getNearestEnemyPos(ctx);
     if (!nearestEnemyPos) return null;
-    
+
     var dir = directionTo(ctx.myPos, nearestEnemyPos);
     if (ctx.myDir !== dir) {
         var targetPos = addPos(ctx.myPos, delta(dir));
@@ -522,7 +571,6 @@ function evalThreatPreAim(ctx) {
 // 单挑期逃跑优先目标：若星星安全则用传送吃星代替传送去草丛（一举两得）
 function getBestEscapeTarget(me, ctx) {
     if (ctx.alivePlayers <= 2 && ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
-        me.speak("EscToStar");
         return ctx.starPos;
     }
     return findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
@@ -559,7 +607,6 @@ function tacticalDefense(me, ctx) {
                             if (onOverloadLine) {
                                 var ghostEscape = findOffAxisMoveForEnemy(ctx, hEnemy);
                                 if (ghostEscape) {
-                                    me.speak("Ghost Evasion");
                                     ghostEscape.score = 22000;
                                     return ghostEscape;
                                 }
@@ -578,7 +625,6 @@ function tacticalDefense(me, ctx) {
             if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[ctx.myPos[0] + "," + ctx.myPos[1]]) {
                 var ghostEscape = findOffAxisMove(ctx);
                 if (ghostEscape) {
-                    me.speak("CoAxial Evasion");
                     ghostEscape.score = 22000;
                     return ghostEscape;
                 }
@@ -605,7 +651,6 @@ function tacticalDefense(me, ctx) {
                     if (!myPosInGrass || d <= 4) {
                         var escape = findOffAxisMoveForEnemy(ctx, hEnemy);
                         if (escape) {
-                            me.speak("SO: Evasion");
                             escape.score = 25000;
                             return escape;
                         }
@@ -687,57 +732,10 @@ function isSafe(pos, ctx, strict) {
     return true;
 }
 
-// 子弹路径追踪：判断从 from 向 fireDir 发射的子弹是否能打到 target
-// 盳头永远阻挡；土堆在敌人当前枪线且 <=4 格内可穿透，其余情况阻挡
-function bulletCanReachPos(from, target, fireDir, map, enemyFacingDir) {
-    var d = delta(fireDir);
-    var curr = [from[0] + d[0], from[1] + d[1]];
-    var steps = 0;
-    while (steps < 30) {
-        if (samePos(curr, target)) return true;
-        var tile = getTile(curr, map);
-        if (!tile || tile === "x") return false; // 盳头永远阻挡
-        if (tile === "m") {
-            var distToMound = getDist(from, curr);
-            // 土堆在敌人当前枪线方向且距离 <=4：子弹可穿透
-            if (fireDir === enemyFacingDir && distToMound <= 4) {
-                // 穿透，继续追踪
-            } else {
-                return false; // 土堆阻挡
-            }
-        }
-        curr = [curr[0] + d[0], curr[1] + d[1]];
-        steps++;
-    }
-    return false;
-}
-
-// 判断 pos 是否处于「物理封闭」状态：任何敌人在任何方向都射不到这里
-function isPhysicallySafeForStar(pos, ctx) {
-    if (!ctx.trackedEnemies) return false;
-    var dirs4 = ["up", "down", "left", "right"];
-    for (var idx in ctx.trackedEnemies) {
-        var hEnemy = ctx.trackedEnemies[idx];
-        if (!hEnemy || !hEnemy.pos) continue;
-        var recentEnough = hEnemy.visible || (G_History.frame - hEnemy.frame < 35);
-        if (!recentEnough) continue;
-        // 判断该敌人是否能从任意方向射到 pos
-        for (var i = 0; i < dirs4.length; i++) {
-            if (bulletCanReachPos(hEnemy.pos, pos, dirs4[i], ctx.map, hEnemy.dir || "up")) {
-                return false; // 有敌人能射到，不是物理封闭
-            }
-        }
-    }
-    return true; // 所有敌人均打不到，物理封闭
-}
-
 function isSafeForStarTeleport(pos, ctx) {
     if (!isSafe(pos, ctx, true)) return false;
     // 如果有任何可见子弹正飞向该位置，禁止传送
     if (getMinFramesToHit(pos, ctx.visibleBullets, ctx.map) !== Infinity) return false;
-
-    // 物理封闭豁免：子弹物理上打不到此处，跳过所有距离检查
-    if (isPhysicallySafeForStar(pos, ctx)) return true;
 
     if (ctx.trackedEnemies) {
         for (var idx in ctx.trackedEnemies) {
@@ -763,9 +761,6 @@ function isSafeForStarWalking(pos, ctx) {
     if (directionTo(ctx.myPos, pos) !== ctx.myDir) {
         T_me += 1;
     }
-
-    // 物理封闭豁免：子弹物理上打不到此处，跳过所有距离检查
-    if (isPhysicallySafeForStar(pos, ctx)) return true;
 
     if (ctx.trackedEnemies) {
         for (var idx in ctx.trackedEnemies) {
@@ -918,12 +913,6 @@ function executeAction(me, act, ctx) {
         }
         var next = getNextStep(ctx.myPos, act.target, ctx);
         if (next) {
-            var isCloseLoS = ctx.enemyVisible && !ctx.enemyFireLocked && ctx.enemyPos &&
-                getDist(next, ctx.enemyPos) <= 5 &&
-                isLoS(ctx.enemyPos, next, ctx.enemyDir, ctx.map);
-            if (isCloseLoS) {
-                me.speak("LoS: Close Danger");
-            }
             var tile = getTile(next, ctx.map);
             var d = directionTo(ctx.myPos, next);
             if (tile === "m") {
@@ -998,12 +987,10 @@ function findOffAxisMoveForEnemy(ctx, hEnemy) {
 
 // 判断草丛格是否有至少一个可步行出口（防止四面都是石头的降阱草丛）
 function hasWalkableExit(pos, map) {
-    var dirs = ["up", "down", "left", "right"];
-    for (var i = 0; i < dirs.length; i++) {
-        var np = addPos(pos, delta(dirs[i]));
-        if (isPassable(np, map)) return true;
+    if (G_Blueprint.mapVision && G_Blueprint.mapVision.trapped) {
+        if (G_Blueprint.mapVision.trapped[pos[0] + "," + pos[1]]) return false;
     }
-    return false;
+    return true;
 }
 
 function findSafeGrassSpot(ctx) {
@@ -1127,14 +1114,15 @@ function findPreAimDir(myPos, enemyPos, enemyDir, map) {
 
 function findSafeQuadrantSpot(ctx) {
     var e = ctx.enemyPos, q = [ctx.myPos[0] < e[0] ? 2 : 17, ctx.myPos[1] < e[1] ? 2 : 12];
-    if (isPassable(q, ctx.map) && isSafe(q, ctx, true)) return q;
+    if (isPassable(q, ctx.map) && isSafe(q, ctx, true) && hasWalkableExit(q, ctx.map)) return q;
     return findEscapeSpot(ctx);
 }
 
 function findEscapeSpot(ctx) {
     var offs = [[5, 0], [-5, 0], [0, 5], [0, -5], [4, 4], [-4, -4]];
     for (var i = 0; i < offs.length; i++) {
-        var p = addPos(ctx.myPos, offs[i]); if (isPassable(p, ctx.map) && isSafe(p, ctx, false)) return p;
+        var p = addPos(ctx.myPos, offs[i]); 
+        if (isPassable(p, ctx.map) && isSafe(p, ctx, false) && hasWalkableExit(p, ctx.map)) return p;
     }
     return null;
 }
