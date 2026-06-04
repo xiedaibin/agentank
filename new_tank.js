@@ -922,10 +922,22 @@ function findOffAxisMoveForEnemy(ctx, hEnemy) {
     return best ? { action: "move", target: best, score: 25000 } : null;
 }
 
+// 判断草丛格是否有至少一个可步行出口（防止四面都是石头的降阱草丛）
+function hasWalkableExit(pos, map) {
+    var dirs = ["up", "down", "left", "right"];
+    for (var i = 0; i < dirs.length; i++) {
+        var np = addPos(pos, delta(dirs[i]));
+        var tile = getTile(np, map);
+        if (tile && tile !== "x") return true;
+    }
+    return false;
+}
+
 function findSafeGrassSpot(ctx) {
     var grass = [];
     for (var k in G_Blueprint.mapVision.grass) {
         var p = k.split(",").map(Number);
+        if (!hasWalkableExit(p, ctx.map)) continue; // 跳过四面封面的降阱草丛
         if (isSafe(p, ctx, true) && getDist(p, ctx.enemyPos) > 10) grass.push(p);
     }
     if (grass.length === 0) return null;
@@ -946,6 +958,7 @@ function findNearestSafeGrass(pos, ctx) {
     var best = null, minDist = 999;
     for (var k in G_Blueprint.mapVision.grass) {
         var p = k.split(",").map(Number);
+        if (!hasWalkableExit(p, ctx.map)) continue; // 跳过四面封面的降阱草丛
         if (!isSafe(p, ctx, true)) continue;
         if (ctx.enemyPos && getDist(p, ctx.enemyPos) <= 2) continue;
         var d = getDist(pos, p);
