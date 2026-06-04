@@ -1,6 +1,8 @@
 const fs = require('fs');
 const { getToken } = require('./config');
 
+const { execSync } = require('child_process');
+
 async function main() {
     const code = fs.readFileSync('new_tank.js', 'utf8');
     const token = getToken();
@@ -9,8 +11,20 @@ async function main() {
         process.exit(1);
     }
 
+    let branch = process.argv[2];
+    if (!branch) {
+        try {
+            branch = execSync('git rev-parse --abbrev-ref HEAD', { encoding: 'utf8' }).trim();
+            console.log(`Detected git branch: ${branch}`);
+        } catch (e) {
+            console.warn("Could not detect git branch, falling back to 'main'");
+            branch = 'main';
+        }
+    } else {
+        console.log(`Using branch specified in argument: ${branch}`);
+    }
 
-    console.log("Publishing code...");
+    console.log(`Publishing code to AgenTank branch '${branch}'...`);
     const res = await fetch('https://agentank.ai/api/agent/tank/code', {
         method: 'POST',
         headers: {
