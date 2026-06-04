@@ -52,7 +52,7 @@ function clearDir(dir) {
         return;
     }
     fs.readdirSync(dir).forEach(f => {
-        try { fs.unlinkSync(path.join(dir, f)); } catch(e) {}
+        try { fs.unlinkSync(path.join(dir, f)); } catch (e) { }
     });
 }
 
@@ -60,16 +60,16 @@ async function runMatches(targetId, count, mode = 'challenge') {
     let wins = 0;
     const results = [];
     console.log(`\n[开始] 发起 ${count} 场对战 (目标: ${targetId}, 模式: ${mode})...`);
-    
+
     for (let i = 1; i <= count; i++) {
         process.stdout.write(`[${i}/${count}] 对战中... `);
         try {
             const body = (mode === 'simulate' || targetId === 'nova-scout')
                 ? { opponentId: targetId, mapId: 'classic' }
                 : { opponentTankId: parseInt(targetId), mapId: 'classic' };
-            
+
             const endpoint = (mode === 'simulate' || targetId === 'nova-scout') ? 'simulate' : 'challenge';
-            
+
             const res = await fetch(`https://agentank.ai/api/agent/tank/${endpoint}`, {
                 method: 'POST',
                 headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
@@ -101,7 +101,7 @@ async function runMatches(targetId, count, mode = 'challenge') {
                         const replay = await repRes.json();
                         fs.writeFileSync(`${replayDir}/loss_${targetId}_${urlId}.json`, JSON.stringify(replay, null, 2));
                     }
-                } catch (e) {}
+                } catch (e) { }
             }
             results.push({ i, isWin, urlId });
         } catch (e) {
@@ -115,7 +115,7 @@ async function runMatches(targetId, count, mode = 'challenge') {
 async function main() {
     const targetId = process.argv[2];
     const strategyName = process.argv[3] || 'Targeted_Optimization';
-    
+
     if (!targetId) {
         console.log("用法: node targeted_evolution.js <tankId> [策略名]");
         return;
@@ -134,7 +134,7 @@ async function main() {
         if (matches) {
             baselineWR = parseFloat(matches[matches.length - 1].replace(/[^\d.]/g, '')) / 100;
         }
-    } catch (e) {}
+    } catch (e) { }
     console.log(`基准胜率: ${(baselineWR * 100).toFixed(2)}%`);
 
     console.log(`\n=== 第二阶段: 专项挑战目标 [${targetId}] (20场) ===`);
@@ -154,7 +154,7 @@ async function main() {
     }
 
     console.log(`\n✅ 专项达标! 进入第三阶段: 基准校验 (防止过度特化)...`);
-    
+
     async function runRandom(count) {
         let wins = 0;
         for (let i = 1; i <= count; i++) {
@@ -182,7 +182,7 @@ async function main() {
                                 const replay = await repRes.json();
                                 fs.writeFileSync(`${replayDir}/loss_random_${urlId}.json`, JSON.stringify(replay, null, 2));
                             }
-                        } catch (e) {}
+                        } catch (e) { }
                     }
                 } else {
                     console.log("跳过");
@@ -192,7 +192,7 @@ async function main() {
         }
         return wins / count;
     }
-    
+
     const newBenchmarkWR = await runRandom(30);
     const diff = newBenchmarkWR - baselineWR;
     console.log(`\n新基准胜率: ${(newBenchmarkWR * 100).toFixed(2)}% (偏差: ${(diff * 100).toFixed(2)}%)`);

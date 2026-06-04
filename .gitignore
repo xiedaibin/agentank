@@ -6,5 +6,6 @@ batch_evolution_replays/
 rank_replays/
 targeted_evolution_replays/
 rank_reports/
+scratch/*.json
 .env
-.env.local
+.env.local
