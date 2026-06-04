@@ -33,7 +33,7 @@ var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 function onIdle(me, enemy, game) {
     try {
         var originalTurn = me.turn;
-        me.turn = function(dir) {
+        me.turn = function (dir) {
             var turnDir = getTurnDir(me.tank.direction, dir);
             if (turnDir) {
                 originalTurn.call(me, turnDir);
@@ -47,8 +47,13 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.0: Raid Survival");
+            me.speak("V13.1: Raid StarChase");
             G_History.hasSpokenInit = true;
+        }
+        // 单挑期且场上有星：首次进入时播报 StarChase 模式
+        if ((game.alivePlayers || 2) <= 2 && game.star && !G_History.spokenStarChase) {
+            me.speak("StarChase Mode");
+            G_History.spokenStarChase = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
         if (G_History.cloakFramesLeft > 0) G_History.cloakFramesLeft--;
@@ -256,6 +261,8 @@ function evalPanicTeleport(ctx) {
 
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
+    // 单挑期：禁止主动传送暗杀，让坦克专注于吃星而不是主动寻战击杀
+    if (ctx.alivePlayers <= 2) return null;
     if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
     if (ctx.enemyFireLocked || (ctx.enemy && ctx.meStars < ctx.enemy.stars && !ctx.enemySkillReady)) {
         var spot = findAssassinSpot(ctx);
@@ -274,13 +281,22 @@ function evalShooting(ctx) {
             var onEnemyAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
             if (onEnemyAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
         }
-        return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 100 };
+        // 单挑期且场上有星星：将「转炮瞄准」权重压低到 500，让坦克优先去吃星
+        // 注：直接顺手开炮（已对准）由 onIdle 第一步处理，不依赖此函数
+        var killScore = CONFIG.KILL_PRIO - 100;
+        if (ctx.alivePlayers <= 2 && ctx.starPos) {
+            killScore = 500; // 低于安全吃星（约1300-dist），但高于草丛待机（300）
+        }
+        return { action: "turn", target: ctx.enemyPos, score: killScore };
     }
     return null;
 }
 
 function evalPreAim(ctx) {
     if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
+
+    // 单挑期且场上有星星：禁止预瞄转炮，避免浪费行动帧对准敌人
+    if (ctx.alivePlayers <= 2 && ctx.starPos) return null;
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var recentlyTeleported = G_History.postTeleportFrames > 0;
@@ -477,8 +493,8 @@ function isEnemyOverloadActive(ctx, pos) {
     if (!G_Blueprint.enemyProfile || !G_Blueprint.enemyProfile.hasOverload) return false;
     var recentlyOverloaded = G_History.lastEnemyOverloadedFrame && (G_History.frame - G_History.lastEnemyOverloadedFrame < 8);
     return (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) ||
-           (ctx.enemySkillReady) ||
-           recentlyOverloaded;
+        (ctx.enemySkillReady) ||
+        recentlyOverloaded;
 }
 
 function isOnEnemyGunLine(pos, ctx, checkOverload) {
@@ -487,11 +503,11 @@ function isOnEnemyGunLine(pos, ctx, checkOverload) {
     if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
         // Overload 枪线为 3 格宽：主线 + 右偏 + 左偏
         var rightDir = { up: "right", right: "down", down: "left", left: "up" }[ctx.enemyDir];
-        var leftDir  = { up: "left",  right: "up",   down: "right", left: "down" }[ctx.enemyDir];
+        var leftDir = { up: "left", right: "up", down: "right", left: "down" }[ctx.enemyDir];
         var rightOrigin = addPos(ctx.enemyPos, delta(rightDir));
-        var leftOrigin  = addPos(ctx.enemyPos, delta(leftDir));
+        var leftOrigin = addPos(ctx.enemyPos, delta(leftDir));
         if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;
-        if (isLoS(leftOrigin,  pos, ctx.enemyDir, ctx.map)) return true;
+        if (isLoS(leftOrigin, pos, ctx.enemyDir, ctx.map)) return true;
     }
     return false;
 }
@@ -692,7 +708,7 @@ function executeAction(me, act, ctx) {
     else if (act.action === "move") {
         if (G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) G_History.stuckTurnCount++; else G_History.stuckTurnCount = 0;
         G_History.lastPos = ctx.myPos.slice();
-        if (G_History.stuckTurnCount >= 4) {
+        if (G_History.stuckTurnCount >= 20) {
             G_History.stuckTurnCount = 0;
             if (ctx.canTeleport) {
                 if (ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
@@ -1031,7 +1047,7 @@ function chooseMainTarget(me, enemy, game) {
 
     var myPos = me.tank.position;
     var myStars = me.stars || 0;
-    candidates.sort(function(a, b) {
+    candidates.sort(function (a, b) {
         return getTargetScore(a, myPos, myStars) - getTargetScore(b, myPos, myStars);
     });
     return candidates[0];
@@ -1119,11 +1135,11 @@ function isOnEnemyGunLineForTracked(pos, hEnemy, ctx, checkOverload) {
     if (isLoS(hEnemy.pos, pos, hEnemy.dir, ctx.map)) return true;
     if (checkOverload && isEnemyOverloadActiveForTracked(hEnemy, ctx)) {
         var rightDir = { up: "right", right: "down", down: "left", left: "up" }[hEnemy.dir];
-        var leftDir  = { up: "left",  right: "up",   down: "right", left: "down" }[hEnemy.dir];
+        var leftDir = { up: "left", right: "up", down: "right", left: "down" }[hEnemy.dir];
         var rightOrigin = addPos(hEnemy.pos, delta(rightDir));
-        var leftOrigin  = addPos(hEnemy.pos, delta(leftDir));
+        var leftOrigin = addPos(hEnemy.pos, delta(leftDir));
         if (isLoS(rightOrigin, pos, hEnemy.dir, ctx.map)) return true;
-        if (isLoS(leftOrigin,  pos, hEnemy.dir, ctx.map)) return true;
+        if (isLoS(leftOrigin, pos, hEnemy.dir, ctx.map)) return true;
     }
     return false;
 }
