@@ -77,7 +77,7 @@ function onIdle(me, enemy, game) {
         if (!G_Blueprint.initialized || (target && !G_Blueprint.enemySeen)) strategicInit(target, game.map);
 
         var ctx = buildExecutionContext(me, target, game);
-
+        me.speak("G_History.frame:" + G_History.frame);
         // 120帧星星记录器
         if (G_History.frame >= 120 && !G_History.starsAt120) {
             G_History.starsAt120 = {
