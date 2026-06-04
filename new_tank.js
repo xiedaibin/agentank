@@ -333,10 +333,24 @@ function evalGrassAmbushAndSurvival(ctx) {
         //if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
-            // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
-            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 3;
-            if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
-                // 不在此处 return，让它fall-through到下面的grass寻路
+            // 检查当前草丛位置是否处于任何敌人的枪线上或有子弹袭来，禁止在对方枪线草丛中待机
+            var onAnyGunLine = false;
+            if (ctx.trackedEnemies) {
+                for (var idx in ctx.trackedEnemies) {
+                    var hEnemy = ctx.trackedEnemies[idx];
+                    if (hEnemy && hEnemy.pos) {
+                        var elapsed = G_History.frame - hEnemy.frame;
+                        if ((hEnemy.visible || elapsed < 35) && isOnEnemyGunLineForTracked(ctx.myPos, hEnemy, ctx, true)) {
+                            onAnyGunLine = true;
+                            break;
+                        }
+                    }
+                }
+            }
+            var bulletIncoming = getMinFramesToHit(ctx.myPos, ctx.visibleBullets, ctx.map) <= 5;
+
+            if (onAnyGunLine || bulletIncoming) {
+                // 不在此处 return，让它fall-through到下面的grass寻路以寻找安全草丛
             } else {
                 if (ctx.enemyVisible && canShoot(ctx.myPos, ctx.enemyPos, ctx.map) === true) {
                     var d = directionTo(ctx.myPos, ctx.enemyPos);
@@ -433,7 +447,7 @@ function tacticalDefense(me, ctx) {
                 var onLine = isOnEnemyGunLineForTracked(ctx.myPos, hEnemy, ctx, true);
                 if (onLine && d <= 8) {
                     var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-                    if (!myPosInGrass || d <= 2) {
+                    if (!myPosInGrass || d <= 4) {
                         var escape = findOffAxisMoveForEnemy(ctx, hEnemy);
                         if (escape) {
                             me.speak("SO: Evasion");
@@ -623,7 +637,7 @@ function aStar(start, goal, ctx) {
                                 if (isOnEnemyGunLineForTracked(next, hEnemy, ctx, true)) {
                                     if (dist < 4) {
                                         isExtremeLoS = true;
-                                    } else if (dist <= 5 && !G_Blueprint.mapVision.grass[next[0] + "," + next[1]]) {
+                                    } else if (dist <= 5) {
                                         isCloseLoS = true;
                                     }
                                 }
@@ -682,7 +696,6 @@ function executeAction(me, act, ctx) {
         if (next) {
             var isCloseLoS = ctx.enemyVisible && !ctx.enemyFireLocked && ctx.enemyPos &&
                 getDist(next, ctx.enemyPos) <= 5 &&
-                !G_Blueprint.mapVision.grass[next[0] + "," + next[1]] &&
                 isLoS(ctx.enemyPos, next, ctx.enemyDir, ctx.map);
             if (isCloseLoS) {
                 me.speak("LoS: Close Danger");
