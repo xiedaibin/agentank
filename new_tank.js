@@ -26,7 +26,8 @@ var G_History = {
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
     lastEnemyOverloadedFrame: null,
-    killModeActive: false  // 单挑期落后≥2星时触发，一旦开启延续到局结束
+    killModeActive: false,  // 单挑期落后≥2星时触发，一旦开启延续到局结束
+    starsAt120: null        // 记录第120帧的我方与敌方星星数
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -62,12 +63,22 @@ function onIdle(me, enemy, game) {
 
         var ctx = buildExecutionContext(me, target, game);
 
-        // Kill Mode 触发检测：单挑期落后≥2星，或者超时临近（>=110帧）且落后或持平时启动（不可逆）
+        // 120帧星星记录器
+        if (G_History.frame >= 120 && !G_History.starsAt120 && ctx.enemy) {
+            G_History.starsAt120 = {
+                me: ctx.meStars,
+                enemy: ctx.enemy.stars || 0
+            };
+            me.speak("Rec120: " + G_History.starsAt120.me + "-" + G_History.starsAt120.enemy);
+        }
+
+        // Kill Mode 触发检测：单挑期落后≥2星，或者120帧及以后落后，或者150帧及以后平局或落后（不可逆）
         if (ctx.alivePlayers <= 2 && !G_History.killModeActive && ctx.enemy) {
             var enemyStars = ctx.enemy.stars || 0;
-            var isBehindOrTied = (ctx.meStars <= enemyStars);
-            var isTimeoutImminent = (G_History.frame >= 110);
-            if (ctx.meStars <= enemyStars - 2 || (isTimeoutImminent && isBehindOrTied)) {
+            var isSevereBehind = (ctx.meStars <= enemyStars - 2);
+            var isTimeTrigger = (G_History.frame >= 120 && ctx.meStars < enemyStars);
+            var isExtremeTimeoutTied = (G_History.frame >= 150 && ctx.meStars <= enemyStars);
+            if (isSevereBehind || isTimeTrigger || isExtremeTimeoutTied) {
                 G_History.killModeActive = true;
                 me.speak("Kill Mode: All-In!");
             }
@@ -836,7 +847,7 @@ function executeAction(me, act, ctx) {
     else if (act.action === "move") {
         if (G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) G_History.stuckTurnCount++; else G_History.stuckTurnCount = 0;
         G_History.lastPos = ctx.myPos.slice();
-        if (G_History.stuckTurnCount >= 20) {
+        if (G_History.stuckTurnCount >= 30) {
             G_History.stuckTurnCount = 0;
             if (ctx.canTeleport) {
                 if (ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
