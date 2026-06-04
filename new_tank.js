@@ -493,9 +493,7 @@ function isSafe(pos, ctx, strict) {
             if (!hEnemy || !hEnemy.pos) continue;
             var d = getDist(pos, hEnemy.pos);
             if (hEnemy.visible) {
-                var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                var overloadNearby = isEnemyOverloadActiveForTracked(hEnemy, ctx) && d <= 3;
-                if ((!isGrass || overloadNearby) && isOnEnemyGunLineForTracked(pos, hEnemy, ctx, true)) return false;
+                if (isOnEnemyGunLineForTracked(pos, hEnemy, ctx, true)) return false;
                 var dangerRadius = G_Blueprint.Tactics.DANGER_RADIUS;
                 if (hEnemy.skillType === "freeze" || hEnemy.skillType === "stun") dangerRadius = 8;
                 if (strict && hEnemy.skillReady && d <= dangerRadius) return false;
@@ -504,10 +502,10 @@ function isSafe(pos, ctx, strict) {
                 var elapsed = G_History.frame - hEnemy.frame;
                 if (elapsed < 35) {
                     if (d < 2) return false;
+                    if (isOnEnemyGunLineForTracked(pos, hEnemy, ctx, true)) return false;
                     var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
                     if (!inGrass) {
                         if (d <= 3) return false;
-                        if (isOnEnemyGunLineForTracked(pos, hEnemy, ctx, true)) return false;
                         if (pos[0] === hEnemy.pos[0] || pos[1] === hEnemy.pos[1]) {
                             if (canShoot(hEnemy.pos, pos, ctx.map) !== false) return false;
                         }
