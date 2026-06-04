@@ -555,8 +555,6 @@ function getNearestEnemyPos(ctx) {
 }
 
 function evalThreatPreAim(ctx) {
-    if (ctx.starPos) return null; // 场上有星时优先抢星，不预瞄转向
-
     var nearestEnemyPos = getNearestEnemyPos(ctx);
     if (!nearestEnemyPos) return null;
 
