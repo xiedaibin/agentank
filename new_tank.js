@@ -27,7 +27,8 @@ var G_History = {
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
     lastEnemyOverloadedFrame: null,
     killModeActive: false,  // 单挑期落后≥2星时触发，一旦开启延续到局结束
-    starsAt120: null        // 记录第120帧的我方与敌方星星数
+    starsAt120: null,       // 记录第120帧的我方与敌方星星数
+    lastEnemyStars: 0       // 记录敌人的最新已知星星数
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -43,6 +44,20 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
+
+        // 更新敌方的最新已知星星数量
+        if (enemy) {
+            G_History.lastEnemyStars = enemy.stars || 0;
+        }
+        if (game.enemies && game.enemies.length > 0) {
+            for (var i = 0; i < game.enemies.length; i++) {
+                var e = game.enemies[i];
+                if (e && e.stars !== undefined && e.stars > G_History.lastEnemyStars) {
+                    G_History.lastEnemyStars = e.stars;
+                }
+            }
+        }
+
         var target = chooseMainTarget(me, enemy, game);
 
         if (target && target.status && target.status.overloaded) {
@@ -64,18 +79,18 @@ function onIdle(me, enemy, game) {
         var ctx = buildExecutionContext(me, target, game);
 
         // 120帧星星记录器
-        if (G_History.frame >= 120 && !G_History.starsAt120 && ctx.enemy) {
+        if (G_History.frame >= 120 && !G_History.starsAt120) {
             G_History.starsAt120 = {
                 me: ctx.meStars,
-                enemy: ctx.enemy.stars || 0
+                enemy: G_History.lastEnemyStars
             };
             me.speak("Rec120: " + G_History.starsAt120.me + "-" + G_History.starsAt120.enemy);
         }
 
-        // Kill Mode 触发检测：单挑期落后≥2星，或者120帧及以后落后，或者150帧及以后平局或落后（不可逆）
-        if (ctx.alivePlayers <= 2 && !G_History.killModeActive && ctx.enemy) {
-            var enemyStars = ctx.enemy.stars || 0;
-            var isSevereBehind = (ctx.meStars <= enemyStars - 2);
+        // Kill Mode 触发检测：单挑期落后≥2星，或者120帧及以后落后，或者150帧及以后平局或落后（不可逆，支持出击混战期）
+        if (!G_History.killModeActive) {
+            var enemyStars = G_History.lastEnemyStars;
+            var isSevereBehind = (ctx.alivePlayers <= 2 && ctx.meStars <= enemyStars - 2);
             var isTimeTrigger = (G_History.frame >= 120 && ctx.meStars < enemyStars);
             var isExtremeTimeoutTied = (G_History.frame >= 150 && ctx.meStars <= enemyStars);
             if (isSevereBehind || isTimeTrigger || isExtremeTimeoutTied) {

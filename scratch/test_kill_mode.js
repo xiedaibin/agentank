@@ -3,8 +3,9 @@ const vm = require('vm');
 
 const code = fs.readFileSync('new_tank.js', 'utf8');
 
-function runTest(testName, frames, meStars, enemyStars) {
-    console.log(`\n=== TEST CASE: ${testName} (frame: ${frames}, stars: ${meStars} vs ${enemyStars}) ===`);
+function runTest(testName, frames, meStars, enemyStars, alivePlayers, enemyVisible) {
+    console.log(`\n=== TEST CASE: ${testName} ===`);
+    console.log(`  (frame: ${frames}, stars: ${meStars} vs ${enemyStars}, alivePlayers: ${alivePlayers}, enemyVisible: ${enemyVisible})`);
     
     const printLogs = [];
     const mockMe = {
@@ -19,7 +20,7 @@ function runTest(testName, frames, meStars, enemyStars) {
     };
 
     const mockEnemy = {
-        tank: { id: 1414, position: [6, 13], direction: 'down', crashed: false },
+        tank: enemyVisible ? { id: 1414, position: [6, 13], direction: 'down', crashed: false } : null,
         bullet: null,
         stars: enemyStars,
         skill: { type: 'freeze', remainingCooldownFrames: 0 }
@@ -33,9 +34,9 @@ function runTest(testName, frames, meStars, enemyStars) {
     const mockGame = {
         frames: frames,
         star: null, // No star on map
-        enemies: [mockEnemy],
+        enemies: enemyVisible ? [mockEnemy] : [],
         map: map,
-        alivePlayers: 2
+        alivePlayers: alivePlayers
     };
 
     const sandbox = {
@@ -61,14 +62,16 @@ function runTest(testName, frames, meStars, enemyStars) {
             index: 0,
             pos: [6, 13],
             dir: 'down',
-            frame: frames,
-            visible: true,
+            frame: frames - 5, // Seen 5 frames ago
+            visible: enemyVisible,
             skillReady: true,
             skillType: 'freeze',
             hasOverload: false,
             overloaded: false
         }
     };
+    sandbox.G_History.lastEnemyStars = enemyStars; // Set historical star count
+    sandbox.G_History.lastEnemyPos = [6, 13];
 
     sandbox.onIdle(mockMe, mockEnemy, mockGame);
 
@@ -82,14 +85,14 @@ function runTest(testName, frames, meStars, enemyStars) {
     console.log('Best Action Decision:', best);
 }
 
-// Case 1: Early frame, equal stars. Should NOT trigger Kill Mode.
-runTest("Early Frame Equal Stars", 115, 3, 3);
+// Case 1: Early frame, equal stars. Should NOT trigger.
+runTest("Early Frame Equal Stars", 115, 3, 3, 2, true);
 
-// Case 2: Frame 120, lagging stars (3 vs 4). Should trigger Kill Mode and record star counts.
-runTest("Frame 120 Lagging Stars", 120, 3, 4);
+// Case 2: Frame 120, lagging stars, enemy invisible. Should trigger and record.
+runTest("Frame 120 Lagging Stars (Enemy Invisible)", 120, 3, 4, 2, false);
 
-// Case 3: Frame 120, equal stars (3 vs 3). Should record star counts, but NOT trigger Kill Mode yet.
-runTest("Frame 120 Equal Stars", 120, 3, 3);
+// Case 3: Frame 120, equal stars, 3 players alive (Raid melee). Should record, but NOT trigger yet.
+runTest("Frame 120 Equal Stars (3 Players Alive)", 120, 3, 3, 3, true);
 
-// Case 4: Frame 150 (extreme timeout), equal stars (3 vs 3). Should trigger Kill Mode.
-runTest("Frame 150 Equal Stars (Extreme Timeout)", 150, 3, 3);
+// Case 4: Frame 150 (extreme timeout), equal stars, 3 players alive. Should trigger.
+runTest("Frame 150 Equal Stars (3 Players Alive - Extreme Timeout)", 150, 3, 3, 3, true);
