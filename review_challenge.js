@@ -1,11 +1,17 @@
 const fs = require('fs');
+const { getToken } = require('./config');
 
 async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
+
     const args = process.argv.slice(2);
     const targetTankId = args[0] ? (isNaN(args[0]) ? args[0] : parseInt(args[0])) : null;
     const totalMatches = 10;

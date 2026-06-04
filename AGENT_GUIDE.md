@@ -332,13 +332,14 @@ Notes:
 - `code` is optional
 - if omitted, the latest published code is used
 - if included, the simulation uses this candidate code without publishing it
+- `opponentId` is optional; omit it to let the server choose a random training bot
+- when provided, `opponentId` must be a training bot id such as `nova-scout`, `azure-hunter`, or `crimson-bastion`; public tank ids use `opponentTankId` only in the real challenge endpoint
 - the response includes raw replay data suitable for frame-by-frame analysis
 
 Replay shape summary:
 
 - `replay.meta`
-- `replay.frames`
-- per-frame events such as tank movement, turning, firing, bullet updates, star spawns, and star collection
+- `replay.records` - per-frame events such as tank movement, turning, firing, bullet updates, star spawns, and star collection
 
 ### 4. Read your tank's recent recorded matches
 
@@ -452,6 +453,7 @@ Or ask the server to choose a random public opponent:
   "mapId": "classic"
 }
 ```
+You can also omit `opponentTankId`; the challenge endpoint treats a missing or zero opponent id as a random rank-eligible public opponent.
 
 Returns:
 

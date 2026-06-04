@@ -118,3 +118,25 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-05-27 | Fix enemyStars and unify usage | Fix enemyStars and unify usage (自动生成) | 46.67% | Rejected | -13.33% |
 | V12 | 2026-05-27 | User current version V12.31 | User current version V12.31 (自动生成) | 70.00% | Adopted | 20.00% |
 | V12 | 2026-05-27 | Re-test current version | Re-test current version (自动生成) | 60.00% | Rejected | -10.00% |
+| V12 | 2026-05-29 | Baseline Measurement V12.31 | Baseline Measurement V12.31 (自动生成) | 36.67% | Pending | -3.33% |
+| V12 | 2026-05-29 | Ghost Bullet Axis Defense V12.32 | Ghost Bullet Axis Defense V12.32 (自动生成) | 60.00% | Adopted | 23.33% |
+| V12 | 2026-05-29 | V12.32 Stability Verification | V12.32 Stability Verification (自动生成) | 53.33% | Rejected | -6.67% |
+| V12 | 2026-05-29 | Ghost Bullet Tightened V12.33 | Ghost Bullet Tightened V12.33 (自动生成) | 56.67% | Adopted | 20.00% |
+| V12 | 2026-05-29 | Safety Override V12.34 | Safety Override V12.34 (自动生成) | 50.00% | Rejected | -6.67% |
+| V12 | 2026-05-29 | Safety Override V12.34 non-strict | Safety Override V12.34 non-strict (自动生成) | 53.33% | Pending | -3.34% |
+| V12 | 2026-05-29 | Safety Speak Debug V12.35 | Safety Speak Debug V12.35 (自动生成) | 50.00% | Rejected | -6.67% |
+| V12 | 2026-05-29 | Baseline V12.33 Verification | Baseline V12.33 Verification (自动生成) | 62.07% | Adopted | 12.07% |
+| V12 | 2026-05-29 | Turn Bug Fix V12.36 | Turn Bug Fix V12.36 (自动生成) | 41.38% | Rejected | -20.69% |
+| V12 | 2026-05-29 | Turn Translation V12.36 | Turn Translation V12.36 (自动生成) | 63.33% | Adopted | 1.26% |
+| V12 | 2026-06-02 | V12.36 Baseline | V12.36 Baseline (自动生成) | 60.00% | Pending | 10.00% |
+| V12 | 2026-06-02 | Star Suppression | Star Suppression (自动生成) | 50.00% | Rejected | -10.00% |
+| V12 | 2026-06-02 | Star Suppression | Star Suppression (自动生成) | 56.67% | Pending | 6.67% |
+| V12 | 2026-06-02 | Star Suppression relaxed | Star Suppression relaxed (自动生成) | 50.00% | Pending | 0.00% |
+| V12 | 2026-06-02 | Star Suppression fixed | Star Suppression fixed (自动生成) | 60.00% | Pending | 10.00% |
+| V12 | 2026-06-02 | Star Suppression & Grass Safety | Star Suppression & Grass Safety (自动生成) | 46.67% | Rejected | -8.33% |
+| V12 | 2026-06-02 | Star Suppression & Grass Pathing V12.40 | Star Suppression & Grass Pathing V12.40 (自动生成) | 50.00% | Rejected | -5.00% |
+| V12 | 2026-06-02 | LoS Penalty Evasion | LoS Penalty Evasion (自动生成) | 56.67% | Adopted | 6.67% |
+| V12 | 2026-06-02 | Grass Blind Fire | Grass Blind Fire (自动生成) | 51.72% | Pending | 1.72% |
+| V12 | 2026-06-02 | Evasion Tie-Breaker | Evasion Tie-Breaker (自动生成) | 60.00% | Adopted | 10.00% |
+| V_Auto | 2026-06-03 | Targeted_Optimization | 专项达标(70.00%)并校验通过 | 63.33% | Adopted | 3.33% |
+| V_Auto | 2026-06-03 | Targeted_Optimization | 专项达标(73.68%)并校验通过 | 63.33% | Adopted | 0.00% |

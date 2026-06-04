@@ -1,5 +1,12 @@
+const { getToken } = require('./config');
+
 async function main() {
-    const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
+    const token = getToken();
+    if (!token) {
+        console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
+        process.exit(1);
+    }
+
     
     for (let i = 1; i <= 3; i++) {
         console.log(`\nStarting match ${i}...`);
