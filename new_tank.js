@@ -91,8 +91,8 @@ function onIdle(me, enemy, game) {
         if (!G_History.killModeActive) {
             var enemyStars = G_History.lastEnemyStars;
             var isSevereBehind = (ctx.alivePlayers <= 2 && ctx.meStars <= enemyStars - 2);
-            var isTimeTrigger = (G_History.frame >= 120 && ctx.meStars < enemyStars);
-            var isExtremeTimeoutTied = (G_History.frame >= 150 && ctx.meStars <= enemyStars);
+            var isTimeTrigger = (G_History.frame >= 100 && ctx.meStars < enemyStars);
+            var isExtremeTimeoutTied = (G_History.frame >= 120 && ctx.meStars <= enemyStars);
             if (isSevereBehind || isTimeTrigger || isExtremeTimeoutTied) {
                 G_History.killModeActive = true;
                 me.speak("Kill Mode: All-In!");
@@ -215,7 +215,7 @@ function analyzeMap(map) {
                     var p = component[i];
                     v.componentIds[p[0] + "," + p[1]] = compCount;
                 }
-                if (component.length <= 30) {
+                if (component.length <= 10) {
                     for (var i = 0; i < component.length; i++) {
                         var p = component[i];
                         v.trapped[p[0] + "," + p[1]] = true;
@@ -443,6 +443,10 @@ function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
 
+    if (ctx.killMode && ctx.canTeleport && dist > 0) {
+        return { action: "teleport", target: ctx.starPos, score: CONFIG.KILL_PRIO - 50 };
+    }
+
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
@@ -568,8 +572,10 @@ function evalThreatPreAim(ctx) {
 
 // 单挑期逃跑优先目标：若星星安全则用传送吃星代替传送去草丛（一举两得）
 function getBestEscapeTarget(me, ctx) {
-    if (ctx.alivePlayers <= 2 && ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
-        return ctx.starPos;
+    if (ctx.alivePlayers <= 2 && ctx.starPos) {
+        if (ctx.killMode || isSafeForStarTeleport(ctx.starPos, ctx)) {
+            return ctx.starPos;
+        }
     }
     return findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
 }
@@ -1119,7 +1125,7 @@ function findSafeQuadrantSpot(ctx) {
 function findEscapeSpot(ctx) {
     var offs = [[5, 0], [-5, 0], [0, 5], [0, -5], [4, 4], [-4, -4]];
     for (var i = 0; i < offs.length; i++) {
-        var p = addPos(ctx.myPos, offs[i]); 
+        var p = addPos(ctx.myPos, offs[i]);
         if (isPassable(p, ctx.map) && isSafe(p, ctx, false) && hasWalkableExit(p, ctx.map)) return p;
     }
     return null;
