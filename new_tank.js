@@ -389,12 +389,21 @@ function evalGrassAmbushAndSurvival(ctx) {
     return { action: "move", target: esc, score: 100 };
 }
 
+// 单挑期逃跑优先目标：若星星安全则用传送吃星代替传送去草丛（一举两得）
+function getBestEscapeTarget(me, ctx) {
+    if (ctx.alivePlayers <= 2 && ctx.starPos && isSafeForStarTeleport(ctx.starPos, ctx)) {
+        me.speak("EscToStar");
+        return ctx.starPos;
+    }
+    return findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+}
+
 function tacticalDefense(me, ctx) {
     var minFH = getMinFramesToHit(ctx.myPos, ctx.visibleBullets, ctx.map);
     if (minFH <= 5) {
         var dodge = findBestDodge(ctx, minFH);
         if (ctx.canTeleport && (minFH <= 2 || !dodge)) {
-            var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+            var esc = getBestEscapeTarget(me, ctx);
             if (esc) return { action: "teleport", target: esc, score: 99999 };
         }
         if (dodge) {
@@ -471,7 +480,7 @@ function tacticalDefense(me, ctx) {
                             return escape;
                         }
                         if (ctx.canTeleport) {
-                            var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                            var esc = getBestEscapeTarget(me, ctx);
                             if (esc) return { action: "teleport", target: esc, score: 99999 };
                         }
                     }
