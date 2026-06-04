@@ -202,6 +202,15 @@ async function main() {
     sandbox.G_Blueprint.initialized = false;
     sandbox.G_Blueprint.enemySeen = false;
 
+    // Process Frame 0 events to initialize state (e.g. star spawning)
+    if (records[0]) {
+        for (const ev of records[0]) {
+            if (ev.type === "star" || ev.event === "star_spawned" || (ev.action === "created" && ev.type === "star")) {
+                starPos = ev.position || ev.at;
+            }
+        }
+    }
+
     // Step through each frame record
     for (let f = 1; f < records.length; f++) {
         const frameEvents = records[f] || [];
