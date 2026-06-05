@@ -1,88 +1,373 @@
-[2026-06-03 13:59:12] === 挂机第一模式启动 ===
-[2026-06-03 13:59:12] 正在初始化坦克数据...
-[2026-06-03 13:59:13] 我的坦克 ID: 230 | 当前分数: 2972 | 当前点数: 1172
-[2026-06-03 13:59:13] 正在搜寻全服最高分合格对手...
-[2026-06-03 14:00:05] [搜寻成功] 锁定对手 #1: 小强#1394 (分数: 2988)
-[2026-06-03 14:00:05] [第 1 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:00:09] [第 1 场] 结果: WIN | 得分: 2993 (+21) | 点数: 1193 | 原因: runTime | 链接: https://agentank.ai/history/mat_3524nI2dHeCL4fdrf
-[2026-06-03 14:00:09] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:20:35] === 挂机第一模式启动 ===
+[2026-06-04 18:20:35] 正在初始化坦克数据...
+[2026-06-04 18:20:36] 我的坦克 ID: 230 | 当前分数: 2910 | 当前点数: 1110
+[2026-06-04 18:20:36] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:21:06] [搜寻成功] 锁定对手 #1: 小强#1394 (分数: 3010)
+[2026-06-04 18:21:06] [第 1 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:10] [第 1 场] 结果: LOSS | 得分: 2896 (-14) | 点数: 1096 | 原因: crashed | 链接: https://agentank.ai/history/mat_3lAzMajKkje7LwqEt
+[2026-06-04 18:21:10] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:00:14] [第 2 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:00:22] [第 2 场] 结果: LOSS | 得分: 2970 (-23) | 点数: 1170 | 原因: star | 链接: https://agentank.ai/history/mat_63h2Q0u2mba5EBMod
-[2026-06-03 14:00:22] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:21:15] [第 2 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:20] [第 2 场] 结果: WIN | 得分: 2922 (+26) | 点数: 1122 | 原因: star | 链接: https://agentank.ai/history/mat_KGN4UJtlDWr2BziNy
+[2026-06-04 18:21:20] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:00:27] [第 3 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:00:34] [第 3 场] 结果: WIN | 得分: 2991 (+21) | 点数: 1191 | 原因: crashed | 链接: https://agentank.ai/history/mat_6BN3kYMrsmsA4DfFz
-[2026-06-03 14:00:34] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:21:25] [第 3 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:31] [第 3 场] 结果: WIN | 得分: 2946 (+24) | 点数: 1146 | 原因: crashed | 链接: https://agentank.ai/history/mat_35DIwrghlGz0L1VSm
+[2026-06-04 18:21:31] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:00:39] [第 4 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:00:45] [第 4 场] 结果: WIN | 得分: 3011 (+20) | 点数: 1211 | 原因: crashed | 链接: https://agentank.ai/history/mat_ArYBUVjMXGI3FlQv0
-[2026-06-03 14:00:45] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:21:36] [第 4 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:39] [第 4 场] 结果: WIN | 得分: 2967 (+21) | 点数: 1167 | 原因: crashed | 链接: https://agentank.ai/history/mat_BVtWe111vOf7ZwaGw
+[2026-06-04 18:21:40] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:00:50] [第 5 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:00:54] [第 5 场] 结果: LOSS | 得分: 2990 (-21) | 点数: 1190 | 原因: crashed | 链接: https://agentank.ai/history/mat_EGdxPE7HZC5Gwhx0L
-[2026-06-03 14:00:54] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:21:45] [第 5 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:49] [第 5 场] 结果: LOSS | 得分: 2961 (-24) | 点数: 1161 | 原因: crashed | 链接: https://agentank.ai/history/mat_7gWRadInCbBHTT8UF
+[2026-06-04 18:21:49] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:00:59] [第 6 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:01:05] [第 6 场] 结果: WIN | 得分: 3009 (+19) | 点数: 1209 | 原因: star | 链接: https://agentank.ai/history/mat_2GLn052AaBGBjJfvq
-[2026-06-03 14:01:05] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:21:54] [第 6 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:21:59] [第 6 场] 结果: LOSS | 得分: 2940 (-21) | 点数: 1140 | 原因: star | 链接: https://agentank.ai/history/mat_Ec0zrnn9DsE33OTpi
+[2026-06-04 18:21:59] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:01:10] [第 7 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:01:16] [第 7 场] 结果: WIN | 得分: 3004 (+21) | 点数: 1204 | 原因: crashed | 链接: https://agentank.ai/history/mat_3gDkILf9NB74v8iT1
-[2026-06-03 14:01:16] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:22:04] [第 7 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:22:09] [第 7 场] 结果: WIN | 得分: 2998 (+18) | 点数: 1198 | 原因: star | 链接: https://agentank.ai/history/mat_Jae0SN9ggqh2856Rn
+[2026-06-04 18:22:09] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:01:21] [第 8 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:01:30] [第 8 场] 结果: WIN | 得分: 3001 (+0) | 点数: 1201 | 原因: star | 链接: https://agentank.ai/history/mat_HGPmFsnsSOxAgSeGA
-[2026-06-03 14:01:30] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:22:14] [第 8 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:22:18] [第 8 场] 结果: WIN | 得分: 3016 (+0) | 点数: 1216 | 原因: runTime | 链接: https://agentank.ai/history/mat_5KwG4Jvro7rCc1Ocq
+[2026-06-04 18:22:18] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:01:35] [第 9 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:01:40] [第 9 场] 结果: WIN | 得分: 2988 (+21) | 点数: 1188 | 原因: star | 链接: https://agentank.ai/history/mat_77YFFbETKsM65Cjs8
-[2026-06-03 14:01:40] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:22:23] [第 9 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:22:28] [第 9 场] 结果: LOSS | 得分: 2987 (-29) | 点数: 1187 | 原因: star | 链接: https://agentank.ai/history/mat_COWyxuL5OcJD0X7qV
+[2026-06-04 18:22:28] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:01:45] [第 10 场对战] 正在挑战第一名: 小强#1394 (2988)
-[2026-06-03 14:01:52] [第 10 场] 结果: WIN | 得分: 3006 (+0) | 点数: 1206 | 原因: star | 链接: https://agentank.ai/history/mat_BONoV7KwBvsCeAriO
-[2026-06-03 14:01:52] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:22:33] [第 10 场对战] 正在挑战第一名: 小强#1394 (3010)
+[2026-06-04 18:22:37] [第 10 场] 结果: WIN | 得分: 3001 (+0) | 点数: 1201 | 原因: crashed | 链接: https://agentank.ai/history/mat_BV8w3whHHoH7MFecS
+[2026-06-04 18:22:37] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:01:57] 正在搜寻全服最高分合格对手...
-[2026-06-03 14:03:47] [搜寻成功] 锁定对手 #1: Tank-AEE85265#3521 (分数: 2959)
-[2026-06-03 14:03:47] [第 11 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:03:53] [第 11 场] 结果: WIN | 得分: 2994 (+18) | 点数: 1194 | 原因: star | 链接: https://agentank.ai/history/mat_AeiJdU7SxvTHl2EAk
-[2026-06-03 14:03:53] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:22:42] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:23:05] [搜寻成功] 锁定对手 #1: DETHGORF 1#1972 (分数: 2958)
+[2026-06-04 18:23:05] [第 11 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:08] [第 11 场] 结果: LOSS | 得分: 2878 (-16) | 点数: 1078 | 原因: crashed | 链接: https://agentank.ai/history/mat_EM5mvsuzJT04iu0VS
+[2026-06-04 18:23:08] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:03:58] [第 12 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:04] [第 12 场] 结果: WIN | 得分: 3012 (+18) | 点数: 1212 | 原因: crashed | 链接: https://agentank.ai/history/mat_1gizm2KIlrw8KNSEs
-[2026-06-03 14:04:04] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:13] [第 12 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:16] [第 12 场] 结果: LOSS | 得分: 2864 (-14) | 点数: 1064 | 原因: crashed | 链接: https://agentank.ai/history/mat_FyD7XEUA3Fp5YLx74
+[2026-06-04 18:23:16] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:04:09] [第 13 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:15] [第 13 场] 结果: LOSS | 得分: 2988 (-24) | 点数: 1188 | 原因: crashed | 链接: https://agentank.ai/history/mat_FEmNCn0PnXn0f1yd5
-[2026-06-03 14:04:15] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:21] [第 13 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:25] [第 13 场] 结果: WIN | 得分: 2891 (+27) | 点数: 1091 | 原因: crashed | 链接: https://agentank.ai/history/mat_JYmJzx7d98YDBdAww
+[2026-06-04 18:23:25] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:04:20] [第 14 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:25] [第 14 场] 结果: LOSS | 得分: 2964 (-21) | 点数: 1164 | 原因: crashed | 链接: https://agentank.ai/history/mat_62RCEaWon9P03VYiz
-[2026-06-03 14:04:25] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:30] [第 14 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:33] [第 14 场] 结果: LOSS | 得分: 2875 (-16) | 点数: 1075 | 原因: crashed | 链接: https://agentank.ai/history/mat_Dn0Qfb5vyXv1oWjkC
+[2026-06-04 18:23:33] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:04:30] [第 15 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:34] [第 15 场] 结果: LOSS | 得分: 2964 (-22) | 点数: 1164 | 原因: crashed | 链接: https://agentank.ai/history/mat_7HbbbMkKi3FAuTg35
-[2026-06-03 14:04:34] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:39] [第 15 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:42] [第 15 场] 结果: WIN | 得分: 2926 (+26) | 点数: 1126 | 原因: crashed | 链接: https://agentank.ai/history/mat_FdvfN5lKCzI92J1eG
+[2026-06-04 18:23:42] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:04:39] [第 16 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:44] [第 16 场] 结果: WIN | 得分: 2971 (+22) | 点数: 1171 | 原因: crashed | 链接: https://agentank.ai/history/mat_5kkPinSCyk7Bk86UU
-[2026-06-03 14:04:44] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:47] [第 16 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:51] [第 16 场] 结果: LOSS | 得分: 2909 (-17) | 点数: 1109 | 原因: crashed | 链接: https://agentank.ai/history/mat_Ld9j13lOv2b7oDMcu
+[2026-06-04 18:23:51] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:04:49] [第 17 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:04:58] [第 17 场] 结果: LOSS | 得分: 2948 (-20) | 点数: 1148 | 原因: star | 链接: https://agentank.ai/history/mat_D43QhzkI3G1KPbequ
-[2026-06-03 14:04:58] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:23:56] [第 17 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:23:59] [第 17 场] 结果: LOSS | 得分: 2895 (-14) | 点数: 1095 | 原因: crashed | 链接: https://agentank.ai/history/mat_Fu8OIfiPmUXKhMYFc
+[2026-06-04 18:23:59] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:05:03] [第 18 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:05:07] [第 18 场] 结果: LOSS | 得分: 2968 (-20) | 点数: 1168 | 原因: crashed | 链接: https://agentank.ai/history/mat_7oqNkSk5zuEEO5MMw
-[2026-06-03 14:05:07] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:24:04] [第 18 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:24:08] [第 18 场] 结果: LOSS | 得分: 2882 (-13) | 点数: 1082 | 原因: crashed | 链接: https://agentank.ai/history/mat_74MylJTVyhZGO1OVK
+[2026-06-04 18:24:08] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:05:12] [第 19 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:05:19] [第 19 场] 结果: WIN | 得分: 3007 (+21) | 点数: 1207 | 原因: star | 链接: https://agentank.ai/history/mat_0qL78mPt98zLnf4Iy
-[2026-06-03 14:05:19] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:24:13] [第 19 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:24:17] [第 19 场] 结果: WIN | 得分: 2907 (+25) | 点数: 1107 | 原因: crashed | 链接: https://agentank.ai/history/mat_7GPsLu3pN0816o2M8
+[2026-06-04 18:24:17] 等待 5 秒后发起下一次挑战...
 
-[2026-06-03 14:05:24] [第 20 场对战] 正在挑战第一名: Tank-AEE85265#3521 (2959)
-[2026-06-03 14:05:31] [第 20 场] 结果: WIN | 得分: 3007 (+0) | 点数: 1207 | 原因: star | 链接: https://agentank.ai/history/mat_5LhfVe2t3v1KlG5TE
-[2026-06-03 14:05:31] 等待 5 秒后发起下一次挑战...
+[2026-06-04 18:24:22] [第 20 场对战] 正在挑战第一名: DETHGORF 1#1972 (2958)
+[2026-06-04 18:24:26] [第 20 场] 运行异常: HTTP 502: <!DOCTYPE html>
+<!--[if lt IE 7]> <html class="no-js ie6 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 7]>    <html class="no-js ie7 oldie" lang="en-US"> <![endif]-->
+<!--[if IE 8]>    <html class="no-js ie8 oldie" lang="en-US"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en-US"> <!--<![endif]-->
+<head>
 
-[2026-06-03 14:05:36] 正在搜寻全服最高分合格对手...
+<title>agentank.ai | 502: Bad gateway</title>
+<meta charset="UTF-8" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<link rel="stylesheet" id="cf_styles-css" href="/cdn-cgi/styles/main.css" />
+</head>
+<body>
+<div id="cf-wrapper">
+    <div id="cf-error-details" class="p-0">
+        <header class="mx-auto pt-10 lg:pt-6 lg:px-8 w-240 lg:w-full mb-8">
+            <h1 class="inline-block sm:block sm:mb-2 font-light text-60 lg:text-4xl text-black-dark leading-tight mr-2">
+                <span class="inline-block">Bad gateway</span>
+                <span class="code-label">Error code 502</span>
+            </h1>
+            <div>
+                Visit <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=agentank.ai" target="_blank" rel="noopener noreferrer">cloudflare.com</a> for more information.
+            </div>
+            <div class="mt-3">2026-06-04 18:24:28 UTC</div>
+        </header>
+        <div class="my-8 bg-gradient-gray">
+            <div class="w-240 lg:w-full mx-auto">
+                <div class="clearfix md:px-8">
+                    <div id="cf-browser-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-browser block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">You</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Browser
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-cloudflare-status" class=" relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&#38;utm_campaign=agentank.ai" target="_blank" rel="noopener noreferrer">
+    <span class="cf-icon-cloud block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-ok w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    </a>
+  </div>
+  <span class="md:block w-full truncate">Amsterdam</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  <a href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&utm_campaign=agentank.ai" target="_blank" rel="noopener noreferrer">
+    Cloudflare
+  </a>
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-green-success">Working</span>
+  
+</div>
+                    <div id="cf-host-status" class="cf-error-source relative w-1/3 md:w-full py-15 md:p-0 md:py-8 md:text-left md:border-solid md:border-0 md:border-b md:border-gray-400 overflow-hidden float-left md:float-none text-center">
+  <div class="relative mb-10 md:m-0">
+    
+    <span class="cf-icon-server block md:hidden h-20 bg-center bg-no-repeat"></span>
+    <span class="cf-icon-error w-12 h-12 absolute left-1/2 md:left-auto md:right-0 md:top-0 -ml-6 -bottom-4"></span>
+    
+  </div>
+  <span class="md:block w-full truncate">agentank.ai</span>
+  <h3 class="md:inline-block mt-3 md:mt-0 text-2xl text-gray-600 font-light leading-1.3">
+  
+    Host
+  
+  </h3>
+  
+  <span class="leading-1.3 text-2xl text-red-error">Error</span>
+  
+</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-240 lg:w-full mx-auto mb-8 lg:px-8">
+            <div class="clearfix">
+                <div class="w-1/2 md:w-full float-left pr-6 md:pb-10 md:pr-0 leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What happened?</h2>
+                    <p>The web server reported a bad gateway error.</p>
+                </div>
+                <div class="w-1/2 md:w-full float-left leading-relaxed">
+                    <h2 class="text-3xl font-normal leading-1.3 mb-4">What can I do?</h2>
+                    <p class="mb-6">Please try again in a few minutes.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="cf-error-footer cf-wrapper w-240 lg:w-full py-10 sm:py-4 sm:px-8 mx-auto text-center sm:text-left border-solid border-0 border-t border-gray-300">
+    <p class="text-13">
+      <span class="cf-footer-item sm:block sm:mb-1">Cloudflare Ray ID: <strong class="font-semibold">a068f96c1a17a5c5</strong></span>
+      <span class="cf-footer-separator sm:hidden">&bull;</span>
+      <span id="cf-footer-item-ip" class="cf-footer-item hidden sm:block sm:mb-1">
+        Your IP:
+        <button type="button" id="cf-footer-ip-reveal" class="cf-footer-ip-reveal-btn">Click to reveal</button>
+        <span class="hidden" id="cf-footer-ip">106.84.21.146</span>
+        <span class="cf-footer-separator sm:hidden">&bull;</span>
+      </span>
+      <span class="cf-footer-item sm:block sm:mb-1"><span>Performance &amp; security by</span> <a rel="noopener noreferrer" href="https://www.cloudflare.com/5xx-error-landing?utm_source=errorcode_502&#38;utm_campaign=agentank.ai" id="brand_link" target="_blank">Cloudflare</a></span>
+      
+    </p>
+    <script>(function(){function d(){var b=a.getElementById("cf-footer-item-ip"),c=a.getElementById("cf-footer-ip-reveal");b&&"classList"in b&&(b.classList.remove("hidden"),c.addEventListener("click",function(){c.classList.add("hidden");a.getElementById("cf-footer-ip").classList.remove("hidden")}))}var a=document;document.addEventListener&&a.addEventListener("DOMContentLoaded",d)})();</script>
+  </div><!-- /.error-footer -->
+
+    </div>
+</div>
+</body>
+</html>
+[2026-06-04 18:24:26] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:24:31] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:24:59] [搜寻成功] 锁定对手 #1: DETHGORF 1#1972 (分数: 2972)
+[2026-06-04 18:24:59] [第 21 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:02] [第 21 场] 结果: LOSS | 得分: 2901 (-20) | 点数: 1101 | 原因: crashed | 链接: https://agentank.ai/history/mat_42LXdbmVgwH1qRVO2
+[2026-06-04 18:25:02] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:07] [第 22 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:09] [第 22 场] 结果: LOSS | 得分: 2878 (-23) | 点数: 1078 | 原因: crashed | 链接: https://agentank.ai/history/mat_JfO0VeH1KIQ4f61Z7
+[2026-06-04 18:25:09] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:14] [第 23 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:18] [第 23 场] 结果: LOSS | 得分: 2859 (-19) | 点数: 1059 | 原因: star | 链接: https://agentank.ai/history/mat_GejWbfeh3V8EbSKBR
+[2026-06-04 18:25:18] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:23] [第 24 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:25] [第 24 场] 结果: WIN | 得分: 2880 (+21) | 点数: 1080 | 原因: crashed | 链接: https://agentank.ai/history/mat_6ZCaD9feoqHByqiTG
+[2026-06-04 18:25:25] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:30] [第 25 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:34] [第 25 场] 结果: LOSS | 得分: 2858 (-22) | 点数: 1058 | 原因: crashed | 链接: https://agentank.ai/history/mat_Dkwg0N2NrT5G3MxRl
+[2026-06-04 18:25:34] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:39] [第 26 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:42] [第 26 场] 结果: LOSS | 得分: 2840 (-18) | 点数: 1040 | 原因: crashed | 链接: https://agentank.ai/history/mat_LecxlE4yuBz81XLAN
+[2026-06-04 18:25:42] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:47] [第 27 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:51] [第 27 场] 结果: WIN | 得分: 2835 (+23) | 点数: 1035 | 原因: star | 链接: https://agentank.ai/history/mat_8KR92emcE8KAYjLHh
+[2026-06-04 18:25:51] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:25:56] [第 28 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:25:59] [第 28 场] 结果: LOSS | 得分: 2818 (-17) | 点数: 1018 | 原因: crashed | 链接: https://agentank.ai/history/mat_Iz1rpzVFua9C5FMva
+[2026-06-04 18:25:59] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:26:04] [第 29 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:26:08] [第 29 场] 结果: LOSS | 得分: 2804 (-14) | 点数: 1004 | 原因: crashed | 链接: https://agentank.ai/history/mat_3jG9FDok6UP83Kr6L
+[2026-06-04 18:26:08] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:26:13] [第 30 场对战] 正在挑战第一名: DETHGORF 1#1972 (2972)
+[2026-06-04 18:26:15] [第 30 场] 结果: WIN | 得分: 2832 (+28) | 点数: 1032 | 原因: star | 链接: https://agentank.ai/history/mat_BnBz717VZsm6AKMhH
+[2026-06-04 18:26:15] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:26:20] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:26:43] [搜寻成功] 锁定对手 #1: DETHGORF 1#1972 (分数: 2951)
+[2026-06-04 18:26:43] [第 31 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:26:46] [第 31 场] 结果: LOSS | 得分: 2820 (-12) | 点数: 1020 | 原因: crashed | 链接: https://agentank.ai/history/mat_6BCmYP1Dh6R5uwhlF
+[2026-06-04 18:26:46] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:26:51] [第 32 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:26:55] [第 32 场] 结果: WIN | 得分: 2848 (+28) | 点数: 1048 | 原因: star | 链接: https://agentank.ai/history/mat_IK441UXzE9844krqT
+[2026-06-04 18:26:55] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:00] [第 33 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:02] [第 33 场] 结果: WIN | 得分: 2874 (+26) | 点数: 1074 | 原因: crashed | 链接: https://agentank.ai/history/mat_0I3fXqPkiUbEQTFAd
+[2026-06-04 18:27:02] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:07] [第 34 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:11] [第 34 场] 结果: LOSS | 得分: 2858 (-16) | 点数: 1058 | 原因: crashed | 链接: https://agentank.ai/history/mat_0BuUrk6uVFDJJBN1y
+[2026-06-04 18:27:11] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:16] [第 35 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:21] [第 35 场] 结果: WIN | 得分: 2881 (+23) | 点数: 1081 | 原因: star | 链接: https://agentank.ai/history/mat_DbFOv12fAg7KPdcTz
+[2026-06-04 18:27:21] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:26] [第 36 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:29] [第 36 场] 结果: LOSS | 得分: 2860 (-21) | 点数: 1060 | 原因: crashed | 链接: https://agentank.ai/history/mat_BGb7hTgod2rHyutNN
+[2026-06-04 18:27:29] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:34] [第 37 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:38] [第 37 场] 结果: LOSS | 得分: 2821 (-16) | 点数: 1021 | 原因: crashed | 链接: https://agentank.ai/history/mat_GeqvS60X7rVG3Rz3L
+[2026-06-04 18:27:38] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:43] [第 38 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:47] [第 38 场] 结果: LOSS | 得分: 2806 (-15) | 点数: 1006 | 原因: crashed | 链接: https://agentank.ai/history/mat_3DaUkYVAUMA91SI9C
+[2026-06-04 18:27:47] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:27:52] [第 39 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:27:55] [第 39 场] 结果: LOSS | 得分: 2791 (-15) | 点数: 991 | 原因: star | 链接: https://agentank.ai/history/mat_6hsKPdPhuN00BMdPd
+[2026-06-04 18:27:55] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:28:00] [第 40 场对战] 正在挑战第一名: DETHGORF 1#1972 (2951)
+[2026-06-04 18:28:04] [第 40 场] 结果: LOSS | 得分: 2760 (-10) | 点数: 960 | 原因: runTime | 链接: https://agentank.ai/history/mat_FRKu6snn6sz2qtsJ3
+[2026-06-04 18:28:04] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:28:09] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:28:36] [搜寻成功] 锁定对手 #1: 小强#1394 (分数: 3006)
+[2026-06-04 18:28:36] [第 41 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:28:39] [第 41 场] 结果: LOSS | 得分: 2739 (-10) | 点数: 939 | 原因: crashed | 链接: https://agentank.ai/history/mat_HGp5I46S2shDSnDMt
+[2026-06-04 18:28:39] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:28:45] [第 42 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:28:48] [第 42 场] 结果: WIN | 得分: 2767 (+28) | 点数: 967 | 原因: star | 链接: https://agentank.ai/history/mat_3FHMWDGiyZnG3hGgg
+[2026-06-04 18:28:48] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:28:53] [第 43 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:28:58] [第 43 场] 结果: LOSS | 得分: 2758 (-9) | 点数: 958 | 原因: star | 链接: https://agentank.ai/history/mat_HR2kOzNYFaS0wy2ZL
+[2026-06-04 18:28:58] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:03] [第 44 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:07] [第 44 场] 结果: WIN | 得分: 2814 (+31) | 点数: 1014 | 原因: crashed | 链接: https://agentank.ai/history/mat_JSaVGmwQ6ci1jbAXN
+[2026-06-04 18:29:07] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:12] [第 45 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:17] [第 45 场] 结果: WIN | 得分: 2843 (+29) | 点数: 1043 | 原因: crashed | 链接: https://agentank.ai/history/mat_LXru0uUrwhI0ySk9e
+[2026-06-04 18:29:17] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:22] [第 46 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:28] [第 46 场] 结果: LOSS | 得分: 2829 (-14) | 点数: 1029 | 原因: star | 链接: https://agentank.ai/history/mat_1Ai8gVblUO51rPShp
+[2026-06-04 18:29:28] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:33] [第 47 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:38] [第 47 场] 结果: WIN | 得分: 2856 (+27) | 点数: 1056 | 原因: star | 链接: https://agentank.ai/history/mat_980ZokXAYHp8JXbww
+[2026-06-04 18:29:38] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:43] [第 48 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:48] [第 48 场] 结果: WIN | 得分: 2880 (+24) | 点数: 1080 | 原因: star | 链接: https://agentank.ai/history/mat_Kesyb3CUujWDJnWWi
+[2026-06-04 18:29:48] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:29:53] [第 49 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:29:57] [第 49 场] 结果: WIN | 得分: 2902 (+22) | 点数: 1102 | 原因: crashed | 链接: https://agentank.ai/history/mat_GEtvBuaD79fCviLg6
+[2026-06-04 18:29:57] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:30:02] [第 50 场对战] 正在挑战第一名: 小强#1394 (3006)
+[2026-06-04 18:30:06] [第 50 场] 结果: LOSS | 得分: 2881 (-21) | 点数: 1081 | 原因: crashed | 链接: https://agentank.ai/history/mat_JCFcYvUiZEm2hEs8q
+[2026-06-04 18:30:06] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:30:11] 正在搜寻全服最高分合格对手...
+[2026-06-04 18:30:36] [搜寻成功] 锁定对手 #1: 小强#1394 (分数: 2948)
+[2026-06-04 18:30:36] [第 51 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:30:40] [第 51 场] 结果: WIN | 得分: 2922 (+23) | 点数: 1122 | 原因: crashed | 链接: https://agentank.ai/history/mat_IVZsv6YV2ME2GxIDR
+[2026-06-04 18:30:40] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:30:45] [第 52 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:30:50] [第 52 场] 结果: WIN | 得分: 2945 (+23) | 点数: 1145 | 原因: star | 链接: https://agentank.ai/history/mat_DvVsVHobBDK5PEmqi
+[2026-06-04 18:30:50] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:30:55] [第 53 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:30:59] [第 53 场] 结果: WIN | 得分: 2982 (+19) | 点数: 1182 | 原因: star | 链接: https://agentank.ai/history/mat_6QHFM6H4kWVAvecsu
+[2026-06-04 18:30:59] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:04] [第 54 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:08] [第 54 场] 结果: WIN | 得分: 2995 (+13) | 点数: 1195 | 原因: crashed | 链接: https://agentank.ai/history/mat_AwWY6Bdfwcs8V04VK
+[2026-06-04 18:31:08] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:13] [第 55 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:16] [第 55 场] 结果: WIN | 得分: 3006 (+11) | 点数: 1206 | 原因: crashed | 链接: https://agentank.ai/history/mat_7rlqejMMnQd48WgKs
+[2026-06-04 18:31:16] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:21] [第 56 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:24] [第 56 场] 结果: LOSS | 得分: 2977 (-29) | 点数: 1177 | 原因: crashed | 链接: https://agentank.ai/history/mat_CzSmyuFLCqZ4RWGTe
+[2026-06-04 18:31:24] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:29] [第 57 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:33] [第 57 场] 结果: WIN | 得分: 2980 (+18) | 点数: 1180 | 原因: star | 链接: https://agentank.ai/history/mat_GiyZLaX1H6W5UoBcr
+[2026-06-04 18:31:33] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:38] [第 58 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:43] [第 58 场] 结果: WIN | 得分: 2971 (+18) | 点数: 1171 | 原因: runTime | 链接: https://agentank.ai/history/mat_Ih1htob3RoXECmtJK
+[2026-06-04 18:31:43] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:48] [第 59 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:31:52] [第 59 场] 结果: WIN | 得分: 2981 (+18) | 点数: 1181 | 原因: runTime | 链接: https://agentank.ai/history/mat_2d76mzq7Yz8E01Gup
+[2026-06-04 18:31:52] 等待 5 秒后发起下一次挑战...
+
+[2026-06-04 18:31:57] [第 60 场对战] 正在挑战第一名: 小强#1394 (2948)
+[2026-06-04 18:32:02] [第 60 场] 结果: WIN | 得分: 3006 (+0) | 点数: 1206 | 原因: star | 链接: https://agentank.ai/history/mat_GsHjwbzpdam0Sbjtn
+[2026-06-04 18:32:02] 等待 5 秒后发起下一次挑战...
+

@@ -9,3 +9,4 @@ rank_reports/
 scratch/*.json
 .env
 .env.local
+*.json

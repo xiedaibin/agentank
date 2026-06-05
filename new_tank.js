@@ -15,7 +15,7 @@ var G_Blueprint = {
         DANGER_RADIUS: 4,
         ASTAR_UNSAFE_PENALTY: 2000,
         ENABLE_ASSASSINATION: true,
-        MAX_NODES: 250
+        MAX_NODES: 350
     }
 };
 
