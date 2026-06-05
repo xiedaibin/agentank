@@ -28,7 +28,8 @@ var G_History = {
     lastEnemyOverloadedFrame: null,
     killModeActive: false,  // 单挑期落后≥2星时触发，一旦开启延续到局结束
     starsAt120: null,       // 记录第120帧的我方与敌方星星数
-    lastEnemyStars: 0       // 记录敌人的最新已知星星数
+    lastEnemyStars: 0,      // 记录敌人的最新已知星星数
+    startShotFired: false   // 是否已发射开局预瞄子弹
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -44,6 +45,10 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
+
+        if (me.bullet) {
+            G_History.startShotFired = true;
+        }
 
         // 更新敌方的最新已知星星数量
         if (enemy) {
@@ -328,6 +333,7 @@ function tacticalAnalysis(ctx) {
     }
     // 单挑期敌人贴身（<=2格）时，先尝试安全步行脱离，得分高于转炮（9950 > 9900）
     candidates.push(evalCloseEnemyEscape(ctx));
+    candidates.push(evalStartShooting(ctx));
     candidates.push(evalShooting(ctx));
     candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
@@ -336,6 +342,26 @@ function tacticalAnalysis(ctx) {
     candidates.push(evalGrassAmbushAndSurvival(ctx));
     candidates.sort(function (a, b) { return (b ? b.score : 0) - (a ? a.score : 0); });
     return candidates[0];
+}
+
+function evalStartShooting(ctx) {
+    if (G_History.frame >= 15 || G_History.startShotFired) return null;
+
+    // 如果我们可以在开局传送吃星，优先让传送吃星执行
+    if (ctx.starPos && ctx.canTeleport && isSafeForStarTeleport(ctx.starPos, ctx)) {
+        var dist = getDist(ctx.myPos, ctx.starPos);
+        var myComp = G_Blueprint.mapVision.componentIds[ctx.myPos[0] + "," + ctx.myPos[1]];
+        var starComp = G_Blueprint.mapVision.componentIds[ctx.starPos[0] + "," + ctx.starPos[1]];
+        var isUnreachable = (myComp !== undefined && starComp !== undefined && myComp !== starComp);
+        var isSingleEnemy = ctx.alivePlayers <= 2;
+        if ((dist > 7 && isSingleEnemy) || isUnreachable) {
+            return null;
+        }
+    }
+
+    // 单纯在当前朝向发射一颗子弹，不用管对方坦克位置
+    var targetPos = addPos(ctx.myPos, delta(ctx.myDir));
+    return { action: "fire", target: targetPos, score: CONFIG.KILL_PRIO + 1000, tag: "StartShoot: Fire" };
 }
 
 function evalPanicTeleport(ctx) {

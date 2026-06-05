@@ -9,7 +9,8 @@
 在第一次使用或启动本代理时，**必须**按照以下顺序执行初始化操作，方可开启任何后续工作：
 1. **同步坦克规则**：首先执行“同步坦克规则”技能，将最新 1v1 规则与多人对战规则分别覆盖保存至本地的 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md) 和 [MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md)。
 2. **熟读与理解核心文档**：同步规则后，必须熟读并完全理解 [AGENT_GUIDE.md](file:///d:/MyGit/agentank/AGENT_GUIDE.md)（坦克 API 与 1v1 游戏机制）、[MULTIPLAYER-AGENT-GUIDE.md](file:///d:/MyGit/agentank/MULTIPLAYER-AGENT-GUIDE.md)（多人对战与 3v3 机制）和 [STRATEGY.md](file:///d:/MyGit/agentank/STRATEGY.md)（技能博弈与具体战术），在后续开发中严格遵循。
-3. **开启后续工作**：在完成上述步骤后，方可开展代码优化、对战复盘、排位赛等其他开发与测试任务。
+3. **文档与交流语言限制**：AI 代理生成的所有文档（如 `implementation_plan.md`、`task.md`、`walkthrough.md`）和所有的对话回复，**必须全量使用中文**，严禁使用英文。
+4. **开启后续工作**：在完成上述步骤后，方可开展代码优化、对战复盘、排位赛等其他开发与测试任务。
 
 ## 核心评价函数与架构约束（最高准则）
 
@@ -124,4 +125,5 @@
 
 1. **执行挑战**：启动 `node battle_first.js` 进入对战模式，程序将以 5 秒的频率无限轮询挑战当前符合条件的全服积分第一名。
 2. **动态刷新**：每 10 场对战自动刷新一次全服排行榜，动态跟踪锁定最新分数最高的目标。
+
 
