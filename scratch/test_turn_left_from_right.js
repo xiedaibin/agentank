@@ -1,0 +1,51 @@
+const fs = require('fs');
+const { getToken } = require('../config');
+
+async function testTurnLeftFromRight() {
+    const token = getToken();
+    const testCode = `
+function onIdle(me, enemy, game) {
+    if (game.frames === 1) {
+        // Start up, turn right to face right
+        me.turn("right");
+        me.speak("F1");
+    } else if (game.frames === 2) {
+        // Face right, call turn("left")
+        me.turn("left");
+        me.speak("F2");
+    } else if (game.frames === 3) {
+        me.go();
+        me.speak("F3");
+    }
+}
+`;
+    try {
+        const res = await fetch('https://agentank.ai/api/agent/tank/simulate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify({
+                opponentId: 'nova-scout',
+                mapId: 'classic',
+                code: testCode
+            })
+        });
+
+        const data = await res.json();
+        const records = data.replayData.replay.records || [];
+        
+        console.log("Starting state:");
+        console.log(JSON.stringify(data.replayData.replay.meta.players, null, 2));
+
+        console.log("Events in first 10 frames:");
+        for (let i = 0; i < Math.min(10, records.length); i++) {
+            console.log(`Frame ${i}:`, JSON.stringify(records[i], null, 2));
+        }
+    } catch (e) {
+        console.error(e);
+    }
+}
+
+testTurnLeftFromRight();

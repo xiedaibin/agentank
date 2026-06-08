@@ -34,7 +34,8 @@ function onIdle(me, enemy, game) {
     try {
         var originalTurn = me.turn;
         me.turn = function(dir) {
-            var turnDir = getTurnDir(me.tank.direction, dir);
+            var ePos = (enemy && enemy.tank) ? enemy.tank.position : (G_History.lastEnemyPos || null);
+            var turnDir = getTurnDir(me.tank.direction, dir, ePos, me.tank.position);
             if (turnDir) {
                 originalTurn.call(me, turnDir);
             }
@@ -657,6 +658,10 @@ function findOffAxisMove(ctx) {
             if (directionTo(ctx.myPos, n) === ctx.myDir) {
                 s += 0.1;
             }
+            // Tie-breaker 2: prefer moving closer to the star (max bonus 0.05, less than turn bonus 0.1)
+            if (ctx.starPos) {
+                s += Math.max(0, (50 - getDist(n, ctx.starPos)) * 0.001);
+            }
             if (s > maxS) { maxS = s; best = n; }
         }
     }
@@ -821,7 +826,7 @@ function directionTo(a, b) { if (b[0] > a[0]) return "right"; if (b[0] < a[0]) r
 function reverseDir(d) { return { up: "down", down: "up", left: "right", right: "left" }[d]; }
 function isPassable(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return false; var t = map[p[0]][p[1]]; return t !== "x" && t !== "m"; }
 function getTile(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return null; return map[p[0]][p[1]]; }
-function getTurnDir(currentDir, targetDir) {
+function getTurnDir(currentDir, targetDir, enemyPos, myPos) {
     if (!targetDir || currentDir === targetDir) return null;
     var dirs = ["up", "right", "down", "left"];
     var curIdx = dirs.indexOf(currentDir);
@@ -830,6 +835,15 @@ function getTurnDir(currentDir, targetDir) {
     var diff = (tarIdx - curIdx + 4) % 4;
     if (diff === 1) return "right";
     if (diff === 3) return "left";
+    
+    // diff === 2 (180 degrees turn): Avoid turning towards the enemy if possible
+    if (enemyPos && myPos) {
+        var dirToEnemy = directionTo(myPos, enemyPos);
+        var intermediateRight = dirs[(curIdx + 1) % 4];
+        var intermediateLeft = dirs[(curIdx + 3) % 4];
+        if (intermediateRight === dirToEnemy) return "left";
+        if (intermediateLeft === dirToEnemy) return "right";
+    }
     return "right";
 }
 
