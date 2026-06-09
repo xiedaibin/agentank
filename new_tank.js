@@ -29,12 +29,42 @@ var G_History = {
     killModeActive: false,  // 单挑期落后≥2星时触发，一旦开启延续到局结束
     starsAt120: null,       // 记录第120帧的我方与敌方星星数
     lastEnemyStars: 0,      // 记录敌人的最新已知星星数
-    startShotFired: false   // 是否已发射开局预瞄子弹
+    startShotFired: false,  // 是否已发射开局预瞄子弹
+    canFire: true           // 连发开火许可标记（初始为真）
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 
 function onIdle(me, enemy, game) {
+    // ==========================================
+    // 【快速装填连发探测与限制模块】
+    // ==========================================
+    G_History.frame = game.frames || 0;
+    var activeBulletsCount = me.bullets ? me.bullets.length : 0;
+
+    if (activeBulletsCount > 0) {
+        G_History.startShotFired = true;
+    }
+
+    // 动态探测与缓存：记录出击模式下看到的最大子弹数
+    if (G_History.maxBulletsSeen === undefined) {
+        // 出击模式下初始默认保底连发为 2
+        G_History.maxBulletsSeen = 2;
+    }
+    if (activeBulletsCount > G_History.maxBulletsSeen) {
+        G_History.maxBulletsSeen = activeBulletsCount;
+    }
+
+    // 使用 G_History.canFire 来进行全局动作判断
+    G_History.canFire = (activeBulletsCount < G_History.maxBulletsSeen);
+
+    // 前 4 帧（帧 0, 1, 2, 3）强制连续开火探测最大可射击连发上限，同时起到开局弹幕压制效果
+    if (G_History.frame < 4) {
+        me.speak("Probe Rate: " + G_History.frame);
+        me.fire();
+        return;
+    }
+
     try {
         var originalTurn = me.turn;
         me.turn = function (dir) {
@@ -45,10 +75,6 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
-
-        if (me.bullet) {
-            G_History.startShotFired = true;
-        }
 
         // 更新敌方的最新已知星星数量
         if (enemy) {
@@ -112,7 +138,7 @@ function onIdle(me, enemy, game) {
             var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
             if (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7)) {
                 var dir = directionTo(ctx.myPos, ctx.enemyPos);
-                if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
+                if (ctx.myDir === dir && ctx.canFire && !ctx.meStatus.fireLocked) {
                     // 如果处于超载敌人的双枪线下，且对方正对我们且未开火锁定，禁止站立射击，强制规避
                     var onOverloadLine = isOnEnemyGunLine(ctx.myPos, ctx, true);
                     var enemyFacingUs = isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
@@ -130,7 +156,7 @@ function onIdle(me, enemy, game) {
             var prevPos = G_History.lastEnemyPos;
             if (isNearGrass(prevPos)) {
                 var targetGrass = findTargetGrassForBlindFire(ctx.myPos, ctx.myDir, prevPos, ctx.map);
-                if (targetGrass && !me.bullet && !ctx.meStatus.fireLocked) {
+                if (targetGrass && ctx.canFire && !ctx.meStatus.fireLocked) {
                     me.speak("Blind Fire");
                     me.fire(); return;
                 }
@@ -145,7 +171,7 @@ function onIdle(me, enemy, game) {
         var bestAction = tacticalAnalysis(ctx);
         executeAction(me, bestAction, ctx);
 
-    } catch (e) { print("Error: " + e.message); }
+    } catch (e) { console.log("Error: " + e.message); }
 }
 
 function strategicInit(enemy, map) {
@@ -321,7 +347,8 @@ function buildExecutionContext(me, enemy, game) {
         unsafeCoAxialTiles: unsafeCoAxialTiles,
         visibleBullets: visibleBullets,
         trackedEnemies: G_History.enemies,
-        alivePlayers: game.alivePlayers || 2
+        alivePlayers: game.alivePlayers || 2,
+        canFire: G_History.canFire
     };
 }
 
@@ -918,7 +945,7 @@ function executeAction(me, act, ctx) {
     if (act.tag) me.speak(act.tag);
     if (act.action === "fire") {
         var d = directionTo(ctx.myPos, act.target);
-        if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
+        if (ctx.myDir === d) { if (ctx.canFire && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
     }
     else if (act.action === "turn") { me.turn(directionTo(ctx.myPos, act.target)); }
     else if (act.action === "teleport") { me.teleport(act.target[0], act.target[1]); G_History.postTeleportFrames = 8; }
@@ -946,7 +973,7 @@ function executeAction(me, act, ctx) {
             var tile = getTile(next, ctx.map);
             var d = directionTo(ctx.myPos, next);
             if (tile === "m") {
-                if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
+                if (ctx.myDir === d) { if (ctx.canFire && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
             } else {
                 if (ctx.myDir === d) { if (ctx.meStatus.boosted) me.go(2); else me.go(); } else me.turn(d);
             }
