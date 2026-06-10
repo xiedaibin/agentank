@@ -25,7 +25,8 @@ var G_History = {
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
-    lastEnemyOverloadedFrame: null
+    lastEnemyOverloadedFrame: null,
+    starTeleportFrame: -99
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -291,9 +292,28 @@ function evalStarCollection(ctx) {
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
 
-    var safeForTeleport = isSafeForStarTeleport(ctx.starPos, ctx);
-    if (ctx.canTeleport && dist > 7 && safeForTeleport) {
-        return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 1000 };
+    // 针对传送后 T+1 帧吃星延迟的特殊处理
+    if (G_History.frame - G_History.starTeleportFrame === 1) {
+        if (dist === 1) {
+            var dirToStar = directionTo(ctx.myPos, ctx.starPos);
+            if (ctx.myDir === dirToStar) {
+                // 原地等待 1 帧
+                ctx.me.speak("Delay Wait");
+                return { action: "move", target: ctx.myPos, score: CONFIG.STAR_PRIO + 500 };
+            } else {
+                // 转向星格
+                ctx.me.speak("Delay Turn");
+                return { action: "turn", target: ctx.starPos, score: CONFIG.STAR_PRIO + 500 };
+            }
+        }
+    }
+
+    // 正常传送逻辑：不再传送到星格中心，而是传送到最安全、效率最高的相邻格
+    if (ctx.canTeleport && dist > 7) {
+        var teleportTarget = findBestStarTeleportTarget(ctx);
+        if (teleportTarget) {
+            return { action: "teleport", target: teleportTarget, score: CONFIG.STAR_PRIO + 1000 };
+        }
     }
 
     var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
@@ -589,7 +609,13 @@ function executeAction(me, act, ctx) {
         if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
     }
     else if (act.action === "turn") { me.turn(directionTo(ctx.myPos, act.target)); }
-    else if (act.action === "teleport") { me.teleport(act.target[0], act.target[1]); G_History.postTeleportFrames = 8; }
+    else if (act.action === "teleport") {
+        me.teleport(act.target[0], act.target[1]);
+        G_History.postTeleportFrames = 8;
+        if (ctx.starPos && getDist(act.target, ctx.starPos) === 1) {
+            G_History.starTeleportFrame = G_History.frame;
+        }
+    }
     else if (act.action === "move") {
         if (G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) G_History.stuckTurnCount++; else G_History.stuckTurnCount = 0;
         G_History.lastPos = ctx.myPos.slice();
@@ -884,5 +910,42 @@ function findTargetGrassForBlindFire(myPos, myDir, enemyPrevPos, map) {
             }
         }
     }
-    return null;
+}
+
+function findBestStarTeleportTarget(ctx) {
+    if (!ctx.starPos) return null;
+    var star = ctx.starPos;
+    // 4相邻格子: 上、下、左、右
+    var adjs = [
+        [star[0], star[1] - 1],
+        [star[0], star[1] + 1],
+        [star[0] - 1, star[1]],
+        [star[0] + 1, star[1]]
+    ];
+
+    var candidates = [];
+    for (var i = 0; i < adjs.length; i++) {
+        var p = adjs[i];
+        if (isPassable(p, ctx.map) && isSafeForStarTeleport(p, ctx)) {
+            var score = 0;
+            // 1. 优先选择安全草丛
+            if (G_Blueprint.mapVision.grass[p[0] + "," + p[1]]) {
+                score += 10;
+            }
+            // 2. 其次不用转向直接能前进吃星的方向
+            var dirToStar = directionTo(p, star);
+            if (dirToStar === ctx.myDir) {
+                score += 5;
+            }
+            candidates.push({ pos: p, score: score });
+        }
+    }
+
+    if (candidates.length === 0) return null;
+
+    candidates.sort(function(a, b) {
+        return b.score - a.score;
+    });
+
+    return candidates[0].pos;
 }
