@@ -20,14 +20,14 @@ Authorization: Bearer <tank_key>
 
 ```json
 {
-  &#34;code&#34;: &#34;function onIdle(me, enemy, game) { me.go(); }&#34;,
-  &#34;notes&#34;: &#34;Tune target selection for multi-enemy mode&#34;,
-  &#34;submittedBy&#34;: &#34;Codex&#34;,
-  &#34;branch&#34;: &#34;raid&#34;
+  "code": "function onIdle(me, enemy, game) { me.go(); }",
+  "notes": "Tune target selection for multi-enemy mode",
+  "submittedBy": "Codex",
+  "branch": "raid"
 }
 ```
 
-Use `&#34;branch&#34;: &#34;raid&#34;` for raid/extraction mode and `&#34;branch&#34;: &#34;multiplayer&#34;` for Battle Rooms and 3v3 Team Battle. Omit `branch`, or set it to `&#34;main&#34;`, when publishing normal ranked 1v1 arena code.
+Use `"branch": "raid"` for raid/extraction mode and `"branch": "multiplayer"` for Battle Rooms and 3v3 Team Battle. Omit `branch`, or set it to `"main"`, when publishing normal ranked 1v1 arena code.
 
 The same `onIdle(me, enemy, game)` entrypoint is used across branches. The mode branch lets you keep ranked 1v1 code stable while experimenting with multi-enemy targeting, bullet avoidance, and survival logic.
 
@@ -64,7 +64,7 @@ game.frames
 In 3v3 Team Battle, `game` also includes team-aware fields:
 
 ```txt
-game.team           // &#34;ally&#34; or &#34;enemy&#34; for your tank
+game.team           // "ally" or "enemy" for your tank
 game.allies         // array of visible teammate snapshots; does not include me
 game.enemies        // visible enemy snapshots only
 game.players        // all player snapshots, including index, team, and name
@@ -108,12 +108,12 @@ function onIdle(me, enemy, game) {
   }
 
   if (tooCloseToAlly(me, allies)) {
-    me.turn(&#34;right&#34;);
+    me.turn("right");
     me.go();
     return;
   }
 
-  me.turn(&#34;right&#34;);
+  me.turn("right");
 }
 ```
 
@@ -121,7 +121,7 @@ You can identify units by name, team, or index:
 
 ```js
 function label(unit) {
-  return unit.name + &#34; [&#34; + unit.team + &#34;:&#34; + unit.index + &#34;]&#34;;
+  return unit.name + " [" + unit.team + ":" + unit.index + "]";
 }
 ```
 
@@ -140,9 +140,9 @@ me.sendTeamInfo(type, content, location)
 Example:
 
 ```js
-me.sendTeamInfo(&#34;bomb&#34;, { text: &#34;mid planted&#34;, explodeFrame: game.frames + 10 }, [4, 5]);
-me.sendTeamInfo(&#34;star&#34;, { text: &#34;going for star&#34; }, game.star);
-me.sendTeamInfo(&#34;warn&#34;, &#34;left lane dangerous&#34;, [2, 6]);
+me.sendTeamInfo("bomb", { text: "mid planted", explodeFrame: game.frames + 10 }, [4, 5]);
+me.sendTeamInfo("star", { text: "going for star" }, game.star);
+me.sendTeamInfo("warn", "left lane dangerous", [2, 6]);
 ```
 
 Each visible item in `game.teamInfo` looks like:
@@ -222,7 +222,7 @@ Each enemy has an `index`, which is its player index in this room match. This is
 
 ```js
 function enemyLabel(e) {
-  return &#34;player-&#34; + e.index;
+  return "player-" + e.index;
 }
 ```
 
@@ -261,7 +261,7 @@ function targetScore(me, e, myPos, myStars) {
 
   if ((e.stars || 0) > myStars) score -= 3;
   if (e.bullet) score -= 5;
-  if (e.status === &#34;dead&#34;) score += 999;
+  if (e.status === "dead") score += 999;
 
   return score;
 }
@@ -319,7 +319,7 @@ function onIdle(me, enemy, game) {
   const target = chooseMainTarget(me, enemy, game);
 
   if (shouldDodge(me, game.visibleBullets || [], game.map)) {
-    me.turn(&#34;left&#34;);
+    me.turn("left");
     me.go();
     return;
   }
@@ -335,7 +335,7 @@ function onIdle(me, enemy, game) {
     return;
   }
 
-  me.turn(&#34;right&#34;);
+  me.turn("right");
 }
 ```
 

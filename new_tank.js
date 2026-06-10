@@ -30,7 +30,8 @@ var G_History = {
     starsAt120: null,       // 记录第120帧的我方与敌方星星数
     lastEnemyStars: 0,      // 记录敌人的最新已知星星数
     startShotFired: false,  // 是否已发射开局预瞄子弹
-    canFire: true           // 连发开火许可标记（初始为真）
+    canFire: true,           // 连发开火许可标记（初始为真）
+    maxBulletsSeen: 1,      // 记录我方最多发射子弹数
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -48,8 +49,8 @@ function onIdle(me, enemy, game) {
 
     // 动态探测与缓存：记录出击模式下看到的最大子弹数
     if (G_History.maxBulletsSeen === undefined) {
-        // 出击模式下初始默认保底连发为 2
-        G_History.maxBulletsSeen = 2;
+        // 出击模式下初始默认保底连发为 1
+        G_History.maxBulletsSeen = 1;
     }
     if (activeBulletsCount > G_History.maxBulletsSeen) {
         G_History.maxBulletsSeen = activeBulletsCount;
@@ -58,12 +59,7 @@ function onIdle(me, enemy, game) {
     // 使用 G_History.canFire 来进行全局动作判断
     G_History.canFire = (activeBulletsCount < G_History.maxBulletsSeen);
 
-    // 前 4 帧（帧 0, 1, 2, 3）强制连续开火探测最大可射击连发上限，同时起到开局弹幕压制效果
-    if (G_History.frame < 4) {
-        me.speak("Probe Rate: " + G_History.frame);
-        me.fire();
-        return;
-    }
+
 
     try {
         var originalTurn = me.turn;
@@ -166,6 +162,13 @@ function onIdle(me, enemy, game) {
         // 2. 紧急防御 (模块化路由)
         var defenseAction = tacticalDefense(me, ctx);
         if (defenseAction) { executeAction(me, defenseAction, ctx); return; }
+
+        // 仅在多人对战/出击混战模式（alivePlayers > 2）且没有防御动作时执行，避免开局原地不动被击毁
+        if (G_History.frame < 5) {
+            //me.speak("Probe Rate: " + G_History.frame);
+            me.fire();
+            return;
+        }
 
         // 3. 战术评估
         var bestAction = tacticalAnalysis(ctx);
