@@ -140,3 +140,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-02 | Evasion Tie-Breaker | Evasion Tie-Breaker (自动生成) | 60.00% | Adopted | 10.00% |
 | V_Auto | 2026-06-03 | Targeted_Optimization | 专项达标(70.00%)并校验通过 | 63.33% | Adopted | 3.33% |
 | V_Auto | 2026-06-03 | Targeted_Optimization | 专项达标(73.68%)并校验通过 | 63.33% | Adopted | 0.00% |
+| V12 | 2026-06-10 | 未命名策略 | 未命名策略 (自动生成) | 46.67% | Pending | -3.33% |
