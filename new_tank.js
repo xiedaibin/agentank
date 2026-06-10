@@ -231,6 +231,7 @@ function tacticalAnalysis(ctx) {
     candidates.push(evalShooting(ctx));
     candidates.push(evalPreAim(ctx));
     candidates.push(evalStarCollection(ctx));
+    candidates.push(evalStarGuard(ctx));
     candidates.push(evalGrassAmbushAndSurvival(ctx));
     candidates.sort(function (a, b) { return (b ? b.score : 0) - (a ? a.score : 0); });
     return candidates[0];
@@ -319,6 +320,48 @@ function evalStarCollection(ctx) {
     var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
     if (!safeForWalking) score = Math.min(score - 1200, -500);
     return { action: "move", target: ctx.starPos, score: score };
+}
+
+function evalStarGuard(ctx) {
+    if (!ctx.starPos) return null;
+
+    var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
+    var hasSafeTeleportTarget = false;
+    if (ctx.canTeleport && getDist(ctx.myPos, ctx.starPos) > 7) {
+        if (findBestStarTeleportTarget(ctx)) {
+            hasSafeTeleportTarget = true;
+        }
+    }
+
+    if (safeForWalking || hasSafeTeleportTarget) return null;
+
+    var onAxis = (ctx.myPos[0] === ctx.starPos[0] || ctx.myPos[1] === ctx.starPos[1]);
+    if (!onAxis) return null;
+
+    if (canShoot(ctx.myPos, ctx.starPos, ctx.map) === false) return null;
+
+    if (ctx.enemyPos && getDist(ctx.myPos, ctx.enemyPos) === 1) {
+        var dirToStar = directionTo(ctx.myPos, ctx.starPos);
+        var revDir = reverseDir(dirToStar);
+        var escapePos = addPos(ctx.myPos, delta(revDir));
+        if (isPassable(escapePos, ctx.map)) {
+            ctx.me.speak("Guard Run");
+            return { action: "move", target: escapePos, score: 23000 };
+        }
+    }
+
+    if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
+        var dirToStar = directionTo(ctx.myPos, ctx.starPos);
+        if (ctx.myDir === dirToStar) {
+            ctx.me.speak("Guard Fire");
+            return { action: "fire", target: ctx.starPos, score: 2200 };
+        } else {
+            ctx.me.speak("Guard Turn");
+            return { action: "turn", target: ctx.starPos, score: 2200 };
+        }
+    }
+
+    return null;
 }
 
 function evalGrassAmbushAndSurvival(ctx) {
