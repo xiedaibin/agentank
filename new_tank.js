@@ -105,6 +105,13 @@ function onIdle(me, enemy, game) {
 
         var ctx = buildExecutionContext(me, target, game);
 
+        //多人开局时，强行探测
+        if (ctx.alivePlayers > 3 && G_History.frame < 5) {
+            me.speak("Probe Rate: " + G_History.frame);
+            me.fire();
+            return;
+        }
+
         // 120帧星星记录器
         if (G_History.frame >= 120 && !G_History.starsAt120) {
             G_History.starsAt120 = {
