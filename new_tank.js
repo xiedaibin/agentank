@@ -1,7 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.44 - Collision Counterfire & Performance Hotfixes)
- * V12.44: 增加撞击隐藏敌方检测与反击机制；同时对地图草丛列表进行了静态化构建(grassList)以及
- * 去除热点路径上的属性遍历(for..in)与split解析，解决高频帧下容易产生 runtime 超时 disqualified 的问题。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.45 - Star Guard & Teleport Star-eating Delay Fixes)
+ * V12.45: 合并守星压制与传送吃星延迟优化。阻挡反击、性能热点重构，增强了中场控星和传送精度。
  */
 
 var G_Blueprint = {
@@ -47,7 +46,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.44: 撞击反击");
+            me.speak("V12.45: 撞击守星");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
