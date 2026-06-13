@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V12.47 - 优化传送埋伏与背杀，解除比分限制并引入经典图兜底预测",
+            notes: "XDB Strategic Assassin V12.60 - 优化刺杀埋伏敌坦与枪线草丛压制逻辑，修复 A* 危险区域草丛屏蔽问题",
             submittedBy: "Gemini"
         })
 
