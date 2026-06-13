@@ -1,6 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.45 - Star Guard & Teleport Star-eating Delay Fixes)
- * V12.45: 合并守星压制与传送吃星延迟优化。阻挡反击、性能热点重构，增强了中场控星和传送精度。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.46 - Teleport Ambush Prediction & Backstab Counter)
+ * V12.46: 新增传送埋伏预判逻辑。当敌方传送处于 CD 且隐身时，自动推算其在星格周围草丛中的伏击坐标
+ * 与预瞄方向。不仅借此规避盲区预射枪线，还可在保有传送优势时触发主动闪现背杀反制。
  */
 
 var G_Blueprint = {
@@ -46,7 +47,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.45: 撞击守星");
+            me.speak("V12.46: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -172,6 +173,14 @@ function buildExecutionContext(me, enemy, game) {
 
     if (visible) {
         G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
+    } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames > 0) {
+        var ambushSpot = findAmbushGrassTile(game.star, game.map);
+        if (ambushSpot) {
+            G_History.lastEnemyPos = ambushSpot.pos;
+            G_History.lastEnemyDir = ambushSpot.dir;
+            G_History.lastEnemySeenFrame = G_History.frame;
+            me.speak("预判传送埋伏");
+        }
     }
 
     var unsafeCoAxialTiles = {};
@@ -1026,4 +1035,32 @@ function findBestStarTeleportTarget(ctx) {
     });
 
     return candidates[0].pos;
+}
+
+function findAmbushGrassTile(star, map) {
+    if (!star || !map) return null;
+    var list = G_Blueprint.mapVision.grassList || [];
+    var bestSpot = null;
+    var minDist = 999;
+    
+    for (var i = 0; i < list.length; i++) {
+        var g = list[i];
+        var d = getDist(g, star);
+        if (d <= 3) {
+            var losDir = null;
+            if (g[0] === star[0] || g[1] === star[1]) {
+                var dir = directionTo(g, star);
+                if (isLoS(g, star, dir, map)) {
+                    losDir = dir;
+                }
+            }
+            if (losDir) {
+                if (d < minDist) {
+                    minDist = d;
+                    bestSpot = { pos: g, dir: losDir };
+                }
+            }
+        }
+    }
+    return bestSpot;
 }

@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V12.45 - 合并守星压制与传送延迟优化",
+            notes: "XDB Strategic Assassin V12.46 - 传送预瞄伏击与反击背杀预判机制",
             submittedBy: "Gemini"
         })
 
