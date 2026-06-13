@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V8 (Stable Edition) - 均衡防御与高效抢星",
+            notes: "XDB Strategic Assassin V12.44 - 阻挡反击与性能热点优化",
             submittedBy: "Gemini"
         })
 

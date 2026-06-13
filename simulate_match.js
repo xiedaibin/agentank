@@ -77,14 +77,14 @@ async function fetchMatchData(matchId, token) {
 }
 
 const COOLDOWNS = {
-    shield: 32,
-    freeze: 34,
-    stun: 31,
+    shield: 25,
+    freeze: 29,
+    stun: 20,
     overload: 32,
-    cloak: 32,
-    poison: 34,
+    cloak: 35,
+    poison: 20,
     teleport: 40,
-    boost: 31
+    boost: 26
 };
 
 async function main() {

@@ -1,8 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.41 - Overload 3-Wide Gun Line Fix)
- * V12.41: 修复 overload 枪线宽度判断——之前只检查主线+右偏（2格），
- * 根据 STRATEGY.md overload 为 3 格宽（左偏+主线+右偏），
- * 补全左偏线检测，防止 [13,6] 类型的左侧被击中场景。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.44 - Collision Counterfire & Performance Hotfixes)
+ * V12.44: 增加撞击隐藏敌方检测与反击机制；同时对地图草丛列表进行了静态化构建(grassList)以及
+ * 去除热点路径上的属性遍历(for..in)与split解析，解决高频帧下容易产生 runtime 超时 disqualified 的问题。
  */
 
 var G_Blueprint = {
@@ -25,7 +24,8 @@ var G_History = {
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
-    lastEnemyOverloadedFrame: null
+    lastEnemyOverloadedFrame: null,
+    lastAttemptedStep: null
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -46,7 +46,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.41: OL 3-Wide");
+            me.speak("V12.44: Block Fire Opt");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -55,6 +55,20 @@ function onIdle(me, enemy, game) {
 
         var ctx = buildExecutionContext(me, enemy, game);
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
+
+        // 撞击隐藏敌方检测与反击
+        var lastAttempted = G_History.lastAttemptedStep;
+        G_History.lastAttemptedStep = null;
+        if (lastAttempted && G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) {
+            if (isPassable(lastAttempted, ctx.map)) {
+                var dir = directionTo(ctx.myPos, lastAttempted);
+                if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
+                    me.speak("Blocked: Fire!");
+                    me.fire();
+                    return;
+                }
+            }
+        }
 
         // 1. 绝杀与 Mound 压制
         if (ctx.enemyVisible && !ctx.enemyShielded) {
@@ -127,12 +141,16 @@ function strategicInit(enemy, map) {
 }
 
 function analyzeMap(map) {
-    var w = map.length, h = map[0].length, v = { width: w, height: h, cover: {}, grass: {} };
+    var w = map.length, h = map[0].length;
+    var v = { width: w, height: h, cover: {}, grass: {}, grassList: [] };
     for (var x = 0; x < w; x++) {
         for (var y = 0; y < h; y++) {
             var tile = map[x][y];
             if (tile === "x") v.cover[x + "," + y] = true;
-            if (tile === "o") v.grass[x + "," + y] = true;
+            if (tile === "o") {
+                v.grass[x + "," + y] = true;
+                v.grassList.push([x, y]);
+            }
         }
     }
     return v;
@@ -162,9 +180,11 @@ function buildExecutionContext(me, enemy, game) {
         var elapsed = G_History.frame - G_History.lastEnemySeenFrame;
         var maxDist = Math.min(5, elapsed + 1);
         var potentialGrass = [];
-        for (var k in G_Blueprint.mapVision.grass) {
-            var g = k.split(",").map(Number);
-            if (getDist(g, lastSeen) <= maxDist) {
+        var list = G_Blueprint.mapVision.grassList || [];
+        for (var i = 0; i < list.length; i++) {
+            var g = list[i];
+            var dist = Math.abs(g[0] - lastSeen[0]) + Math.abs(g[1] - lastSeen[1]);
+            if (dist <= maxDist) {
                 potentialGrass.push(g);
             }
         }
@@ -292,7 +312,10 @@ function evalStarCollection(ctx) {
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
 
     var safeForTeleport = isSafeForStarTeleport(ctx.starPos, ctx);
-    if (ctx.canTeleport && dist > 7 && safeForTeleport) {
+    var isEnemyTeleport = ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport";
+    var forbidEarlyTP = isEnemyTeleport && G_History.frame <= 3;
+
+    if (ctx.canTeleport && dist > 7 && safeForTeleport && !forbidEarlyTP) {
         return { action: "teleport", target: ctx.starPos, score: CONFIG.STAR_PRIO + 1000 };
     }
 
@@ -611,7 +634,12 @@ function executeAction(me, act, ctx) {
             if (tile === "m") {
                 if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
             } else {
-                if (ctx.myDir === d) { if (ctx.meStatus.boosted) me.go(2); else me.go(); } else me.turn(d);
+                if (ctx.myDir === d) { 
+                    if (ctx.meStatus.boosted) me.go(2); else me.go(); 
+                    G_History.lastAttemptedStep = next;
+                } else {
+                    me.turn(d);
+                }
             }
         }
     }
@@ -670,8 +698,9 @@ function findOffAxisMove(ctx) {
 
 function findSafeGrassSpot(ctx) {
     var grass = [];
-    for (var k in G_Blueprint.mapVision.grass) {
-        var p = k.split(",").map(Number);
+    var list = G_Blueprint.mapVision.grassList || [];
+    for (var i = 0; i < list.length; i++) {
+        var p = list[i];
         if (isSafe(p, ctx, true) && getDist(p, ctx.enemyPos) > 10) grass.push(p);
     }
     if (grass.length === 0) return null;
@@ -681,8 +710,9 @@ function findSafeGrassSpot(ctx) {
 
 function findNearestGrass(pos) {
     var best = null, minDist = 999;
-    for (var k in G_Blueprint.mapVision.grass) {
-        var p = k.split(",").map(Number);
+    var list = G_Blueprint.mapVision.grassList || [];
+    for (var i = 0; i < list.length; i++) {
+        var p = list[i];
         var d = getDist(pos, p); if (d < minDist) { minDist = d; best = p; }
     }
     return best;
@@ -690,8 +720,9 @@ function findNearestGrass(pos) {
 
 function findNearestSafeGrass(pos, ctx) {
     var best = null, minDist = 999;
-    for (var k in G_Blueprint.mapVision.grass) {
-        var p = k.split(",").map(Number);
+    var list = G_Blueprint.mapVision.grassList || [];
+    for (var i = 0; i < list.length; i++) {
+        var p = list[i];
         if (!isSafe(p, ctx, true)) continue;
         if (ctx.enemyPos && getDist(p, ctx.enemyPos) <= 2) continue;
         var d = getDist(pos, p);
