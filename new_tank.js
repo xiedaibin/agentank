@@ -1,8 +1,9 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.46 - Teleport Ambush Prediction & Backstab Counter)
- * V12.46: 新增传送埋伏预判逻辑。当敌方传送处于 CD 且隐身时，自动推算其在星格周围草丛中的伏击坐标
- * 与预瞄方向。不仅借此规避盲区预射枪线，还可在保有传送优势时触发主动闪现背杀反制。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.47 - Teleport Ambush Prediction & Backstab Counter)
+ * V12.47: 优化传送埋伏与背杀逻辑。移除刺杀比分限制，只要敌方传送在 CD 且隐身伏击，我方保有传送优势即主动实施闪现背杀。
+ * 支持在星星为 null 时使用经典地图中心格 [6, 6] 兜底预测。
  */
+
 
 var G_Blueprint = {
     initialized: false,
@@ -26,13 +27,15 @@ var G_History = {
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
     lastEnemyOverloadedFrame: null,
     lastAttemptedStep: null,
-    starTeleportFrame: -99
+    starTeleportFrame: -99,
+    lastStarPos: null
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
 
 function onIdle(me, enemy, game) {
     try {
+
         var originalTurn = me.turn;
         me.turn = function (dir) {
             var ePos = (enemy && enemy.tank) ? enemy.tank.position : (G_History.lastEnemyPos || null);
@@ -47,7 +50,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.46: 预判背杀");
+            me.speak("V12.47: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -158,6 +161,9 @@ function analyzeMap(map) {
 }
 
 function buildExecutionContext(me, enemy, game) {
+    if (game && game.star) {
+        G_History.lastStarPos = game.star;
+    }
     var eTank = enemy ? enemy.tank : null;
     var visible = !!eTank;
 
@@ -276,9 +282,17 @@ function evalPanicTeleport(ctx) {
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
     if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
-    if (ctx.enemyFireLocked || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
+    
+    var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
+    
+    if (ctx.enemyFireLocked || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
         var spot = findAssassinSpot(ctx);
-        if (spot && isSafeForStarTeleport(spot, ctx)) return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100 };
+        if (spot && isSafeForStarTeleport(spot, ctx, true)) {
+            if (isEnemyAmbushing) {
+                ctx.me.speak("刺杀埋伏敌坦");
+            }
+            return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100 };
+        }
     }
     return null;
 }
@@ -531,7 +545,7 @@ function isOnEnemyGunLine(pos, ctx, checkOverload) {
     return false;
 }
 
-function isSafe(pos, ctx, strict) {
+function isSafe(pos, ctx, strict, isAssassinationSpot) {
     if (!pos) return false;
     var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
     if (fH <= (strict ? 4 : 2)) return false;
@@ -546,18 +560,23 @@ function isSafe(pos, ctx, strict) {
             if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
             if (d < 2) return false;
         } else {
-            // 针对近距离隐身敌人的同轴预判防御
-            var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < 35);
-            if (enemySeenRecently) {
-                if (d < 2) return false; // 近距离强制不安全，防止贴脸或碰撞
-                var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                if (!inGrass) {
-                    if (d <= 3) return false; // 3格内无草丛露天格视为危险
-                    if (isOnEnemyGunLine(pos, ctx, true)) return false;
-                    if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
-                        if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) return false;
+            if (isAssassinationSpot) {
+                if (d < 2) return false;
+                if (isOnEnemyGunLine(pos, ctx, true)) return false;
+            } else {
+                // 针对近距离隐身敌人的同轴预判防御
+                var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < 35);
+                if (enemySeenRecently) {
+                    if (d < 2) return false; // 近距离强制不安全，防止贴脸或碰撞
+                    var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+                    if (!inGrass) {
+                        if (d <= 3) return false; // 3格内无草丛露天格视为危险
+                        if (isOnEnemyGunLine(pos, ctx, true)) return false;
+                        if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
+                            if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) return false;
+                        }
+                        if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[pos[0] + "," + pos[1]]) return false;
                     }
-                    if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[pos[0] + "," + pos[1]]) return false;
                 }
             }
         }
@@ -565,11 +584,11 @@ function isSafe(pos, ctx, strict) {
     return true;
 }
 
-function isSafeForStarTeleport(pos, ctx) {
-    if (!isSafe(pos, ctx, true)) return false;
+function isSafeForStarTeleport(pos, ctx, isAssassinationSpot) {
+    if (!isSafe(pos, ctx, true, isAssassinationSpot)) return false;
     if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
-        if (d <= 2) return false;
+        if (!isAssassinationSpot && d <= 2) return false;
         if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
             if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
                 if (d <= 5 && !ctx.enemyFireLocked) return false;
@@ -844,39 +863,39 @@ function canShoot(a, b, map) {
 
 function findAssassinSpot(ctx) {
     var e = ctx.enemyPos;
-    // 根据敌方朝向排序 offsets：背后 > 侧翼 > 正面（仍为 4 个候选）
-    var offsets = getAssassinOffsets(ctx.enemyDir);
-
-    // 1. 预测暗杀点 (结合预瞄逻辑)
-    if (ctx.enemyDir) {
-        var ed = delta(ctx.enemyDir);
-        var predE = addPos(e, [ed[0] * 2, ed[1] * 2]); // 预测 2 步
-        if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
-            for (var i = 0; i < offsets.length; i++) {
-                var p = addPos(predE, offsets[i]);
-                if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true) {
-                    if (isSafe(p, ctx, true)) return p;
+    for (var dist = 5; dist >= 1; dist--) {
+        var offsets = getAssassinOffsets(ctx.enemyDir, dist);
+        // 1. 预测暗杀点 (仅在 dist >= 4 时预测，避免近距离预测越界)
+        if (ctx.enemyDir && dist >= 4) {
+            var ed = delta(ctx.enemyDir);
+            var predE = addPos(e, [ed[0] * 2, ed[1] * 2]);
+            if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
+                for (var i = 0; i < offsets.length; i++) {
+                    var p = addPos(predE, offsets[i]);
+                    if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true) {
+                        if (isSafe(p, ctx, true, true)) return p;
+                    }
                 }
             }
         }
-    }
-
-    // 2. 兜底当前点（加安全校查）
-    for (var i = 0; i < offsets.length; i++) {
-        var p = addPos(e, offsets[i]);
-        if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false)) return p;
+        // 2. 兜底当前点
+        for (var i = 0; i < offsets.length; i++) {
+            var p = addPos(e, offsets[i]);
+            if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false, true)) return p;
+        }
     }
     return null;
 }
 
 // 根据敌方朝向返回 4 个 offset，背后优先
-function getAssassinOffsets(enemyDir) {
+function getAssassinOffsets(enemyDir, dist) {
     var d = enemyDir || "up";
-    if (d === "up") return [[0, 5], [-5, 0], [5, 0], [0, -5]];  // 背后(下) > 左右 > 正面(上)
-    if (d === "down") return [[0, -5], [-5, 0], [5, 0], [0, 5]];  // 背后(上) > 左右 > 正面(下)
-    if (d === "left") return [[5, 0], [0, -5], [0, 5], [-5, 0]];  // 背后(右) > 上下 > 正面(左)
-    if (d === "right") return [[-5, 0], [0, -5], [0, 5], [5, 0]];  // 背后(左) > 上下 > 正面(右)
-    return [[-5, 0], [5, 0], [0, -5], [0, 5]];
+    var s = dist || 5;
+    if (d === "up") return [[0, s], [-s, 0], [s, 0], [0, -s]];  // 背后(下) > 左右 > 正面(上)
+    if (d === "down") return [[0, -s], [-s, 0], [s, 0], [0, s]];  // 背后(上) > 左右 > 正面(下)
+    if (d === "left") return [[s, 0], [0, -s], [0, s], [-s, 0]];  // 背后(右) > 上下 > 正面(left)
+    if (d === "right") return [[-s, 0], [0, -s], [0, s], [s, 0]];  // 背后(左) > 上下 > 正面(right)
+    return [[-s, 0], [s, 0], [0, -s], [0, s]];
 }
 
 function findPreAimDir(myPos, enemyPos, enemyDir, map) {
@@ -1038,19 +1057,21 @@ function findBestStarTeleportTarget(ctx) {
 }
 
 function findAmbushGrassTile(star, map) {
-    if (!star || !map) return null;
+    if (!map) return null;
+    var starPos = star || G_History.lastStarPos || (map.length === 13 ? [6, 6] : null);
+    if (!starPos) return null;
     var list = G_Blueprint.mapVision.grassList || [];
     var bestSpot = null;
     var minDist = 999;
     
     for (var i = 0; i < list.length; i++) {
         var g = list[i];
-        var d = getDist(g, star);
+        var d = getDist(g, starPos);
         if (d <= 3) {
             var losDir = null;
-            if (g[0] === star[0] || g[1] === star[1]) {
-                var dir = directionTo(g, star);
-                if (isLoS(g, star, dir, map)) {
+            if (g[0] === starPos[0] || g[1] === starPos[1]) {
+                var dir = directionTo(g, starPos);
+                if (isLoS(g, starPos, dir, map)) {
                     losDir = dir;
                 }
             }

@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V12.46 - 传送预瞄伏击与反击背杀预判机制",
+            notes: "XDB Strategic Assassin V12.47 - 优化传送埋伏与背杀，解除比分限制并引入经典图兜底预测",
             submittedBy: "Gemini"
         })
 
