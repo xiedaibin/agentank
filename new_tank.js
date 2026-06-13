@@ -1,7 +1,7 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.47 - Teleport Ambush Prediction & Backstab Counter)
- * V12.47: 优化传送埋伏与背杀逻辑。移除刺杀比分限制，只要敌方传送在 CD 且隐身伏击，我方保有传送优势即主动实施闪现背杀。
- * 支持在星星为 null 时使用经典地图中心格 [6, 6] 兜底预测。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.60 - Teleport Ambush Prediction & Backstab Counter)
+ * V12.60: 修复 tacticalAnalysis 中负分候选动作在存在 null 元素时被错误排序为垫底导致坦克原地挂机 timeout 的重大 Bug。
+ * 露天格刺杀点限制 Manhattan 距离 >= 5，以防止传送后火控锁期间被敌方瞬间反击。
  */
 
 
@@ -28,7 +28,13 @@ var G_History = {
     lastEnemyOverloadedFrame: null,
     lastAttemptedStep: null,
     starTeleportFrame: -99,
-    lastStarPos: null
+    lastStarPos: null,
+    enemyInvisibleFrames: 0,
+    isAmbushStreamDetected: false,
+    failedTeleportSpots: {},
+    lastTeleportTarget: null,
+    lastTeleportFrame: -99,
+    lastTeleportPos: null
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
@@ -46,11 +52,19 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
+        if (G_History.lastTeleportTarget && G_History.frame === G_History.lastTeleportFrame + 1) {
+            if (samePos(me.tank.position, G_History.lastTeleportPos)) {
+                if (!G_History.failedTeleportSpots) G_History.failedTeleportSpots = {};
+                G_History.failedTeleportSpots[G_History.lastTeleportTarget[0] + "," + G_History.lastTeleportTarget[1]] = G_History.frame;
+                me.speak("传送失败记录");
+            }
+            G_History.lastTeleportTarget = null;
+        }
         if (enemy && enemy.status && enemy.status.overloaded) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.47: 预判背杀");
+            me.speak("V12.60: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -107,6 +121,17 @@ function onIdle(me, enemy, game) {
         // 2. 紧急防御 (模块化路由)
         var defenseAction = tacticalDefense(me, ctx);
         if (defenseAction) { executeAction(me, defenseAction, ctx); return; }
+
+        // 2.5 传送草丛预射流枪线盲射
+        var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
+        var cooldown = (ctx.enemy && ctx.enemy.skill) ? ctx.enemy.skill.remainingCooldownFrames : 0;
+        if (isTeleportAmbushStream && (cooldown > 25) && !me.bullet && !ctx.meStatus.fireLocked) {
+            var targetGrass = findGrassOnGunLine(ctx.myPos, ctx.myDir, ctx.map, 6);
+            if (targetGrass) {
+                me.speak("枪线草丛压制");
+                me.fire(); return;
+            }
+        }
 
         // 3. 战术评估
         var bestAction = tacticalAnalysis(ctx);
@@ -167,6 +192,18 @@ function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
     var visible = !!eTank;
 
+    if (visible) {
+        G_History.enemyInvisibleFrames = 0;
+    } else {
+        G_History.enemyInvisibleFrames++;
+    }
+
+    if (G_History.frame <= 3 && !G_History.isAmbushStreamDetected) {
+        if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 37) {
+            G_History.isAmbushStreamDetected = true;
+        }
+    }
+
     if (enemy && enemy.status && enemy.status.cloaked) {
         G_History.cloakFramesLeft = 8;
     }
@@ -179,7 +216,7 @@ function buildExecutionContext(me, enemy, game) {
 
     if (visible) {
         G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
-    } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames > 0) {
+    } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {
         var ambushSpot = findAmbushGrassTile(game.star, game.map);
         if (ambushSpot) {
             G_History.lastEnemyPos = ambushSpot.pos;
@@ -257,24 +294,35 @@ function buildExecutionContext(me, enemy, game) {
 }
 
 function tacticalAnalysis(ctx) {
-    var candidates = [];
+    var rawCandidates = [];
     if (ctx.canTeleport) {
-        if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) candidates.push(evalAssassination(ctx));
-        if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK") candidates.push(evalPanicTeleport(ctx));
+        if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) rawCandidates.push(evalAssassination(ctx));
+        if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK") rawCandidates.push(evalPanicTeleport(ctx));
     }
-    candidates.push(evalShooting(ctx));
-    candidates.push(evalPreAim(ctx));
-    candidates.push(evalStarCollection(ctx));
-    candidates.push(evalStarGuard(ctx));
-    candidates.push(evalGrassAmbushAndSurvival(ctx));
-    candidates.sort(function (a, b) { return (b ? b.score : 0) - (a ? a.score : 0); });
+    if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) {
+        rawCandidates.push(evalAssassinationPreAim(ctx));
+    }
+    rawCandidates.push(evalShooting(ctx));
+    rawCandidates.push(evalPreAim(ctx));
+    rawCandidates.push(evalStarCollection(ctx));
+    rawCandidates.push(evalStarGuard(ctx));
+    rawCandidates.push(evalGrassAmbushAndSurvival(ctx));
+
+    var candidates = [];
+    for (var i = 0; i < rawCandidates.length; i++) {
+        if (rawCandidates[i] !== null && rawCandidates[i] !== undefined) {
+            candidates.push(rawCandidates[i]);
+        }
+    }
+    if (candidates.length === 0) return null;
+    candidates.sort(function (a, b) { return b.score - a.score; });
     return candidates[0];
 }
 
 function evalPanicTeleport(ctx) {
     if (ctx.enemyCloaked && !isSafeForAntiCloak(ctx.myPos, ctx)) {
         var esc = findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
-        if (esc) return { action: "teleport", target: esc, score: 99999 };
+        if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) return { action: "teleport", target: esc, score: 99999 };
     }
     return null;
 }
@@ -282,12 +330,16 @@ function evalPanicTeleport(ctx) {
 function evalAssassination(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
     if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
-    
+
     var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
-    
+
     if (ctx.enemyFireLocked || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
+        if (isEnemyAmbushing && ctx.enemyPos) {
+            var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
+            if (!enemyInGrass) return null;
+        }
         var spot = findAssassinSpot(ctx);
-        if (spot && isSafeForStarTeleport(spot, ctx, true)) {
+        if (spot && !samePos(spot, ctx.myPos) && isTeleportPassable(spot, ctx) && isSafeForStarTeleport(spot, ctx, true)) {
             if (isEnemyAmbushing) {
                 ctx.me.speak("刺杀埋伏敌坦");
             }
@@ -357,7 +409,7 @@ function evalStarCollection(ctx) {
     // 正常传送逻辑：不再传送到星格中心，而是传送到最安全、效率最高的相邻格
     if (ctx.canTeleport && dist > 7 && !forbidEarlyTP) {
         var teleportTarget = findBestStarTeleportTarget(ctx);
-        if (teleportTarget) {
+        if (teleportTarget && !samePos(teleportTarget, ctx.myPos) && isTeleportPassable(teleportTarget, ctx)) {
             return { action: "teleport", target: teleportTarget, score: CONFIG.STAR_PRIO + 1000 };
         }
     }
@@ -410,6 +462,11 @@ function evalStarGuard(ctx) {
 }
 
 function evalGrassAmbushAndSurvival(ctx) {
+    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
+    if (isTeleportAmbushStream) {
+        return null;
+    }
+
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var grass = findNearestSafeGrass(ctx.myPos, ctx);
 
@@ -454,7 +511,7 @@ function tacticalDefense(me, ctx) {
             var dodge = findBestDodge(ctx, fH);
             if (ctx.canTeleport && (fH <= 2 || !dodge)) {
                 var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
-                if (esc) return { action: "teleport", target: esc, score: 99999 };
+                if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) return { action: "teleport", target: esc, score: 99999 };
             }
             if (dodge) { G_History.defenseLockTicks = 2; G_History.lastDefenseTarget = dodge; return { action: "move", target: dodge, score: 99999 }; }
         }
@@ -561,7 +618,7 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
             if (d < 2) return false;
         } else {
             if (isAssassinationSpot) {
-                if (d < 2) return false;
+                if (d < 1) return false;
                 if (isOnEnemyGunLine(pos, ctx, true)) return false;
             } else {
                 // 针对近距离隐身敌人的同轴预判防御
@@ -589,9 +646,11 @@ function isSafeForStarTeleport(pos, ctx, isAssassinationSpot) {
     if (ctx.enemyPos) {
         var d = getDist(pos, ctx.enemyPos);
         if (!isAssassinationSpot && d <= 2) return false;
-        if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
-            if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
-                if (d <= 5 && !ctx.enemyFireLocked) return false;
+        if (!isAssassinationSpot) {
+            if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
+                if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
+                    if (d <= 5 && !ctx.enemyFireLocked) return false;
+                }
             }
         }
     }
@@ -664,6 +723,13 @@ function aStar(start, goal, ctx) {
             if (tile && tile !== "x") {
                 var cost = 1 + (curr.dir === d ? 0 : CONFIG.TURN_COST);
                 if (tile === "m") cost += 200;
+                if (tile === "o") {
+                    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
+                    var cooldown = (ctx.enemy && ctx.enemy.skill) ? ctx.enemy.skill.remainingCooldownFrames : 0;
+                    if (isTeleportAmbushStream && (cooldown === 0 || cooldown > 30)) {
+                        cost += 3000;
+                    }
+                }
                 if (!isSafe(next, ctx, true)) {
                     // 近距离（≤5格）枪口 LoS 直线格（含超载枪线）：大幅提升代价（近似禁止但保留兜底）
                     var isCloseLoS = ctx.enemyVisible && !ctx.enemyFireLocked && ctx.enemyPos &&
@@ -702,6 +768,9 @@ function executeAction(me, act, ctx) {
     else if (act.action === "teleport") {
         me.teleport(act.target[0], act.target[1]);
         G_History.postTeleportFrames = 8;
+        G_History.lastTeleportTarget = act.target.slice();
+        G_History.lastTeleportFrame = G_History.frame;
+        G_History.lastTeleportPos = ctx.myPos.slice();
         if (ctx.starPos && getDist(act.target, ctx.starPos) === 1) {
             G_History.starTeleportFrame = G_History.frame;
         }
@@ -713,9 +782,12 @@ function executeAction(me, act, ctx) {
             G_History.stuckTurnCount = 0;
             if (ctx.canTeleport && ctx.starPos) {
                 var target = findBestStarTeleportTarget(ctx);
-                if (target) {
+                if (target && isTeleportPassable(target, ctx)) {
                     me.teleport(target[0], target[1]);
                     G_History.postTeleportFrames = 8;
+                    G_History.lastTeleportTarget = target.slice();
+                    G_History.lastTeleportFrame = G_History.frame;
+                    G_History.lastTeleportPos = ctx.myPos.slice();
                     G_History.starTeleportFrame = G_History.frame;
                     return;
                 }
@@ -863,26 +935,41 @@ function canShoot(a, b, map) {
 
 function findAssassinSpot(ctx) {
     var e = ctx.enemyPos;
-    for (var dist = 5; dist >= 1; dist--) {
+    var candidates = [];
+    for (var dist = 1; dist <= 5; dist++) {
         var offsets = getAssassinOffsets(ctx.enemyDir, dist);
-        // 1. 预测暗杀点 (仅在 dist >= 4 时预测，避免近距离预测越界)
+
+        // 1. 兜底当前点
+        for (var i = 0; i < offsets.length; i++) {
+            var p = addPos(e, offsets[i]);
+            if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false, true)) {
+                var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
+                if (isGrass === 0 && dist < 5) continue;
+                var score = isGrass * 1000 - dist * 100 - i;
+                candidates.push({ pos: p, score: score });
+            }
+        }
+
+        // 2. 预测未来点 (仅在 dist >= 4 且有预测时)
         if (ctx.enemyDir && dist >= 4) {
             var ed = delta(ctx.enemyDir);
             var predE = addPos(e, [ed[0] * 2, ed[1] * 2]);
             if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
                 for (var i = 0; i < offsets.length; i++) {
                     var p = addPos(predE, offsets[i]);
-                    if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true) {
-                        if (isSafe(p, ctx, true, true)) return p;
+                    if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true && isSafe(p, ctx, true, true)) {
+                        var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
+                        if (isGrass === 0 && dist < 5) continue;
+                        var score = isGrass * 1000 - dist * 100 - i - 50;
+                        candidates.push({ pos: p, score: score });
                     }
                 }
             }
         }
-        // 2. 兜底当前点
-        for (var i = 0; i < offsets.length; i++) {
-            var p = addPos(e, offsets[i]);
-            if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false, true)) return p;
-        }
+    }
+    if (candidates.length > 0) {
+        candidates.sort(function (a, b) { return b.score - a.score; });
+        return candidates[0].pos;
     }
     return null;
 }
@@ -957,6 +1044,16 @@ function delta(d) { return { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1
 function directionTo(a, b) { if (b[0] > a[0]) return "right"; if (b[0] < a[0]) return "left"; if (b[1] > a[1]) return "down"; return "up"; }
 function reverseDir(d) { return { up: "down", down: "up", left: "right", right: "left" }[d]; }
 function isPassable(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return false; var t = map[p[0]][p[1]]; return t !== "x" && t !== "m"; }
+function isTeleportPassable(p, ctx) {
+    if (!isPassable(p, ctx.map)) return false;
+    var k = p[0] + "," + p[1];
+    if (G_History.failedTeleportSpots && G_History.failedTeleportSpots[k]) {
+        if (G_History.frame - G_History.failedTeleportSpots[k] < 15) {
+            return false;
+        }
+    }
+    return true;
+}
 function getTile(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) return null; return map[p[0]][p[1]]; }
 function getTurnDir(currentDir, targetDir, enemyPos, myPos) {
     if (!targetDir || currentDir === targetDir) return null;
@@ -1062,26 +1159,68 @@ function findAmbushGrassTile(star, map) {
     if (!starPos) return null;
     var list = G_Blueprint.mapVision.grassList || [];
     var bestSpot = null;
-    var minDist = 999;
-    
+    var bestScore = -9999;
+
     for (var i = 0; i < list.length; i++) {
         var g = list[i];
         var d = getDist(g, starPos);
         if (d <= 3) {
-            var losDir = null;
-            if (g[0] === starPos[0] || g[1] === starPos[1]) {
-                var dir = directionTo(g, starPos);
-                if (isLoS(g, starPos, dir, map)) {
-                    losDir = dir;
-                }
-            }
-            if (losDir) {
-                if (d < minDist) {
-                    minDist = d;
-                    bestSpot = { pos: g, dir: losDir };
-                }
+            var dir = directionTo(g, starPos);
+            var isCoAxial = (g[0] === starPos[0] || g[1] === starPos[1]);
+            var hasLoS = isCoAxial && isLoS(g, starPos, dir, map);
+
+            var score = 100 - d * 20;
+            if (isCoAxial) score += 30;
+            if (hasLoS) score += 50;
+
+            if (score > bestScore) {
+                bestScore = score;
+                bestSpot = { pos: g, dir: dir };
             }
         }
     }
     return bestSpot;
+}
+
+function findGrassOnGunLine(myPos, myDir, map, maxDist) {
+    var d = delta(myDir);
+    if (d[0] === 0 && d[1] === 0) return null;
+    var p = myPos.slice();
+    for (var i = 1; i <= maxDist; i++) {
+        p = addPos(p, d);
+        if (!isPassable(p, map)) {
+            return null;
+        }
+        var tile = getTile(p, map);
+        if (tile === "o") {
+            return p;
+        }
+    }
+    return null;
+}
+
+function evalAssassinationPreAim(ctx) {
+    if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
+    if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
+
+    var isCdOne = ctx.me.skill && ctx.me.skill.remainingCooldownFrames === 1;
+    if (!isCdOne) return null;
+
+    var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
+
+    if (ctx.enemyFireLocked || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
+        if (isEnemyAmbushing && ctx.enemyPos) {
+            var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
+            if (!enemyInGrass) return null;
+        }
+        var spot = findAssassinSpot(ctx);
+        if (spot && !samePos(spot, ctx.myPos) && isPassable(spot, ctx.map) && isSafeForStarTeleport(spot, ctx, true)) {
+            var fireDir = directionTo(spot, ctx.enemyPos);
+            if (ctx.myDir !== fireDir) {
+                ctx.me.speak("刺杀预瞄");
+                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO - 50 };
+            }
+        }
+    }
+    return null;
 }
