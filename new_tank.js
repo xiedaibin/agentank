@@ -529,7 +529,13 @@ function tacticalDefense(me, ctx) {
                     var onOverloadLine = isOnEnemyGunLine(ctx.myPos, ctx, true);
                     if (onOverloadLine) {
                         var ghostEscape = findOffAxisMove(ctx);
-                        if (ghostEscape) { me.speak("幽灵避弹"); ghostEscape.score = 22000; return ghostEscape; }
+                        if (ghostEscape) {
+                            me.speak("幽灵避弹");
+                            ghostEscape.score = 22000;
+                            G_History.defenseLockTicks = 2;
+                            G_History.lastDefenseTarget = ghostEscape.target;
+                            return ghostEscape;
+                        }
                     }
                 }
             }
@@ -545,6 +551,8 @@ function tacticalDefense(me, ctx) {
                 if (ghostEscape) {
                     me.speak("共轴避弹");
                     ghostEscape.score = 22000;
+                    G_History.defenseLockTicks = 2;
+                    G_History.lastDefenseTarget = ghostEscape.target;
                     return ghostEscape;
                 }
             }
@@ -564,7 +572,13 @@ function tacticalDefense(me, ctx) {
             var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!myPosInGrass || d <= 2) {
                 var escape = findOffAxisMove(ctx);
-                if (escape) { me.speak("安全规避"); escape.score = 25000; return escape; }
+                if (escape) {
+                    me.speak("安全规避");
+                    escape.score = 25000;
+                    G_History.defenseLockTicks = 2;
+                    G_History.lastDefenseTarget = escape.target;
+                    return escape;
+                }
                 if (ctx.canTeleport) {
                     var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                     if (esc) return { action: "teleport", target: esc, score: 99999 };
@@ -613,7 +627,9 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
             var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
             // Overload 近距离（≤3格）取消草丛豁免：子弹穿草，草丛无法提供物理防护
             var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 3;
-            if ((!isGrass || overloadNearby) && isOnEnemyGunLine(pos, ctx, true)) return false;
+            var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
+            var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
+            if (gunLineDodge) return false;
             if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
             if (d < 2) return false;
         } else {
