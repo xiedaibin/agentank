@@ -38,7 +38,6 @@ var G_History = {
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
-var G_SafeCache = {};
 
 function onIdle(me, enemy, game) {
     try {
@@ -53,7 +52,6 @@ function onIdle(me, enemy, game) {
         };
 
         G_History.frame = game.frames || 0;
-        G_SafeCache = {};
         if (G_History.lastTeleportTarget && G_History.frame === G_History.lastTeleportFrame + 1) {
             if (samePos(me.tank.position, G_History.lastTeleportPos)) {
                 if (!G_History.failedTeleportSpots) G_History.failedTeleportSpots = {};
@@ -91,8 +89,7 @@ function onIdle(me, enemy, game) {
         }
 
         // 1. 绝杀与 Mound 压制
-        var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-        if ((isTeleportAmbushStream || ctx.enemyVisible) && !ctx.enemyShielded) {
+        if (ctx.enemyVisible && !ctx.enemyShielded) {
             var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
             if (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7)) {
                 var dir = directionTo(ctx.myPos, ctx.enemyPos);
@@ -195,39 +192,38 @@ function buildExecutionContext(me, enemy, game) {
     var eTank = enemy ? enemy.tank : null;
     var visible = !!eTank;
 
+    if (visible) {
+        G_History.enemyInvisibleFrames = 0;
+    } else {
+        G_History.enemyInvisibleFrames++;
+    }
+
+    if (G_History.frame <= 3 && !G_History.isAmbushStreamDetected) {
+        if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 37) {
+            G_History.isAmbushStreamDetected = true;
+        }
+    }
+
+    if (enemy && enemy.status && enemy.status.cloaked) {
+        G_History.cloakFramesLeft = 8;
+    }
+
     if (G_History.lastUpdatedFrame !== G_History.frame) {
-        if (visible) {
-            G_History.enemyInvisibleFrames = 0;
-        } else {
-            G_History.enemyInvisibleFrames++;
-        }
-
-        if (G_History.frame <= 3 && !G_History.isAmbushStreamDetected) {
-            if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 37) {
-                G_History.isAmbushStreamDetected = true;
-            }
-        }
-
-        if (enemy && enemy.status && enemy.status.cloaked) {
-            G_History.cloakFramesLeft = 8;
-        }
-
         G_History.wasEnemyVisible = G_History.lastEnemyVisible;
         G_History.lastEnemyVisible = visible;
-
-        if (visible) {
-            G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
-        } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {
-            var ambushSpot = findAmbushGrassTile(game.star, game.map);
-            if (ambushSpot) {
-                G_History.lastEnemyPos = ambushSpot.pos;
-                G_History.lastEnemyDir = ambushSpot.dir;
-                G_History.lastEnemySeenFrame = G_History.frame;
-                me.speak("预判在: [" + ambushSpot.pos[0] + "," + ambushSpot.pos[1] + "]");
-            }
-        }
-
         G_History.lastUpdatedFrame = G_History.frame;
+    }
+
+    if (visible) {
+        G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
+    } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {
+        var ambushSpot = findAmbushGrassTile(game.star, game.map);
+        if (ambushSpot) {
+            G_History.lastEnemyPos = ambushSpot.pos;
+            G_History.lastEnemyDir = ambushSpot.dir;
+            G_History.lastEnemySeenFrame = G_History.frame;
+            me.speak("预判在: [" + ambushSpot.pos[0] + "," + ambushSpot.pos[1] + "]");
+        }
     }
 
     var unsafeCoAxialTiles = {};
@@ -353,33 +349,22 @@ function evalAssassination(ctx) {
 }
 
 function evalShooting(ctx) {
-    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    var targetVisible = ctx.enemyVisible || isTeleportAmbushStream;
-    if (!ctx.enemyPos || !targetVisible) return null;
-
+    if (!ctx.enemyPos || !ctx.enemyVisible) return null;
     var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
-    var canKill = (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7));
-    if (canKill) {
+    if (cs === true) {
         if (ctx.enemyShielded) return null;
         var dir = directionTo(ctx.myPos, ctx.enemyPos);
-        if (ctx.myDir === dir) {
-            var isPostTeleportLocked = (G_History.frame - G_History.lastTeleportFrame <= 2);
-            if (isPostTeleportLocked && ctx.meStatus.fireLocked) {
-                return { action: "move", target: ctx.myPos, score: CONFIG.KILL_PRIO - 80 };
-            }
-        } else {
+        if (ctx.myDir !== dir) {
             var onEnemyAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
             if (onEnemyAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
-            return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 100 };
         }
+        return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 100 };
     }
     return null;
 }
 
 function evalPreAim(ctx) {
-    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    var targetVisible = ctx.enemyVisible || isTeleportAmbushStream;
-    if (!ctx.enemyPos || !targetVisible || !ctx.enemyDir) return null;
+    if (!ctx.enemyPos || !ctx.enemyVisible || !ctx.enemyDir) return null;
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var recentlyTeleported = G_History.postTeleportFrames > 0;
@@ -402,8 +387,7 @@ function evalStarCollection(ctx) {
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
 
     var isEnemyTeleport = ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport";
-    //等待时间大于判定传送草丛预杀流的判定时间5
-    var forbidEarlyTP = isEnemyTeleport && G_History.frame <= 6;
+    var forbidEarlyTP = isEnemyTeleport && G_History.frame <= 3;
 
     // 针对传送后 T+1 帧吃星延迟的特殊处理
     if (G_History.frame - G_History.starTeleportFrame === 1) {
@@ -544,13 +528,7 @@ function tacticalDefense(me, ctx) {
                     var onOverloadLine = isOnEnemyGunLine(ctx.myPos, ctx, true);
                     if (onOverloadLine) {
                         var ghostEscape = findOffAxisMove(ctx);
-                        if (ghostEscape) {
-                            me.speak("幽灵避弹");
-                            ghostEscape.score = 22000;
-                            G_History.defenseLockTicks = 2;
-                            G_History.lastDefenseTarget = ghostEscape.target;
-                            return ghostEscape;
-                        }
+                        if (ghostEscape) { me.speak("幽灵避弹"); ghostEscape.score = 22000; return ghostEscape; }
                     }
                 }
             }
@@ -566,8 +544,6 @@ function tacticalDefense(me, ctx) {
                 if (ghostEscape) {
                     me.speak("共轴避弹");
                     ghostEscape.score = 22000;
-                    G_History.defenseLockTicks = 2;
-                    G_History.lastDefenseTarget = ghostEscape.target;
                     return ghostEscape;
                 }
             }
@@ -587,13 +563,7 @@ function tacticalDefense(me, ctx) {
             var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!myPosInGrass || d <= 2) {
                 var escape = findOffAxisMove(ctx);
-                if (escape) {
-                    me.speak("安全规避");
-                    escape.score = 25000;
-                    G_History.defenseLockTicks = 2;
-                    G_History.lastDefenseTarget = escape.target;
-                    return escape;
-                }
+                if (escape) { me.speak("安全规避"); escape.score = 25000; return escape; }
                 if (ctx.canTeleport) {
                     var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                     if (esc) return { action: "teleport", target: esc, score: 99999 };
@@ -633,49 +603,41 @@ function isOnEnemyGunLine(pos, ctx, checkOverload) {
 
 function isSafe(pos, ctx, strict, isAssassinationSpot) {
     if (!pos) return false;
-    var cacheKey = pos[0] + "," + pos[1] + "," + (strict ? 1 : 0) + "," + (isAssassinationSpot ? 1 : 0);
-    if (G_SafeCache[cacheKey] !== undefined) return G_SafeCache[cacheKey];
+    var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
+    if (fH <= (strict ? 4 : 2)) return false;
 
-    var res = (function () {
-        var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
-        if (fH <= (strict ? 4 : 2)) return false;
-
-        if (ctx.enemyPos) {
-            var d = getDist(pos, ctx.enemyPos);
-            if (ctx.enemyVisible) {
-                var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 3;
-                var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
-                var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
-                if (gunLineDodge) return false;
-                if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
-                if (d < 2) return false;
+    if (ctx.enemyPos) {
+        var d = getDist(pos, ctx.enemyPos);
+        if (ctx.enemyVisible) {
+            var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+            // Overload 近距离（≤3格）取消草丛豁免：子弹穿草，草丛无法提供物理防护
+            var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 3;
+            if ((!isGrass || overloadNearby) && isOnEnemyGunLine(pos, ctx, true)) return false;
+            if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
+            if (d < 2) return false;
+        } else {
+            if (isAssassinationSpot) {
+                if (d < 1) return false;
+                if (isOnEnemyGunLine(pos, ctx, true)) return false;
             } else {
-                if (isAssassinationSpot) {
-                    if (d < 1) return false;
-                    if (isOnEnemyGunLine(pos, ctx, true)) return false;
-                } else {
-                    var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < 35);
-                    if (enemySeenRecently) {
-                        if (d < 2) return false;
-                        var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                        if (!inGrass) {
-                            if (d <= 3) return false;
-                            if (isOnEnemyGunLine(pos, ctx, true)) return false;
-                            if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
-                                if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) return false;
-                            }
-                            if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[pos[0] + "," + pos[1]]) return false;
+                // 针对近距离隐身敌人的同轴预判防御
+                var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < 35);
+                if (enemySeenRecently) {
+                    if (d < 2) return false; // 近距离强制不安全，防止贴脸或碰撞
+                    var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+                    if (!inGrass) {
+                        if (d <= 3) return false; // 3格内无草丛露天格视为危险
+                        if (isOnEnemyGunLine(pos, ctx, true)) return false;
+                        if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
+                            if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) return false;
                         }
+                        if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[pos[0] + "," + pos[1]]) return false;
                     }
                 }
             }
         }
-        return true;
-    })();
-
-    G_SafeCache[cacheKey] = res;
-    return res;
+    }
+    return true;
 }
 
 function isSafeForStarTeleport(pos, ctx, isAssassinationSpot) {
