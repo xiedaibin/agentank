@@ -1032,6 +1032,12 @@ function findAssassinSpot(ctx) {
                 var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
                 if (isGrass === 0 && dist < 5) continue;
                 var score = isGrass * 1000 - dist * 100 - i;
+                
+                // 朝向对齐奖励
+                if (ctx.myDir === directionTo(p, e)) {
+                    score += 300;
+                }
+                
                 candidates.push({ pos: p, score: score });
             }
         }
@@ -1047,6 +1053,12 @@ function findAssassinSpot(ctx) {
                         var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
                         if (isGrass === 0 && dist < 5) continue;
                         var score = isGrass * 1000 - dist * 100 - i - 50;
+                        
+                        // 朝向对齐奖励
+                        if (ctx.myDir === directionTo(p, predE)) {
+                            score += 300;
+                        }
+                        
                         candidates.push({ pos: p, score: score });
                     }
                 }
