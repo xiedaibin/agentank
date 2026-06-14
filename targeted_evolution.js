@@ -157,6 +157,7 @@ async function main() {
 
     async function runRandom(count) {
         let wins = 0;
+        let validMatches = 0;
         for (let i = 1; i <= count; i++) {
             process.stdout.write(`[随机 ${i}/${count}] 对战中... `);
             try {
@@ -166,6 +167,7 @@ async function main() {
                     body: JSON.stringify({ randomOpponent: true, mapId: 'classic' })
                 });
                 if (res.ok) {
+                    validMatches++;
                     const data = await res.json();
                     const urlId = data.urlId || data.matchUrlId || `rand_${Date.now()}`;
                     const isWin = data.winnerTankId === 230 || data.winnerTankName === "XDB" || data.winner === "XDB" || data.winner === 'me' || data.winner === 230;
@@ -190,7 +192,7 @@ async function main() {
             } catch (e) { console.log("异常"); }
             await delay(3000);
         }
-        return wins / count;
+        return validMatches > 0 ? (wins / validMatches) : 0;
     }
 
     const newBenchmarkWR = await runRandom(30);
