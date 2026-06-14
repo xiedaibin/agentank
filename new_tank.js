@@ -228,9 +228,11 @@ function buildExecutionContext(me, enemy, game) {
             G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
             G_History.isEnemyPosPredicted = false;
             G_History.invalidPredictedSpots = {};
+            G_History.firedPredictedSpots = {};
         } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {
             G_History.invalidPredictedSpots = {};
-            var ambushSpot = findAmbushGrassTile(game.star, game.map);
+            G_History.firedPredictedSpots = {};
+            var ambushSpot = findAmbushGrassTile(game.star, game.map, false);
             if (ambushSpot) {
                 G_History.lastEnemyPos = ambushSpot.pos;
                 G_History.lastEnemyDir = ambushSpot.dir;
@@ -297,14 +299,28 @@ function buildExecutionContext(me, enemy, game) {
     }
 
     var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
+
+    var shootingEnemyPos = G_History.lastEnemyPos;
+    if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
+        var key = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
+        if (G_History.firedPredictedSpots && G_History.firedPredictedSpots[key]) {
+            var altAmbush = findAmbushGrassTile(game.star, game.map, true);
+            if (altAmbush) {
+                shootingEnemyPos = altAmbush.pos;
+            } else {
+                shootingEnemyPos = null;
+            }
+        }
+    }
+
     var isEnemyRecentlyInvisibleInGrass = G_History.enemyInvisibleFrames > 0 &&
                                           G_History.enemyInvisibleFrames <= CONFIG.BLIND_FIRE_FRAMES &&
-                                          G_History.lastEnemyPos &&
-                                          isNearGrass(G_History.lastEnemyPos);
+                                          shootingEnemyPos &&
+                                          isNearGrass(shootingEnemyPos);
 
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
-        enemy: enemy, enemyPos: G_History.lastEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
+        enemy: enemy, enemyPos: G_History.lastEnemyPos, shootingEnemyPos: shootingEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
         wasEnemyVisible: G_History.wasEnemyVisible,
         enemyCloaked: G_History.cloakFramesLeft > 0,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
@@ -375,22 +391,22 @@ function evalAssassination(ctx) {
 
 function evalShooting(ctx) {
     var targetVisible = ctx.enemyVisible || ctx.isTeleportAmbushStream;
-    if (!ctx.enemyPos || !targetVisible) return null;
+    if (!ctx.shootingEnemyPos || !targetVisible) return null;
 
-    var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
-    var canKill = (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7));
+    var cs = canShoot(ctx.myPos, ctx.shootingEnemyPos, ctx.map);
+    var canKill = (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.shootingEnemyPos) <= 7));
     if (canKill) {
         if (ctx.enemyShielded) return null;
-        var dir = directionTo(ctx.myPos, ctx.enemyPos);
+        var dir = directionTo(ctx.myPos, ctx.shootingEnemyPos);
         if (ctx.myDir === dir) {
             var isPostTeleportLocked = (G_History.frame - G_History.lastTeleportFrame <= 2);
             if (isPostTeleportLocked && ctx.meStatus.fireLocked) {
                 return { action: "move", target: ctx.myPos, score: CONFIG.KILL_PRIO - 80 };
             }
         } else {
-            var onEnemyAxis = (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
-            if (onEnemyAxis && isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
-            return { action: "turn", target: ctx.enemyPos, score: CONFIG.KILL_PRIO - 100 };
+            var onEnemyAxis = (ctx.myPos[0] === ctx.shootingEnemyPos[0] || ctx.myPos[1] === ctx.shootingEnemyPos[1]);
+            if (onEnemyAxis && isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
+            return { action: "turn", target: ctx.shootingEnemyPos, score: CONFIG.KILL_PRIO - 100 };
         }
     }
     return null;
@@ -398,13 +414,13 @@ function evalShooting(ctx) {
 
 function evalPreAim(ctx) {
     var targetVisible = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass || ctx.isTeleportAmbushStream;
-    if (!ctx.enemyPos || !targetVisible || !ctx.enemyDir) return null;
+    if (!ctx.shootingEnemyPos || !targetVisible || !ctx.enemyDir) return null;
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var recentlyTeleported = G_History.postTeleportFrames > 0;
 
     if (isCurrentlyInGrass || recentlyTeleported) {
-        var preAimDir = findPreAimDir(ctx.myPos, ctx.enemyPos, ctx.enemyDir, ctx.map);
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
         if (preAimDir && ctx.myDir !== preAimDir) {
             return { action: "turn", target: addPos(ctx.myPos, delta(preAimDir)), score: CONFIG.KILL_PRIO - 150 };
         }
@@ -419,8 +435,8 @@ function evalStarCollection(ctx) {
     // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃抢星，坚守伏击防止抽搐
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
-    if (isCurrentlyInGrass && ctx.enemyPos && ctx.enemyDir && shouldStayAmbush) {
-        var preAimDir = findPreAimDir(ctx.myPos, ctx.enemyPos, ctx.enemyDir, ctx.map);
+    if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
         if (preAimDir && ctx.myDir === preAimDir) {
             if (dist > 1) return null;
         }
@@ -1218,7 +1234,7 @@ function findBestStarTeleportTarget(ctx) {
     return candidates[0].pos;
 }
 
-function findAmbushGrassTile(star, map) {
+function findAmbushGrassTile(star, map, forShooting) {
     if (!map) return null;
     var starPos = star || G_History.lastStarPos || (map.length === 13 ? [6, 6] : null);
     if (!starPos) return null;
@@ -1230,6 +1246,9 @@ function findAmbushGrassTile(star, map) {
         var g = list[i];
         var gKey = g[0] + "," + g[1];
         if (G_History.invalidPredictedSpots && G_History.invalidPredictedSpots[gKey]) {
+            continue;
+        }
+        if (forShooting && G_History.firedPredictedSpots && G_History.firedPredictedSpots[gKey]) {
             continue;
         }
         var d = getDist(g, starPos);
@@ -1272,8 +1291,17 @@ function evalAssassinationPreAim(ctx) {
     if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
     if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
 
-    var isCdOne = ctx.me.skill && ctx.me.skill.remainingCooldownFrames === 1;
-    if (!isCdOne) return null;
+    var cooldown = ctx.me.skill ? ctx.me.skill.remainingCooldownFrames : 99;
+    var isPreAimFrame = false;
+    if (cooldown === 1) {
+        isPreAimFrame = true;
+    } else if (cooldown === 0) {
+        var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames === 4;
+        if (isTeleportAmbushStream) {
+            isPreAimFrame = true;
+        }
+    }
+    if (!isPreAimFrame) return null;
 
     var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
 
@@ -1297,13 +1325,12 @@ function evalAssassinationPreAim(ctx) {
 function fireGun(me, ctx) {
     if (!me.bullet && !ctx.meStatus.fireLocked) {
         me.fire();
-        if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
-            if (isPositionOnGunLine(ctx.myPos, ctx.myDir, G_History.lastEnemyPos, ctx.map)) {
-                var badSpotKey = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
-                if (!G_History.invalidPredictedSpots) G_History.invalidPredictedSpots = {};
-                G_History.invalidPredictedSpots[badSpotKey] = G_History.frame + 2;
-                me.speak("射击拉黑: [" + G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1] + "]");
-                recalculateAmbushPrediction(ctx.map);
+        if (G_History.isEnemyPosPredicted && ctx.shootingEnemyPos) {
+            if (isPositionOnGunLine(ctx.myPos, ctx.myDir, ctx.shootingEnemyPos, ctx.map)) {
+                var key = ctx.shootingEnemyPos[0] + "," + ctx.shootingEnemyPos[1];
+                if (!G_History.firedPredictedSpots) G_History.firedPredictedSpots = {};
+                G_History.firedPredictedSpots[key] = true;
+                me.speak("射击压制: [" + key + "]");
             }
         }
     }
@@ -1321,7 +1348,7 @@ function isPositionOnGunLine(myPos, myDir, targetPos, map) {
 }
 
 function recalculateAmbushPrediction(map) {
-    var ambushSpot = findAmbushGrassTile(G_History.lastStarPos, map);
+    var ambushSpot = findAmbushGrassTile(G_History.lastStarPos, map, false);
     if (ambushSpot) {
         G_History.lastEnemyPos = ambushSpot.pos;
         G_History.lastEnemyDir = ambushSpot.dir;
