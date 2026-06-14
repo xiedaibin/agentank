@@ -202,7 +202,11 @@ async function main() {
     console.log(`当前胜率: ${(currentWinRate * 100).toFixed(2)}%`);
     console.log(`胜率提升: ${(diff * 100).toFixed(2)}%`);
 
-    fs.writeFileSync('evolution_report.json', JSON.stringify(report, null, 2));
+    const reportDir = 'logs';
+    if (!fs.existsSync(reportDir)) {
+        fs.mkdirSync(reportDir, { recursive: true });
+    }
+    fs.writeFileSync(`${reportDir}/evolution_report.json`, JSON.stringify(report, null, 2));
 
     // 自动更新进化日志 (EVOLUTION_LOG.md)
     const logEntry = `| ${currentVersion} | ${date} | ${strategyName} | ${strategyName} (自动生成) | ${(currentWinRate * 100).toFixed(2)}% | ${status} | ${(diff * 100).toFixed(2)}% |\n`;

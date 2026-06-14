@@ -134,6 +134,12 @@ async function main() {
     let enemyDir = enemyStartDir;
 
     let starPos = null;
+    const frame0Events = records[0] || [];
+    for (const ev of frame0Events) {
+        if (ev.type === "star" || ev.event === "star_spawned" || (ev.action === "created" && ev.type === "star")) {
+            starPos = ev.position || ev.at;
+        }
+    }
     let bulletsMap = new Map(); // bulletId -> { position, direction, shooterId }
 
     // Cooldown state

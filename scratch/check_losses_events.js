@@ -1,11 +1,11 @@
 const fs = require('fs');
 
 const token = 'agtk_7fb88c28d1e140d654316c7ff1211d1418af';
-const reportFile = 'evolution_report.json';
+const reportFile = 'logs/evolution_report.json';
 
 async function main() {
     if (!fs.existsSync(reportFile)) {
-        console.error("evolution_report.json not found!");
+        console.error(`${reportFile} not found!`);
         return;
     }
     const report = JSON.parse(fs.readFileSync(reportFile, 'utf8'));

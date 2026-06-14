@@ -8,7 +8,7 @@ async function fetchReplay(matchId) {
         process.exit(1);
     }
 
-    const url = `https://agentank.ai/api/matches/${matchId}/agent.json`;
+    const url = `https://agentank.ai/api/matches/${matchId}/agent.json?view=raw`;
 
     try {
         console.log(`Fetching ${matchId}...`);
@@ -17,8 +17,10 @@ async function fetchReplay(matchId) {
         });
         if (!res.ok) throw new Error(`Status ${res.status}: ${await res.text()}`);
         const data = await res.json();
-        fs.writeFileSync(`${matchId}.json`, JSON.stringify(data, null, 2));
-        console.log(`Saved ${matchId}.json`);
+        const dir = 'replays';
+        if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+        fs.writeFileSync(`${dir}/${matchId}.json`, JSON.stringify(data, null, 2));
+        console.log(`Saved ${dir}/${matchId}.json`);
     } catch (e) {
         console.error(e);
     }

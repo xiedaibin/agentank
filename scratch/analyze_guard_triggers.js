@@ -52,9 +52,9 @@ async function fetchMatchData(matchId, token) {
 
 async function main() {
     const token = getToken();
-    const reportPath = path.join(__dirname, '../evolution_report.json');
+    const reportPath = path.join(__dirname, '../logs/evolution_report.json');
     if (!fs.existsSync(reportPath)) {
-        console.error("Error: evolution_report.json not found.");
+        console.error(`Error: ${reportPath} not found.`);
         process.exit(1);
     }
     const report = JSON.parse(fs.readFileSync(reportPath, 'utf8'));

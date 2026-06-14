@@ -114,8 +114,12 @@ async function main() {
     console.log("\n=== Batch Complete ===");
     console.log(`Wins: ${report.summary.wins} | Losses: ${report.summary.losses} | Draws: ${report.summary.draws}`);
     
-    fs.writeFileSync('battle_report.json', JSON.stringify(report, null, 2));
-    console.log("Detailed report saved to battle_report.json");
+    const reportDir = 'logs';
+    if (!fs.existsSync(reportDir)) {
+        fs.mkdirSync(reportDir, { recursive: true });
+    }
+    fs.writeFileSync(`${reportDir}/battle_report.json`, JSON.stringify(report, null, 2));
+    console.log(`Detailed report saved to ${reportDir}/battle_report.json`);
 }
 
 main();

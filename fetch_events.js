@@ -8,9 +8,10 @@ async function fetchEvents(matchId) {
         headers: { 'Authorization': `Bearer ${token}` }
     });
     if (!res.ok) throw new Error(await res.text());
-    const data = await res.json();
-    fs.writeFileSync(`${matchId}_events.json`, JSON.stringify(data, null, 2));
-    console.log(`Saved ${matchId}_events.json`);
+    const dir = 'replays';
+    if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
+    fs.writeFileSync(`${dir}/${matchId}_events.json`, JSON.stringify(data, null, 2));
+    console.log(`Saved ${dir}/${matchId}_events.json`);
 }
 
 fetchEvents(process.argv[2]);

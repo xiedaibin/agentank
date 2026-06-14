@@ -87,8 +87,12 @@ async function main() {
     console.log("\n=== Review Challenge Complete ===");
     console.log(`Wins: ${report.summary.wins} | Losses: ${report.summary.losses} | Draws: ${report.summary.draws}`);
     
-    fs.writeFileSync('review_report.json', JSON.stringify(report, null, 2));
-    console.log("Detailed report saved to review_report.json");
+    const reportDir = 'logs';
+    if (!fs.existsSync(reportDir)) {
+        fs.mkdirSync(reportDir, { recursive: true });
+    }
+    fs.writeFileSync(`${reportDir}/review_report.json`, JSON.stringify(report, null, 2));
+    console.log(`Detailed report saved to ${reportDir}/review_report.json`);
 }
 
 main();
