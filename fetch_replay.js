@@ -17,6 +17,7 @@ async function fetchReplay() {
             headers: { 'Authorization': `Bearer ${token}` }
         });
         if (!res.ok) throw new Error(`Status ${res.status}: ${await res.text()}`);
+        const data = await res.json();
         const dir = 'replays';
         if (!fs.existsSync(dir)) fs.mkdirSync(dir, { recursive: true });
         fs.writeFileSync(`${dir}/${matchId}_events.json`, JSON.stringify(data, null, 2));
