@@ -175,3 +175,113 @@
 [2026-06-14 16:19:11] [第 38 场] 结果: WIN | 得分: 2935 (+24) | 点数: 1135 | 原因: crashed | 链接: https://agentank.ai/history/mat_4vFBwJvLtvG7PPApT
 [2026-06-14 16:19:11] 等待 5 秒后发起下一次挑战...
 
+[2026-06-14 16:19:16] [第 39 场对战] 正在挑战第一名: 小强#1394 (3013)
+[2026-06-14 16:19:19] [第 39 场] 结果: WIN | 得分: 2957 (+22) | 点数: 1157 | 原因: crashed | 链接: https://agentank.ai/history/mat_AWtC9SsW7Bs8HDzjn
+[2026-06-14 16:19:19] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:19:24] [第 40 场对战] 正在挑战第一名: 小强#1394 (3013)
+[2026-06-14 16:19:30] [第 40 场] 结果: WIN | 得分: 2976 (+19) | 点数: 1176 | 原因: runTime | 链接: https://agentank.ai/history/mat_KopyzwElTrw7ap2PO
+[2026-06-14 16:19:30] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:19:35] [第 5 轮] 正在搜寻全服最高分合格对手...
+[2026-06-14 16:20:40] [搜寻成功] 锁定对手 #1: Riftwalker#3643 (分数: 3002)
+[2026-06-14 16:20:40] [第 41 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:20:40] [第 41 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:19:28.645665Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:20:40] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:20:45] [第 42 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:20:47] [第 42 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:19:34.717005Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:20:47] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:20:52] [第 43 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:20:54] [第 43 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:19:41.414867Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:20:54] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:20:59] [第 44 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:00] [第 44 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:19:47.164046Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:21:00] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:05] [第 45 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:10] [第 45 场] 结果: LOSS | 得分: 2935 (-20) | 点数: 1135 | 原因: crashed | 链接: https://agentank.ai/history/mat_AfOzray1yRF3GTYkX
+[2026-06-14 16:21:12] [第 45 场] 失败录像已保存: battle_first\Riftwalker_045_mat_AfOzray1yRF3GTYkX.json
+[2026-06-14 16:21:12] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:17] [第 46 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:22] [第 46 场] 结果: LOSS | 得分: 2936 (-19) | 点数: 1136 | 原因: crashed | 链接: https://agentank.ai/history/mat_Aa5Ti2qJ6FS4OPjYF
+[2026-06-14 16:21:23] [第 46 场] 失败录像已保存: battle_first\Riftwalker_046_mat_Aa5Ti2qJ6FS4OPjYF.json
+[2026-06-14 16:21:23] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:28] [第 47 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:35] [第 47 场] 结果: LOSS | 得分: 2919 (-17) | 点数: 1119 | 原因: crashed | 链接: https://agentank.ai/history/mat_K3POEf1NWJa8CsWjI
+[2026-06-14 16:21:37] [第 47 场] 失败录像已保存: battle_first\Riftwalker_047_mat_K3POEf1NWJa8CsWjI.json
+[2026-06-14 16:21:37] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:42] [第 48 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:43] [第 48 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:20:31.511795Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:21:43] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:48] [第 49 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:21:53] [第 49 场] 结果: WIN | 得分: 2944 (+25) | 点数: 1144 | 原因: crashed | 链接: https://agentank.ai/history/mat_3g8I1IAGUJQ0fJwQy
+[2026-06-14 16:21:53] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:21:58] [第 50 场对战] 正在挑战第一名: Riftwalker#3643 (3002)
+[2026-06-14 16:22:01] [第 50 场] 结果: WIN | 得分: 2966 (+22) | 点数: 1166 | 原因: crashed | 链接: https://agentank.ai/history/mat_KmvbwYnmgyGHdl1Ld
+[2026-06-14 16:22:01] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:22:06] [第 6 轮] 正在搜寻全服最高分合格对手...
+[2026-06-14 16:23:24] [搜寻成功] 锁定对手 #1: Agro#3773 (分数: 2991)
+[2026-06-14 16:23:24] [第 51 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:23:28] [第 51 场] 结果: LOSS | 得分: 2948 (-18) | 点数: 1148 | 原因: crashed | 链接: https://agentank.ai/history/mat_9ZvnwNXpAwB4ureEk
+[2026-06-14 16:23:29] [第 51 场] 失败录像已保存: battle_first\Agro_051_mat_9ZvnwNXpAwB4ureEk.json
+[2026-06-14 16:23:29] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:23:34] [第 52 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:23:36] [第 52 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:22:24.246366Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:23:36] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:23:41] [第 53 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:23:42] [第 53 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:22:29.903556Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:23:42] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:23:47] [第 54 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:23:49] [第 54 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:22:37.298728Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:23:49] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:23:54] [第 55 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:23:59] [第 55 场] 结果: LOSS | 得分: 2910 (-18) | 点数: 1110 | 原因: crashed | 链接: https://agentank.ai/history/mat_Cmh7nseXlWKDkfxUO
+[2026-06-14 16:24:00] [第 55 场] 失败录像已保存: battle_first\Agro_055_mat_Cmh7nseXlWKDkfxUO.json
+[2026-06-14 16:24:00] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:05] [第 56 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:24:09] [第 56 场] 结果: WIN | 得分: 2914 (+26) | 点数: 1114 | 原因: star | 链接: https://agentank.ai/history/mat_0KO75KBlkEr8cRHk9
+[2026-06-14 16:24:09] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:14] [第 57 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:24:20] [第 57 场] 结果: LOSS | 得分: 2899 (-15) | 点数: 1099 | 原因: crashed | 链接: https://agentank.ai/history/mat_LDoQ9MGuCKQJeImsY
+[2026-06-14 16:24:21] [第 57 场] 失败录像已保存: battle_first\Agro_057_mat_LDoQ9MGuCKQJeImsY.json
+[2026-06-14 16:24:21] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:26] [第 58 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:24:27] [第 58 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:23:14.291602Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:24:27] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:32] [第 59 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:24:33] [第 59 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:23:20.389426Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:24:33] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:38] [第 60 场对战] 正在挑战第一名: Agro#3773 (2991)
+[2026-06-14 16:24:39] [第 60 场] 运行异常: HTTP 429: {"error":"simulation cooldown active","nextSimulationAt":"2026-06-14T16:23:27.16981Z","simulationCooldownSeconds":2}
+
+[2026-06-14 16:24:39] 等待 5 秒后发起下一次挑战...
+
+[2026-06-14 16:24:44] [第 7 轮] 正在搜寻全服最高分合格对手...

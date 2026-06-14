@@ -38,7 +38,7 @@ var G_History = {
     lastTeleportPos: null
 };
 
-var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 5 };
+var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
 var G_SafeCache = {};
 
 function onIdle(me, enemy, game) {
