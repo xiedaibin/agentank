@@ -38,7 +38,7 @@ var G_History = {
     lastTeleportPos: null
 };
 
-var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
+var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 5 };
 var G_SafeCache = {};
 
 function onIdle(me, enemy, game) {
@@ -85,7 +85,7 @@ function onIdle(me, enemy, game) {
                 var dir = directionTo(ctx.myPos, lastAttempted);
                 if (ctx.myDir === dir && !me.bullet && !ctx.meStatus.fireLocked) {
                     me.speak("Blocked: Fire!");
-                    me.fire();
+                    fireGun(me, ctx);
                     return;
                 }
             }
@@ -104,7 +104,7 @@ function onIdle(me, enemy, game) {
                     if (onOverloadLine && enemyFacingUs && !ctx.enemyFireLocked && isEnemyOverloadActive(ctx, ctx.myPos)) {
                         // 允许进入下一阶段（防守规避）
                     } else {
-                        me.fire(); return;
+                        fireGun(me, ctx); return;
                     }
                 }
             }
@@ -115,7 +115,7 @@ function onIdle(me, enemy, game) {
             var targetGrass = findTargetGrassForBlindFire(ctx.myPos, ctx.myDir, G_History.lastEnemyPos, ctx.map);
             if (targetGrass && !me.bullet && !ctx.meStatus.fireLocked) {
                 me.speak("草丛盲射");
-                me.fire(); return;
+                fireGun(me, ctx); return;
             }
         }
 
@@ -130,7 +130,7 @@ function onIdle(me, enemy, game) {
             var targetGrass = findGrassOnGunLine(ctx.myPos, ctx.myDir, ctx.map, 6);
             if (targetGrass) {
                 me.speak("枪线草丛压制");
-                me.fire(); return;
+                fireGun(me, ctx); return;
             }
         }
 
@@ -187,6 +187,17 @@ function analyzeMap(map) {
 }
 
 function buildExecutionContext(me, enemy, game) {
+    if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
+        var myPos = me.tank.position;
+        if (samePos(myPos, G_History.lastEnemyPos)) {
+            var badSpotKey = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
+            if (!G_History.invalidPredictedSpots) G_History.invalidPredictedSpots = {};
+            G_History.invalidPredictedSpots[badSpotKey] = true;
+            recalculateAmbushPrediction(game.map);
+            me.speak("踩中拉黑重算");
+        }
+    }
+
     if (game && game.star) {
         G_History.lastStarPos = game.star;
     }
@@ -215,12 +226,16 @@ function buildExecutionContext(me, enemy, game) {
 
         if (visible) {
             G_History.lastEnemyPos = eTank.position; G_History.lastEnemyDir = eTank.direction; G_History.lastEnemySeenFrame = G_History.frame;
+            G_History.isEnemyPosPredicted = false;
+            G_History.invalidPredictedSpots = {};
         } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {
+            G_History.invalidPredictedSpots = {};
             var ambushSpot = findAmbushGrassTile(game.star, game.map);
             if (ambushSpot) {
                 G_History.lastEnemyPos = ambushSpot.pos;
                 G_History.lastEnemyDir = ambushSpot.dir;
                 G_History.lastEnemySeenFrame = G_History.frame;
+                G_History.isEnemyPosPredicted = true;
                 me.speak("预判在: [" + ambushSpot.pos[0] + "," + ambushSpot.pos[1] + "]");
             }
         }
@@ -812,7 +827,7 @@ function executeAction(me, act, ctx) {
     if (!act) return;
     if (act.action === "fire") {
         var d = directionTo(ctx.myPos, act.target);
-        if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
+        if (ctx.myDir === d) { fireGun(me, ctx); } else me.turn(d);
     }
     else if (act.action === "turn") { me.turn(directionTo(ctx.myPos, act.target)); }
     else if (act.action === "teleport") {
@@ -855,7 +870,7 @@ function executeAction(me, act, ctx) {
             var tile = getTile(next, ctx.map);
             var d = directionTo(ctx.myPos, next);
             if (tile === "m") {
-                if (ctx.myDir === d) { if (!me.bullet && !ctx.meStatus.fireLocked) me.fire(); } else me.turn(d);
+                if (ctx.myDir === d) { fireGun(me, ctx); } else me.turn(d);
             } else {
                 if (ctx.myDir === d) {
                     if (ctx.meStatus.boosted) me.go(2); else me.go();
@@ -1213,6 +1228,10 @@ function findAmbushGrassTile(star, map) {
 
     for (var i = 0; i < list.length; i++) {
         var g = list[i];
+        var gKey = g[0] + "," + g[1];
+        if (G_History.invalidPredictedSpots && G_History.invalidPredictedSpots[gKey]) {
+            continue;
+        }
         var d = getDist(g, starPos);
         if (d <= 3) {
             var dir = directionTo(g, starPos);
@@ -1273,4 +1292,43 @@ function evalAssassinationPreAim(ctx) {
         }
     }
     return null;
+}
+
+function fireGun(me, ctx) {
+    if (!me.bullet && !ctx.meStatus.fireLocked) {
+        me.fire();
+        if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
+            if (isPositionOnGunLine(ctx.myPos, ctx.myDir, G_History.lastEnemyPos, ctx.map)) {
+                var badSpotKey = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
+                if (!G_History.invalidPredictedSpots) G_History.invalidPredictedSpots = {};
+                G_History.invalidPredictedSpots[badSpotKey] = true;
+                me.speak("射击拉黑: [" + G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1] + "]");
+                recalculateAmbushPrediction(ctx.map);
+            }
+        }
+    }
+}
+
+function isPositionOnGunLine(myPos, myDir, targetPos, map) {
+    if (!targetPos) return false;
+    var d = delta(myDir);
+    if (d[0] === 0 && d[1] === 0) return false;
+    var isCoAxial = false;
+    if (d[0] !== 0 && myPos[1] === targetPos[1] && (targetPos[0] - myPos[0]) * d[0] > 0) isCoAxial = true;
+    if (d[1] !== 0 && myPos[0] === targetPos[0] && (targetPos[1] - myPos[1]) * d[1] > 0) isCoAxial = true;
+    if (!isCoAxial) return false;
+    return isLoS(myPos, targetPos, myDir, map);
+}
+
+function recalculateAmbushPrediction(map) {
+    var ambushSpot = findAmbushGrassTile(G_History.lastStarPos, map);
+    if (ambushSpot) {
+        G_History.lastEnemyPos = ambushSpot.pos;
+        G_History.lastEnemyDir = ambushSpot.dir;
+        G_History.lastEnemySeenFrame = G_History.frame;
+        G_History.isEnemyPosPredicted = true;
+    } else {
+        G_History.lastEnemyPos = null;
+        G_History.isEnemyPosPredicted = false;
+    }
 }
