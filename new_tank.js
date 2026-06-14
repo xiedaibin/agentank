@@ -380,6 +380,11 @@ function evalAssassination(ctx) {
         }
         var spot = findAssassinSpot(ctx);
         if (spot && !samePos(spot, ctx.myPos) && isTeleportPassable(spot, ctx) && isSafeForStarTeleport(spot, ctx, true)) {
+            var fireDir = directionTo(spot, ctx.enemyPos);
+            if (ctx.myDir !== fireDir) {
+                ctx.me.speak("刺杀预瞄");
+                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO + 100 };
+            }
             if (isTeleportAmbushStream) {
                 ctx.me.speak("刺杀埋伏: [" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "]");
             }
