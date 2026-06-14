@@ -363,7 +363,8 @@ function evalShooting(ctx) {
         if (ctx.enemyShielded) return null;
         var dir = directionTo(ctx.myPos, ctx.enemyPos);
         if (ctx.myDir === dir) {
-            if (ctx.meStatus.fireLocked || ctx.me.bullet) {
+            var isPostTeleportLocked = (G_History.frame - G_History.lastTeleportFrame <= 2);
+            if (isPostTeleportLocked && ctx.meStatus.fireLocked) {
                 return { action: "move", target: ctx.myPos, score: CONFIG.KILL_PRIO - 80 };
             }
         } else {
