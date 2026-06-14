@@ -22,7 +22,7 @@ var G_Blueprint = {
 var G_History = {
     lastEnemyPos: null, lastEnemyDir: "up", lastEnemySeenFrame: -99,
     lastEnemyVisible: false, wasEnemyVisible: false, lastUpdatedFrame: -99,
-    isEnemyPosPredicted: false, invalidPredictedSpots: {},
+    isEnemyPosPredicted: false, invalidPredictedSpots: {}, firedPredictedSpots: {},
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
@@ -667,29 +667,6 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
     var res = (function () {
         var fH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
         if (fH <= (strict ? 4 : 2)) return false;
-
-        if (G_History.invalidPredictedSpots) {
-            for (var key in G_History.invalidPredictedSpots) {
-                var expireFrame = G_History.invalidPredictedSpots[key];
-                if (typeof expireFrame === "number" && G_History.frame <= expireFrame) {
-                    var parts = key.split(",");
-                    var spot = [parseInt(parts[0]), parts[1] ? parseInt(parts[1]) : 0];
-                    var dSpot = getDist(pos, spot);
-                    if (isAssassinationSpot) {
-                        if (dSpot < 1) return false;
-                    } else {
-                        var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                        if (dSpot < 2) return false;
-                        if (!inGrass) {
-                            if (dSpot <= 3) return false;
-                            if (pos[0] === spot[0] || pos[1] === spot[1]) {
-                                if (canShoot(spot, pos, ctx.map) !== false) return false;
-                            }
-                        }
-                    }
-                }
-            }
-        }
 
         if (ctx.enemyPos) {
             var d = getDist(pos, ctx.enemyPos);
