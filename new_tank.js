@@ -1297,15 +1297,6 @@ function evalAssassinationPreAim(ctx) {
 function fireGun(me, ctx) {
     if (!me.bullet && !ctx.meStatus.fireLocked) {
         me.fire();
-        if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
-            if (isPositionOnGunLine(ctx.myPos, ctx.myDir, G_History.lastEnemyPos, ctx.map)) {
-                var badSpotKey = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
-                if (!G_History.invalidPredictedSpots) G_History.invalidPredictedSpots = {};
-                G_History.invalidPredictedSpots[badSpotKey] = true;
-                me.speak("射击拉黑: [" + G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1] + "]");
-                recalculateAmbushPrediction(ctx.map);
-            }
-        }
     }
 }
 
