@@ -1,47 +1,36 @@
 const fs = require('fs');
+const content = fs.readFileSync('replays/mat_EnDvq9PY90F82dLZK_events.json', 'utf8');
+const data = JSON.parse(content);
 
-const files = [
-    'mat_BchXi69ZgmmIaFfM9_events.json',
-    'mat_3JCDqDQhroU22Okp4_events.json',
-    'mat_9fsqxd46RbvGN8hfj_events.json',
-    'mat_HA15QlCkQrC8xCiTy_events.json',
-    'mat_KcCJShJx0PNB63nPY_events.json'
-];
+const events = data.events || [];
+const timeline = {};
 
-files.forEach(file => {
-    if (!fs.existsSync(file)) {
-        console.log(`File ${file} does not exist.`);
-        return;
-    }
-    const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-    const events = data.events || [];
-    
-    console.log(`\n============================`);
-    console.log(`File: ${file}`);
-    console.log(`Total events: ${events.length}`);
-    
-    // 过滤出最后 15 个事件
-    const lastEvents = events.slice(-15);
-    console.log("Last 15 events:");
-    lastEvents.forEach(evt => {
-        if (evt.event === 'crashed') {
-            console.log(`  [F${evt.frame}] 💥 Crashed: ${evt.tank} by ${evt.by}`);
-        } else if (evt.event === 'move') {
-            console.log(`  [F${evt.frame}] Move: ${evt.tank} to ${JSON.stringify(evt.to)}`);
-        } else if (evt.event === 'turn') {
-            console.log(`  [F${evt.frame}] Turn: ${evt.tank} to ${evt.direction}`);
-        } else if (evt.event === 'fire') {
-            console.log(`  [F${evt.frame}] 🔥 Fire: ${evt.tank} dir ${evt.direction}`);
-        } else if (evt.event === 'skill_cast') {
-            console.log(`  [F${evt.frame}] Skill: ${evt.tank} cast ${evt.skill}`);
-        } else if (evt.event === 'skill_applied') {
-            console.log(`  [F${evt.frame}] Skill: ${evt.tank} applied ${evt.skill} to ${JSON.stringify(evt.to)}`);
-        } else if (evt.event === 'star_collected') {
-            console.log(`  [F${evt.frame}] ⭐ Star collected: ${evt.tank}`);
-        } else if (evt.event === 'shot_hit') {
-            console.log(`  [F${evt.frame}] Bullet hit: ${evt.tank}`);
+events.forEach(e => {
+    const f = e.frame;
+    if (!timeline[f]) timeline[f] = [];
+    timeline[f].push(e);
+});
+
+const frames = Object.keys(timeline).sort((a, b) => Number(a) - Number(b));
+
+console.log("Timeline of Events:\n====================");
+frames.forEach(f => {
+    console.log(`\nFrame ${f}:`);
+    timeline[f].forEach(e => {
+        if (e.event === "star_spawned" || e.event === "star_collected") {
+            console.log(`  🌟 [Star] ${e.event} at ${JSON.stringify(e.at || e.by)}`);
+        } else if (e.event === "hit") {
+            console.log(`  💥 [Hit] ${e.bulletOwner}'s bullet hit ${e.target} at ${JSON.stringify(e.at)}`);
+        } else if (e.event === "fire") {
+            console.log(`  🔫 [Fire] ${e.tank} fired a bullet`);
+        } else if (e.event === "turn") {
+            console.log(`  🔄 [Turn] ${e.tank} turned to ${e.direction}`);
+        } else if (e.event === "go") {
+            console.log(`  🏃 [Go] ${e.tank} moved forward (steps: ${e.steps})`);
+        } else if (e.event === "teleport") {
+            console.log(`  ✨ [Teleport] ${e.tank} teleported to ${JSON.stringify(e.to)}`);
         } else {
-            console.log(`  [F${evt.frame}] Event: ${evt.event} details: ${JSON.stringify(evt)}`);
+            console.log(`  ❓ [Event] ${e.event}: ${JSON.stringify(e)}`);
         }
     });
 });

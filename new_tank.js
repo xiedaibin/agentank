@@ -22,6 +22,7 @@ var G_Blueprint = {
 var G_History = {
     lastEnemyPos: null, lastEnemyDir: "up", lastEnemySeenFrame: -99,
     lastEnemyVisible: false, wasEnemyVisible: false, lastUpdatedFrame: -99,
+    isEnemyPosPredicted: false, invalidPredictedSpots: {},
     cloakFramesLeft: 0, postTeleportFrames: 0, frame: 0,
     defenseLockTicks: 0, lastDefenseTarget: null,
     path: [], pathTarget: null, stuckTurnCount: 0, lastPos: null,
@@ -37,7 +38,7 @@ var G_History = {
     lastTeleportPos: null
 };
 
-var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8 };
+var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
 var G_SafeCache = {};
 
 function onIdle(me, enemy, game) {
@@ -110,14 +111,11 @@ function onIdle(me, enemy, game) {
         }
 
         // 1.5. 草丛盲射 (Blind Fire)
-        if (!ctx.enemyVisible && ctx.wasEnemyVisible && G_History.lastEnemyPos) {
-            var prevPos = G_History.lastEnemyPos;
-            if (isNearGrass(prevPos)) {
-                var targetGrass = findTargetGrassForBlindFire(ctx.myPos, ctx.myDir, prevPos, ctx.map);
-                if (targetGrass && !me.bullet && !ctx.meStatus.fireLocked) {
-                    me.speak("草丛盲射");
-                    me.fire(); return;
-                }
+        if (!ctx.enemyVisible && ctx.isEnemyRecentlyInvisibleInGrass) {
+            var targetGrass = findTargetGrassForBlindFire(ctx.myPos, ctx.myDir, G_History.lastEnemyPos, ctx.map);
+            if (targetGrass && !me.bullet && !ctx.meStatus.fireLocked) {
+                me.speak("草丛盲射");
+                me.fire(); return;
             }
         }
 
@@ -283,6 +281,12 @@ function buildExecutionContext(me, enemy, game) {
         }
     }
 
+    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
+    var isEnemyRecentlyInvisibleInGrass = G_History.enemyInvisibleFrames > 0 &&
+                                          G_History.enemyInvisibleFrames <= CONFIG.BLIND_FIRE_FRAMES &&
+                                          G_History.lastEnemyPos &&
+                                          isNearGrass(G_History.lastEnemyPos);
+
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
         enemy: enemy, enemyPos: G_History.lastEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
@@ -293,7 +297,9 @@ function buildExecutionContext(me, enemy, game) {
         enemyShielded: enemy && enemy.status && enemy.status.shielded,
         enemyBullet: enemy ? enemy.bullet : null, starPos: game.star, map: game.map,
         canTeleport: me.skill && me.skill.remainingCooldownFrames === 0,
-        unsafeCoAxialTiles: unsafeCoAxialTiles
+        unsafeCoAxialTiles: unsafeCoAxialTiles,
+        isTeleportAmbushStream: isTeleportAmbushStream,
+        isEnemyRecentlyInvisibleInGrass: isEnemyRecentlyInvisibleInGrass
     };
 }
 
@@ -353,8 +359,7 @@ function evalAssassination(ctx) {
 }
 
 function evalShooting(ctx) {
-    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    var targetVisible = ctx.enemyVisible || isTeleportAmbushStream;
+    var targetVisible = ctx.enemyVisible || ctx.isTeleportAmbushStream;
     if (!ctx.enemyPos || !targetVisible) return null;
 
     var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
@@ -377,8 +382,7 @@ function evalShooting(ctx) {
 }
 
 function evalPreAim(ctx) {
-    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    var targetVisible = ctx.enemyVisible || isTeleportAmbushStream;
+    var targetVisible = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass || ctx.isTeleportAmbushStream;
     if (!ctx.enemyPos || !targetVisible || !ctx.enemyDir) return null;
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
@@ -396,6 +400,16 @@ function evalPreAim(ctx) {
 function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
+
+    // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃抢星，坚守伏击防止抽搐
+    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+    var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
+    if (isCurrentlyInGrass && ctx.enemyPos && ctx.enemyDir && shouldStayAmbush) {
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.enemyPos, ctx.enemyDir, ctx.map);
+        if (preAimDir && ctx.myDir === preAimDir) {
+            if (dist > 1) return null;
+        }
+    }
 
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
@@ -477,8 +491,7 @@ function evalStarGuard(ctx) {
 }
 
 function evalGrassAmbushAndSurvival(ctx) {
-    var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    if (isTeleportAmbushStream) {
+    if (ctx.isTeleportAmbushStream) {
         return null;
     }
 
