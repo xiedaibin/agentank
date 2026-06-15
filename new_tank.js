@@ -1032,6 +1032,7 @@ function findAssassinSpot(ctx) {
                 var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
                 if (isGrass === 0 && dist < 5) continue;
                 var score = isGrass * 1000 - dist * 100 - i;
+                if (dist < 5) score -= 3000;
                 
                 // 朝向对齐奖励
                 if (ctx.myDir === directionTo(p, e)) {
@@ -1053,6 +1054,7 @@ function findAssassinSpot(ctx) {
                         var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
                         if (isGrass === 0 && dist < 5) continue;
                         var score = isGrass * 1000 - dist * 100 - i - 50;
+                        if (dist < 5) score -= 3000;
                         
                         // 朝向对齐奖励
                         if (ctx.myDir === directionTo(p, predE)) {
@@ -1266,6 +1268,9 @@ function findAmbushGrassTile(star, map, forShooting) {
             continue;
         }
         if (forShooting && G_History.firedPredictedSpots && G_History.firedPredictedSpots[gKey]) {
+            continue;
+        }
+        if (samePos(g, starPos)) {
             continue;
         }
         var d = getDist(g, starPos);
