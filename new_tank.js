@@ -314,9 +314,9 @@ function buildExecutionContext(me, enemy, game) {
     }
 
     var isEnemyRecentlyInvisibleInGrass = G_History.enemyInvisibleFrames > 0 &&
-                                          G_History.enemyInvisibleFrames <= CONFIG.BLIND_FIRE_FRAMES &&
-                                          shootingEnemyPos &&
-                                          isNearGrass(shootingEnemyPos);
+        G_History.enemyInvisibleFrames <= CONFIG.BLIND_FIRE_FRAMES &&
+        shootingEnemyPos &&
+        isNearGrass(shootingEnemyPos);
 
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
@@ -1033,12 +1033,12 @@ function findAssassinSpot(ctx) {
                 if (isGrass === 0 && dist < 5) continue;
                 var score = isGrass * 1000 - dist * 100 - i;
                 if (dist < 5) score -= 3000;
-                
+
                 // 朝向对齐奖励
                 if (ctx.myDir === directionTo(p, e)) {
                     score += 300;
                 }
-                
+
                 candidates.push({ pos: p, score: score });
             }
         }
@@ -1055,12 +1055,12 @@ function findAssassinSpot(ctx) {
                         if (isGrass === 0 && dist < 5) continue;
                         var score = isGrass * 1000 - dist * 100 - i - 50;
                         if (dist < 5) score -= 3000;
-                        
+
                         // 朝向对齐奖励
                         if (ctx.myDir === directionTo(p, predE)) {
                             score += 300;
                         }
-                        
+
                         candidates.push({ pos: p, score: score });
                     }
                 }
@@ -1274,7 +1274,7 @@ function findAmbushGrassTile(star, map, forShooting) {
             continue;
         }
         var d = getDist(g, starPos);
-        if (d <= 3) {
+        if (d <= 6) {
             var dir = directionTo(g, starPos);
             var isCoAxial = (g[0] === starPos[0] || g[1] === starPos[1]);
             var hasLoS = isCoAxial && isLoS(g, starPos, dir, map);
