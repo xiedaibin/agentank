@@ -682,17 +682,28 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    // [方案B v2] 幽灵子弹轴线预判（收窄版）：减少误触发
-    // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时） + LoS枪口对准
+    // 防御锁检测置顶：若无迫在眉睫的真实子弹威胁，且上一帧已经锁定了逃跑规避方向，坚持走完，防止原地转向抖动
+    if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
+        G_History.defenseLockTicks--;
+        if (isSafe(G_History.lastDefenseTarget, ctx, true)) return { action: "move", target: G_History.lastDefenseTarget, score: 30000 };
+    }
+
+    // [方案B v2] 幽灵子弹轴线预判（收窄脱敏版）：减少误触发
+    // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时）
     if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet) {
         var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 6);
         if (recentlySeen || ctx.enemyCloaked) {
             var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
             if (ghostDist <= 7) {
                 var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-                if (!myPosInGrass || ghostDist <= 2) {
-                    var onOverloadLine = isOnEnemyGunLine(ctx.myPos, ctx, true);
-                    if (onOverloadLine) {
+                
+                // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地或敌方已开启超载，才防范超宽枪线
+                var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
+                var needCheckOverload = !myPosInGrass || activeOverload;
+                var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
+
+                if (!myPosInGrass || (ghostDist <= 2 && onEnemyLine)) {
+                    if (onEnemyLine) {
                         var ghostEscape = findOffAxisMove(ctx);
                         if (ghostEscape) {
                             me.speak("幽灵避弹");
@@ -724,17 +735,15 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
-        G_History.defenseLockTicks--;
-        if (isSafe(G_History.lastDefenseTarget, ctx, true)) return { action: "move", target: G_History.lastDefenseTarget, score: 30000 };
-    }
-
     var enemySeenRecently = ctx.enemyPos && (G_History.frame - G_History.lastEnemySeenFrame < 35);
     if (ctx.enemyPos && (ctx.enemyVisible || enemySeenRecently) && !ctx.enemyFireLocked) {
         var d = getDist(ctx.myPos, ctx.enemyPos);
-        var onLine = isOnEnemyGunLine(ctx.myPos, ctx, true);
+        var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+        var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
+        var needCheckOverload = !myPosInGrass || activeOverload;
+        var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
+        
         if (onLine && d <= 8) {
-            var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!myPosInGrass || d <= 2) {
                 var escape = findOffAxisMove(ctx);
                 if (escape) {
