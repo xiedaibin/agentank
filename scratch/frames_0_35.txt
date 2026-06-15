@@ -1,0 +1,166 @@
+
+==================== Frame 0 ====================
+{"action":"created","position":[6,13],"type":"star"}
+
+==================== Frame 1 ====================
+{"action":"say","by":0,"objectId":"44d6025e","position":[2,2],"tank":{"id":"44d6025e","position":[2,2],"direction":"up"},"text":"V12.60: 预判背杀","type":"speech"}
+{"action":"cast","by":0,"skillType":"teleport","sourceObjectId":"44d6025e","type":"skill"}
+{"action":"applied","by":0,"from":[2,2],"skillType":"teleport","sourceObjectId":"44d6025e","targetObjectId":"44d6025e","to":[6,12],"type":"skill"}
+{"action":"turn","direction":"right","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 2 ====================
+{"action":"say","by":0,"objectId":"44d6025e","position":[6,12],"tank":{"id":"44d6025e","position":[6,12],"direction":"up"},"text":"传送延迟转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"cast","by":1,"skillType":"overload","sourceObjectId":"144edc2e","type":"skill"}
+{"action":"applied","by":1,"durationFrames":10,"skillType":"overload","sourceObjectId":"144edc2e","targetObjectId":"144edc2e","type":"skill"}
+
+==================== Frame 3 ====================
+{"action":"turn","direction":"right","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"created","direction":"left","objectId":"dacfa856","tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"created","direction":"left","objectId":"cae49d43","tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"expired","by":1,"skillType":"overload","sourceObjectId":"144edc2e","targetObjectId":"144edc2e","type":"skill"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[15,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[14,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[15,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":1,"position":[14,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 4 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[13,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[12,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[13,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":1,"position":[12,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 5 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[11,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[10,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[11,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":1,"position":[10,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 6 ====================
+{"action":"go","objectId":"44d6025e","position":[6,11],"reverse":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[9,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[8,13],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[9,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":1,"position":[8,12],"tank":{"id":"144edc2e","position":[16,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 7 ====================
+{"action":"go","objectId":"144edc2e","position":[15,12],"reverse":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[7,13],"tank":{"id":"144edc2e","position":[15,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[6,13],"tank":{"id":"144edc2e","position":[15,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[7,12],"tank":{"id":"144edc2e","position":[15,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":1,"position":[6,12],"tank":{"id":"144edc2e","position":[15,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 8 ====================
+{"action":"go","objectId":"144edc2e","position":[14,12],"reverse":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":0,"position":[5,13],"tank":{"id":"144edc2e","position":[14,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"cae49d43","order":1,"position":[4,13],"tank":{"id":"144edc2e","position":[14,12],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"left","objectId":"cae49d43","tank":{"id":"144edc2e","position":[14,12],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"dacfa856","order":0,"position":[5,12],"tank":{"id":"144edc2e","position":[14,12],"direction":"left"},"type":"bullet"}
+{"action":"destroyed","position":[5,12],"tile":"m","type":"map"}
+{"action":"crashed","direction":"left","objectId":"dacfa856","tank":{"id":"144edc2e","position":[14,12],"direction":"left"},"type":"bullet"}
+
+==================== Frame 9 ====================
+{"action":"go","objectId":"144edc2e","position":[13,12],"reverse":false,"type":"tank"}
+
+==================== Frame 10 ====================
+{"action":"go","objectId":"144edc2e","position":[12,12],"reverse":false,"type":"tank"}
+
+==================== Frame 11 ====================
+{"action":"go","objectId":"144edc2e","position":[11,12],"reverse":false,"type":"tank"}
+
+==================== Frame 12 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[10,12],"reverse":false,"type":"tank"}
+
+==================== Frame 13 ====================
+{"action":"go","objectId":"44d6025e","position":[5,11],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[9,12],"reverse":false,"type":"tank"}
+
+==================== Frame 14 ====================
+{"action":"go","objectId":"144edc2e","position":[8,12],"reverse":false,"type":"tank"}
+
+==================== Frame 15 ====================
+{"action":"turn","direction":"right","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[7,12],"reverse":false,"type":"tank"}
+
+==================== Frame 16 ====================
+{"action":"go","objectId":"44d6025e","position":[5,10],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[6,12],"reverse":false,"type":"tank"}
+
+==================== Frame 17 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"turn","direction":"left","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 18 ====================
+{"action":"go","objectId":"44d6025e","position":[4,10],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[6,13],"reverse":false,"type":"tank"}
+{"action":"collected","by":1,"type":"star"}
+
+==================== Frame 19 ====================
+{"action":"go","objectId":"44d6025e","position":[3,10],"reverse":false,"type":"tank"}
+{"action":"turn","direction":"right","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 20 ====================
+{"action":"turn","direction":"right","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[5,13],"reverse":false,"type":"tank"}
+
+==================== Frame 21 ====================
+{"action":"go","objectId":"44d6025e","position":[3,9],"reverse":false,"type":"tank"}
+{"action":"turn","direction":"right","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 22 ====================
+{"action":"go","objectId":"44d6025e","position":[3,8],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[5,12],"reverse":false,"type":"tank"}
+
+==================== Frame 23 ====================
+{"action":"go","objectId":"44d6025e","position":[3,7],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[5,11],"reverse":false,"type":"tank"}
+
+==================== Frame 24 ====================
+{"action":"turn","direction":"right","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 25 ====================
+{"action":"go","objectId":"144edc2e","position":[6,11],"reverse":false,"type":"tank"}
+
+==================== Frame 26 ====================
+{"action":"turn","direction":"left","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 27 ====================
+{"action":"go","objectId":"144edc2e","position":[6,10],"reverse":false,"type":"tank"}
+
+==================== Frame 28 ====================
+{"action":"created","position":[2,3],"type":"star"}
+{"action":"go","objectId":"144edc2e","position":[6,9],"reverse":false,"type":"tank"}
+
+==================== Frame 29 ====================
+{"action":"go","objectId":"44d6025e","position":[3,6],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[6,8],"reverse":false,"type":"tank"}
+
+==================== Frame 30 ====================
+{"action":"go","objectId":"44d6025e","position":[3,5],"reverse":false,"type":"tank"}
+{"action":"turn","direction":"left","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+
+==================== Frame 31 ====================
+{"action":"go","objectId":"44d6025e","position":[3,4],"reverse":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[5,8],"reverse":false,"type":"tank"}
+
+==================== Frame 32 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[4,8],"reverse":false,"type":"tank"}
+
+==================== Frame 33 ====================
+{"action":"turn","direction":"left","objectId":"44d6025e","stunReversed":false,"type":"tank"}
+{"action":"go","objectId":"144edc2e","position":[3,8],"reverse":false,"type":"tank"}
+
+==================== Frame 34 ====================
+{"action":"created","direction":"down","objectId":"c13ae727","tank":{"id":"44d6025e","position":[3,4],"direction":"down"},"type":"bullet"}
+{"action":"go","objectId":"144edc2e","position":[2,8],"reverse":false,"type":"tank"}
+{"action":"go","direction":"down","objectId":"c13ae727","order":0,"position":[3,5],"tank":{"id":"44d6025e","position":[3,4],"direction":"down"},"type":"bullet"}
+{"action":"go","direction":"down","objectId":"c13ae727","order":1,"position":[3,6],"tank":{"id":"44d6025e","position":[3,4],"direction":"down"},"type":"bullet"}
+
+==================== Frame 35 ====================
+{"action":"turn","direction":"right","objectId":"144edc2e","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"down","objectId":"c13ae727","order":0,"position":[3,7],"tank":{"id":"44d6025e","position":[3,4],"direction":"down"},"type":"bullet"}
+{"action":"go","direction":"down","objectId":"c13ae727","order":1,"position":[3,8],"tank":{"id":"44d6025e","position":[3,4],"direction":"down"},"type":"bullet"}
