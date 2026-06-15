@@ -1,0 +1,1483 @@
+﻿
+=================== Simulation Config ===================
+  My Tank (XDB) ID : 951e4865 (Index: 0)
+  Enemy (silver_wolf) ID : f28d4f55 (Index: 1)
+=========================================================
+
+--------------------------------------------------------------------------------
+Frame 1 | Star: [12,10] | Map: classic
+[State] XDB   : Pos=[12,11] Dir=up    | CD=40 | Status=[fireLocked]
+        silver_wolf : Pos=[16,13] Dir=down  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [16,13]
+  🛡️ XDB   : teleported to [12,11]
+    [PRINT] [DEBUG] isSafe [12,10] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F1: gunLineDodge=false, isOnEnemyGunLine=true, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,10],"score":1799,"type":"star"}
+    [PRINT] [DEBUG] isSafe [13,11] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [12,10] -> Need Turn/Move Dir: up
+    [PRINT] [DEBUG] tacticalDefense ghost check at F1: recentlySeen=true, enemyCloaked=false, dist=6, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [12,10] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F1: gunLineDodge=false, isOnEnemyGunLine=true, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F1: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: teleported to [12,11]
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 2 | Star: [12,10] | Map: classic
+[State] XDB   : Pos=[12,11] Dir=up    | CD=39 | Status=[fireLocked]
+        silver_wolf : Pos=[16,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now left)
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,10],"score":1949,"type":"star"}
+  Path NextStep: [12,10] -> Need Turn/Move Dir: up
+    [PRINT] [DEBUG] tacticalDefense ghost check at F2: recentlySeen=true, enemyCloaked=false, dist=6, onLine=false, enemyVisible=false
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 3 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=up    | CD=38 | Status=[Normal]
+        silver_wolf : Pos=[15,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [15,13]
+  🛡️ XDB   : move to [12,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":780,"type":"survival"}
+  Path NextStep: [13,10] -> Need Turn/Move Dir: right
+    [PRINT] [DEBUG] tacticalDefense ghost check at F3: recentlySeen=true, enemyCloaked=false, dist=7, onLine=false, enemyVisible=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [12,10]
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 4 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=right | CD=37 | Status=[Normal]
+        silver_wolf : Pos=[14,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [14,13]
+  🛡️ XDB   : turn right (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":930,"type":"survival"}
+  Path NextStep: [13,10] -> Need Turn/Move Dir: right
+    [PRINT] [DEBUG] tacticalDefense ghost check at F4: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [17,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,11] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,11] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,12] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,9] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,8] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,7] at F4: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: stay still
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now right)
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 5 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=down  | CD=36 | Status=[Normal]
+        silver_wolf : Pos=[13,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [13,13]
+  🛡️ XDB   : turn right (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":930,"type":"survival"}
+    [PRINT] [DEBUG] tacticalDefense ghost check at F5: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [17,12] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [12,11] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,11] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [12,12] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,12] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,11] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,9] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,8] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,7] at F5: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now down)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 6 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=right | CD=35 | Status=[Normal]
+        silver_wolf : Pos=[13,13] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now up)
+  🛡️ XDB   : turn left (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":930,"type":"survival"}
+    [PRINT] [DEBUG] isSafe [9,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [8,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [8,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [8,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [5,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [4,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [3,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [2,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,9] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [1,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,11] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [11,10] -> Need Turn/Move Dir: left
+    [PRINT] [DEBUG] tacticalDefense ghost check at F6: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [17,12] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [11,10] at F6: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now right)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 7 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=down  | CD=34 | Status=[Normal]
+        silver_wolf : Pos=[13,13] Dir=right | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now right)
+  🛡️ XDB   : turn right (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":930,"type":"survival"}
+  Path NextStep: [11,10] -> Need Turn/Move Dir: left
+    [PRINT] [DEBUG] tacticalDefense ghost check at F7: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F7: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now down)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 8 | Star: null | Map: classic
+[State] XDB   : Pos=[12,10] Dir=left  | CD=33 | Status=[Normal]
+        silver_wolf : Pos=[14,13] Dir=right | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [14,13]
+  🛡️ XDB   : turn right (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":930,"type":"survival"}
+  Path NextStep: [11,10] -> Need Turn/Move Dir: left
+    [PRINT] [DEBUG] tacticalDefense ghost check at F8: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F8: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now left)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 9 | Star: null | Map: classic
+[State] XDB   : Pos=[11,10] Dir=left  | CD=32 | Status=[Normal]
+        silver_wolf : Pos=[14,13] Dir=down  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now down)
+  🛡️ XDB   : move to [11,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":920,"type":"survival"}
+    [PRINT] [DEBUG] isSafe [12,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,11] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,11] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [9,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,9] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [12,10] -> Need Turn/Move Dir: right
+    [PRINT] [DEBUG] tacticalDefense ghost check at F9: recentlySeen=true, enemyCloaked=false, dist=6, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [17,12] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [12,10] at F9: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [11,10]
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 10 | Star: null | Map: classic
+[State] XDB   : Pos=[10,10] Dir=left  | CD=31 | Status=[Normal]
+        silver_wolf : Pos=[14,13] Dir=right | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now right)
+  🛡️ XDB   : move to [10,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":930,"type":"survival"}
+    [PRINT] [DEBUG] isSafe [11,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,11] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,11] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [9,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [14,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,9] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [11,10] -> Need Turn/Move Dir: right
+    [PRINT] [DEBUG] tacticalDefense ghost check at F10: recentlySeen=true, enemyCloaked=false, dist=7, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F10: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [10,10]
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 11 | Star: null | Map: classic
+[State] XDB   : Pos=[10,10] Dir=down  | CD=30 | Status=[Normal]
+        silver_wolf : Pos=[14,13] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now up)
+  🛡️ XDB   : turn left (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":930,"type":"survival"}
+  Path NextStep: [11,10] -> Need Turn/Move Dir: right
+    [PRINT] [DEBUG] tacticalDefense ghost check at F11: recentlySeen=true, enemyCloaked=false, dist=7, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [16,13] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [17,12] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [11,10] at F11: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now down)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 12 | Star: null | Map: classic
+[State] XDB   : Pos=[10,11] Dir=down  | CD=29 | Status=[Normal]
+        silver_wolf : Pos=[14,12] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [14,12]
+  🛡️ XDB   : move to [10,11]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":920,"type":"survival"}
+    [PRINT] [DEBUG] isSafe [10,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] tacticalDefense ghost check at F12: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [1,1] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [11,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F12: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: stay still
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [10,11]
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 13 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,11] Dir=down  | CD=28 | Status=[Normal]
+        silver_wolf : Pos=[14,12] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now left)
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1793,"type":"star"}
+    [PRINT] [DEBUG] isSafe [14,11] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,10] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,9] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,5] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,5] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,5] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [10,10] -> Need Turn/Move Dir: up
+    [PRINT] [DEBUG] tacticalDefense ghost check at F13: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [12,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F13: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 14 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,11] Dir=left  | CD=27 | Status=[Normal]
+        silver_wolf : Pos=[14,12] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now up)
+  🛡️ XDB   : turn right (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1943,"type":"star"}
+  Path NextStep: [10,10] -> Need Turn/Move Dir: up
+    [PRINT] [DEBUG] tacticalDefense ghost check at F14: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [12,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F14: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now left)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 15 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,11] Dir=up    | CD=26 | Status=[Normal]
+        silver_wolf : Pos=[14,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [14,11]
+  🛡️ XDB   : turn right (now up)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,11],"score":9900,"type":"shoot"}
+    [PRINT] [DEBUG] tacticalDefense ghost check at F15: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [10,10] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor up at [10,10]: passable=true, safe=true
+    [PRINT] [DEBUG] isSafe [11,11] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor right at [11,11]: passable=true, safe=true
+    [PRINT] [DEBUG] isSafe [10,12] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor down at [10,12]: passable=true, safe=true
+    [PRINT] [DEBUG] isSafe [9,11] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor left at [9,11]: passable=false, safe=true
+    [PRINT] [DEBUG] isSafe [10,10] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,12] at F15: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now up)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 16 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=up    | CD=25 | Status=[Normal]
+        silver_wolf : Pos=[14,11] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now left)
+  🛡️ XDB   : move to [10,10]
+    [PRINT] [DEBUG] isSafe [12,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1944,"type":"star"}
+    [PRINT] [DEBUG] isSafe [11,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] tacticalDefense ghost check at F16: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [12,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [14,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [15,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,6] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F16: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: stay still
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [10,10]
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 17 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=left  | CD=24 | Status=[Normal]
+        silver_wolf : Pos=[14,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn right (now up)
+  🛡️ XDB   : turn left (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1544,"type":"star"}
+    [PRINT] [DEBUG] tacticalDefense ghost check at F17: recentlySeen=true, enemyCloaked=false, dist=5, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [12,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [12,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [13,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,6] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F17: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: stay still
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now left)
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 18 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=left  | CD=23 | Status=[Normal]
+        silver_wolf : Pos=[14,10] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: move to [14,10]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,10],"score":9900,"type":"shoot"}
+    [PRINT] [DEBUG] tacticalDefense ghost check at F18: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [10,9] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor up at [10,9]: passable=false, safe=true
+    [PRINT] [DEBUG] isSafe [11,10] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor right at [11,10]: passable=true, safe=true
+    [PRINT] [DEBUG] isSafe [10,11] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor down at [10,11]: passable=true, safe=true
+    [PRINT] [DEBUG] isSafe [9,10] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor left at [9,10]: passable=false, safe=true
+    [PRINT] [DEBUG] isSafe [11,10] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [10,11] at F18: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 19 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=up    | CD=22 | Status=[Normal]
+        silver_wolf : Pos=[14,10] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now left)
+  🛡️ XDB   : turn right (now up)
+    [PRINT] [DEBUG] isSafe [12,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1544,"type":"star"}
+    [PRINT] [DEBUG] isSafe [11,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,6] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [10,11] -> Need Turn/Move Dir: down
+    [PRINT] [DEBUG] tacticalDefense ghost check at F19: recentlySeen=true, enemyCloaked=false, dist=4, onLine=true, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [10,9] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor up at [10,9]: passable=false, safe=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor right at [11,10]: passable=true, safe=false
+    [PRINT] [DEBUG] isSafe [10,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor down at [10,11]: passable=true, safe=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor left at [9,10]: passable=false, safe=false
+    [PRINT] [DEBUG] isSafe [10,11] at F19: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now up)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 20 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=left  | CD=21 | Status=[Normal]
+        silver_wolf : Pos=[14,10] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: stay still
+  🛡️ XDB   : turn left (now left)
+    [PRINT] [DEBUG] isSafe [12,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,1] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,6],"score":1544,"type":"star"}
+    [PRINT] [DEBUG] isSafe [11,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,12] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,9] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,10] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,9] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,8] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [4,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,7] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,6] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,13] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  Path NextStep: [10,11] -> Need Turn/Move Dir: down
+    [PRINT] [DEBUG] tacticalDefense ghost check at F20: recentlySeen=true, enemyCloaked=false, dist=4, onLine=true, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [10,9] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor up at [10,9]: passable=false, safe=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor right at [11,10]: passable=true, safe=false
+    [PRINT] [DEBUG] isSafe [10,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] findOffAxisMove neighbor down at [10,11]: passable=true, safe=true
+    [PRINT] [DEBUG] findOffAxisMove neighbor left at [9,10]: passable=false, safe=false
+    [PRINT] [DEBUG] isSafe [10,11] at F20: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now left)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 21 | Star: [12,6] | Map: classic
+[State] XDB   : Pos=[10,10] Dir=down  | CD=20 | Status=[Normal]
+        silver_wolf : Pos=[14,10] Dir=down  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ silver_wolf: turn left (now down)
+  🛡️ XDB   : CRASHED
+    [PRINT] [DEBUG] isSafe [12,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,10] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=true
+    [PRINT] [DEBUG] isSafe [1,1] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [1,2] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [2,1] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [3,1] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [5,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [6,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [7,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [8,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [9,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [10,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [11,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [12,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,6] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,7] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [13,8] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [15,13] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [16,13] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,12] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+    [PRINT] [DEBUG] isSafe [17,13] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=true, overloadNearby=false, bulletPassable=false
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,10],"score":9900,"type":"shoot"}
+    [PRINT] [DEBUG] tacticalDefense ghost check at F21: recentlySeen=true, enemyCloaked=false, dist=4, onLine=false, enemyVisible=true
+    [PRINT] [DEBUG] isSafe [10,11] at F21: gunLineDodge=false, isOnEnemyGunLine=false, isGrass=undefined, overloadNearby=false, bulletPassable=false
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: CRASHED
+     -> Local Code   : go(1)
+================================================================================

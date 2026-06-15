@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB Strategic Assassin V12.60 - 优化刺杀埋伏敌坦与枪线草丛压制逻辑，修复 A* 危险区域草丛屏蔽问题",
+            notes: "XDB V12.61 - 优化传送暗杀逻辑，在暗杀与预瞄前检测子弹与火控是否就绪，避免空弹传送被反杀",
             submittedBy: "Gemini"
         })
 
