@@ -985,8 +985,8 @@ function aStar(start, goal, ctx) {
 function executeAction(me, act, ctx) {
     if (!act) return;
 
-    // 1. 更新卡死计数器，对所有行动（转弯和移动等）都生效
-    if (G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) {
+    // 1. 更新卡死计数器：仅在上一帧尝试迈步位移且实际坐标没有改变时才累加
+    if (G_History.lastAttemptedStep && G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) {
         G_History.stuckTurnCount++;
     } else {
         G_History.stuckTurnCount = 0;
