@@ -54,7 +54,7 @@ function onIdle(me, enemy, game) {
         var originalTurn = me.turn;
         me.turn = function (dir) {
             var ePos = (enemy && enemy.tank) ? enemy.tank.position : (G_History.lastEnemyPos || null);
-            var turnDir = getTurnDir(me.tank.direction, dir, ePos, me.tank.position);
+            var turnDir = getTurnDir(me.tank.direction, dir, ePos, me.tank.position, game.map);
             if (turnDir) {
                 originalTurn.call(me, turnDir);
             }
@@ -1413,7 +1413,7 @@ function getTile(p, map) { if (!p || !map || !map[p[0]] || !map[p[0]][p[1]]) ret
 /**
  * 原生转向控制重映射函数，规避平台不支持绝对朝向转向的 Bug，并智能挑选远离敌方的侧向进行缓冲转向
  */
-function getTurnDir(currentDir, targetDir, enemyPos, myPos) {
+function getTurnDir(currentDir, targetDir, enemyPos, myPos, map) {
     if (!targetDir || currentDir === targetDir) return null;
     var dirs = ["up", "right", "down", "left"];
     var curIdx = dirs.indexOf(currentDir);
@@ -1428,6 +1428,17 @@ function getTurnDir(currentDir, targetDir, enemyPos, myPos) {
         var dirToEnemy = directionTo(myPos, enemyPos);
         var intermediateRight = dirs[(curIdx + 1) % 4];
         var intermediateLeft = dirs[(curIdx + 3) % 4];
+
+        // 引入物理通行性校验，避开墙壁
+        var pRight = addPos(myPos, delta(intermediateRight));
+        var pLeft = addPos(myPos, delta(intermediateLeft));
+        var rightPassable = isPassable(pRight, map);
+        var leftPassable = isPassable(pLeft, map);
+
+        if (rightPassable && !leftPassable) return "right";
+        if (!rightPassable && leftPassable) return "left";
+
+        // 两侧都可行或都不可行时，再回退到防直面敌人朝向的避让策略
         if (intermediateRight === dirToEnemy) return "left";
         if (intermediateLeft === dirToEnemy) return "right";
     }
