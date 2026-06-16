@@ -1,7 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.60 - Teleport Ambush Prediction & Backstab Counter)
- * V12.60: 修复 tacticalAnalysis 中负分候选动作在存在 null 元素时被错误排序为垫底导致坦克原地挂机 timeout 的重大 Bug。
- * 露天格刺杀点限制 Manhattan 距离 >= 5，以防止传送后火控锁期间被敌方瞬间反击。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.64 - Teleport Ambush Prediction & Backstab Counter)
+ * V12.64: 通道轨迹伏击（Path Ambush）、通道提前量拦截（T_enemy >= T_bullet）、绝杀横向规避与空地消极阻断解套
  */
 
 
@@ -111,7 +110,27 @@ function onIdle(me, enemy, game) {
                     if (onOverloadLine && enemyFacingUs && !ctx.enemyFireLocked && isEnemyOverloadActive(ctx, ctx.myPos)) {
                         // 允许进入下一阶段（防守规避）
                     } else {
-                        fireGun(me, ctx); return;
+                        // 判断敌人是否在垂直于我们枪线方向横向穿行
+                        var isEnemyMovingTransversely = false;
+                        var distToEnemy = getDist(ctx.myPos, ctx.enemyPos);
+                        if (distToEnemy > 1 && ctx.enemyDir) {
+                            var isHorizontalAxis = (ctx.myPos[1] === ctx.enemyPos[1]);
+                            var isVerticalAxis = (ctx.myPos[0] === ctx.enemyPos[0]);
+                            var isEnemyMoving = !(enemy && enemy.status && (enemy.status.frozen || enemy.status.stunned));
+                            
+                            if (isEnemyMoving) {
+                                if (isHorizontalAxis && (ctx.enemyDir === "up" || ctx.enemyDir === "down")) {
+                                    isEnemyMovingTransversely = true;
+                                }
+                                if (isVerticalAxis && (ctx.enemyDir === "left" || ctx.enemyDir === "right")) {
+                                    isEnemyMovingTransversely = true;
+                                }
+                            }
+                        }
+
+                        if (!isEnemyMovingTransversely) {
+                            fireGun(me, ctx); return;
+                        }
                     }
                 }
             }
@@ -337,7 +356,35 @@ function buildExecutionContext(me, enemy, game) {
 
     var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
 
-    var shootingEnemyPos = G_History.lastEnemyPos;
+    var currentEnemyPos = G_History.lastEnemyPos ? G_History.lastEnemyPos.slice() : null;
+    var currentEnemyDir = G_History.lastEnemyDir;
+
+    // 当敌人不可见且场上有星星时，推算其朝向星星前行的推导位置
+    if (!visible && currentEnemyPos && game.star) {
+        var invisibleFrames = G_History.enemyInvisibleFrames;
+        if (invisibleFrames > 0 && invisibleFrames <= 30) {
+            var enemySpeed = 1;
+            if (enemy && enemy.skill && enemy.skill.type === "boost") {
+                var isEnemyBoosted = enemy.status && enemy.status.boosted;
+                var isEnemyBoostReady = enemy.skill.remainingCooldownFrames === 0;
+                if (isEnemyBoosted || isEnemyBoostReady) {
+                    enemySpeed = 2;
+                }
+            }
+            var totalSteps = invisibleFrames * enemySpeed;
+            var tempPos = currentEnemyPos.slice();
+            for (var step = 0; step < totalSteps; step++) {
+                if (samePos(tempPos, game.star)) break;
+                var nextDir = directionTo(tempPos, game.star);
+                var d = delta(nextDir);
+                tempPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
+                currentEnemyDir = nextDir;
+            }
+            currentEnemyPos = tempPos;
+        }
+    }
+
+    var shootingEnemyPos = currentEnemyPos;
     if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
         var key = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
         if (G_History.firedPredictedSpots && G_History.firedPredictedSpots[key]) {
@@ -357,7 +404,7 @@ function buildExecutionContext(me, enemy, game) {
 
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
-        enemy: enemy, enemyPos: G_History.lastEnemyPos, shootingEnemyPos: shootingEnemyPos, enemyDir: G_History.lastEnemyDir, enemyVisible: visible,
+        enemy: enemy, enemyPos: currentEnemyPos, shootingEnemyPos: shootingEnemyPos, enemyDir: currentEnemyDir, enemyVisible: visible,
         wasEnemyVisible: G_History.wasEnemyVisible,
         enemyCloaked: G_History.cloakFramesLeft > 0,
         enemySkillReady: enemy && enemy.skill && enemy.skill.remainingCooldownFrames === 0,
@@ -388,6 +435,8 @@ function tacticalAnalysis(ctx) {
     rawCandidates.push(evalPreAim(ctx));
     rawCandidates.push(evalStarCollection(ctx));
     rawCandidates.push(evalStarGuard(ctx));
+    rawCandidates.push(evalPathAmbushFire(ctx));
+    rawCandidates.push(evalPathAmbush(ctx));
     rawCandidates.push(evalGrassAmbushAndSurvival(ctx));
 
     var candidates = [];
@@ -602,6 +651,217 @@ function evalStarGuard(ctx) {
 
     return null;
 }
+
+/**
+ * 步进推演敌人前行至星格的预测轨道节点列表
+ */
+function getEnemyPathToStar(enemyPos, starPos, map) {
+    var tempPos = enemyPos.slice();
+    var path = [];
+    var safety = 0;
+    while (!samePos(tempPos, starPos) && safety < 15) {
+        var nextDir = directionTo(tempPos, starPos);
+        var d = delta(nextDir);
+        tempPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
+        path.push({ pos: tempPos.slice(), dir: nextDir, step: path.length + 1 });
+        safety++;
+    }
+    return path;
+}
+
+/**
+ * 寻找敌人通道节点上的最佳草丛伏击格
+ */
+function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
+    var list = G_Blueprint.mapVision.grassList || [];
+    var bestSpot = null;
+    var bestScore = -9999;
+    
+    // 计算敌方速度用于时间差过滤
+    var enemySpeed = 1;
+    if (ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
+        var isEnemyBoosted = ctx.enemy.status && ctx.enemy.status.boosted;
+        var isEnemyBoostReady = ctx.enemy.skill.remainingCooldownFrames === 0;
+        if (isEnemyBoosted || isEnemyBoostReady) {
+            enemySpeed = 2;
+        }
+    }
+
+    for (var i = 0; i < enemyPath.length; i++) {
+        var node = enemyPath[i];
+        for (var j = 0; j < list.length; j++) {
+            var g = list[j];
+            var gKey = g[0] + "," + g[1];
+            if (G_History.invalidPredictedSpots && G_History.invalidPredictedSpots[gKey]) continue;
+            if (samePos(g, starPos)) continue;
+            
+            var d = getDist(g, node.pos);
+            if (d >= 3 && d <= 7) {
+                var dir = directionTo(g, node.pos);
+                var isCoAxial = (g[0] === node.pos[0] || g[1] === node.pos[1]);
+                var hasLoS = isCoAxial && isLoS(g, node.pos, dir, map);
+                
+                if (hasLoS) {
+                    // 时间差过滤：如果我们在该格子时敌人还没走到（或者传送过去有时间准备）才有效
+                    var timeToAmbush = samePos(myPos, g) ? 0 : (ctx.canTeleport ? 1 : getDist(myPos, g));
+                    var enemyTimeToTarget = Math.ceil(node.step / enemySpeed);
+                    if (enemyTimeToTarget < timeToAmbush) continue;
+
+                    // 伏击打分：伏击格离相撞点越近(越准)越好，离我方当前位置越近越好，相撞点越靠后(准备时间更长)越好
+                    var score = 1000 - d * 20 - getDist(myPos, g) * 10 - node.step * 5;
+                    if (isSafe(g, ctx, true)) score += 300;
+                    
+                    if (score > bestScore) {
+                        bestScore = score;
+                        bestSpot = { 
+                            pos: g, 
+                            dir: dir, 
+                            targetPos: node.pos, 
+                            targetDir: node.dir,
+                            step: node.step
+                        };
+                    }
+                }
+            }
+        }
+    }
+    return bestSpot;
+}
+
+/**
+ * 评估大优势下的保星通道路径伏击战术
+ * @param {Object} ctx 上下文
+ */
+function evalPathAmbush(ctx) {
+    if (!ctx.starPos || !ctx.enemyPos || !ctx.enemy) return null;
+
+    // 优势判定：我方星星 >= 敌方星星 + 2
+    var advantage = ctx.meStars >= (ctx.enemy.stars + 2);
+    if (!advantage) return null;
+
+    // 1. 获取敌人前行路径
+    var enemyPath = getEnemyPathToStar(ctx.enemyPos, ctx.starPos, ctx.map);
+    if (enemyPath.length === 0) return null;
+
+    // 2. 寻找最佳通道伏击格
+    var ambushSpot = findPathAmbushSpot(enemyPath, ctx.myPos, ctx.starPos, ctx.map, ctx);
+    if (!ambushSpot) return null;
+
+    var dist = getDist(ctx.myPos, ambushSpot.pos);
+
+    // 如果未占领伏击点
+    if (!samePos(ctx.myPos, ambushSpot.pos)) {
+        // 1. 若传送就绪且安全，使用传送占领
+        if (ctx.canTeleport && dist > 1) { // 距离大于 1 才传送，避免贴脸浪费 CD
+            if (isTeleportPassable(ambushSpot.pos, ctx) && isSafeForStarTeleport(ambushSpot.pos, ctx, false)) {
+                ctx.me.speak("优势传送伏击");
+                return { action: "teleport", target: ambushSpot.pos, score: 2100, type: "ambush" };
+            }
+        }
+        // 2. 步行走过去，需要确保安全
+        if (isSafe(ambushSpot.pos, ctx, true)) {
+            return { action: "move", target: ambushSpot.pos, score: 1800 - dist, type: "ambush" };
+        }
+    } else {
+        // 已经占领伏击点
+        // 3. 原地转向相撞点，偏正车头
+        if (ctx.myDir !== ambushSpot.dir) {
+            ctx.me.speak("伏击转向");
+            return { action: "turn", target: ambushSpot.targetPos, score: 1900, type: "ambush" };
+        }
+        // 4. 无声潜伏，原地不动
+        return { action: "move", target: ctx.myPos, score: 1850, type: "ambush" };
+    }
+
+    return null;
+}
+
+/**
+ * 评估在优势伏击状态下的拦截开火
+ * @param {Object} ctx 上下文
+ */
+function evalPathAmbushFire(ctx) {
+    if (!ctx.starPos || !ctx.enemyPos || !ctx.enemy) return null;
+
+    // 优势判定：我方星星 >= 敌方星星 + 2
+    var advantage = ctx.meStars >= (ctx.enemy.stars + 2);
+    if (!advantage) return null;
+
+    // 1. 获取敌人前行路径
+    var enemyPath = getEnemyPathToStar(ctx.enemyPos, ctx.starPos, ctx.map);
+    if (enemyPath.length === 0) return null;
+
+    // 2. 寻找最佳通道伏击格
+    var ambushSpot = findPathAmbushSpot(enemyPath, ctx.myPos, ctx.starPos, ctx.map, ctx);
+    if (!ambushSpot) return null;
+
+    // 必须在伏击草丛内，且已和相撞点共轴、对准相撞点
+    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+    if (!isCurrentlyInGrass) return null;
+
+    // 确保我们已经在伏击点
+    if (!samePos(ctx.myPos, ambushSpot.pos)) return null;
+
+    var onAxis = (ctx.myPos[0] === ambushSpot.targetPos[0] || ctx.myPos[1] === ambushSpot.targetPos[1]);
+    if (!onAxis) return null;
+
+    if (ctx.myDir !== ambushSpot.dir) return null;
+
+    // 确保弹道通畅
+    if (canShoot(ctx.myPos, ambushSpot.targetPos, ctx.map) === false) return null;
+
+    // 1. 计算子弹飞行到相撞点的帧数
+    var myDist = getDist(ctx.myPos, ambushSpot.targetPos);
+    var T_bullet = Math.ceil(myDist / 2);
+
+    // 2. 计算敌方到达相撞点的帧数
+    var enemySpeed = 1;
+    if (ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
+        var isEnemyBoosted = ctx.enemy.status && ctx.enemy.status.boosted;
+        var isEnemyBoostReady = ctx.enemy.skill.remainingCooldownFrames === 0;
+        if (isEnemyBoosted || isEnemyBoostReady) {
+            enemySpeed = 2;
+        }
+    }
+    var T_enemy = Math.ceil(ambushSpot.step / enemySpeed);
+
+    // 转向延迟补偿：如果敌人当前朝向不直接对准下一个通道节点，加上 1 帧转向延迟
+    if (ctx.enemyDir && ambushSpot.targetDir) {
+        if (ctx.enemyDir !== ambushSpot.targetDir) {
+            T_enemy += 1;
+        }
+    }
+
+    // 3. 开火判定
+    var isEnemyCoAxialWithUs = (ctx.enemyPos[0] === ctx.myPos[0] || ctx.enemyPos[1] === ctx.myPos[1]);
+    var shouldFire = false;
+
+    if (isEnemyCoAxialWithUs) {
+        // 情况 A：迎面走来（共轴）
+        var dirToTargetFromEnemy = directionTo(ctx.enemyPos, ambushSpot.targetPos);
+        if (ctx.enemyDir === dirToTargetFromEnemy) {
+            if (T_enemy >= T_bullet) {
+                shouldFire = true;
+            }
+        }
+    } else {
+        // 情况 B：横向切入
+        if (T_enemy === T_bullet) {
+            shouldFire = true;
+        }
+    }
+
+    if (shouldFire) {
+        if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
+            ctx.me.speak("通道预判: " + T_enemy + "帧");
+            return { action: "fire", target: ambushSpot.targetPos, score: 2200, type: "ambush_fire" };
+        }
+    }
+
+    return null;
+}
+
+
 
 /**
  * 评估草丛潜伏战术以及生存走位避险（兜底保命决策）
@@ -1109,9 +1369,19 @@ function getNextStep(start, goal, ctx) {
     }
 
     if (res && !isSafe(res, ctx, true) && isSafe(start, ctx, true)) {
-        G_History.path = [];
-        G_History.pathTarget = null;
-        return null;
+        // 放宽空地阻断：如果当前位置不是草丛，且无5帧内即击中子弹威胁，不执行待机阻断
+        var myPosInGrass = G_Blueprint.mapVision.grass[start[0] + "," + start[1]];
+        var shouldBlock = myPosInGrass;
+        if (!shouldBlock) {
+            if (ctx.enemyBullet && getFramesToHit(start, ctx.enemyBullet, ctx.map) <= 5) {
+                shouldBlock = true;
+            }
+        }
+        if (shouldBlock) {
+            G_History.path = [];
+            G_History.pathTarget = null;
+            return null;
+        }
     }
     return res;
 }
