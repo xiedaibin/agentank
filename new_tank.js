@@ -655,15 +655,51 @@ function evalStarGuard(ctx) {
 /**
  * 步进推演敌人前行至星格的预测轨道节点列表
  */
-function getEnemyPathToStar(enemyPos, starPos, map) {
+function getEnemyPredictedPath(enemyPos, enemyDir, starPos, map) {
     var tempPos = enemyPos.slice();
+    var currentDir = enemyDir;
     var path = [];
     var safety = 0;
-    while (!samePos(tempPos, starPos) && safety < 15) {
-        var nextDir = directionTo(tempPos, starPos);
+    var maxSteps = 15;
+    
+    while (safety < maxSteps) {
+        if (starPos && samePos(tempPos, starPos)) {
+            break;
+        }
+        
+        var nextDir = currentDir;
         var d = delta(nextDir);
-        tempPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
-        path.push({ pos: tempPos.slice(), dir: nextDir, step: path.length + 1 });
+        var testPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
+        var tile = getTile(testPos, map);
+        var isBlocked = !tile || tile === "x" || tile === "m";
+        
+        var needTurn = false;
+        if (starPos) {
+            var distCurrent = getDist(tempPos, starPos);
+            var distTest = getDist(testPos, starPos);
+            if (distTest > distCurrent) {
+                needTurn = true;
+            }
+        }
+        
+        if (isBlocked || needTurn) {
+            if (starPos) {
+                nextDir = directionTo(tempPos, starPos);
+                var d2 = delta(nextDir);
+                var testPos2 = [tempPos[0] + d2[0], tempPos[1] + d2[1]];
+                var tile2 = getTile(testPos2, map);
+                if (!tile2 || tile2 === "x" || tile2 === "m") {
+                    break;
+                }
+            } else {
+                break;
+            }
+        }
+        
+        var stepDelta = delta(nextDir);
+        tempPos = [tempPos[0] + stepDelta[0], tempPos[1] + stepDelta[1]];
+        currentDir = nextDir;
+        path.push({ pos: tempPos.slice(), dir: currentDir, step: path.length + 1 });
         safety++;
     }
     return path;
@@ -693,7 +729,7 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
             var g = list[j];
             var gKey = g[0] + "," + g[1];
             if (G_History.invalidPredictedSpots && G_History.invalidPredictedSpots[gKey]) continue;
-            if (samePos(g, starPos)) continue;
+            if (starPos && samePos(g, starPos)) continue;
             
             var d = getDist(g, node.pos);
             if (d >= 3 && d <= 7) {
@@ -740,7 +776,7 @@ function evalPathAmbush(ctx) {
     if (!advantage) return null;
 
     // 1. 获取敌人前行路径
-    var enemyPath = getEnemyPathToStar(ctx.enemyPos, ctx.starPos, ctx.map);
+    var enemyPath = getEnemyPredictedPath(ctx.enemyPos, ctx.enemyDir, ctx.starPos, ctx.map);
     if (enemyPath.length === 0) return null;
 
     // 2. 寻找最佳通道伏击格
@@ -781,80 +817,81 @@ function evalPathAmbush(ctx) {
  * @param {Object} ctx 上下文
  */
 function evalPathAmbushFire(ctx) {
-    if (!ctx.starPos || !ctx.enemyPos || !ctx.enemy) return null;
+    if (!ctx.enemyPos || !ctx.enemy) return null;
 
-    // 优势判定：我方星星 >= 敌方星星 + 2
-    var advantage = ctx.meStars >= (ctx.enemy.stars + 2);
-    if (!advantage) return null;
-
-    // 1. 获取敌人前行路径
-    var enemyPath = getEnemyPathToStar(ctx.enemyPos, ctx.starPos, ctx.map);
-    if (enemyPath.length === 0) return null;
-
-    // 2. 寻找最佳通道伏击格
-    var ambushSpot = findPathAmbushSpot(enemyPath, ctx.myPos, ctx.starPos, ctx.map, ctx);
-    if (!ambushSpot) return null;
-
-    // 必须在伏击草丛内，且已和相撞点共轴、对准相撞点
+    // 必须在伏击草丛内
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     if (!isCurrentlyInGrass) return null;
 
-    // 确保我们已经在伏击点
-    if (!samePos(ctx.myPos, ambushSpot.pos)) return null;
+    // 1. 获取敌人前行路径
+    var enemyPath = getEnemyPredictedPath(ctx.enemyPos, ctx.enemyDir, ctx.starPos, ctx.map);
+    if (enemyPath.length === 0) return null;
 
-    var onAxis = (ctx.myPos[0] === ambushSpot.targetPos[0] || ctx.myPos[1] === ambushSpot.targetPos[1]);
-    if (!onAxis) return null;
-
-    if (ctx.myDir !== ambushSpot.dir) return null;
-
-    // 确保弹道通畅
-    if (canShoot(ctx.myPos, ambushSpot.targetPos, ctx.map) === false) return null;
-
-    // 1. 计算子弹飞行到相撞点的帧数
-    var myDist = getDist(ctx.myPos, ambushSpot.targetPos);
-    var T_bullet = Math.ceil(myDist / 2);
-
-    // 2. 计算敌方到达相撞点的帧数
-    var enemySpeed = 1;
-    if (ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
-        var isEnemyBoosted = ctx.enemy.status && ctx.enemy.status.boosted;
-        var isEnemyBoostReady = ctx.enemy.skill.remainingCooldownFrames === 0;
-        if (isEnemyBoosted || isEnemyBoostReady) {
-            enemySpeed = 2;
+    var bestInterception = null;
+    for (var i = 0; i < enemyPath.length; i++) {
+        var node = enemyPath[i];
+        
+        if (ctx.starPos && samePos(ctx.myPos, ctx.starPos)) continue;
+        
+        var d = getDist(ctx.myPos, node.pos);
+        if (d < 3 || d > 7) continue;
+        
+        var dir = directionTo(ctx.myPos, node.pos);
+        var isCoAxial = (ctx.myPos[0] === node.pos[0] || ctx.myPos[1] === node.pos[1]);
+        if (!isCoAxial) continue;
+        if (isLoS(ctx.myPos, node.pos, dir, ctx.map) === false) continue;
+        
+        if (ctx.myDir !== dir) continue;
+        
+        var T_bullet = Math.ceil(d / 2);
+        
+        var enemySpeed = 1;
+        if (ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
+            var isEnemyBoosted = ctx.enemy.status && ctx.enemy.status.boosted;
+            var isEnemyBoostReady = ctx.enemy.skill.remainingCooldownFrames === 0;
+            if (isEnemyBoosted || isEnemyBoostReady) {
+                enemySpeed = 2;
+            }
         }
-    }
-    var T_enemy = Math.ceil(ambushSpot.step / enemySpeed);
-
-    // 转向延迟补偿：如果敌人当前朝向不直接对准下一个通道节点，加上 1 帧转向延迟
-    if (ctx.enemyDir && ambushSpot.targetDir) {
-        if (ctx.enemyDir !== ambushSpot.targetDir) {
-            T_enemy += 1;
+        var T_enemy = Math.ceil(node.step / enemySpeed);
+        
+        if (ctx.enemyDir && node.dir) {
+            if (ctx.enemyDir !== node.dir) {
+                T_enemy += 1;
+            }
         }
-    }
-
-    // 3. 开火判定
-    var isEnemyCoAxialWithUs = (ctx.enemyPos[0] === ctx.myPos[0] || ctx.enemyPos[1] === ctx.myPos[1]);
-    var shouldFire = false;
-
-    if (isEnemyCoAxialWithUs) {
-        // 情况 A：迎面走来（共轴）
-        var dirToTargetFromEnemy = directionTo(ctx.enemyPos, ambushSpot.targetPos);
-        if (ctx.enemyDir === dirToTargetFromEnemy) {
-            if (T_enemy >= T_bullet) {
+        
+        var isEnemyCoAxialWithUs = (ctx.enemyPos[0] === ctx.myPos[0] || ctx.enemyPos[1] === ctx.myPos[1]);
+        var shouldFire = false;
+        
+        if (isEnemyCoAxialWithUs) {
+            var dirToTargetFromEnemy = directionTo(ctx.enemyPos, node.pos);
+            if (ctx.enemyDir === dirToTargetFromEnemy) {
+                if (T_enemy >= T_bullet) {
+                    shouldFire = true;
+                }
+            }
+        } else {
+            if (T_enemy === T_bullet) {
                 shouldFire = true;
             }
         }
-    } else {
-        // 情况 B：横向切入
-        if (T_enemy === T_bullet) {
-            shouldFire = true;
+        
+        if (shouldFire) {
+            if (bestInterception === null || node.step < bestInterception.step) {
+                bestInterception = {
+                    targetPos: node.pos,
+                    T_enemy: T_enemy,
+                    T_bullet: T_bullet
+                };
+            }
         }
     }
 
-    if (shouldFire) {
+    if (bestInterception) {
         if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
-            ctx.me.speak("通道预判: " + T_enemy + "帧");
-            return { action: "fire", target: ambushSpot.targetPos, score: 2200, type: "ambush_fire" };
+            ctx.me.speak("通道预判: " + bestInterception.T_enemy + "帧");
+            return { action: "fire", target: bestInterception.targetPos, score: 2200, type: "ambush_fire" };
         }
     }
 

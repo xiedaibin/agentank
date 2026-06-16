@@ -1,12 +1,27 @@
 const fs = require('fs');
-const path = require('path');
+const { getToken } = require('../config');
 
-const matchId = 'mat_0tnLfXhzpKOD6AGBZ';
-const raw = JSON.parse(fs.readFileSync(path.join(__dirname, `${matchId}_raw.json`), 'utf8'));
-const records = raw.replayData.replay.records || [];
+async function main() {
+    const token = getToken();
+    const matchId = 'mat_3hAMVjAFdQj8ItYPn';
+    const url = `https://agentank.ai/api/matches/${matchId}/agent.json?view=raw`;
 
-console.log("--- Record 0 ---");
-console.log(JSON.stringify(records[0], null, 2));
+    console.log("Fetching raw replay...");
+    const res = await fetch(url, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!res.ok) {
+        console.error(`HTTP error: ${res.status}`);
+        return;
+    }
+    const data = await res.json();
+    console.log("Replay keys:", Object.keys(data));
+    if (data.replayData) {
+        console.log("replayData keys:", Object.keys(data.replayData));
+        const meta = data.replayData.replay.meta;
+        console.log("Meta players structure:");
+        console.log(JSON.stringify(meta.players, null, 2));
+    }
+}
 
-console.log("--- Meta ---");
-console.log(JSON.stringify(raw.replayData.replay.meta, null, 2));
+main().catch(console.error);
