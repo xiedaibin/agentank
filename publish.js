@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.61 - 优化传送暗杀逻辑，在暗杀与预瞄前检测子弹与火控是否就绪，避免空弹传送被反杀",
+            notes: "XDB V12.65 - 增加下一步极近飞弹硬拦截阻断，并自动调度为偏轴避让或转向闪避，解决主动撞弹与原地罚死漏洞",
             submittedBy: "Gemini"
         })
 

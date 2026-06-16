@@ -126,6 +126,14 @@ function onIdle(me, enemy, game) {
                                     isEnemyMovingTransversely = true;
                                 }
                             }
+
+                            // 【精细化拦截优化】：如果敌人正瞄准我们（处于共轴对狙致死威胁下），绝不拦截，直接开火对轰！
+                            if (isEnemyMovingTransversely) {
+                                var enemyFacingUs = isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
+                                if (enemyFacingUs) {
+                                    isEnemyMovingTransversely = false;
+                                }
+                            }
                         }
 
                         if (!isEnemyMovingTransversely) {
@@ -1336,6 +1344,9 @@ function executeAction(me, act, ctx) {
                 isLoS(ctx.enemyPos, next, ctx.enemyDir, ctx.map);
             if (isCloseLoS) {
                 me.speak("近距危险");
+                G_History.path = [];
+                G_History.pathTarget = null;
+                return;
             }
             var tile = getTile(next, ctx.map);
             var d = directionTo(ctx.myPos, next);
