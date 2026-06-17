@@ -110,35 +110,7 @@ function onIdle(me, enemy, game) {
                     if (onOverloadLine && enemyFacingUs && !ctx.enemyFireLocked && isEnemyOverloadActive(ctx, ctx.myPos)) {
                         // 允许进入下一阶段（防守规避）
                     } else {
-                        // 判断敌人是否在垂直于我们枪线方向横向穿行
-                        var isEnemyMovingTransversely = false;
-                        var distToEnemy = getDist(ctx.myPos, ctx.enemyPos);
-                        if (distToEnemy > 1 && ctx.enemyDir) {
-                            var isHorizontalAxis = (ctx.myPos[1] === ctx.enemyPos[1]);
-                            var isVerticalAxis = (ctx.myPos[0] === ctx.enemyPos[0]);
-                            var isEnemyMoving = !(enemy && enemy.status && (enemy.status.frozen || enemy.status.stunned));
-                            
-                            if (isEnemyMoving) {
-                                if (isHorizontalAxis && (ctx.enemyDir === "up" || ctx.enemyDir === "down")) {
-                                    isEnemyMovingTransversely = true;
-                                }
-                                if (isVerticalAxis && (ctx.enemyDir === "left" || ctx.enemyDir === "right")) {
-                                    isEnemyMovingTransversely = true;
-                                }
-                            }
-
-                            // 【精细化拦截优化】：如果敌人正瞄准我们（处于共轴对狙致死威胁下），绝不拦截，直接开火对轰！
-                            if (isEnemyMovingTransversely) {
-                                var enemyFacingUs = isLoS(ctx.enemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
-                                if (enemyFacingUs) {
-                                    isEnemyMovingTransversely = false;
-                                }
-                            }
-                        }
-
-                        if (!isEnemyMovingTransversely) {
-                            fireGun(me, ctx); return;
-                        }
+                        fireGun(me, ctx); return;
                     }
                 }
             }
@@ -669,18 +641,18 @@ function getEnemyPredictedPath(enemyPos, enemyDir, starPos, map) {
     var path = [];
     var safety = 0;
     var maxSteps = 15;
-    
+
     while (safety < maxSteps) {
         if (starPos && samePos(tempPos, starPos)) {
             break;
         }
-        
+
         var nextDir = currentDir;
         var d = delta(nextDir);
         var testPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
         var tile = getTile(testPos, map);
         var isBlocked = !tile || tile === "x" || tile === "m";
-        
+
         var needTurn = false;
         if (starPos) {
             var distCurrent = getDist(tempPos, starPos);
@@ -689,7 +661,7 @@ function getEnemyPredictedPath(enemyPos, enemyDir, starPos, map) {
                 needTurn = true;
             }
         }
-        
+
         if (isBlocked || needTurn) {
             if (starPos) {
                 nextDir = directionTo(tempPos, starPos);
@@ -703,7 +675,7 @@ function getEnemyPredictedPath(enemyPos, enemyDir, starPos, map) {
                 break;
             }
         }
-        
+
         var stepDelta = delta(nextDir);
         tempPos = [tempPos[0] + stepDelta[0], tempPos[1] + stepDelta[1]];
         currentDir = nextDir;
@@ -720,7 +692,7 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
     var list = G_Blueprint.mapVision.grassList || [];
     var bestSpot = null;
     var bestScore = -9999;
-    
+
     // 计算敌方速度用于时间差过滤
     var enemySpeed = 1;
     if (ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
@@ -738,13 +710,13 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
             var gKey = g[0] + "," + g[1];
             if (G_History.invalidPredictedSpots && G_History.invalidPredictedSpots[gKey]) continue;
             if (starPos && samePos(g, starPos)) continue;
-            
+
             var d = getDist(g, node.pos);
             if (d >= 3 && d <= 7) {
                 var dir = directionTo(g, node.pos);
                 var isCoAxial = (g[0] === node.pos[0] || g[1] === node.pos[1]);
                 var hasLoS = isCoAxial && isLoS(g, node.pos, dir, map);
-                
+
                 if (hasLoS) {
                     // 时间差过滤：如果我们在该格子时敌人还没走到（或者传送过去有时间准备）才有效
                     var timeToAmbush = samePos(myPos, g) ? 0 : (ctx.canTeleport ? 1 : getDist(myPos, g));
@@ -754,13 +726,13 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
                     // 伏击打分：伏击格离相撞点越近(越准)越好，离我方当前位置越近越好，相撞点越靠后(准备时间更长)越好
                     var score = 1000 - d * 20 - getDist(myPos, g) * 10 - node.step * 5;
                     if (isSafe(g, ctx, true)) score += 300;
-                    
+
                     if (score > bestScore) {
                         bestScore = score;
-                        bestSpot = { 
-                            pos: g, 
-                            dir: dir, 
-                            targetPos: node.pos, 
+                        bestSpot = {
+                            pos: g,
+                            dir: dir,
+                            targetPos: node.pos,
                             targetDir: node.dir,
                             step: node.step
                         };
@@ -838,21 +810,21 @@ function evalPathAmbushFire(ctx) {
     var bestInterception = null;
     for (var i = 0; i < enemyPath.length; i++) {
         var node = enemyPath[i];
-        
+
         if (ctx.starPos && samePos(ctx.myPos, ctx.starPos)) continue;
-        
+
         var d = getDist(ctx.myPos, node.pos);
         if (d < 3 || d > 7) continue;
-        
+
         var dir = directionTo(ctx.myPos, node.pos);
         var isCoAxial = (ctx.myPos[0] === node.pos[0] || ctx.myPos[1] === node.pos[1]);
         if (!isCoAxial) continue;
         if (isLoS(ctx.myPos, node.pos, dir, ctx.map) === false) continue;
-        
+
         if (ctx.myDir !== dir) continue;
-        
+
         var T_bullet = Math.ceil(d / 2);
-        
+
         var enemySpeed = 1;
         if (ctx.enemy.skill && ctx.enemy.skill.type === "boost") {
             var isEnemyBoosted = ctx.enemy.status && ctx.enemy.status.boosted;
@@ -862,16 +834,16 @@ function evalPathAmbushFire(ctx) {
             }
         }
         var T_enemy = Math.ceil(node.step / enemySpeed);
-        
+
         if (ctx.enemyDir && node.dir) {
             if (ctx.enemyDir !== node.dir) {
                 T_enemy += 1;
             }
         }
-        
+
         var isEnemyCoAxialWithUs = (ctx.enemyPos[0] === ctx.myPos[0] || ctx.enemyPos[1] === ctx.myPos[1]);
         var shouldFire = false;
-        
+
         if (isEnemyCoAxialWithUs) {
             var dirToTargetFromEnemy = directionTo(ctx.enemyPos, node.pos);
             if (ctx.enemyDir === dirToTargetFromEnemy) {
@@ -884,7 +856,7 @@ function evalPathAmbushFire(ctx) {
                 shouldFire = true;
             }
         }
-        
+
         if (shouldFire) {
             if (bestInterception === null || node.step < bestInterception.step) {
                 bestInterception = {
@@ -971,11 +943,11 @@ function tacticalDefense(me, ctx) {
         var fH = getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map);
         if (fH <= 5) {
             var dodge = findBestDodge(ctx, fH);
-            
+
             // 计算物理避弹是否需要转向（若需要，耗时会多1-2帧）
             var needTurn = dodge && (directionTo(ctx.myPos, dodge) !== ctx.myDir);
             var tooClose = fH <= 2 || (fH <= 3 && needTurn);
-            
+
             if (ctx.canTeleport && (tooClose || !dodge)) {
                 var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                 if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
@@ -1001,7 +973,7 @@ function tacticalDefense(me, ctx) {
             var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
             if (ghostDist <= 7) {
                 var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-                
+
                 // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地或敌方已开启超载，才防范超宽枪线
                 var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
                 var needCheckOverload = !myPosInGrass || activeOverload;
@@ -1047,7 +1019,7 @@ function tacticalDefense(me, ctx) {
         var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
         var needCheckOverload = !myPosInGrass || activeOverload;
         var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
-        
+
         if (onLine && d <= 8) {
             if (!myPosInGrass || d <= 2) {
                 var escape = findOffAxisMove(ctx);
@@ -1380,7 +1352,7 @@ function getNextStep(start, goal, ctx) {
         if (samePos(start, G_History.path[0])) {
             G_History.path.shift();
         }
-        
+
         if (G_History.path.length > 0) {
             var nextNode = G_History.path[0];
             if (getDist(start, nextNode) === 1 && isPassable(nextNode, ctx.map) && isSafe(nextNode, ctx, true)) {
