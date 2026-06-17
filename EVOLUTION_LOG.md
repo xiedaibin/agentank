@@ -189,3 +189,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-17 | 未命名策略 | 未命名策略 (自动生成) | 40.00% | Rejected | -20.00% |
 | V12 | 2026-06-17 | 未命名策略 | 未命名策略 (自动生成) | 60.00% | Pending | 0.00% |
 | V12 | 2026-06-17 | 未命名策略 | 未命名策略 (自动生成) | 63.33% | Pending | 3.33% |
+| V12 | 2026-06-17 | 未命名策略 | 未命名策略 (自动生成) | 40.00% | Rejected | -20.00% |
