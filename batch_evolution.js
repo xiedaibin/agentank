@@ -7,6 +7,16 @@ async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function getFormattedTime() {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const MM = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const HH = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    return `${yyyy}${MM}${dd}${HH}${mm}`;
+}
+
 // 清理旧录像
 function clearReplays(dir) {
     if (!fs.existsSync(dir)) {
@@ -215,7 +225,12 @@ async function main() {
     if (diff >= 0.05) {
         console.log("\n[决策] 显著提升! 自动提交并推送代码...");
         try {
-            execSync('git add new_tank.js STRATEGY.md batch_evolution.js EVOLUTION_LOG.md');
+            const timeStr = getFormattedTime();
+            const historyFile = `history/${timeStr}_new_tank.js`;
+            fs.copyFileSync('new_tank.js', historyFile);
+            console.log(`[历史] 已备份当前 Adopted 版本至 ${historyFile}`);
+
+            execSync(`git add new_tank.js STRATEGY.md batch_evolution.js EVOLUTION_LOG.md "${historyFile}"`);
             execSync(`git commit -m "feat: ${currentVersion} ${strategyName} (胜率: ${(currentWinRate * 100).toFixed(0)}%)"`);
             execSync('git push');
             console.log("✅ Git 同步完成。");

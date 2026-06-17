@@ -7,6 +7,16 @@ async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+function getFormattedTime() {
+    const now = new Date();
+    const yyyy = now.getFullYear();
+    const MM = String(now.getMonth() + 1).padStart(2, '0');
+    const dd = String(now.getDate()).padStart(2, '0');
+    const HH = String(now.getHours()).padStart(2, '0');
+    const mm = String(now.getMinutes()).padStart(2, '0');
+    return `${yyyy}${MM}${dd}${HH}${mm}`;
+}
+
 const token = getToken();
 if (!token) {
     console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
@@ -207,9 +217,18 @@ async function main() {
     }
 
     console.log("\n🏆 进化成功! 专项与基准均通过。正在存档...");
+    const timeStr = getFormattedTime();
+    const historyFile = `history/${timeStr}_new_tank.js`;
+    try {
+        fs.copyFileSync('new_tank.js', historyFile);
+        console.log(`[历史] 已备份当前 Adopted 版本至 ${historyFile}`);
+    } catch (e) {
+        console.error("❌ 历史备份复制失败:", e.message);
+    }
+
     const entry = `| V_Auto | ${new Date().toISOString().split('T')[0]} | ${strategyName} | 专项达标(${currentWR}%)并校验通过 | ${(newBenchmarkWR * 100).toFixed(2)}% | Adopted | ${(diff * 100).toFixed(2)}% |\n`;
     fs.appendFileSync('EVOLUTION_LOG.md', entry);
-    execSync(`git add new_tank.js EVOLUTION_LOG.md && git commit -m "feat: 专项优化 [${targetId}] 达标 ${currentWR}%"`);
+    execSync(`git add new_tank.js EVOLUTION_LOG.md "${historyFile}" && git commit -m "feat: 专项优化 [${targetId}] 达标 ${currentWR}%"`);
 }
 
 main();
