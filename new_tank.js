@@ -134,7 +134,16 @@ function onIdle(me, enemy, game) {
         var cooldown = (ctx.enemy && ctx.enemy.skill) ? ctx.enemy.skill.remainingCooldownFrames : 0;
         if (isTeleportAmbushStream && (cooldown > 25) && !me.bullet && !ctx.meStatus.fireLocked) {
             var targetGrass = findGrassOnGunLine(ctx.myPos, ctx.myDir, ctx.map, 6);
-            if (targetGrass) {
+            // Fix P0-2: 盲射前校验枪线与已知敌人位置共轴，防止打偏轴废弹
+            var blindFireAxisOk = false;
+            if (targetGrass && G_History.lastEnemyPos) {
+                var ep = G_History.lastEnemyPos;
+                var mp = ctx.myPos;
+                blindFireAxisOk = (ctx.myDir === "left" || ctx.myDir === "right")
+                    ? (ep[1] === mp[1])
+                    : (ep[0] === mp[0]);
+            }
+            if (targetGrass && blindFireAxisOk) {
                 me.speak("枪线草丛压制");
                 fireGun(me, ctx); return;
             }
@@ -282,10 +291,14 @@ function buildExecutionContext(me, enemy, game) {
 
     var unsafeCoAxialTiles = {};
     var limit = G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" ? 40 : 35;
-    if (!visible && G_History.lastEnemyPos && (G_History.frame - G_History.lastEnemySeenFrame < limit)) {
+    // Fix P0-1: 传送预判模式下禁止触发coAxial标记（lastEnemyPos是推算坐标非真实消失点）
+    var skipCoAxial = G_History.isEnemyPosPredicted;
+    if (!skipCoAxial && !visible && G_History.lastEnemyPos && (G_History.frame - G_History.lastEnemySeenFrame < limit)) {
         var lastSeen = G_History.lastEnemyPos;
         var elapsed = G_History.frame - G_History.lastEnemySeenFrame;
         var maxDist = Math.min(5, elapsed + 1);
+        // Fix P0-1: 射线长度从30缩减到max(6, DANGER_RADIUS+2)，避免覆盖整张地图
+        var maxRayLen = Math.max(6, (G_Blueprint.Tactics.DANGER_RADIUS || 4) + 2);
         var potentialGrass = [];
         var list = G_Blueprint.mapVision.grassList || [];
         for (var i = 0; i < list.length; i++) {
@@ -304,7 +317,7 @@ function buildExecutionContext(me, enemy, game) {
                 var d = delta(dirStr);
                 var p = [g[0] + d[0], g[1] + d[1]];
                 var safety = 0;
-                while (safety < 30) {
+                while (safety < maxRayLen) {
                     var tile = getTile(p, game.map);
                     if (!tile || tile === "x" || tile === "m") break;
                     if (tile !== "o") {
@@ -320,7 +333,7 @@ function buildExecutionContext(me, enemy, game) {
                     var offsetOrigin = [g[0] + rDelta[0], g[1] + rDelta[1]];
                     var p2 = [offsetOrigin[0] + d[0], offsetOrigin[1] + d[1]];
                     var safety2 = 0;
-                    while (safety2 < 30) {
+                    while (safety2 < maxRayLen) {
                         var tile2 = getTile(p2, game.map);
                         if (!tile2 || tile2 === "x" || tile2 === "m") break;
                         if (tile2 !== "o") {
