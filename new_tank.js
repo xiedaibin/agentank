@@ -274,6 +274,9 @@ function buildExecutionContext(me, enemy, game) {
             G_History.invalidPredictedSpots = {};
             G_History.firedPredictedSpots = {};
             if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38) {
+                if (G_History.enemyTeleportRevealedFrame !== G_History.frame - 1 && G_History.enemyTeleportRevealedFrame !== G_History.frame) {
+                    me.speak("敌传至: [" + eTank.position[0] + "," + eTank.position[1] + "]");
+                }
                 G_History.enemyTeleportRevealedFrame = G_History.frame;
             }
         } else if (enemy && enemy.skill && enemy.skill.type === "teleport" && enemy.skill.remainingCooldownFrames >= 38 && G_History.isAmbushStreamDetected) {

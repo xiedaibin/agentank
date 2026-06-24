@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.65 - 增加下一步极近飞弹硬拦截阻断，并自动调度为偏轴避让或转向闪避，解决主动撞弹与原地罚死漏洞",
+            notes: "XDB V12.65 - 增加对方传送 speak 喊话调试，且具备防重复 speak 机制",
             submittedBy: "Gemini"
         })
 
