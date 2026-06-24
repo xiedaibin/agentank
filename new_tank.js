@@ -1106,13 +1106,31 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
                     var limit = G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" ? 40 : 35;
                     var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < limit);
                     if (enemySeenRecently) {
-                        if (d < 2) return false;
+                        var realEnemyPos = G_History.lastEnemyPos;
+                        var dReal = realEnemyPos ? getDist(pos, realEnemyPos) : d;
+                        if (dReal < 2) return false;
+                        
                         var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
+
+                        // 针对草丛格子，如果与敌人最后真实消失点在中近距离（≤8格）共轴且无墙壁阻挡，在我们即将移入该格时判定为不安全
+                        if (inGrass && !samePos(pos, ctx.myPos) && realEnemyPos) {
+                            var isCoAxial = (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1]);
+                            if (isCoAxial && dReal <= 8 && canShoot(realEnemyPos, pos, ctx.map) !== false) {
+                                return false;
+                            }
+                        }
+
                         if (!inGrass) {
-                            if (d <= 3) return false;
-                            if (isOnEnemyGunLine(pos, ctx, true)) return false;
-                            if (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]) {
-                                if (canShoot(ctx.enemyPos, pos, ctx.map) !== false) return false;
+                            if (dReal <= 3) return false;
+                            if (realEnemyPos) {
+                                var backupPos = ctx.enemyPos;
+                                ctx.enemyPos = realEnemyPos;
+                                var onGun = isOnEnemyGunLine(pos, ctx, true);
+                                ctx.enemyPos = backupPos;
+                                if (onGun) return false;
+                            }
+                            if (realEnemyPos && (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1])) {
+                                if (canShoot(realEnemyPos, pos, ctx.map) !== false) return false;
                             }
                             if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[pos[0] + "," + pos[1]]) return false;
                         }
