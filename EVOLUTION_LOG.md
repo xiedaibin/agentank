@@ -197,3 +197,6 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-24 | 传送新规speak加防重复 | 传送新规speak加防重复 (自动生成) | 73.33% | Pending | 3.33% |
 | V12 | 2026-06-24 | 剔除传送伏击流残留与寻路CD避险 | 剔除传送伏击流残留与寻路CD避险 (自动生成) | 43.33% | Rejected | -26.67% |
 | V12 | 2026-06-24 | 修正Overload方向与引入空地逃跑惯性阻尼 | 修正Overload方向与引入空地逃跑惯性阻尼 (自动生成) | 63.33% | Adopted | 20.00% |
+| V12 | 2026-06-24 | 全面适配绝对坐标下的Overload双轨投影和避弹逻辑 | 全面适配绝对坐标下的Overload双轨投影和避弹逻辑 (自动生成) | 56.67% | Rejected | -6.66% |
+| V12 | 2026-06-24 | 剔除isTeleportAmbushStream逻辑 | 剔除isTeleportAmbushStream逻辑 (自动生成) | 44.83% | Rejected | -11.84% |
+| V12 | 2026-06-24 | 吃星优先级优化与canShoot单帧缓存 | 吃星优先级优化与canShoot单帧缓存 (自动生成) | 53.33% | Adopted | 8.50% |
