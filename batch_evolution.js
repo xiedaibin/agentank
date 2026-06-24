@@ -240,12 +240,12 @@ async function main() {
     } else if (diff > -0.05) {
         console.log("\n[决策] 胜率波动，保留代码进一步分析。");
     } else {
-        console.log("\n[决策] 性能下降，自动回滚至上一版本...");
+        console.log("\n[决策] 性能下降，但根据用户要求，暂不自动回滚，保留代码进一步分析与针对优化。");
         try {
-            execSync('git restore new_tank.js');
-            console.log("✅ 回滚完成。");
+            // execSync('git restore new_tank.js');
+            console.log("✅ 代码已保留（已跳过自动回滚）。");
         } catch (e) {
-            console.error("❌ 回滚失败:", e.message);
+            console.error("❌ 回滚分支异常:", e.message);
         }
     }
 }
