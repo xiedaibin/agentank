@@ -205,3 +205,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-24 | 传送落点与步行拉扯共轴分治安全策略V2 | 传送落点与步行拉扯共轴分治安全策略V2 (自动生成) | 40.00% | Rejected | -13.33% |
 | V12 | 2026-06-24 | 剔除isTeleportAmbushStream与传参残留 | 剔除isTeleportAmbushStream与传参残留 (自动生成) | 43.33% | Rejected | -10.00% |
 | V12 | 2026-06-24 | 根治A*抖动与修复enemyStars缺失与传送CD估计 | 根治A*抖动与修复enemyStars缺失与传送CD估计 (自动生成) | 53.33% | Pending | 0.00% |
+| V12 | 2026-06-24 | 未命名策略 | 未命名策略 (自动生成) | 58.62% | Adopted | 8.62% |
