@@ -60,7 +60,7 @@ async function main() {
     }
     const totalMatches = 30;
 
-    
+
     let baselineWinRate = parseFloat(process.argv[2]);
     if (isNaN(baselineWinRate)) {
         baselineWinRate = getLatestAdoptedWinRate();
@@ -70,7 +70,7 @@ async function main() {
     const strategyName = process.argv[3] || '未命名策略';
     const currentVersion = getVersion();
     const replayDir = 'batch_evolution_replays';
-    
+
     if (process.argv.length < 3 && !baselineWinRate) {
         console.log("用法: node batch_evolution.js <基准胜率> [策略名称]");
         return;
@@ -121,7 +121,7 @@ async function main() {
             submittedBy: "Gemini-Auto-Evolution"
         })
     });
-    
+
     if (!pubRes.ok) {
         console.warn("⚠️ 发布失败:", await pubRes.text());
         console.warn("⚠️ 可能是 API 权限受限。如果您已在网页端手动更新并发布了 new_tank.js 代码，我们将继续进行测试对战。");
@@ -169,7 +169,7 @@ async function main() {
             } else if (matchData.winnerTankId) {
                 resultType = "loss";
                 report.summary.losses++;
-                
+
                 // 保存失败录像
                 const urlId = matchData.urlId || matchData.matchUrlId;
                 const replayFilename = `${replayDir}/loss_${i}_${(matchData.defenderTankName || "Bot").replace(/[\\/:*?"<>|]/g, '_')}_${urlId}.json`;
@@ -185,9 +185,9 @@ async function main() {
             } else {
                 report.summary.draws++;
             }
-            
+
             console.log(`${resultType.toUpperCase()} | 对手: ${matchData.defenderTankName || "Bot"}`);
-            
+
             report.matches.push({
                 matchNum: i,
                 result: resultType,
@@ -207,7 +207,7 @@ async function main() {
     const diff = currentWinRate - baselineWinRate;
     const date = new Date().toISOString().split('T')[0];
     const status = diff >= 0.05 ? "Adopted" : (diff > -0.05 ? "Pending" : "Rejected");
-    
+
     console.log("\n=== 进化结果评估 ===");
     console.log(`当前胜率: ${(currentWinRate * 100).toFixed(2)}%`);
     console.log(`胜率提升: ${(diff * 100).toFixed(2)}%`);
@@ -240,12 +240,12 @@ async function main() {
     } else if (diff > -0.05) {
         console.log("\n[决策] 胜率波动，保留代码进一步分析。");
     } else {
-        console.log("\n[决策] 性能下降，但根据用户要求，暂不自动回滚，保留代码进一步分析与针对优化。");
+        console.log("\n[决策] 性能下降，自动回滚至上一版本...");
         try {
-            // execSync('git restore new_tank.js');
-            console.log("✅ 代码已保留（已跳过自动回滚）。");
+            execSync('git restore new_tank.js');
+            console.log("✅ 回滚完成。");
         } catch (e) {
-            console.error("❌ 回滚分支异常:", e.message);
+            console.error("❌ 回滚失败:", e.message);
         }
     }
 }

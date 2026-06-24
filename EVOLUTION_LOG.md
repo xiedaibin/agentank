@@ -200,3 +200,8 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-24 | 全面适配绝对坐标下的Overload双轨投影和避弹逻辑 | 全面适配绝对坐标下的Overload双轨投影和避弹逻辑 (自动生成) | 56.67% | Rejected | -6.66% |
 | V12 | 2026-06-24 | 剔除isTeleportAmbushStream逻辑 | 剔除isTeleportAmbushStream逻辑 (自动生成) | 44.83% | Rejected | -11.84% |
 | V12 | 2026-06-24 | 吃星优先级优化与canShoot单帧缓存 | 吃星优先级优化与canShoot单帧缓存 (自动生成) | 53.33% | Adopted | 8.50% |
+| V12 | 2026-06-24 | 内战后手保留与吃星限制 | 内战后手保留与吃星限制 (自动生成) | 50.00% | Pending | -3.33% |
+| V12 | 2026-06-24 | 传送落点与步行拉扯共轴分治安全策略 | 传送落点与步行拉扯共轴分治安全策略 (自动生成) | 40.00% | Rejected | -13.33% |
+| V12 | 2026-06-24 | 传送落点与步行拉扯共轴分治安全策略V2 | 传送落点与步行拉扯共轴分治安全策略V2 (自动生成) | 40.00% | Rejected | -13.33% |
+| V12 | 2026-06-24 | 剔除isTeleportAmbushStream与传参残留 | 剔除isTeleportAmbushStream与传参残留 (自动生成) | 43.33% | Rejected | -10.00% |
+| V12 | 2026-06-24 | 根治A*抖动与修复enemyStars缺失与传送CD估计 | 根治A*抖动与修复enemyStars缺失与传送CD估计 (自动生成) | 53.33% | Pending | 0.00% |
