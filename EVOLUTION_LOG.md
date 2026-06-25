@@ -207,3 +207,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-06-24 | 根治A*抖动与修复enemyStars缺失与传送CD估计 | 根治A*抖动与修复enemyStars缺失与传送CD估计 (自动生成) | 53.33% | Pending | 0.00% |
 | V12 | 2026-06-24 | 未命名策略 | 未命名策略 (自动生成) | 58.62% | Adopted | 8.62% |
 | V12 | 2026-06-24 | 未命名策略 | 未命名策略 (自动生成) | 60.00% | Pending | 2.00% |
+| V12 | 2026-06-24 | 未命名策略 | 未命名策略 (自动生成) | 33.33% | Rejected | -26.67% |
+| V12 | 2026-06-24 | 未命名策略 | 未命名策略 (自动生成) | 63.33% | Pending | 3.33% |

@@ -1418,6 +1418,12 @@ function getNextStep(start, goal, ctx) {
             if (ctx.enemyBullet && getFramesToHit(start, ctx.enemyBullet, ctx.map) <= 5) {
                 shouldBlock = true;
             }
+            if (!shouldBlock && ctx.enemyPos) {
+                var enemyInGrass = G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
+                if (enemyInGrass) {
+                    shouldBlock = true;
+                }
+            }
         }
         if (shouldBlock) {
             G_History.path = [];
