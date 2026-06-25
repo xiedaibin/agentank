@@ -511,18 +511,54 @@ function evalShooting(ctx) {
  * @param {Object} ctx 上下文
  */
 function evalPreAim(ctx) {
+    if (G_History.preAimLockoutUntil && G_History.frame < G_History.preAimLockoutUntil) {
+        return null;
+    }
+
     var targetVisible = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass || ctx.isTeleportAmbushStream;
-    if (!ctx.shootingEnemyPos || !targetVisible || !ctx.enemyDir) return null;
+    if (!ctx.shootingEnemyPos || !targetVisible || !ctx.enemyDir) {
+        G_History.preAimTicks = 0;
+        G_History.preAimDir = null;
+        return null;
+    }
 
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var recentlyTeleported = G_History.postTeleportFrames > 0;
 
     if (isCurrentlyInGrass || recentlyTeleported) {
         var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
-        if (preAimDir && ctx.myDir !== preAimDir) {
-            return { action: "turn", target: addPos(ctx.myPos, delta(preAimDir)), score: CONFIG.KILL_PRIO - 150, type: "pre_aim" };
+        
+        if (preAimDir) {
+            var maxWaitTicks = 10;
+            var enemyStars = (ctx.enemy && typeof ctx.enemy.stars === 'number') ? ctx.enemy.stars : 0;
+            if (ctx.meStars > enemyStars) {
+                maxWaitTicks = 20;
+            }
+
+            if (G_History.preAimDir === preAimDir && G_History.preAimTicks > maxWaitTicks) {
+                G_History.preAimLockoutUntil = G_History.frame + 15;
+                G_History.preAimTicks = 0;
+                G_History.preAimDir = null;
+                ctx.me.speak("预瞄超时，退出挂机");
+                return null;
+            }
+
+            if (ctx.myDir !== preAimDir) {
+                return { action: "turn", target: addPos(ctx.myPos, delta(preAimDir)), score: CONFIG.KILL_PRIO - 150, type: "pre_aim" };
+            } else {
+                if (G_History.preAimDir !== preAimDir) {
+                    G_History.preAimDir = preAimDir;
+                    G_History.preAimTicks = 1;
+                } else {
+                    G_History.preAimTicks++;
+                }
+                return { action: "move", target: ctx.myPos, score: CONFIG.KILL_PRIO - 160, type: "pre_aim" };
+            }
         }
     }
+
+    G_History.preAimTicks = 0;
+    G_History.preAimDir = null;
     return null;
 }
 
