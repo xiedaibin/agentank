@@ -398,7 +398,8 @@ function buildExecutionContext(me, enemy, game) {
         canTeleport: me.skill && me.skill.remainingCooldownFrames === 0,
         unsafeCoAxialTiles: unsafeCoAxialTiles,
         isTeleportAmbushStream: isTeleportAmbushStream,
-        isEnemyRecentlyInvisibleInGrass: isEnemyRecentlyInvisibleInGrass
+        isEnemyRecentlyInvisibleInGrass: isEnemyRecentlyInvisibleInGrass,
+        isUrgentStarGrab: (G_History.frame >= 124) && (me.stars <= (enemy ? (enemy.stars || 0) : 0))
     };
 }
 
@@ -610,10 +611,12 @@ function evalStarCollection(ctx) {
     }
 
     // 正常传送逻辑：不再传送到星格中心，而是传送到最安全、效率最高的相邻格
-    if (ctx.canTeleport && dist > 7 && !forbidEarlyTP) {
+    var minTeleportDist = ctx.isUrgentStarGrab ? 2 : 7;
+    if (ctx.canTeleport && dist > minTeleportDist && !forbidEarlyTP) {
         var teleportTarget = findBestStarTeleportTarget(ctx);
         if (teleportTarget && !samePos(teleportTarget, ctx.myPos) && isTeleportPassable(teleportTarget, ctx)) {
-            return { action: "teleport", target: teleportTarget, score: CONFIG.STAR_PRIO + 1000, type: "star" };
+            var teleportScore = ctx.isUrgentStarGrab ? 20000 : (CONFIG.STAR_PRIO + 1000);
+            return { action: "teleport", target: teleportTarget, score: teleportScore, type: "star" };
         }
     }
 
