@@ -346,7 +346,7 @@ function buildExecutionContext(me, enemy, game) {
     // 当敌人不可见且场上有星星时，推算其朝向星星前行的推导位置
     if (!visible && currentEnemyPos && game.star) {
         var invisibleFrames = G_History.enemyInvisibleFrames;
-        if (invisibleFrames > 0 && invisibleFrames <= 30) {
+        if (invisibleFrames > 0 && invisibleFrames <= 150) {
             var enemySpeed = 1;
             if (enemy && enemy.skill && enemy.skill.type === "boost") {
                 var isEnemyBoosted = enemy.status && enemy.status.boosted;
@@ -500,7 +500,14 @@ function evalShooting(ctx) {
             }
         } else {
             var onEnemyAxis = (ctx.myPos[0] === ctx.shootingEnemyPos[0] || ctx.myPos[1] === ctx.shootingEnemyPos[1]);
-            if (onEnemyAxis && isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map) && !ctx.enemyFireLocked) return null;
+            if (onEnemyAxis && !ctx.enemyFireLocked) {
+                var dist = getDist(ctx.myPos, ctx.shootingEnemyPos);
+                var isLoSDanger = isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
+                var isCloseDanger = dist <= 8 && canShoot(ctx.shootingEnemyPos, ctx.myPos, ctx.map) === true;
+                if (isLoSDanger || isCloseDanger) {
+                    return null;
+                }
+            }
             return { action: "turn", target: ctx.shootingEnemyPos, score: CONFIG.KILL_PRIO - 100, type: "shoot" };
         }
     }
