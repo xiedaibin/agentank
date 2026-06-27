@@ -368,6 +368,15 @@ function buildExecutionContext(me, enemy, game) {
         }
     }
 
+    // 新增：如果敌人处于不可见（隐身/草丛），且消失超过 8 帧以上，默认其枪口正对准我方坦克的方向
+    if (!visible && currentEnemyPos) {
+        var invisibleFrames = G_History.enemyInvisibleFrames;
+        var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[currentEnemyPos[0] + "," + currentEnemyPos[1]];
+        if (invisibleFrames >= 8 && enemyInGrass) {
+            currentEnemyDir = directionTo(currentEnemyPos, me.tank.position);
+        }
+    }
+
     var shootingEnemyPos = currentEnemyPos;
     if (G_History.isEnemyPosPredicted && G_History.lastEnemyPos) {
         var spotKey = G_History.lastEnemyPos[0] + "," + G_History.lastEnemyPos[1];
