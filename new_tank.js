@@ -34,7 +34,8 @@ var G_History = {
     failedTeleportSpots: {},
     lastTeleportTarget: null,
     lastTeleportFrame: -99,
-    lastTeleportPos: null
+    lastTeleportPos: null,
+    hasSpokenBullet: false
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
@@ -82,6 +83,16 @@ function onIdle(me, enemy, game) {
 
         var ctx = buildExecutionContext(me, enemy, game);
         if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
+
+        // 发现子弹的视觉 Speak 预警
+        if (ctx.enemyBullet) {
+            if (!G_History.hasSpokenBullet) {
+                me.speak("发现了子弹");
+                G_History.hasSpokenBullet = true;
+            }
+        } else {
+            G_History.hasSpokenBullet = false;
+        }
 
         // 撞击隐藏敌方检测与反击
         var lastAttempted = G_History.lastAttemptedStep;
@@ -368,11 +379,12 @@ function buildExecutionContext(me, enemy, game) {
         }
     }
 
-    // 新增：如果敌人处于不可见（隐身/草丛），且消失超过 8 帧以上，默认其枪口正对准我方坦克的方向
+    // 新增：如果敌人处于不可见（隐身/草丛），且消失超过 8 帧以上，默认其枪口正对准我方坦克的方向，并将预测位置拉回最后消失点以防漂移
     if (!visible && currentEnemyPos) {
         var invisibleFrames = G_History.enemyInvisibleFrames;
         var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[currentEnemyPos[0] + "," + currentEnemyPos[1]];
         if (invisibleFrames >= 8 && enemyInGrass) {
+            currentEnemyPos = G_History.lastEnemyPos.slice();
             currentEnemyDir = directionTo(currentEnemyPos, me.tank.position);
         }
     }
@@ -1602,51 +1614,47 @@ function canShoot(a, b, map) {
 function findAssassinSpot(ctx) {
     var e = ctx.enemyPos;
     var candidates = [];
-    for (var dist = 1; dist <= 5; dist++) {
-        var offsets = getAssassinOffsets(ctx.enemyDir, dist);
+    var dist = 5; // 平台新机制下落地暴露，强制只允许 5 格安全防爆极限距离暗杀
+    var offsets = getAssassinOffsets(ctx.enemyDir, dist);
 
-        // 1. 兜底当前点
-        for (var i = 0; i < offsets.length; i++) {
-            var p = addPos(e, offsets[i]);
-            if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false, true)) {
-                var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
-                if (isGrass === 0 && dist < 5) continue;
-                var score = isGrass * 1000 - dist * 100 - i;
-                if (dist < 5) score -= 3000;
+    // 1. 评估当前位置暗杀
+    for (var i = 0; i < offsets.length; i++) {
+        var p = addPos(e, offsets[i]);
+        if (isPassable(p, ctx.map) && canShoot(p, e, ctx.map) === true && isSafe(p, ctx, false, true)) {
+            var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
+            var score = isGrass * 1000 - dist * 100 - i;
 
-                // 朝向对齐奖励
-                if (ctx.myDir === directionTo(p, e)) {
-                    score += 300;
-                }
-
-                candidates.push({ pos: p, score: score });
+            // 朝向对齐奖励
+            if (ctx.myDir === directionTo(p, e)) {
+                score += 300;
             }
+
+            candidates.push({ pos: p, score: score });
         }
+    }
 
-        // 2. 预测未来点 (仅在 dist >= 4 且有预测时)
-        if (ctx.enemyDir && dist >= 4) {
-            var ed = delta(ctx.enemyDir);
-            var predE = addPos(e, [ed[0] * 2, ed[1] * 2]);
-            if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
-                for (var i = 0; i < offsets.length; i++) {
-                    var p = addPos(predE, offsets[i]);
-                    if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true && isSafe(p, ctx, true, true)) {
-                        var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
-                        if (isGrass === 0 && dist < 5) continue;
-                        var score = isGrass * 1000 - dist * 100 - i - 50;
-                        if (dist < 5) score -= 3000;
+    // 2. 预测未来位置暗杀
+    if (ctx.enemyDir) {
+        var ed = delta(ctx.enemyDir);
+        var predE = addPos(e, [ed[0] * 2, ed[1] * 2]);
+        if (isPassable(predE, ctx.map) && isPassable(addPos(e, ed), ctx.map)) {
+            for (var i = 0; i < offsets.length; i++) {
+                var p = addPos(predE, offsets[i]);
+                if (isPassable(p, ctx.map) && canShoot(p, predE, ctx.map) === true && isSafe(p, ctx, true, true)) {
+                    var isGrass = G_Blueprint.mapVision.grass[p[0] + "," + p[1]] ? 1 : 0;
+                    var score = isGrass * 1000 - dist * 100 - i - 50;
 
-                        // 朝向对齐奖励
-                        if (ctx.myDir === directionTo(p, predE)) {
-                            score += 300;
-                        }
-
-                        candidates.push({ pos: p, score: score });
+                    // 朝向对齐奖励
+                    if (ctx.myDir === directionTo(p, predE)) {
+                        score += 300;
                     }
+
+                    candidates.push({ pos: p, score: score });
                 }
             }
         }
     }
+
     if (candidates.length > 0) {
         candidates.sort(function (a, b) { return b.score - a.score; });
         return candidates[0].pos;
