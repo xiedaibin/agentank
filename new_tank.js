@@ -411,9 +411,19 @@ function buildExecutionContext(me, enemy, game) {
         isNearGrass(shootingEnemyPos);
 
     if (enemy && typeof enemy.stars === 'number') {
-        G_History.lastEnemyStars = Math.max(G_History.lastEnemyStars || 0, enemy.stars);
+        var oldEnemyStars = G_History.lastEnemyStars || 0;
+        G_History.lastEnemyStars = Math.max(oldEnemyStars, enemy.stars);
+        if (G_History.lastEnemyStars > oldEnemyStars) {
+            me.speak("敌得分! 我:" + me.stars + " 敌:" + G_History.lastEnemyStars);
+        }
     }
     var enemyStars = G_History.lastEnemyStars || 0;
+
+    if (G_History.lastSpokenMeStars === undefined) G_History.lastSpokenMeStars = 0;
+    if (me.stars > G_History.lastSpokenMeStars) {
+        G_History.lastSpokenMeStars = me.stars;
+        me.speak("我得分! 我:" + me.stars + " 敌:" + enemyStars);
+    }
 
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
