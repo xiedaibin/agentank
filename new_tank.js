@@ -1527,23 +1527,35 @@ function getNextStep(start, goal, ctx) {
 function findOffAxisMove(ctx) {
     var neighbors = ["up", "right", "down", "left"], best = null, maxS = -1;
     for (var i = 0; i < neighbors.length; i++) {
-        var n = addPos(ctx.myPos, delta(neighbors[i]));
-        if (isPassable(n, ctx.map) && isSafe(n, ctx, false)) {
-            var s = getDist(n, ctx.enemyPos);
-            // Prioritize true off-axis moves over co-axial moves
-            var isNeighborOnAxis = (n[0] === ctx.enemyPos[0] || n[1] === ctx.enemyPos[1]);
-            if (!isNeighborOnAxis) {
-                s += 0.5;
+        var dir = neighbors[i];
+        var n = addPos(ctx.myPos, delta(dir));
+        if (isPassable(n, ctx.map)) {
+            // 1步避险评估
+            if (isSafe(n, ctx, false)) {
+                var s = getDist(n, ctx.enemyPos);
+                var isNeighborOnAxis = (n[0] === ctx.enemyPos[0] || n[1] === ctx.enemyPos[1]);
+                if (!isNeighborOnAxis) s += 0.5;
+                if (directionTo(ctx.myPos, n) === ctx.myDir) s += 0.1;
+                if (ctx.starPos) {
+                    s += Math.max(0, (50 - getDist(n, ctx.starPos)) * 0.001);
+                }
+                if (s > maxS) { maxS = s; best = n; }
             }
-            // Tie-breaker: prefer moving straight to avoid turning overhead
-            if (directionTo(ctx.myPos, n) === ctx.myDir) {
-                s += 0.1;
+            // 2步避险评估（针对敌方超载且第1步在超载枪线上的情况）
+            else if (isOnEnemyGunLine(n, ctx, true)) {
+                var n2 = addPos(n, delta(dir));
+                if (isPassable(n2, ctx.map) && isSafe(n2, ctx, false)) {
+                    var s = getDist(n2, ctx.enemyPos);
+                    var isN2OnAxis = (n2[0] === ctx.enemyPos[0] || n2[1] === ctx.enemyPos[1]);
+                    if (!isN2OnAxis) s += 0.5;
+                    if (directionTo(ctx.myPos, n2) === ctx.myDir) s += 0.1;
+                    if (ctx.starPos) {
+                        s += Math.max(0, (50 - getDist(n2, ctx.starPos)) * 0.001);
+                    }
+                    s -= 2.0; // 双格避险惩罚分，确保优先选择安全的单格避险
+                    if (s > maxS) { maxS = s; best = n2; }
+                }
             }
-            // Tie-breaker 2: prefer moving closer to the star (max bonus 0.05, less than turn bonus 0.1)
-            if (ctx.starPos) {
-                s += Math.max(0, (50 - getDist(n, ctx.starPos)) * 0.001);
-            }
-            if (s > maxS) { maxS = s; best = n; }
         }
     }
     return best ? { action: "move", target: best, score: 25000 } : null;
