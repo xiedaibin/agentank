@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 async function parse() {
-    const rawData = JSON.parse(fs.readFileSync('scratch/mat_4J9TqrLo22B7tuchO_raw.json', 'utf8'));
+    const rawData = JSON.parse(fs.readFileSync('scratch/mat_LlBgqKMekroHwcmvw_raw.json', 'utf8'));
     const replay = rawData.replayData || rawData;
     const map = replay.map ? replay.map.map : null;
     if (map) {

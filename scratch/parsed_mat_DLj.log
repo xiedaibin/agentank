@@ -1,0 +1,455 @@
+﻿Map Grid (Transposed for printing y downwards):
+ 0: x x x x x x x x x x x x x x x x x x x 
+ 1: x o o o . . . . . . . . . . . . . . x 
+ 2: x o . x . . . . . x . . . . . . . . x 
+ 3: x x x x . . . . . x . . . . . . . . x 
+ 4: x . . . . . . . . x . . . . . . . . x 
+ 5: x . . x x x x x x x x x x x . . . . x 
+ 6: x . . . . o o x o o o o o o . . . . x 
+ 7: x . . . . o o o o o o o o o . . . . x 
+ 8: x . . . . o o o o o o x o o . . . . x 
+ 9: x . . . . x x x x x x x x x x x . . x 
+10: x . . . . . . . . x . . . . . . . . x 
+11: x . . . . . . . . x . . . . . x x x x 
+12: x . . . . . . . . x . . . . . x . o x 
+13: x . . . . . . . . . . . . . . o o o x 
+14: x x x x x x x x x x x x x x x x x x x 
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 
+Dynamic Identifications:
+  Me ID: b722c4d4 (XDB (鎴戞柟))
+  Enemy ID: ce3389e6 (ByteStorm (鏁屾柟))
+
+Timeline of Events:
+
+--- Frame 0 ---
+  [Star Event] created at [7,13]
+
+--- Frame 1 ---
+  [Speak] XDB (鎴戞柟) said: "V12.85: 棰勫垽鑳屾潃" at [2,2]
+  [Other Event] type=skill action=cast actor=0 pos=undefined
+  [Other Event] type=skill action=applied actor=0 pos=undefined
+  [Tank Move] ByteStorm (鏁屾柟) moved to [16,13] (reverse: false)
+
+--- Frame 2 ---
+  [Speak] XDB (鎴戞柟) said: "浼犻€佸欢杩熻浆鍚? at [7,12]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 3 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [15,13] (reverse: false)
+
+--- Frame 4 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,13] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [14,13] (reverse: false)
+  [Star Event] collected at [undefined]
+
+--- Frame 5 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?1 鏁?0" at [7,13]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [13,13] (reverse: false)
+
+--- Frame 6 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [12,13] (reverse: false)
+
+--- Frame 7 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,12] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [11,13] (reverse: false)
+
+--- Frame 8 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [10,13] (reverse: false)
+
+--- Frame 9 ---
+  [Tank Move] XDB (鎴戞柟) moved to [6,12] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [9,13] (reverse: false)
+
+--- Frame 10 ---
+  [Tank Move] XDB (鎴戞柟) moved to [5,12] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [8,13] (reverse: false)
+
+--- Frame 11 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,12] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 12 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 13 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,11] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [7,13] (reverse: false)
+
+--- Frame 14 ---
+  [Star Event] created at [12,12]
+  [Tank Move] XDB (鎴戞柟) moved to [4,10] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 15 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,9] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 16 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,8] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [6,13] (reverse: false)
+
+--- Frame 17 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,7] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [5,13] (reverse: false)
+
+--- Frame 18 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,13] (reverse: false)
+
+--- Frame 19 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [3,13] (reverse: false)
+
+--- Frame 20 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 21 ---
+  [Speak] XDB (鎴戞柟) said: "骞界伒閬垮脊" at [4,7]
+  [Tank Move] XDB (鎴戞柟) moved to [5,7] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [3,12] (reverse: false)
+
+--- Frame 22 ---
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 23 ---
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,12] (reverse: false)
+
+--- Frame 24 ---
+  [Tank Move] XDB (鎴戞柟) moved to [6,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 25 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,11] (reverse: false)
+
+--- Frame 26 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,10] (reverse: false)
+
+--- Frame 27 ---
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,9] (reverse: false)
+
+--- Frame 28 ---
+  [Other Event] type=skill action=cast actor=1 pos=undefined
+  [Other Event] type=skill action=applied actor=1 pos=undefined
+
+--- Frame 29 ---
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=up
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=up
+  [Other Event] type=skill action=expired actor=1 pos=undefined
+  [Bullet Action] go at [5,8]
+  [Bullet Action] go at [5,7]
+  [Bullet Action] go at [4,8]
+  [Bullet Action] go at [4,7]
+
+--- Frame 30 ---
+  [Speak] XDB (鎴戞柟) said: "鍙戠幇浜嗗瓙寮? at [6,7]
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+  [Bullet Action] go at [5,6]
+  [Bullet Action] go at [5,5]
+  [Bullet Crashed] at [undefined] due to undefined
+  [Bullet Action] go at [4,6]
+  [Bullet Action] go at [4,5]
+  [Bullet Crashed] at [undefined] due to undefined
+
+--- Frame 31 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 32 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 33 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 34 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 35 ---
+  [Tank Move] XDB (鎴戞柟) moved to [9,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 36 ---
+  [Tank Move] XDB (鎴戞柟) moved to [10,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 37 ---
+  [Tank Move] XDB (鎴戞柟) moved to [11,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 38 ---
+  [Tank Move] XDB (鎴戞柟) moved to [12,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 39 ---
+  [Tank Move] XDB (鎴戞柟) moved to [13,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 40 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 41 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 42 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 43 ---
+  [Tank Move] XDB (鎴戞柟) moved to [15,7] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 44 ---
+  [Other Event] type=skill action=cast actor=0 pos=undefined
+  [Other Event] type=skill action=applied actor=0 pos=undefined
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,8] (reverse: false)
+
+--- Frame 45 ---
+  [Speak] XDB (鎴戞柟) said: "浼犻€佸欢杩熺瓑寰? at [11,12]
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 46 ---
+  [Tank Move] XDB (鎴戞柟) moved to [12,12] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Star Event] collected at [undefined]
+
+--- Frame 47 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?2 鏁?0" at [12,12]
+  [Tank Move] XDB (鎴戞柟) moved to [13,12] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,9] (reverse: false)
+
+--- Frame 48 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,12] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,10] (reverse: false)
+
+--- Frame 49 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 50 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,13] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [5,10] (reverse: false)
+
+--- Frame 51 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 52 ---
+  [Tank Move] XDB (鎴戞柟) moved to [15,13] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [5,11] (reverse: false)
+
+--- Frame 53 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [5,12] (reverse: false)
+
+--- Frame 54 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 55 ---
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,12] (reverse: false)
+
+--- Frame 56 ---
+  [Star Event] created at [17,6]
+  [Tank Move] ByteStorm (鏁屾柟) moved to [3,12] (reverse: false)
+
+--- Frame 57 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,13] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [2,12] (reverse: false)
+
+--- Frame 58 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 59 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,12] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 60 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,11] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [3,12] (reverse: false)
+
+--- Frame 61 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,10] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [4,12] (reverse: false)
+
+--- Frame 62 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [5,12] (reverse: false)
+
+--- Frame 63 ---
+  [Tank Move] XDB (鎴戞柟) moved to [15,10] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [6,12] (reverse: false)
+
+--- Frame 64 ---
+  [Tank Move] XDB (鎴戞柟) moved to [16,10] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 65 ---
+  [Tank Move] XDB (鎴戞柟) moved to [17,10] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 66 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 67 ---
+  [Tank Move] XDB (鎴戞柟) moved to [17,9] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 68 ---
+  [Tank Move] XDB (鎴戞柟) moved to [17,8] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [7,12] (reverse: false)
+
+--- Frame 69 ---
+  [Tank Move] XDB (鎴戞柟) moved to [17,7] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [8,12] (reverse: false)
+
+--- Frame 70 ---
+  [Tank Move] XDB (鎴戞柟) moved to [17,6] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+  [Star Event] collected at [undefined]
+
+--- Frame 71 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?3 鏁?0" at [17,6]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [8,13] (reverse: false)
+
+--- Frame 72 ---
+  [Tank Move] XDB (鎴戞柟) moved to [16,6] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 73 ---
+  [Tank Move] XDB (鎴戞柟) moved to [15,6] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [9,13] (reverse: false)
+
+--- Frame 74 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,6] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [10,13] (reverse: false)
+
+--- Frame 75 ---
+  [Tank Move] XDB (鎴戞柟) moved to [13,6] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [11,13] (reverse: false)
+
+--- Frame 76 ---
+  [Tank Move] ByteStorm (鏁屾柟) moved to [12,13] (reverse: false)
+
+--- Frame 77 ---
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 78 ---
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 79 ---
+  [Tank Move] ByteStorm (鏁屾柟) moved to [11,13] (reverse: false)
+
+--- Frame 80 ---
+  [Star Event] created at [14,7]
+  [Tank Move] ByteStorm (鏁屾柟) moved to [10,13] (reverse: false)
+
+--- Frame 81 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [9,13] (reverse: false)
+
+--- Frame 82 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] ByteStorm (鏁屾柟) moved to [8,13] (reverse: false)
+
+--- Frame 83 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,6] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [7,13] (reverse: false)
+
+--- Frame 84 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+
+--- Frame 85 ---
+  [Speak] XDB (鎴戞柟) said: "浼樺娍浼犻€佷紡鍑? at [14,6]
+  [Other Event] type=skill action=cast actor=0 pos=undefined
+  [Other Event] type=skill action=applied actor=0 pos=undefined
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 86 ---
+  [Speak] XDB (鎴戞柟) said: "浼忓嚮杞悜" at [15,13]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "right"
+
+--- Frame 87 ---
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=left
+  [Tank Move] ByteStorm (鏁屾柟) moved to [7,12] (reverse: false)
+  [Bullet Action] go at [14,13]
+  [Bullet Action] go at [13,13]
+
+--- Frame 88 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,13] (reverse: false)
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [12,13]
+  [Bullet Action] go at [11,13]
+
+--- Frame 89 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [10,13]
+  [Bullet Action] go at [9,13]
+
+--- Frame 90 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [8,13]
+  [Bullet Action] go at [7,13]
+
+--- Frame 91 ---
+  [Speak] XDB (鎴戞柟) said: "瀹夊叏瑙勯伩" at [14,13]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Other Event] type=skill action=cast actor=1 pos=undefined
+  [Other Event] type=skill action=applied actor=1 pos=undefined
+  [Bullet Action] go at [6,13]
+  [Bullet Action] go at [5,13]
+
+--- Frame 92 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=right
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=right
+  [Other Event] type=skill action=expired actor=1 pos=undefined
+  [Bullet Action] go at [4,13]
+  [Bullet Action] go at [3,13]
+  [Bullet Action] go at [8,13]
+  [Bullet Action] go at [9,13]
+  [Bullet Action] go at [8,12]
+  [Bullet Action] go at [9,12]
+  [Bullet Crashed] at [undefined] due to undefined
+
+--- Frame 93 ---
+  [Tank Move] XDB (鎴戞柟) moved to [15,13] (reverse: false)
+  [Tank Move] ByteStorm (鏁屾柟) moved to [8,12] (reverse: false)
+  [Bullet Action] go at [2,13]
+  [Bullet Action] go at [1,13]
+  [Bullet Action] go at [10,13]
+  [Bullet Action] go at [11,13]
+
+--- Frame 94 ---
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [0,13]
+  [Bullet Crashed] at [undefined] due to undefined
+  [Bullet Action] go at [12,13]
+  [Bullet Action] go at [13,13]
+
+--- Frame 95 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] ByteStorm (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [14,13]
+  [Bullet Action] go at [15,13]
+  [Bullet Crashed] at [undefined] due to undefined
+  [Tank Action] XDB (鎴戞柟) did crashed at undefined

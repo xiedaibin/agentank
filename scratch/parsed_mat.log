@@ -1,0 +1,327 @@
+﻿Map Grid (Transposed for printing y downwards):
+ 0: x x x x x x x x x x x x x x x x x x x 
+ 1: x o o o . . . . . . . . . . . . . . x 
+ 2: x o . x . . . . . x . . . . . . . . x 
+ 3: x x x x . . . . . x . . . . . . . . x 
+ 4: x . . . . . . . . x . . . . . . . . x 
+ 5: x . . x x x x x x x x x x x . . . . x 
+ 6: x . . . . o o x o o o o o o . . . . x 
+ 7: x . . . . o o o o o o o o o . . . . x 
+ 8: x . . . . o o o o o o x o o . . . . x 
+ 9: x . . . . x x x x x x x x x x x . . x 
+10: x . . . . . . . . x . . . . . . . . x 
+11: x . . . . . . . . x . . . . . x x x x 
+12: x . . . . . . . . x . . . . . x . o x 
+13: x . . . . . . . . . . . . . . o o o x 
+14: x x x x x x x x x x x x x x x x x x x 
+    0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 
+Dynamic Identifications:
+  Me ID: e3468f28 (XDB (鎴戞柟))
+  Enemy ID: 303bce60 (Bolun (鏁屾柟))
+
+Timeline of Events:
+
+--- Frame 0 ---
+  [Star Event] created at [14,5]
+
+--- Frame 1 ---
+  [Speak] XDB (鎴戞柟) said: "V12.60: 棰勫垽鑳屾潃" at [2,2]
+  [Speak] Bolun (鏁屾柟) said: "ESKILL:teleport" at [16,12]
+  [Other Event] type=skill action=cast actor=0 pos=undefined
+  [Other Event] type=skill action=applied actor=0 pos=undefined
+  [Tank Move] Bolun (鏁屾柟) moved to [16,13] (reverse: false)
+
+--- Frame 2 ---
+  [Speak] XDB (鎴戞柟) said: "浼犻€佸欢杩熺瓑寰? at [14,6]
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 3 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,5] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [15,13] (reverse: false)
+  [Star Event] collected at [undefined]
+
+--- Frame 4 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?1 鏁?0" at [14,5]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [14,13] (reverse: false)
+
+--- Frame 5 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 6 ---
+  [Tank Move] XDB (鎴戞柟) moved to [14,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [14,12] (reverse: false)
+
+--- Frame 7 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [14,11] (reverse: false)
+
+--- Frame 8 ---
+  [Tank Move] XDB (鎴戞柟) moved to [13,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [14,10] (reverse: false)
+
+--- Frame 9 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 10 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [15,10] (reverse: false)
+
+--- Frame 11 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [16,10] (reverse: false)
+
+--- Frame 12 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 13 ---
+  [Star Event] created at [10,12]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] Bolun (鏁屾柟) moved to [16,9] (reverse: false)
+
+--- Frame 14 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 15 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 16 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [16,10] (reverse: false)
+
+--- Frame 17 ---
+  [Tank Move] XDB (鎴戞柟) moved to [12,6] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 18 ---
+  [Tank Move] XDB (鎴戞柟) moved to [11,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [15,10] (reverse: false)
+
+--- Frame 19 ---
+  [Tank Move] XDB (鎴戞柟) moved to [10,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [14,10] (reverse: false)
+
+--- Frame 20 ---
+  [Tank Move] XDB (鎴戞柟) moved to [9,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [13,10] (reverse: false)
+
+--- Frame 21 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [12,10] (reverse: false)
+
+--- Frame 22 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [11,10] (reverse: false)
+
+--- Frame 23 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [10,10] (reverse: false)
+
+--- Frame 24 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 25 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [10,11] (reverse: false)
+
+--- Frame 26 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [10,12] (reverse: false)
+  [Star Event] collected at [undefined]
+
+--- Frame 27 ---
+  [Speak] XDB (鎴戞柟) said: "鏁屽緱鍒? 鎴?1 鏁?1" at [8,6]
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 28 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 29 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [10,11] (reverse: false)
+
+--- Frame 30 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [10,10] (reverse: false)
+
+--- Frame 31 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 32 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 33 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 34 ---
+  [Tank Move] Bolun (鏁屾柟) moved to [11,10] (reverse: false)
+
+--- Frame 35 ---
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 36 ---
+  [Star Event] created at [5,4]
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 37 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] Bolun (鏁屾柟) moved to [12,10] (reverse: false)
+
+--- Frame 38 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,7] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 39 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [12,11] (reverse: false)
+
+--- Frame 40 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,7] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [12,12] (reverse: false)
+
+--- Frame 41 ---
+  [Tank Move] XDB (鎴戞柟) moved to [6,7] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [12,13] (reverse: false)
+
+--- Frame 42 ---
+  [Tank Move] XDB (鎴戞柟) moved to [5,7] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 43 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,7] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [11,13] (reverse: false)
+
+--- Frame 44 ---
+  [Tank Move] XDB (鎴戞柟) moved to [3,7] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [10,13] (reverse: false)
+
+--- Frame 45 ---
+  [Tank Move] XDB (鎴戞柟) moved to [2,7] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [9,13] (reverse: false)
+
+--- Frame 46 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [8,13] (reverse: false)
+
+--- Frame 47 ---
+  [Tank Move] XDB (鎴戞柟) moved to [2,6] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [7,13] (reverse: false)
+
+--- Frame 48 ---
+  [Tank Move] XDB (鎴戞柟) moved to [2,5] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [6,13] (reverse: false)
+
+--- Frame 49 ---
+  [Tank Move] XDB (鎴戞柟) moved to [2,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [5,13] (reverse: false)
+
+--- Frame 50 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Move] Bolun (鏁屾柟) moved to [4,13] (reverse: false)
+
+--- Frame 51 ---
+  [Tank Move] XDB (鎴戞柟) moved to [3,4] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 52 ---
+  [Tank Move] XDB (鎴戞柟) moved to [4,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,12] (reverse: false)
+
+--- Frame 53 ---
+  [Tank Move] XDB (鎴戞柟) moved to [5,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,11] (reverse: false)
+  [Star Event] collected at [undefined]
+
+--- Frame 54 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?2 鏁?1" at [5,4]
+  [Tank Move] XDB (鎴戞柟) moved to [6,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,10] (reverse: false)
+
+--- Frame 55 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,9] (reverse: false)
+
+--- Frame 56 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,4] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,8] (reverse: false)
+
+--- Frame 57 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] Bolun (鏁屾柟) moved to [4,7] (reverse: false)
+
+--- Frame 58 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,3] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [4,6] (reverse: false)
+
+--- Frame 59 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,2] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 60 ---
+  [Tank Move] XDB (鎴戞柟) moved to [8,1] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [3,6] (reverse: false)
+
+--- Frame 61 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] Bolun (鏁屾柟) moved to [2,6] (reverse: false)
+
+--- Frame 62 ---
+  [Tank Move] XDB (鎴戞柟) moved to [7,1] (reverse: false)
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "right"
+
+--- Frame 63 ---
+  [Star Event] created at [1,13]
+  [Tank Move] XDB (鎴戞柟) moved to [6,1] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [2,5] (reverse: false)
+
+--- Frame 64 ---
+  [Other Event] type=skill action=cast actor=0 pos=undefined
+  [Other Event] type=skill action=applied actor=0 pos=undefined
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 65 ---
+  [Speak] XDB (鎴戞柟) said: "浼犻€佸欢杩熺瓑寰? at [2,13]
+  [Tank Move] Bolun (鏁屾柟) moved to [1,5] (reverse: false)
+
+--- Frame 66 ---
+  [Tank Move] XDB (鎴戞柟) moved to [1,13] (reverse: false)
+  [Other Event] type=skill action=cast actor=1 pos=undefined
+  [Other Event] type=skill action=applied actor=1 pos=undefined
+  [Star Event] collected at [undefined]
+
+--- Frame 67 ---
+  [Speak] XDB (鎴戞柟) said: "鎴戝緱鍒? 鎴?3 鏁?1" at [1,13]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+
+--- Frame 68 ---
+  [Speak] XDB (鎴戞柟) said: "瀹夊叏瑙勯伩" at [1,13]
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "right"
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=down
+  [Bullet Created] from actor 鏁屾柟 at [undefined] dir=down
+  [Other Event] type=skill action=expired actor=1 pos=undefined
+  [Bullet Action] go at [2,6]
+  [Bullet Action] go at [2,7]
+  [Bullet Action] go at [1,6]
+  [Bullet Action] go at [1,7]
+
+--- Frame 69 ---
+  [Tank Move] XDB (鎴戞柟) moved to [2,13] (reverse: false)
+  [Tank Move] Bolun (鏁屾柟) moved to [1,6] (reverse: false)
+  [Bullet Action] go at [2,8]
+  [Bullet Action] go at [2,9]
+  [Bullet Action] go at [1,8]
+  [Bullet Action] go at [1,9]
+
+--- Frame 70 ---
+  [Speak] Bolun (鏁屾柟) said: "CNT:v324_proactiveOverload7=1" at [1,6]
+  [Tank Turn] Bolun (鏁屾柟) turned relative direction "left"
+  [Bullet Action] go at [2,10]
+  [Bullet Action] go at [2,11]
+  [Bullet Action] go at [1,10]
+  [Bullet Action] go at [1,11]
+
+--- Frame 71 ---
+  [Tank Turn] XDB (鎴戞柟) turned relative direction "left"
+  [Tank Move] Bolun (鏁屾柟) moved to [2,6] (reverse: false)
+  [Bullet Action] go at [2,12]
+  [Bullet Action] go at [2,13]
+  [Bullet Crashed] at [undefined] due to undefined
+  [Tank Action] XDB (鎴戞柟) did crashed at undefined
+  [Bullet Action] go at [1,12]
+  [Bullet Action] go at [1,13]

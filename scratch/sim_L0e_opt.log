@@ -1,0 +1,200 @@
+﻿
+=================== Simulation Config ===================
+  My Tank (XDB) ID : 6c868e88 (Index: 0)
+  Enemy (ByteStorm) ID : 9713a23e (Index: 1)
+=========================================================
+
+--------------------------------------------------------------------------------
+Frame 1 | Star: [12,13] | Map: classic
+[State] XDB   : Pos=[11,13] Dir=up    | CD=40 | Status=[fireLocked]
+        ByteStorm : Pos=[16,13] Dir=down  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [16,13]
+  馃洝锔?XDB   : teleported to [11,13]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":740,"type":"survival"}
+  Path NextStep: [10,13] -> Need Turn/Move Dir: left
+  馃 Local Code Action: turn("left")
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: teleported to [11,13]
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 2 | Star: [12,13] | Map: classic
+[State] XDB   : Pos=[11,12] Dir=up    | CD=39 | Status=[fireLocked]
+        ByteStorm : Pos=[16,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  鈿旓笍 ByteStorm: turn right (now left)
+  馃洝锔?XDB   : move to [11,12]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,11] -> Need Turn/Move Dir: up
+  馃 Local Code Action: go(1)
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [11,12]
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 3 | Star: [12,13] | Map: classic
+[State] XDB   : Pos=[11,12] Dir=up    | CD=38 | Status=[Normal]
+        ByteStorm : Pos=[15,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [15,13]
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,11] -> Need Turn/Move Dir: up
+  馃 Local Code Action: fire()
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 4 | Star: [12,13] | Map: classic
+[State] XDB   : Pos=[11,12] Dir=up    | CD=37 | Status=[Normal]
+        ByteStorm : Pos=[14,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [14,13]
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,11] -> Need Turn/Move Dir: up
+  馃 Local Code Action: go(1)
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 5 | Star: [12,13] | Map: classic
+[State] XDB   : Pos=[11,12] Dir=left  | CD=36 | Status=[Normal]
+        ByteStorm : Pos=[13,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [13,13]
+  馃洝锔?XDB   : turn left (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,11] -> Need Turn/Move Dir: up
+  馃 Local Code Action: turn("right")
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now left)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 6 | Star: null | Map: classic
+[State] XDB   : Pos=[11,12] Dir=down  | CD=35 | Status=[Normal]
+        ByteStorm : Pos=[12,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [12,13]
+  馃洝锔?XDB   : turn left (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,11] -> Need Turn/Move Dir: up
+  馃 Local Code Action: turn("right")
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now down)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 7 | Star: null | Map: classic
+[State] XDB   : Pos=[11,12] Dir=down  | CD=34 | Status=[Normal]
+        ByteStorm : Pos=[12,13] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: turn right (now up)
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,13] -> Need Turn/Move Dir: down
+  馃 Local Code Action: go(1)
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 8 | Star: null | Map: classic
+[State] XDB   : Pos=[11,12] Dir=right | CD=33 | Status=[Normal]
+        ByteStorm : Pos=[12,12] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [12,12]
+  馃洝锔?XDB   : turn left (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [10,12] -> Need Turn/Move Dir: left
+  馃 Local Code Action: fire()
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now right)
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 9 | Star: null | Map: classic
+[State] XDB   : Pos=[11,12] Dir=right | CD=32 | Status=[Normal]
+        ByteStorm : Pos=[12,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [12,11]
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [10,12] -> Need Turn/Move Dir: left
+  馃 Local Code Action: turn("right")
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 10 | Star: null | Map: classic
+[State] XDB   : Pos=[11,12] Dir=down  | CD=31 | Status=[Normal]
+        ByteStorm : Pos=[12,11] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: turn left (now left)
+  馃洝锔?XDB   : turn right (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[10,8],"score":1550,"type":"survival"}
+  Path NextStep: [11,13] -> Need Turn/Move Dir: down
+  馃 Local Code Action: go(1)
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now down)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 11 | Star: null | Map: classic
+[State] XDB   : Pos=[11,13] Dir=down  | CD=30 | Status=[Normal]
+        ByteStorm : Pos=[12,11] Dir=left  | CD=32 | Status=[overloaded] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: stay still
+  馃洝锔?XDB   : move to [11,13]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[15,13],"score":1560,"type":"survival"}
+  Path NextStep: [12,13] -> Need Turn/Move Dir: right
+  馃 Local Code Action: stay still
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [11,13]
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 12 | Star: null | Map: classic
+[State] XDB   : Pos=[11,13] Dir=down  | CD=29 | Status=[Normal]
+        ByteStorm : Pos=[11,11] Dir=left  | CD=31 | Status=[overloaded] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: move to [11,11]
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[15,13],"score":1560,"type":"survival"}
+  Path NextStep: [12,13] -> Need Turn/Move Dir: right
+  馃 Local Code Action: stay still
+--------------------------------------------------------------------------------
+Frame 13 | Star: null | Map: classic
+[State] XDB   : Pos=[11,13] Dir=down  | CD=28 | Status=[Normal]
+        ByteStorm : Pos=[11,11] Dir=down  | CD=30 | Status=[overloaded] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: turn left (now down)
+  馃洝锔?XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[15,13],"score":1560,"type":"survival"}
+  Path NextStep: [10,13] -> Need Turn/Move Dir: left
+  馃 Local Code Action: turn("right")
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 14 | Star: null | Map: classic
+[State] XDB   : Pos=[11,13] Dir=left  | CD=27 | Status=[Normal]
+        ByteStorm : Pos=[11,11] Dir=down  | CD=29 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  鈿旓笍 ByteStorm: stay still
+  馃洝锔?XDB   : CRASHED
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[15,13],"score":1560,"type":"survival"}
+  Path NextStep: [10,13] -> Need Turn/Move Dir: left
+  馃 Local Code Action: go(1)
+  鈿狅笍 [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: CRASHED
+     -> Local Code   : go(1)
+================================================================================
