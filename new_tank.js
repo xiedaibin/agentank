@@ -35,7 +35,8 @@ var G_History = {
     lastTeleportTarget: null,
     lastTeleportFrame: -99,
     lastTeleportPos: null,
-    hasSpokenBullet: false
+    hasSpokenBullet: false,
+    lastEnemyStars: 0
 };
 
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
@@ -409,6 +410,11 @@ function buildExecutionContext(me, enemy, game) {
         shootingEnemyPos &&
         isNearGrass(shootingEnemyPos);
 
+    if (enemy && typeof enemy.stars === 'number') {
+        G_History.lastEnemyStars = Math.max(G_History.lastEnemyStars || 0, enemy.stars);
+    }
+    var enemyStars = G_History.lastEnemyStars || 0;
+
     return {
         me: me, myPos: me.tank.position, myDir: me.tank.direction, meStars: me.stars, meStatus: me.status || {},
         enemy: enemy, enemyPos: currentEnemyPos, predictedEnemyPos: predictedEnemyPos, shootingEnemyPos: shootingEnemyPos, enemyDir: currentEnemyDir, enemyVisible: visible,
@@ -422,7 +428,8 @@ function buildExecutionContext(me, enemy, game) {
         unsafeCoAxialTiles: unsafeCoAxialTiles,
         isTeleportAmbushStream: isTeleportAmbushStream,
         isEnemyRecentlyInvisibleInGrass: isEnemyRecentlyInvisibleInGrass,
-        isUrgentStarGrab: (G_History.frame >= 124) && (me.stars <= (enemy ? (enemy.stars || 0) : 0))
+        enemyStars: enemyStars,
+        isUrgentStarGrab: (G_History.frame >= 124) && (me.stars <= enemyStars)
     };
 }
 
@@ -561,8 +568,7 @@ function evalPreAim(ctx) {
 
         if (preAimDir) {
             var maxWaitTicks = 10;
-            var enemyStars = (ctx.enemy && typeof ctx.enemy.stars === 'number') ? ctx.enemy.stars : 0;
-            if (ctx.meStars > enemyStars) {
+            if (ctx.meStars > ctx.enemyStars) {
                 maxWaitTicks = 20;
             }
 
@@ -641,8 +647,10 @@ function evalStarCollection(ctx) {
     }
 
     // 正常传送逻辑：不再传送到星格中心，而是传送到最安全、效率最高的相邻格
+    // 如果是最后阶段 (例如 frame >= 100)，且我方星星领先，则不传送吃星以保护优势
+    var isFinalStageLeading = (G_History.frame >= 100) && (ctx.meStars > ctx.enemyStars);
     var minTeleportDist = ctx.isUrgentStarGrab ? 2 : 7;
-    if (ctx.canTeleport && dist > minTeleportDist && !forbidEarlyTP) {
+    if (ctx.canTeleport && dist > minTeleportDist && !forbidEarlyTP && !isFinalStageLeading) {
         var teleportTarget = findBestStarTeleportTarget(ctx);
         if (teleportTarget && !samePos(teleportTarget, ctx.myPos) && isTeleportPassable(teleportTarget, ctx)) {
             var teleportScore = ctx.isUrgentStarGrab ? 20000 : (CONFIG.STAR_PRIO + 1000);
@@ -825,7 +833,7 @@ function evalPathAmbush(ctx) {
     if (!ctx.starPos || !ctx.enemyPos || !ctx.enemy) return null;
 
     // 优势判定：我方星星 >= 敌方星星 + 2
-    var advantage = ctx.meStars >= (ctx.enemy.stars + 2);
+    var advantage = ctx.meStars >= (ctx.enemyStars + 2);
     if (!advantage) return null;
 
     // 1. 获取敌人前行路径
