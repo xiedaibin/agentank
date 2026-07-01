@@ -560,6 +560,10 @@ function evalShooting(ctx) {
  * @param {Object} ctx 上下文
  */
 function evalPreAim(ctx) {
+    if (evalPathAmbushFire(ctx)) {
+        return null;
+    }
+
     if (G_History.preAimLockoutUntil && G_History.frame < G_History.preAimLockoutUntil) {
         return null;
     }
@@ -896,7 +900,8 @@ function evalPathAmbushFire(ctx) {
     if (!isCurrentlyInGrass) return null;
 
     // 1. 获取敌人前行路径
-    var enemyPath = getEnemyPredictedPath(ctx.enemyPos, ctx.enemyDir, ctx.starPos, ctx.map);
+    var startPos = ctx.enemyVisible ? ctx.enemyPos : (ctx.predictedEnemyPos || ctx.enemyPos);
+    var enemyPath = getEnemyPredictedPath(startPos, ctx.enemyDir, ctx.starPos, ctx.map);
     if (enemyPath.length === 0) return null;
 
     var bestInterception = null;
@@ -906,7 +911,9 @@ function evalPathAmbushFire(ctx) {
         if (ctx.starPos && samePos(ctx.myPos, ctx.starPos)) continue;
 
         var d = getDist(ctx.myPos, node.pos);
-        if (d < 3 || d > 7) continue;
+        var isStarAmbush = ctx.starPos && (getDist(node.pos, ctx.starPos) <= 1);
+        var minD = isStarAmbush ? 1 : 3;
+        if (d < minD || d > 7) continue;
 
         var dir = directionTo(ctx.myPos, node.pos);
         var isCoAxial = (ctx.myPos[0] === node.pos[0] || ctx.myPos[1] === node.pos[1]);
