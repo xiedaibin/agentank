@@ -39,6 +39,8 @@
 *   **[summarize_rank_losses.js](summarize_rank_losses.js)** 与 **[summarize_evolution_losses.js](summarize_evolution_losses.js)**: 聚合和提取失败对局的特征与败因。
 *   **[analyze_replay.js](analyze_replay.js)**: 解析并详细检查具体的对局录像 JSON。
 *   **[simulate_match.js](simulate_match.js)**: 在本地/API 模拟运行与训练机器人的对局，以便快速调试。
+*   **[run_tests.js](run_tests.js)**: XDB-Registry 回归测试核心运行器，在轻量沙盒内快速对历史失败战例特定帧的动作断言。
+*   **[test_cases/registry.json](test_cases/registry.json)**: 历史行为测试用例集，记录失败对战的战例ID、目标帧、期待行为等。
 
 ---
 
@@ -64,6 +66,10 @@
 
 ### 4. 版本号与启动 Speak 对齐规则
 每次对坦克代码进行版本变更（例如更新头部注释的版本号）时，**必须**同步更新 `onIdle` 入口处的首帧初始化 Speak 播报（例如将 `me.speak("V12.60: 预判背杀")` 变更为 `me.speak("V12.65: 预判背杀")`），以确保对战回放中坦克头顶弹出的版本标识与实际部署的代码版本号一致。
+
+### 5. XDB-Registry 回归测试红线与约束
+- **回归测试工具**：通过 `node run_tests.js` 启动回归测试套件。该工具会自动化拉取或从本地缓存加载 `test_cases/registry.json` 中配置的历史失败对局，用 sandbox 精准复现特定帧的上下文并检验动作断言。
+- **强制执行红线**：AI 代理在对 `new_tank.js` 进行任何策略改动、分支优化或 Bug 修复后，在执行 Git 提交、发起实战演进（`batch_evolution`）或发布（`publish`）前，**必须且强制**在本地运行 `node run_tests.js`，确保全部回归测试用例 100% 通过（PASS）。一旦出现 FAIL，禁止提交和发布。
 
 ---
 
