@@ -1781,7 +1781,7 @@ function reverseDir(d) { return { up: "down", down: "up", left: "right", right: 
 /**
  * 获取给定方向的 Overload 右偏方向朝向字符串(超载子弹的偏移方向)
  */
-function overloadRightDir(d) { return { up: "right", right: "down", down: "left", left: "down" }[d]; }
+function overloadRightDir(d) { return { up: "right", right: "down", down: "right", left: "down" }[d]; }
 /**
  * 检查某点是否不是硬墙或土堆，可用于物理穿行
  */
