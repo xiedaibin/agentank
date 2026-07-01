@@ -71,6 +71,34 @@
 - **回归测试工具**：通过 `node run_tests.js` 启动回归测试套件。该工具会自动化拉取或从本地缓存加载 `test_cases/registry.json` 中配置的历史失败对局，用 sandbox 精准复现特定帧的上下文并检验动作断言。
 - **强制执行红线**：AI 代理在对 `new_tank.js` 进行任何策略改动、分支优化或 Bug 修复后，在执行 Git 提交、发起实战演进（`batch_evolution`）或发布（`publish`）前，**必须且强制**在本地运行 `node run_tests.js`，确保全部回归测试用例 100% 通过（PASS）。一旦出现 FAIL，禁止提交和发布。
 
+### 6. XDB-Registry 测试用例扩充指引 (How to Add Test Cases)
+当用户口述要求增加测试用例（如：“将比赛 `mat_xxx` 期望 `N` 帧开火/移动写入测试框架”）时，AI 代理应当全自动解析参数并将其整理填入 [test_cases/registry.json](test_cases/registry.json) 中。
+
+#### 用例配置结构说明
+每个配置项包含以下字段：
+```json
+{
+  "id": "TC-00X",                     // 唯一测试ID，按顺序累加
+  "description": "用例战术场景描述",    // 简述失败或期望的行为背景
+  "matchId": "mat_BVebIlAw5CD9zXqOI", // 比赛的唯一ID，系统会自动联网拉取并缓存其原始 Replay JSON
+  "frame": 55,                        // 断言期望动作的目标帧号 (1-indexed)
+  "setupHistory": {                   // [可选] 用于覆盖/注入 G_History 相关的局部内存状态
+    "lastEnemyPos": [11, 7],          // 最近一次看到敌人的坐标
+    "lastEnemyDir": "right",          // 最近一次看到敌人的朝向
+    "lastEnemySeenFrame": 123,        // 最近一次看到敌人的帧号 (若为隐身预测，需小于等于 frame - 1)
+    "lastEnemyVisible": true,
+    "wasEnemyVisible": true,
+    "enemyInvisibleFrames": 0,        // 初始不可见帧数。注意：onIdle 一进函数会将其累加 1，若期望在 onIdle 内部值为 1，则此处应灌入 0
+    "isEnemyPosPredicted": true
+  },
+  "expected": {                       // 期待做出的最终物理决策
+    "action": "fire" 或 "move",       // 动作类型 (fire / move / turn 等)
+    "target": [6, 8]                  // [可选] 动作目标的绝对坐标
+  }
+}
+```
+*提示：如果被测帧不牵涉复杂的 G_History 状态缓存判定（如纯视线避弹、吃星路径决策等），`setupHistory` 字段可不填，框架会通过模拟演演进自动从第 0 帧计算生成最接近的物理环境。*
+
 ---
 
 ## 💬 交流语言规范
