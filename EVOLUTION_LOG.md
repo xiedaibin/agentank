@@ -226,3 +226,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-01 | 未命名策略 | 未命名策略 (自动生成) | 56.67% | Rejected | -14.76% |
 | V12 | 2026-07-01 | 未命名策略 | 未命名策略 (自动生成) | 50.00% | Rejected | -21.43% |
 | V12.65 | 2026-07-01 | XDB-Registry 回归与动态星防伏击 | 修复 pre_aim 覆盖伏击 Bug，引入 predictedEnemyPos 起点预测，引入 isStarAmbush 守星伏击距离自适应松弛 (d>=1)，通过全部回归测试。实战胜率相比同对手池原版基准（50%）提升至 56.67%。 | 56.67% | Adopted | +6.67% |
+| V12 | 2026-07-01 | 未命名策略 | 未命名策略 (自动生成) | 73.33% | Adopted | 16.66% |
