@@ -1,0 +1,34 @@
+[
+  {
+    "id": "TC-001",
+    "matchId": "mat_BVebIlAw5CD9zXqOI",
+    "description": "Frame 55 - 敌方抢星前夕，我方必须执行通道伏击预判开火，打掉 [6,8] 星格",
+    "frame": 55,
+    "setupHistory": {
+      "lastPreAimTurnFrame": null
+    },
+    "expected": {
+      "action": "fire",
+      "target": [6, 8]
+    }
+  },
+  {
+    "id": "TC-002",
+    "matchId": "mat_BVebIlAw5CD9zXqOI",
+    "description": "Frame 124 - 敌人进入草丛，我方必须使用预测位置进行完美的盲射",
+    "frame": 124,
+    "setupHistory": {
+      "lastEnemyPos": [11, 7],
+      "lastEnemyDir": "right",
+      "lastEnemySeenFrame": 123,
+      "lastEnemyVisible": true,
+      "wasEnemyVisible": true,
+      "enemyInvisibleFrames": 0,
+      "isEnemyPosPredicted": true
+    },
+    "expected": {
+      "action": "fire",
+      "target": [14, 7]
+    }
+  }
+]
