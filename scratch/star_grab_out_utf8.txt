@@ -1,0 +1,361 @@
+﻿
+------------------ Frame 13 ------------------
+  XDB: Pos=[5,2] Dir=right CD=33
+  AME: Pos=[10,3] Dir=left CD=28 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1789,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":230,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[14,4],"score":1789,"type":"star"}
+
+------------------ Frame 14 ------------------
+  XDB: Pos=[6,2] Dir=right CD=32
+  AME: Pos=[10,3] Dir=up CD=27 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1790,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":240,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[14,4],"score":1790,"type":"star"}
+
+------------------ Frame 15 ------------------
+  XDB: Pos=[7,2] Dir=right CD=31
+  AME: Pos=[10,3] Dir=left CD=26 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"turn","target":[7,3],"score":9850,"type":"pre_aim"}
+
+------------------ Frame 16 ------------------
+  XDB: Pos=[7,2] Dir=down CD=30
+  AME: Pos=[10,3] Dir=up CD=25 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"turn","target":[8,2],"score":9850,"type":"pre_aim"}
+
+------------------ Frame 17 ------------------
+  XDB: Pos=[7,2] Dir=right CD=29
+  AME: Pos=[10,3] Dir=left CD=24 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"turn","target":[7,3],"score":9850,"type":"pre_aim"}
+
+------------------ Frame 18 ------------------
+  XDB: Pos=[7,2] Dir=down CD=28
+  AME: Pos=[10,3] Dir=up CD=23 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"turn","target":[8,2],"score":9850,"type":"pre_aim"}
+
+------------------ Frame 19 ------------------
+  XDB: Pos=[7,2] Dir=down CD=27
+  AME: Pos=[10,3] Dir=right CD=22 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+
+------------------ Frame 20 ------------------
+  XDB: Pos=[7,2] Dir=down CD=26
+  AME: Pos=[11,3] Dir=right CD=21 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+    evalStarCollection            : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":250,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[14,4],"score":1791,"type":"star"}
+
+------------------ Frame 21 ------------------
+  XDB: Pos=[7,2] Dir=down CD=25
+  AME: Pos=[12,3] Dir=right CD=20 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+    evalStarCollection            : {"action":"move","target":[14,4],"score":-500,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":300,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[7,2],"score":300,"type":"survival"}
+
+------------------ Frame 22 ------------------
+  XDB: Pos=[7,2] Dir=down CD=24
+  AME: Pos=[13,3] Dir=right CD=19 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+    evalStarCollection            : {"action":"move","target":[14,4],"score":-500,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":300,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[7,2],"score":300,"type":"survival"}
+
+------------------ Frame 23 ------------------
+  XDB: Pos=[7,2] Dir=down CD=23
+  AME: Pos=[14,3] Dir=right CD=18 (Visible: true)
+  Star: [14,4]
+    [Speak] 鏁屽緱鍒? 鎴?3 鏁?3
+    [Speak] 鎴戝緱鍒? 鎴?3 鏁?3
+    evalStarCollection            : {"action":"move","target":[14,4],"score":-500,"type":"star"}
+    evalGrassAmbushAndSurvival    : {"action":"move","target":[7,2],"score":300,"type":"survival"}
+    evalStarGuard                 : null
+    TACTICAL ANALYSIS CHOICE       : {"action":"move","target":[7,2],"score":300,"type":"survival"}
