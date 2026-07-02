@@ -83,7 +83,11 @@ function onIdle(me, enemy, game) {
         if (!G_Blueprint.initialized || (enemy && !G_Blueprint.enemySeen)) strategicInit(enemy, game.map);
 
         var ctx = buildExecutionContext(me, enemy, game);
-        if (ctx.meStatus.stunned || ctx.meStatus.frozen) return;
+        if (ctx.meStatus.frozen) return;
+        if (ctx.meStatus.stunned) {
+            var coAxial = ctx.enemyPos && (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
+            if (!coAxial) return;
+        }
 
         // 发现子弹的视觉 Speak 预警
         if (ctx.enemyBullet) {
@@ -166,7 +170,7 @@ function strategicInit(enemy, map) {
         };
         if (sType === "freeze" || sType === "stun") {
             G_Blueprint.Tactics = {
-                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 8, ASTAR_UNSAFE_PENALTY: 3000,
+                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 9, ASTAR_UNSAFE_PENALTY: 3000,
                 ENABLE_ASSASSINATION: false, MAX_NODES: 200
             };
         } else if (sType === "cloak") {
@@ -545,7 +549,8 @@ function evalShooting(ctx) {
                 var dist = getDist(ctx.myPos, ctx.shootingEnemyPos);
                 var isLoSDanger = isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
                 var isCloseDanger = dist <= 8 && canShoot(ctx.shootingEnemyPos, ctx.myPos, ctx.map) === true && !ctx.enemyVisible;
-                if (isLoSDanger || isCloseDanger) {
+                var isControlDanger = (G_Blueprint.Tactics.STANCE === "ANTI_CONTROL") && ctx.enemySkillReady && dist <= G_Blueprint.Tactics.DANGER_RADIUS && !ctx.enemyBullet;
+                if (isLoSDanger || isCloseDanger || isControlDanger) {
                     return null;
                 }
             }

@@ -170,6 +170,8 @@ async function main() {
 
     let meFireLockTimer = 0;
     let enemyFireLockTimer = 0;
+    let meStars = 0;
+    let enemyStars = 0;
 
     // Load local code
     const newTankCode = fs.readFileSync(path.join(__dirname, 'new_tank.js'), 'utf8');
@@ -297,6 +299,12 @@ async function main() {
             }
             if (ev.event === "star_collected" || ev.action === "collected") {
                 starPos = null;
+                const collectorIndex = ev.by;
+                if (collectorIndex === meIndex) {
+                    meStars++;
+                } else if (collectorIndex === enemyIndex) {
+                    enemyStars++;
+                }
             }
 
             // 4. Cooldowns
@@ -366,7 +374,7 @@ async function main() {
         // Construct sandbox data objects
         const me = {
             tank: { id: 230, position: mePos.slice(), direction: meDir, crashed: false },
-            stars: f < 17 ? 0 : 1, // approximate star count or dynamically track
+            stars: meStars,
             bullet: meB,
             skill: {
                 type: meSkillType,
@@ -381,7 +389,7 @@ async function main() {
         const enemy = {
             tank: enemyVisible ? { id: 1414, position: enemyPos.slice(), direction: enemyDir, crashed: false } : null,
             bullet: visibleEnemyB,
-            stars: f < 17 ? 0 : 0,
+            stars: enemyStars,
             skill: {
                 type: enemySkillType,
                 cooldownFrames: COOLDOWNS[enemySkillType],
@@ -435,8 +443,14 @@ async function main() {
                 }
             }
 
+            const t0 = performance.now();
             sandbox.onIdle(meSandboxObj, enemy, game);
-            console.log(`  🤖 Local Code Action: ${queuedAction}`);
+            const t1 = performance.now();
+            const elapsed = t1 - t0;
+            console.log(`  🤖 Local Code Action: ${queuedAction} (Time: ${elapsed.toFixed(3)}ms)`);
+            if (elapsed > 5) {
+                console.log(`  ⚠️ [SLOW FRAME] Frame ${f} took ${elapsed.toFixed(3)}ms`);
+            }
 
             // Divergence Detection
             // Clean up both action strings to compare them roughly

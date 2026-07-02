@@ -294,7 +294,7 @@ function onIdle(me, enemy, game) {
 ### Skill behavior summary
 
 - `shield()`
-  Grants a shield for up to 4 frames, but it breaks immediately after blocking 1 bullet hit. Cooldown: 25 frames.
+  Grants a shield for up to 4 frames, and it breaks after blocking 2 bullet hits. Cooldown: 25 frames.
 - `freeze()`
   Prevents the enemy tank from acting for 2 frames. Their queued commands are not discarded; they resume after freeze ends. Cooldown: 29 frames.
 - `stun()`

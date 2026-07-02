@@ -1,1762 +1,740 @@
-﻿
+
 =================== Simulation Config ===================
-  My Tank (XDB) ID : 27d98749 (Index: 0)
-  Enemy (Riftwalker) ID : 002a462c (Index: 1)
+  My Tank (XDB) ID : baed87e4 (Index: 0)
+  Enemy (开心果) ID : e980c898 (Index: 1)
 =========================================================
 
 --------------------------------------------------------------------------------
-Frame 1 | Star: null | Map: random
-[State] XDB   : Pos=[2,1] Dir=up    | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=down  | CD=40 | Status=[fireLocked] (Visible: true)
+Frame 1 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=up    | CD=40 | Status=[fireLocked]
+        开心果   : Pos=[16,12] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: teleported to [6,7]
-  🛡️ XDB   : move to [2,1]
+  ⚔️ 开心果  : turn right (now left)
+  🛡️ XDB   : teleported to [15,3]
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[5,3],"score":750,"type":"survival"}
-  Path NextStep: [3,1] -> Need Turn/Move Dir: right
+  Chosen Target: {"action":"move","target":[16,3],"score":1799,"type":"star"}
+  Path NextStep: [16,3] -> Need Turn/Move Dir: right
   🤖 Local Code Action: turn("right")
   ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: move to [2,1]
+     -> Replay Action: teleported to [15,3]
      -> Local Code   : turn("right")
 --------------------------------------------------------------------------------
-Frame 2 | Star: null | Map: random
-[State] XDB   : Pos=[2,1] Dir=left  | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=left  | CD=39 | Status=[fireLocked] (Visible: false)
+Frame 2 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=39 | Status=[fireLocked]
+        开心果   : Pos=[16,12] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: turn right (now left)
-  🛡️ XDB   : turn left (now left)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[5,3],"score":900,"type":"survival"}
-  Path NextStep: [3,1] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now left)
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 3 | Star: null | Map: random
-[State] XDB   : Pos=[2,1] Dir=down  | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=38 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: move to [5,7]
-  🛡️ XDB   : turn left (now down)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[5,3],"score":900,"type":"survival"}
-  Path NextStep: [3,1] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now down)
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 4 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=37 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : move to [2,2]
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[5,3],"score":910,"type":"survival"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: move to [2,2]
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 5 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=left  | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=36 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : turn right (now left)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[5,3],"score":910,"type":"survival"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: turn("right")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn right (now left)
-     -> Local Code   : turn("right")
---------------------------------------------------------------------------------
-Frame 6 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=up    | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=up    | CD=35 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn right (now up)
-  🛡️ XDB   : turn right (now up)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[1,2],"score":10100,"type":"assassinate"}
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn right (now up)
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 7 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=up    | CD=40 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=34 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn left (now left)
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: null
-  🤖 Local Code Action: stay still
---------------------------------------------------------------------------------
-Frame 8 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=left  | CD=39 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=33 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : turn left (now left)
-[Local Simulation Evaluation]
-  Chosen Target: null
-  🤖 Local Code Action: stay still
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now left)
-     -> Local Code   : stay still
---------------------------------------------------------------------------------
-Frame 9 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=38 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=up    | CD=32 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn right (now up)
-  🛡️ XDB   : turn left (now down)
-[Local Simulation Evaluation]
-  Chosen Target: null
-  🤖 Local Code Action: stay still
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now down)
-     -> Local Code   : stay still
---------------------------------------------------------------------------------
-Frame 10 | Star: null | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=37 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=31 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn left (now left)
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: null
-  🤖 Local Code Action: stay still
---------------------------------------------------------------------------------
-Frame 11 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=36 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=30 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 12 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=35 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=29 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 13 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=34 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=28 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 14 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=33 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=27 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 15 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=32 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=26 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 16 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=31 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=25 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 17 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=30 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=24 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 18 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=29 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=23 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 19 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=28 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=22 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 20 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=27 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=21 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 21 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=26 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=20 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 22 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=25 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=19 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 23 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=24 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=18 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 24 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=23 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=17 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 25 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=22 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=16 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 26 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=21 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=15 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 27 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=20 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=14 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 28 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=19 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=13 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 29 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=18 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=12 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 30 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=17 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=11 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 31 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=16 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=10 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 32 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=15 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=9 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [2,3] -> Need Turn/Move Dir: down
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 33 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=14 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=8 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 34 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=13 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=7 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 35 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=12 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=6 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 36 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=11 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=5 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 37 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=10 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=4 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 38 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=9 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=3 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 39 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=8 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=2 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 40 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=7 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=1 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 41 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=6 | Status=[Normal]
-        Riftwalker : Pos=[5,7] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 42 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=5 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=40 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: teleported to [12,7]
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":1538,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 43 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=4 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=39 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 44 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=3 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=38 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 45 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=2 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=37 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 46 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=down  | CD=1 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=36 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[3,2],"score":9950,"type":"assassinate"}
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 47 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=35 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : turn left (now right)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[7,7],"score":10100,"type":"assassinate"}
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now right)
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 48 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=34 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn right (now up)
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[13,4],"score":1800,"type":"star"}
-  🤖 Local Code Action: teleport(13, 4)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : teleport(13, 4)
---------------------------------------------------------------------------------
-Frame 49 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=33 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[13,4],"score":1800,"type":"star"}
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 50 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=32 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 51 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=31 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 52 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=30 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 53 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=29 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[7,7],"score":10100,"type":"assassinate"}
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 54 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=28 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 55 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=27 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 56 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=26 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 57 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=25 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 58 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=24 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [3,2] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 59 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[2,2] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=23 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[7,7],"score":10100,"type":"assassinate"}
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 60 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,7] Dir=right | CD=40 | Status=[fireLocked]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=22 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : teleported to [7,7]
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,6] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: teleported to [7,7]
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 61 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,7] Dir=up    | CD=39 | Status=[fireLocked]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=21 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn left (now left)
-  🛡️ XDB   : turn left (now up)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[12,7],"score":9900,"type":"shoot"}
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn left (now up)
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 62 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=up    | CD=38 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=20 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : move to [7,6]
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: stay still
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: move to [7,6]
-     -> Local Code   : stay still
---------------------------------------------------------------------------------
-Frame 63 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=up    | CD=37 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=19 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 64 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=36 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=left  | CD=18 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
+  ⚔️ 开心果  : turn right (now up)
   🛡️ XDB   : turn right (now right)
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
+  Chosen Target: {"action":"move","target":[16,3],"score":1949,"type":"star"}
+  Path NextStep: [16,3] -> Need Turn/Move Dir: right
   🤖 Local Code Action: turn("left")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: turn right (now right)
      -> Local Code   : turn("left")
 --------------------------------------------------------------------------------
-Frame 65 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=35 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=17 | Status=[Normal] (Visible: false)
+Frame 3 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=38 | Status=[Normal]
+        开心果   : Pos=[16,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: turn right (now up)
+  ⚔️ 开心果  : move to [16,11]
   🛡️ XDB   : stay still
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
+  Chosen Target: {"action":"move","target":[17,6],"score":1550,"type":"survival"}
+  Path NextStep: [15,2] -> Need Turn/Move Dir: up
   🤖 Local Code Action: turn("left")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: stay still
      -> Local Code   : turn("left")
 --------------------------------------------------------------------------------
-Frame 66 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=34 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=16 | Status=[Normal] (Visible: false)
+Frame 4 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=up    | CD=37 | Status=[Normal]
+        开心果   : Pos=[16,10] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 67 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=33 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=15 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 68 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=32 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=14 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 69 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=31 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=13 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 70 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=30 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=12 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 71 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=29 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=11 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 72 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=28 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=10 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 73 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=27 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=9 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 74 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=26 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=8 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 75 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=25 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=7 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 76 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=24 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=6 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 77 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=23 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=5 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 78 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=22 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=4 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 79 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=21 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=3 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 80 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=20 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=2 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 81 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=19 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=1 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 82 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=18 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=0 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 83 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=17 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=40 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: teleported to [6,7]
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 84 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=16 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=39 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 85 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=15 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=38 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 86 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=14 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=37 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 87 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=13 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=36 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 88 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=12 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=35 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 89 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=11 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=34 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 90 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=10 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=33 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 91 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=9 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=32 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 92 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=8 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=31 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 93 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=7 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=30 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 94 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=6 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=29 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 95 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=5 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=28 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 96 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=4 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=27 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 97 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=3 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=26 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 98 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=2 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=25 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 99 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=1 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=24 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [7,5] -> Need Turn/Move Dir: up
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 100 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=0 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=23 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"teleport","target":[7,7],"score":10100,"type":"assassinate"}
-  🤖 Local Code Action: teleport(7, 7)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : teleport(7, 7)
---------------------------------------------------------------------------------
-Frame 101 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,7] Dir=right | CD=40 | Status=[fireLocked]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=22 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : teleported to [7,7]
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[7,7],"score":9920,"type":"shoot"}
-  🤖 Local Code Action: turn("left")
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: teleported to [7,7]
-     -> Local Code   : turn("left")
---------------------------------------------------------------------------------
-Frame 102 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,7] Dir=up    | CD=39 | Status=[fireLocked]
-        Riftwalker : Pos=[6,7] Dir=right | CD=21 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn right (now right)
+  ⚔️ 开心果  : move to [16,10]
   🛡️ XDB   : turn left (now up)
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[12,7],"score":9900,"type":"shoot"}
-  🤖 Local Code Action: go(1)
+  Chosen Target: {"action":"turn","target":[16,3],"score":2200,"type":"guard"}
+  🤖 Local Code Action: turn("right")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: turn left (now up)
-     -> Local Code   : go(1)
+     -> Local Code   : turn("right")
 --------------------------------------------------------------------------------
-Frame 103 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=up    | CD=38 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=right | CD=20 | Status=[Normal] (Visible: false)
+Frame 5 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=36 | Status=[Normal]
+        开心果   : Pos=[16,10] Dir=up    | CD=26 | Status=[boosted] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : move to [7,6]
+  ⚔️ 开心果  : stay still
+  🛡️ XDB   : turn right (now right)
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[8,6],"score":9850,"type":"pre_aim"}
-  🤖 Local Code Action: stay still
+  Chosen Target: {"action":"fire","target":[16,3],"score":2350,"type":"guard"}
+  🤖 Local Code Action: fire()
   ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: move to [7,6]
-     -> Local Code   : stay still
+     -> Replay Action: turn right (now right)
+     -> Local Code   : fire()
 --------------------------------------------------------------------------------
-Frame 104 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=up    | CD=37 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=right | CD=19 | Status=[Normal] (Visible: false)
+Frame 6 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=35 | Status=[Normal]
+        开心果   : Pos=[16,8] Dir=up    | CD=25 | Status=[boosted] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
+  ⚔️ 开心果  : move to [16,8]
   🛡️ XDB   : stay still
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"turn","target":[8,6],"score":9850,"type":"pre_aim"}
+  Chosen Target: {"action":"move","target":[17,6],"score":750,"type":"survival"}
+  Path NextStep: [15,2] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 7 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=34 | Status=[Normal]
+        开心果   : Pos=[16,6] Dir=up    | CD=24 | Status=[boosted] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [16,6]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"fire","target":[16,3],"score":2200,"type":"guard"}
+  🤖 Local Code Action: fire()
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 8 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=33 | Status=[Normal]
+        开心果   : Pos=[16,4] Dir=up    | CD=23 | Status=[boosted] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [16,4]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"fire","target":[16,3],"score":2350,"type":"guard"}
+  🤖 Local Code Action: fire()
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 9 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=32 | Status=[Normal]
+        开心果   : Pos=[16,4] Dir=up    | CD=22 | Status=[boosted] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : stay still
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[17,6],"score":750,"type":"survival"}
+  Path NextStep: [15,2] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 10 | Star: [16,3] | Map: random
+[State] XDB   : Pos=[15,3] Dir=up    | CD=31 | Status=[Normal]
+        开心果   : Pos=[16,4] Dir=up    | CD=21 | Status=[boosted] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : stay still
+  🛡️ XDB   : turn left (now up)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[16,3],"score":2200,"type":"guard"}
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now up)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 11 | Star: null | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=30 | Status=[Normal]
+        开心果   : Pos=[16,3] Dir=up    | CD=20 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [16,3]
+  🛡️ XDB   : turn right (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[17,6],"score":750,"type":"survival"}
+  Path NextStep: [15,2] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: fire()
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now right)
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 12 | Star: null | Map: random
+[State] XDB   : Pos=[15,3] Dir=right | CD=29 | Status=[Normal]
+        开心果   : Pos=[16,2] Dir=up    | CD=19 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [16,2]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[17,6],"score":750,"type":"survival"}
+  Path NextStep: [14,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 13 | Star: null | Map: random
+[State] XDB   : Pos=[15,3] Dir=up    | CD=28 | Status=[Normal]
+        开心果   : Pos=[16,1] Dir=up    | CD=18 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [16,1]
+  🛡️ XDB   : turn left (now up)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[17,6],"score":1550,"type":"survival"}
+  Path NextStep: [14,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: turn("left")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now up)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 14 | Star: null | Map: random
+[State] XDB   : Pos=[15,3] Dir=left  | CD=27 | Status=[Normal]
+        开心果   : Pos=[16,1] Dir=right | CD=17 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : turn right (now right)
+  🛡️ XDB   : turn left (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[17,6],"score":1550,"type":"survival"}
+  Path NextStep: [14,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now left)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 15 | Star: null | Map: random
+[State] XDB   : Pos=[14,3] Dir=left  | CD=26 | Status=[Normal]
+        开心果   : Pos=[17,1] Dir=right | CD=16 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [17,1]
+  🛡️ XDB   : move to [14,3]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,7],"score":1540,"type":"survival"}
+  Path NextStep: [13,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [14,3]
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 16 | Star: null | Map: random
+[State] XDB   : Pos=[13,3] Dir=left  | CD=25 | Status=[Normal]
+        开心果   : Pos=[17,1] Dir=down  | CD=15 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : turn right (now down)
+  🛡️ XDB   : move to [13,3]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,7],"score":1550,"type":"survival"}
+  Path NextStep: [12,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [13,3]
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 17 | Star: null | Map: random
+[State] XDB   : Pos=[12,3] Dir=left  | CD=24 | Status=[Normal]
+        开心果   : Pos=[17,2] Dir=down  | CD=14 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [17,2]
+  🛡️ XDB   : move to [12,3]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,7],"score":1560,"type":"survival"}
+  Path NextStep: [11,3] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: go(1)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [12,3]
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 18 | Star: null | Map: random
+[State] XDB   : Pos=[11,3] Dir=left  | CD=23 | Status=[Normal]
+        开心果   : Pos=[17,3] Dir=down  | CD=13 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : move to [17,3]
+  🛡️ XDB   : move to [11,3]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[17,3],"score":9900,"type":"shoot"}
+  🤖 Local Code Action: turn("right")
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [11,3]
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 19 | Star: null | Map: random
+[State] XDB   : Pos=[11,3] Dir=left  | CD=22 | Status=[Normal]
+        开心果   : Pos=[17,3] Dir=left  | CD=12 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ 开心果  : turn right (now left)
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,7],"score":750,"type":"survival"}
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+  Path NextStep: [11,4] -> Need Turn/Move Dir: down
+[DEBUG tacticalDefense] Frame=19, !ctx.enemyBullet=true, ctx.enemyPos=17,3, me.bullet=null
+[DEBUG tacticalDefense] Frame=19, recentlySeen=true, ghostDist=6
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=19, neighbor n=[11,2] is passable, isSafe=true
+[DEBUG findOffAxisMove] Frame=19, n=[11,2], isSafe=true, dist=7, isNeighborOnAxis=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=19, neighbor n=[12,3] is passable, isSafe=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=19, neighbor n=[11,4] is passable, isSafe=true
+[DEBUG findOffAxisMove] Frame=19, n=[11,4], isSafe=true, dist=7, isNeighborOnAxis=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=19, neighbor n=[10,3] is passable, isSafe=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=19, hasOverload=false, status.overloaded=false, skillReady=false
   🤖 Local Code Action: turn("right")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: stay still
      -> Local Code   : turn("right")
 --------------------------------------------------------------------------------
-Frame 105 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=36 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=right | CD=18 | Status=[Normal] (Visible: false)
+Frame 20 | Star: null | Map: random
+[State] XDB   : Pos=[11,3] Dir=left  | CD=21 | Status=[Normal]
+        开心果   : Pos=[17,3] Dir=left  | CD=11 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : turn right (now right)
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: turn right (now right)
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 106 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=35 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=17 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: turn left (now up)
+  ⚔️ 开心果  : stay still
   🛡️ XDB   : stay still
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
+  Chosen Target: {"action":"move","target":[12,7],"score":750,"type":"survival"}
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+  Path NextStep: [11,4] -> Need Turn/Move Dir: down
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=20, hasOverload=false, status.overloaded=false, skillReady=false
+  🤖 Local Code Action: turn("right")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: stay still
-     -> Local Code   : fire()
+     -> Local Code   : turn("right")
 --------------------------------------------------------------------------------
-Frame 107 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=34 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=16 | Status=[Normal] (Visible: false)
+Frame 21 | Star: [13,8] | Map: random
+[State] XDB   : Pos=[11,3] Dir=left  | CD=20 | Status=[Normal]
+        开心果   : Pos=[16,3] Dir=left  | CD=10 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
+  ⚔️ 开心果  : move to [16,3]
   🛡️ XDB   : stay still
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
+  Chosen Target: {"action":"move","target":[13,8],"score":1393,"type":"star"}
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+  Path NextStep: [11,4] -> Need Turn/Move Dir: down
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=21, hasOverload=false, status.overloaded=false, skillReady=false
+  🤖 Local Code Action: turn("right")
   ⚠️ [Diverged] Local Code Action differs from Replay!
      -> Replay Action: stay still
-     -> Local Code   : go(1)
+     -> Local Code   : turn("right")
 --------------------------------------------------------------------------------
-Frame 108 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=33 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=15 | Status=[Normal] (Visible: false)
+Frame 22 | Star: [13,8] | Map: random
+[State] XDB   : Pos=[11,3] Dir=left  | CD=19 | Status=[Normal]
+        开心果   : Pos=[15,3] Dir=left  | CD=9 | Status=[Normal] (Visible: true)
 [Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
+  ⚔️ 开心果  : move to [15,3]
+  🛡️ XDB   : CRASHED
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
 [Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
+  Chosen Target: {"action":"move","target":[13,8],"score":1393,"type":"star"}
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+  Path NextStep: [11,4] -> Need Turn/Move Dir: down
+[DEBUG tacticalDefense] Frame=22, !ctx.enemyBullet=true, ctx.enemyPos=15,3, me.bullet=null
+[DEBUG tacticalDefense] Frame=22, recentlySeen=true, ghostDist=4
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=22, neighbor n=[11,2] is passable, isSafe=true
+[DEBUG findOffAxisMove] Frame=22, n=[11,2], isSafe=true, dist=5, isNeighborOnAxis=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=22, neighbor n=[12,3] is passable, isSafe=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=22, neighbor n=[11,4] is passable, isSafe=true
+[DEBUG findOffAxisMove] Frame=22, n=[11,4], isSafe=true, dist=5, isNeighborOnAxis=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG findOffAxisMove] Frame=22, neighbor n=[10,3] is passable, isSafe=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+[DEBUG isEnemyOverloadActive] Frame=22, hasOverload=false, status.overloaded=false, skillReady=false
+  🤖 Local Code Action: turn("left")
   ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 109 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=32 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=14 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 110 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=31 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=13 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 111 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=30 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=12 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 112 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=29 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=11 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 113 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=28 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=10 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 114 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=27 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=9 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 115 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=26 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=8 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 116 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=25 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=7 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 117 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=24 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=6 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 118 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=23 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=5 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 119 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=22 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=4 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 120 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=21 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=3 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 121 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=20 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=2 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 122 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=19 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=1 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 123 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=18 | Status=[Normal]
-        Riftwalker : Pos=[6,7] Dir=up    | CD=0 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 124 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=17 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=40 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: teleported to [12,7]
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":943,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 125 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=16 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=39 | Status=[fireLocked] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
---------------------------------------------------------------------------------
-Frame 126 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=15 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=38 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: fire()
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : fire()
---------------------------------------------------------------------------------
-Frame 127 | Star: [12,4] | Map: random
-[State] XDB   : Pos=[7,6] Dir=right | CD=14 | Status=[Normal]
-        Riftwalker : Pos=[12,7] Dir=up    | CD=37 | Status=[Normal] (Visible: false)
-[Replay Actions]
-  ⚔️ Riftwalker: stay still
-  🛡️ XDB   : stay still
-[Local Simulation Evaluation]
-  Chosen Target: {"action":"move","target":[12,4],"score":-500,"type":"star"}
-  Path NextStep: [8,6] -> Need Turn/Move Dir: right
-  🤖 Local Code Action: go(1)
-  ⚠️ [Diverged] Local Code Action differs from Replay!
-     -> Replay Action: stay still
-     -> Local Code   : go(1)
+     -> Replay Action: CRASHED
+     -> Local Code   : turn("left")
 ================================================================================

@@ -1,0 +1,211 @@
+
+==================== Frame 0 ====================
+{"action":"created","position":[5,3],"type":"star"}
+
+==================== Frame 1 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[16,12],"tank":{"id":"5693c431","position":[16,12],"direction":"down"},"text":"V12.60: 预判背杀","type":"speech"}
+{"action":"cast","by":0,"skillType":"teleport","sourceObjectId":"27472152","type":"skill"}
+{"action":"applied","by":0,"from":[2,2],"skillType":"teleport","sourceObjectId":"27472152","targetObjectId":"27472152","to":[11,3],"type":"skill"}
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 2 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[16,12],"tank":{"id":"5693c431","position":[16,12],"direction":"right"},"text":"敌传至: [11,3]","type":"speech"}
+{"action":"turn","direction":"left","objectId":"27472152","stunReversed":false,"type":"tank"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 3 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 4 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 5 ====================
+{"action":"go","objectId":"5693c431","position":[16,11],"reverse":false,"type":"tank"}
+
+==================== Frame 6 ====================
+{"action":"go","objectId":"5693c431","position":[16,10],"reverse":false,"type":"tank"}
+
+==================== Frame 7 ====================
+{"action":"cast","by":1,"skillType":"teleport","sourceObjectId":"5693c431","type":"skill"}
+{"action":"applied","by":1,"from":[16,10],"skillType":"teleport","sourceObjectId":"5693c431","targetObjectId":"5693c431","to":[5,4],"type":"skill"}
+
+==================== Frame 8 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,4],"tank":{"id":"5693c431","position":[5,4],"direction":"up"},"text":"传送延迟等待","type":"speech"}
+
+==================== Frame 9 ====================
+{"action":"created","direction":"up","objectId":"afe6f57e","tank":{"id":"5693c431","position":[5,4],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"afe6f57e","order":0,"position":[5,3],"tank":{"id":"5693c431","position":[5,4],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"afe6f57e","order":1,"position":[5,2],"tank":{"id":"5693c431","position":[5,4],"direction":"up"},"type":"bullet"}
+
+==================== Frame 10 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,4],"tank":{"id":"5693c431","position":[5,4],"direction":"up"},"text":"守星撤退","type":"speech"}
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"afe6f57e","order":0,"position":[5,1],"tank":{"id":"5693c431","position":[5,4],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"afe6f57e","tank":{"id":"5693c431","position":[5,4],"direction":"left"},"type":"bullet"}
+
+==================== Frame 11 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,4],"tank":{"id":"5693c431","position":[5,4],"direction":"left"},"text":"守星撤退","type":"speech"}
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 12 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,4],"tank":{"id":"5693c431","position":[5,4],"direction":"down"},"text":"守星撤退","type":"speech"}
+{"action":"go","objectId":"5693c431","position":[5,5],"reverse":false,"type":"tank"}
+
+==================== Frame 13 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"down"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 14 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 15 ====================
+{"action":"created","direction":"up","objectId":"23df43f2","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23df43f2","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23df43f2","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 16 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"23df43f2","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23df43f2","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"23df43f2","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 17 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 18 ====================
+{"action":"created","direction":"up","objectId":"23defdea","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23defdea","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23defdea","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 19 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"23defdea","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"23defdea","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"23defdea","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 20 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 21 ====================
+{"action":"created","direction":"up","objectId":"ad0b9728","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"ad0b9728","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"ad0b9728","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 22 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"ad0b9728","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"ad0b9728","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"ad0b9728","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 23 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 24 ====================
+{"action":"created","direction":"up","objectId":"5e6c8897","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"5e6c8897","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"5e6c8897","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 25 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"5e6c8897","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"5e6c8897","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"5e6c8897","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 26 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 27 ====================
+{"action":"created","direction":"up","objectId":"9ecd4443","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"9ecd4443","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"9ecd4443","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 28 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"9ecd4443","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"9ecd4443","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"9ecd4443","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 29 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 30 ====================
+{"action":"created","direction":"up","objectId":"36fa591e","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"36fa591e","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"36fa591e","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 31 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"36fa591e","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"36fa591e","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"36fa591e","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 32 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 33 ====================
+{"action":"created","direction":"up","objectId":"aadc2d1d","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"aadc2d1d","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"aadc2d1d","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 34 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"aadc2d1d","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"aadc2d1d","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"aadc2d1d","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 35 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"text":"守星转向","type":"speech"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 36 ====================
+{"action":"say","by":1,"objectId":"5693c431","position":[5,5],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"text":"守星开火","type":"speech"}
+{"action":"created","direction":"up","objectId":"f430bb8d","tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"f430bb8d","order":0,"position":[5,4],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"f430bb8d","order":1,"position":[5,3],"tank":{"id":"5693c431","position":[5,5],"direction":"up"},"type":"bullet"}
+
+==================== Frame 37 ====================
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"up","objectId":"f430bb8d","order":0,"position":[5,2],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"up","objectId":"f430bb8d","order":1,"position":[5,1],"tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+{"action":"crashed","direction":"up","objectId":"f430bb8d","tank":{"id":"5693c431","position":[5,5],"direction":"left"},"type":"bullet"}
+
+==================== Frame 38 ====================
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+
+==================== Frame 39 ====================
+{"action":"go","objectId":"5693c431","position":[5,4],"reverse":false,"type":"tank"}
+
+==================== Frame 40 ====================
+{"action":"go","objectId":"5693c431","position":[5,3],"reverse":false,"type":"tank"}
+{"action":"collected","by":1,"type":"star"}
+
+==================== Frame 41 ====================
+{"action":"created","direction":"left","objectId":"84dab8d6","tank":{"id":"27472152","position":[11,3],"direction":"left"},"type":"bullet"}
+{"action":"turn","direction":"right","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":0,"position":[10,3],"tank":{"id":"27472152","position":[11,3],"direction":"left"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":1,"position":[9,3],"tank":{"id":"27472152","position":[11,3],"direction":"left"},"type":"bullet"}
+
+==================== Frame 42 ====================
+{"action":"turn","direction":"left","objectId":"27472152","stunReversed":false,"type":"tank"}
+{"action":"created","direction":"right","objectId":"01eb166d","tank":{"id":"5693c431","position":[5,3],"direction":"right"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":0,"position":[8,3],"tank":{"id":"27472152","position":[11,3],"direction":"down"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":1,"position":[7,3],"tank":{"id":"27472152","position":[11,3],"direction":"down"},"type":"bullet"}
+{"action":"go","direction":"right","objectId":"01eb166d","order":0,"position":[6,3],"tank":{"id":"5693c431","position":[5,3],"direction":"right"},"type":"bullet"}
+{"action":"go","direction":"right","objectId":"01eb166d","order":1,"position":[7,3],"tank":{"id":"5693c431","position":[5,3],"direction":"right"},"type":"bullet"}
+
+==================== Frame 43 ====================
+{"action":"go","objectId":"27472152","position":[11,4],"reverse":false,"type":"tank"}
+{"action":"turn","direction":"left","objectId":"5693c431","stunReversed":false,"type":"tank"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":0,"position":[6,3],"tank":{"id":"27472152","position":[11,4],"direction":"down"},"type":"bullet"}
+{"action":"go","direction":"left","objectId":"84dab8d6","order":1,"position":[5,3],"tank":{"id":"27472152","position":[11,4],"direction":"down"},"type":"bullet"}
+{"action":"crashed","direction":"left","objectId":"84dab8d6","tank":{"id":"27472152","position":[11,4],"direction":"down"},"type":"bullet"}
+{"action":"crashed","by":0,"index":1,"objectId":"5693c431","type":"tank"}
+{"action":"go","direction":"right","objectId":"01eb166d","order":0,"position":[8,3],"tank":{"id":"5693c431","position":[5,3],"direction":"up"},"type":"bullet"}
+{"action":"go","direction":"right","objectId":"01eb166d","order":1,"position":[9,3],"tank":{"id":"5693c431","position":[5,3],"direction":"up"},"type":"bullet"}
