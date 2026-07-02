@@ -58,7 +58,7 @@ async function main() {
         console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
         process.exit(1);
     }
-    const totalMatches = 30;
+    const totalMatches = parseInt(process.argv[4]) || 30;
 
 
     let baselineWinRate = parseFloat(process.argv[2]);
