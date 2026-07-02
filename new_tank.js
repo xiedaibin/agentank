@@ -549,7 +549,7 @@ function evalShooting(ctx) {
                 var dist = getDist(ctx.myPos, ctx.shootingEnemyPos);
                 var isLoSDanger = isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
                 var isCloseDanger = dist <= 8 && canShoot(ctx.shootingEnemyPos, ctx.myPos, ctx.map) === true && !ctx.enemyVisible;
-                var isControlDanger = (G_Blueprint.Tactics.STANCE === "ANTI_CONTROL") && ctx.enemySkillReady && dist <= G_Blueprint.Tactics.DANGER_RADIUS && !ctx.enemyBullet;
+                var isControlDanger = (G_Blueprint.Tactics.STANCE === "ANTI_CONTROL") && ctx.enemySkillReady && dist <= G_Blueprint.Tactics.DANGER_RADIUS;
                 if (isLoSDanger || isCloseDanger || isControlDanger) {
                     return null;
                 }
