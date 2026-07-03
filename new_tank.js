@@ -709,7 +709,7 @@ function evalStarCollection(ctx) {
     var cdRemaining = ctx.me.skill && ctx.me.skill.remainingCooldownFrames;
     var newlyTeleported = cdRemaining && (40 - cdRemaining >= 1 && 40 - cdRemaining <= 4);
     var isUrgentAndLosing = ctx.isUrgentStarGrab && (ctx.meStars < ctx.enemyStars);
-    var isLastWalking = (G_History.frame >= 126 && ctx.meStars <= ctx.enemyStars && getDist(ctx.myPos, ctx.starPos) === 1);
+    var isLastWalking = (G_History.frame >= 126 && ctx.meStars <= ctx.enemyStars && getDist(ctx.myPos, ctx.starPos) === 2);
     var nextStep = getNextStep(ctx.myPos, ctx.starPos, ctx) || ctx.starPos;
 
     var safeForWalking = true;
