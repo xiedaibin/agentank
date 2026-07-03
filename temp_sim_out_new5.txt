@@ -1,0 +1,278 @@
+[Simulator] Downloading match data for mat_BaQRVJL91ev4UCRGG...
+[Simulator] Downloaded and saved to scratch/
+
+=================== Simulation Config ===================
+  My Tank (XDB) ID : 654ac984 (Index: 0)
+  Enemy (sn123) ID : 656dc814 (Index: 1)
+=========================================================
+
+--------------------------------------------------------------------------------
+Frame 1 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[2,1] Dir=up    | CD=0 | Status=[Normal]
+        sn123 : Pos=[16,13] Dir=down  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [16,13]
+  🛡️ XDB   : move to [2,1]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"teleport","target":[14,10],"score":1800,"type":"star"}
+  🤖 Local Code Action: teleport(14, 10) (Time: 0.507ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [2,1]
+     -> Local Code   : teleport(14, 10)
+--------------------------------------------------------------------------------
+Frame 2 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[14,10] Dir=up    | CD=40 | Status=[fireLocked]
+        sn123 : Pos=[16,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  ⚔️ sn123: turn right (now left)
+  🛡️ XDB   : teleported to [14,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,11],"score":1300,"type":"star"}
+  🤖 Local Code Action: turn("left") (Time: 0.267ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: teleported to [14,10]
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 3 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[14,10] Dir=left  | CD=39 | Status=[fireLocked]
+        sn123 : Pos=[15,13] Dir=left  | CD=0 | Status=[Normal] (Visible: false)
+[Replay Actions]
+  ⚔️ sn123: move to [15,13]
+  🛡️ XDB   : turn left (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":770,"type":"survival"}
+  Path NextStep: [15,10] -> Need Turn/Move Dir: right
+  🤖 Local Code Action: turn("left") (Time: 0.306ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now left)
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 4 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[14,10] Dir=down  | CD=38 | Status=[Normal]
+        sn123 : Pos=[14,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [14,13]
+  🛡️ XDB   : turn left (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[14,11],"score":1799,"type":"star"}
+  Path NextStep: [14,11] -> Need Turn/Move Dir: down
+  🤖 Local Code Action: fire() (Time: 0.105ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now down)
+     -> Local Code   : fire()
+--------------------------------------------------------------------------------
+Frame 5 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[14,10] Dir=down  | CD=37 | Status=[Normal]
+        sn123 : Pos=[13,13] Dir=left  | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [13,13]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1570,"type":"survival"}
+  Path NextStep: [15,10] -> Need Turn/Move Dir: right
+  🤖 Local Code Action: turn("left") (Time: 1.170ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 6 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[14,10] Dir=right | CD=36 | Status=[Normal]
+        sn123 : Pos=[13,13] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: turn right (now up)
+  🛡️ XDB   : turn left (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[13,10],"score":9850,"type":"pre_aim"}
+  🤖 Local Code Action: go(1) (Time: 0.335ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now right)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 7 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[15,10] Dir=right | CD=35 | Status=[Normal]
+        sn123 : Pos=[13,12] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [13,12]
+  🛡️ XDB   : move to [15,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,10],"score":9850,"type":"pre_aim"}
+  🤖 Local Code Action: turn("right") (Time: 1.429ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [15,10]
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 8 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[15,10] Dir=down  | CD=34 | Status=[Normal]
+        sn123 : Pos=[13,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [13,11]
+  🛡️ XDB   : turn right (now down)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"turn","target":[14,10],"score":9850,"type":"pre_aim"}
+  🤖 Local Code Action: turn("right") (Time: 0.805ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now down)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 9 | Star: [14,11] | Map: classic
+[State] XDB   : Pos=[15,10] Dir=left  | CD=33 | Status=[Normal]
+        sn123 : Pos=[13,11] Dir=right | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: turn right (now right)
+  🛡️ XDB   : turn right (now left)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":760,"type":"survival"}
+  Path NextStep: [14,10] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: turn("right") (Time: 1.264ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now left)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 10 | Star: null | Map: classic
+[State] XDB   : Pos=[15,10] Dir=up    | CD=32 | Status=[Normal]
+        sn123 : Pos=[14,11] Dir=right | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [14,11]
+  🛡️ XDB   : turn right (now up)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":1560,"type":"survival"}
+  Path NextStep: [14,10] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: turn("right") (Time: 0.208ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now up)
+     -> Local Code   : turn("right")
+--------------------------------------------------------------------------------
+Frame 11 | Star: null | Map: classic
+[State] XDB   : Pos=[15,10] Dir=right | CD=31 | Status=[Normal]
+        sn123 : Pos=[14,11] Dir=up    | CD=0 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: turn left (now up)
+  🛡️ XDB   : turn right (now right)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[12,8],"score":1550,"type":"survival"}
+  Path NextStep: [16,10] -> Need Turn/Move Dir: right
+  🤖 Local Code Action: go(1) (Time: 0.048ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn right (now right)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 12 | Star: null | Map: classic
+[State] XDB   : Pos=[16,10] Dir=right | CD=30 | Status=[Normal]
+        sn123 : Pos=[14,11] Dir=up    | CD=32 | Status=[overloaded] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: stay still
+  🛡️ XDB   : move to [16,10]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":1570,"type":"survival"}
+  Path NextStep: [16,9] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: stay still (Time: 0.014ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [16,10]
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 13 | Star: null | Map: classic
+[State] XDB   : Pos=[16,10] Dir=right | CD=29 | Status=[Normal]
+        sn123 : Pos=[14,11] Dir=up    | CD=31 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: stay still
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":1570,"type":"survival"}
+  Path NextStep: [16,9] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: stay still (Time: 0.012ms)
+--------------------------------------------------------------------------------
+Frame 14 | Star: null | Map: classic
+[State] XDB   : Pos=[16,10] Dir=right | CD=28 | Status=[Normal]
+        sn123 : Pos=[14,10] Dir=up    | CD=30 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [14,10]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":1570,"type":"survival"}
+  Path NextStep: [16,9] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: turn("left") (Time: 0.081ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 15 | Star: null | Map: classic
+[State] XDB   : Pos=[16,10] Dir=up    | CD=27 | Status=[Normal]
+        sn123 : Pos=[14,10] Dir=right | CD=29 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: turn right (now right)
+  🛡️ XDB   : turn left (now up)
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[16,13],"score":1570,"type":"survival"}
+  Path NextStep: [16,9] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: go(1) (Time: 0.039ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: turn left (now up)
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 16 | Star: null | Map: classic
+[State] XDB   : Pos=[16,9] Dir=up    | CD=26 | Status=[Normal]
+        sn123 : Pos=[14,10] Dir=right | CD=28 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: stay still
+  🛡️ XDB   : move to [16,9]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1560,"type":"survival"}
+  Path NextStep: [16,8] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: stay still (Time: 0.010ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [16,9]
+     -> Local Code   : stay still
+--------------------------------------------------------------------------------
+Frame 17 | Star: null | Map: classic
+[State] XDB   : Pos=[16,9] Dir=up    | CD=25 | Status=[Normal]
+        sn123 : Pos=[15,10] Dir=right | CD=27 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [15,10]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1560,"type":"survival"}
+  Path NextStep: [16,8] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: stay still (Time: 0.007ms)
+--------------------------------------------------------------------------------
+Frame 18 | Star: null | Map: classic
+[State] XDB   : Pos=[16,9] Dir=up    | CD=24 | Status=[Normal]
+        sn123 : Pos=[16,10] Dir=right | CD=26 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: move to [16,10]
+  🛡️ XDB   : stay still
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1560,"type":"survival"}
+  Path NextStep: [16,8] -> Need Turn/Move Dir: up
+  🤖 Local Code Action: go(1) (Time: 0.084ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: stay still
+     -> Local Code   : go(1)
+--------------------------------------------------------------------------------
+Frame 19 | Star: null | Map: classic
+[State] XDB   : Pos=[16,8] Dir=up    | CD=23 | Status=[Normal]
+        sn123 : Pos=[16,10] Dir=up    | CD=25 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: turn left (now up)
+  🛡️ XDB   : move to [16,8]
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1570,"type":"survival"}
+  Path NextStep: [15,8] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: turn("left") (Time: 0.055ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: move to [16,8]
+     -> Local Code   : turn("left")
+--------------------------------------------------------------------------------
+Frame 20 | Star: [13,4] | Map: classic
+[State] XDB   : Pos=[16,8] Dir=left  | CD=22 | Status=[Normal]
+        sn123 : Pos=[16,10] Dir=up    | CD=24 | Status=[Normal] (Visible: true)
+[Replay Actions]
+  ⚔️ sn123: stay still
+  🛡️ XDB   : CRASHED
+[Local Simulation Evaluation]
+  Chosen Target: {"action":"move","target":[13,8],"score":1020,"type":"survival"}
+  Path NextStep: [15,8] -> Need Turn/Move Dir: left
+  🤖 Local Code Action: go(1) (Time: 0.020ms)
+  ⚠️ [Diverged] Local Code Action differs from Replay!
+     -> Replay Action: CRASHED
+     -> Local Code   : go(1)
+================================================================================

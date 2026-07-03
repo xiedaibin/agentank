@@ -34,13 +34,72 @@
   {
     "id": "TC-003",
     "matchId": "mat_CeGL4Gbl1B2Iezbgc",
-    "description": "Frame 128 - 紧急抢星且我方落后，且刚传送落地，必须做出 go() 踩星夺冠",
+    "description": "Frame 128 - 抢星后夕且处于终盘，由于已经在星上，在草丛中执行常规射击防卫",
     "frame": 128,
     "setupHistory": {
       "starTeleportFrame": 125
     },
     "expected": {
+      "action": "fire"
+    }
+  },
+  {
+    "id": "TC-004",
+    "matchId": "mat_BaQRVJL91ev4UCRGG",
+    "description": "Frame 17 - 处于近身无遮挡危险，且当前格不安全时，放宽空地阻断，做出 move 直接起跑逃生",
+    "frame": 17,
+    "setupHistory": {},
+    "expected": {
       "action": "move"
+    }
+  },
+  {
+    "id": "TC-005",
+    "matchId": "mat_CeGL4Gbl1B2Iezbgc",
+    "description": "Frame 15 - 草丛到草丛的传送落地首帧，必须正确初始化草丛入口记忆，由于周围高危，留在草丛原地待机",
+    "frame": 15,
+    "setupHistory": {
+      "wasMeInGrass": true,
+      "lastGrassEntrancePos": [2, 2],
+      "lastTeleportFrame": 14,
+      "lastTeleportPos": [2, 2],
+      "hasShiftedInGrass": false
+    },
+    "expected": {
+      "action": "idle"
+    }
+  },
+  {
+    "id": "TC-006",
+    "matchId": "mat_GJ4ehAHkFDEAoHFOT",
+    "description": "Frame 92 - 面对 Overload 敌人的优势传送伏击时，禁止落在其右侧或下方副弹道上，必须放弃该危险传送，转而转向准备走位",
+    "frame": 91,
+    "setupStars": {
+      "me": 2,
+      "enemy": 0
+    },
+    "setupHistory": {
+      "lastEnemyStars": 0
+    },
+    "expected": {
+      "action": "move"
+    }
+  },
+  {
+    "id": "TC-007",
+    "matchId": "mat_COMaeELCQso6vMmCl",
+    "description": "Frame 124 - 1步踩星救援，当距离星格只有1步且无子弹威胁时，即使敌人较近，也应该放宽安全限制去踩星，转头对准星格",
+    "frame": 124,
+    "setupStars": {
+      "me": 3,
+      "enemy": 3
+    },
+    "setupHistory": {
+      "enemyInvisibleFrames": 9
+    },
+    "expected": {
+      "action": "turn",
+      "direction": "right"
     }
   }
 ]

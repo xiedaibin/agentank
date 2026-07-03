@@ -432,14 +432,11 @@ async function main() {
                 sandbox.strategicInit(enemy, game.map);
             }
             const ctx = sandbox.buildExecutionContext(meSandboxObj, enemy, game);
-            const bestAction = sandbox.tacticalAnalysis(ctx);
-            console.log(`[Local Simulation Evaluation]`);
-            console.log(`  Chosen Target: ${JSON.stringify(bestAction)}`);
+             const bestAction = sandbox.tacticalAnalysis(ctx);
             if (bestAction && bestAction.action === "move") {
                 const nextStep = sandbox.getNextStep(ctx.myPos, bestAction.target, ctx);
                 if (nextStep) {
                     const d = sandbox.directionTo(ctx.myPos, nextStep);
-                    console.log(`  Path NextStep: [${nextStep}] -> Need Turn/Move Dir: ${d}`);
                 }
             }
 

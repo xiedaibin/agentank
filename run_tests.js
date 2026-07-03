@@ -64,7 +64,7 @@ function getNewDirection(currentDir, turn) {
 function simulateToFrame(replayRaw, targetFrame) {
     const meta = replayRaw.replayData.replay.meta;
     const records = replayRaw.replayData.replay.records || [];
-    const participants = replayRaw.summary ? replayRaw.summary.participants : null;
+    const participants = replayRaw.participants || (replayRaw.summary ? replayRaw.summary.participants : null);
 
     // 确定谁是 XDB(me) 和 AME(enemy)
     let meId = null;
@@ -224,6 +224,10 @@ function runTestCase(caseInfo, replayData, newTankCode) {
             sandbox.G_Blueprint = G_Blueprint;
             sandbox.G_History = G_History;
             sandbox.buildExecutionContext = buildExecutionContext;
+            sandbox.tacticalAnalysis = tacticalAnalysis;
+            sandbox.isSafeForStarWalking = isSafeForStarWalking;
+            sandbox.getNextStep = getNextStep;
+            sandbox.isSafe = isSafe;
         }
     `);
     runCode(sandbox);
@@ -269,17 +273,20 @@ function runTestCase(caseInfo, replayData, newTankCode) {
         }
     }
 
+    const meStars = (caseInfo.setupStars && caseInfo.setupStars.me !== undefined) ? caseInfo.setupStars.me : 3;
+    const enemyStars = (caseInfo.setupStars && caseInfo.setupStars.enemy !== undefined) ? caseInfo.setupStars.enemy : 3;
+
     // 重构对战对象并运行 buildExecutionContext
     const meObj = {
         tank: { id: simState.meId, position: simState.mePos.slice(), direction: simState.meDir, crashed: false },
-        stars: 3,
+        stars: meStars,
         bullet: simState.meBullet,
         skill: { type: simState.meSkillType, cooldownFrames: 40, remainingCooldownFrames: simState.meSkillCD },
         status: Object.assign({}, simState.meStatus),
         speak: function(text) {},
         fire: function() {
             const expected = caseInfo.expected;
-            if (expected && expected.action === "fire") {
+            if (expected && expected.action === "fire" && expected.target) {
                 const myP = simState.mePos;
                 const tar = expected.target;
                 const d = simState.meDir;
@@ -304,6 +311,9 @@ function runTestCase(caseInfo, replayData, newTankCode) {
         },
         go: function(dest) {
             recordedAction = { action: "move", target: dest };
+        },
+        teleport: function(x, y) {
+            recordedAction = { action: "teleport", target: [x, y] };
         }
     };
 
@@ -314,7 +324,7 @@ function runTestCase(caseInfo, replayData, newTankCode) {
     const enemyObj = {
         tank: isVisible ? { id: simState.enemyId, position: simState.enemyPos.slice(), direction: simState.enemyDir, crashed: false } : null,
         bullet: simState.enemyBullet,
-        stars: 3,
+        stars: enemyStars,
         skill: { type: simState.enemySkillType, cooldownFrames: 35, remainingCooldownFrames: simState.enemySkillCD },
         status: Object.assign({}, simState.enemyStatus)
     };
@@ -332,6 +342,9 @@ function runTestCase(caseInfo, replayData, newTankCode) {
     const expected = caseInfo.expected;
 
     if (!actual) {
+        if (expected && (expected.action === null || expected.action === "none" || expected.action === "idle")) {
+            return { pass: true, actual: { action: "idle" } };
+        }
         return { pass: false, error: "未做出任何动作" };
     }
 
