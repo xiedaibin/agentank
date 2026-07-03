@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.88 - Clean Deprecated Teleport Ambush Stream & Real-time CD Pathfinding)
- * V12.88: 优化 [2,2] 黄金出生点传送抢星逻辑
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.90 - Clean Deprecated Teleport Ambush Stream & Real-time CD Pathfinding)
+ * V12.90: 新增吃星转向时空飞弹碰撞判定
  */
 
 
@@ -75,7 +75,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.88: 预判背杀");
+            me.speak("V12.90: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -693,6 +693,21 @@ function evalStarCollection(ctx) {
         score = 25000;
     } else {
         safeForWalking = isSafeForStarWalking(nextStep, ctx);
+
+        // 【最完备子弹时空账判定】：
+        // 如果去往下一步需要原地转身（产生 1 帧硬直，使坦克在当前格多停留 1 帧），
+        // 且空中已有一颗敌方子弹正飞向我们当前格（ctx.myPos），且预计在 2 帧内击中。
+        // 这意味着执行抢星会导致在当前格原地转身被直接炸死。必须强行判定为不安全，降级让位给即时逃生动作。
+        if (safeForWalking && ctx.enemyBullet) {
+            var needTurn = (directionTo(ctx.myPos, nextStep) !== ctx.myDir);
+            if (needTurn) {
+                var bulletFH = getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map);
+                if (bulletFH !== Infinity && bulletFH <= 2) {
+                    safeForWalking = false;
+                }
+            }
+        }
+
         if (!safeForWalking) score = Math.min(score - 1200, -500);
     }
     return { action: "move", target: ctx.starPos, score: score, type: "star" };
