@@ -45,6 +45,7 @@ var G_History = {
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
 var G_SafeCache = {};
 var G_DangerTiles = {};
+var G_AStarCache = {};  // 帧内 A* 路径缓存：同一帧相同 (start,goal) 直接复用结果，避免重复寻路
 
 /**
  * 核心决策入口函数，引擎在坦克没有动作队列时每帧调用一次
@@ -66,6 +67,7 @@ function onIdle(me, enemy, game) {
 
         G_History.frame = game.frames || 0;
         G_SafeCache = {};
+        G_AStarCache = {};
         if (G_History.lastTeleportTarget && G_History.frame === G_History.lastTeleportFrame + 1) {
             if (samePos(me.tank.position, G_History.lastTeleportPos)) {
                 if (!G_History.failedTeleportSpots) G_History.failedTeleportSpots = {};
@@ -1480,6 +1482,10 @@ function isSafeForAntiCloak(pos, ctx) {
  * A* 寻路核心实现（计入转向耗时、土堆惩罚、不安全轨道和飞行子弹迎头避让）
  */
 function aStar(start, goal, ctx) {
+    // 帧内缓存：同一帧对相同 (start,goal,enemyVisible) 的寻路结果直接复用
+    var cacheKey = start[0] + "," + start[1] + "|" + goal[0] + "," + goal[1] + "|" + (ctx.enemyVisible ? 1 : 0);
+    if (G_AStarCache[cacheKey] !== undefined) return G_AStarCache[cacheKey];
+
     var open = [{ pos: start, g: 0, h: getDist(start, goal), path: [], dir: ctx.myDir }], closed = {}, nodes = 0;
     var t = G_Blueprint.Tactics;
     while (open.length > 0 && nodes < t.MAX_NODES) {
@@ -1491,7 +1497,7 @@ function aStar(start, goal, ctx) {
         }
         var curr = open[bestIdx];
         open.splice(bestIdx, 1);
-        if (samePos(curr.pos, goal)) return curr.path;
+        if (samePos(curr.pos, goal)) { G_AStarCache[cacheKey] = curr.path; return curr.path; }
         if (closed[key(curr.pos)] && closed[key(curr.pos)] <= curr.g) continue;
         closed[key(curr.pos)] = curr.g; nodes++;
         var dirs = ["up", "right", "down", "left"];
@@ -1534,8 +1540,10 @@ function aStar(start, goal, ctx) {
             }
         }
     }
+    G_AStarCache[cacheKey] = null;
     return null;
 }
+
 
 // --- [5. 工具库] ---
 
