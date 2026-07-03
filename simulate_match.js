@@ -180,7 +180,7 @@ async function main() {
         G_Blueprint: null,
         G_History: null,
         CONFIG: null,
-        print: function(...args) {
+        print: function (...args) {
             console.log("    [PRINT]", args.join(" "));
         },
     };
@@ -410,7 +410,7 @@ async function main() {
         console.log(`Frame ${f} | Star: ${JSON.stringify(starPos)} | Map: ${raw.replayData.map.id}`);
         console.log(`[State] XDB   : Pos=[${mePos}] Dir=${meDir.padEnd(5)} | CD=${meSkillCD} | Status=[${Object.keys(meStatus).filter(k => meStatus[k]).join(', ') || 'Normal'}]`);
         console.log(`        ${enemyName.padEnd(5)} : Pos=[${enemyPos}] Dir=${enemyDir.padEnd(5)} | CD=${enemySkillCD} | Status=[${Object.keys(enemyStatus).filter(k => enemyStatus[k]).join(', ') || 'Normal'}] (Visible: ${enemyVisible})`);
-        
+
         console.log(`[Replay Actions]`);
         console.log(`  ⚔️ ${enemyName.padEnd(5)}: ${enemyActualActionStr}`);
         console.log(`  🛡️ XDB   : ${meActualActionStr}`);
@@ -418,11 +418,11 @@ async function main() {
         // Capture local code queued actions
         let queuedAction = "stay still";
         const meSandboxObj = Object.assign({}, me, {
-            go: function(steps) { queuedAction = `go(${steps || 1})`; },
-            turn: function(dir) { queuedAction = `turn("${dir}")`; },
-            fire: function() { queuedAction = `fire()`; },
-            speak: function(text) { queuedAction = `${queuedAction === "stay still" ? "" : queuedAction + " | "}speak("${text}")`; },
-            teleport: function(x, y) { queuedAction = `teleport(${x}, ${y})`; }
+            go: function (steps) { queuedAction = `go(${steps || 1})`; },
+            turn: function (dir) { queuedAction = `turn("${dir}")`; },
+            fire: function () { queuedAction = `fire()`; },
+            speak: function (text) { queuedAction = `${queuedAction === "stay still" ? "" : queuedAction + " | "}speak("${text}")`; },
+            teleport: function (x, y) { queuedAction = `teleport(${x}, ${y})`; }
         });
 
         // Run local tank onIdle
@@ -432,11 +432,14 @@ async function main() {
                 sandbox.strategicInit(enemy, game.map);
             }
             const ctx = sandbox.buildExecutionContext(meSandboxObj, enemy, game);
-             const bestAction = sandbox.tacticalAnalysis(ctx);
+            const bestAction = sandbox.tacticalAnalysis(ctx);
+            console.log(`[Local Simulation Evaluation]`);
+            console.log(`  Chosen Target: ${JSON.stringify(bestAction)}`);
             if (bestAction && bestAction.action === "move") {
                 const nextStep = sandbox.getNextStep(ctx.myPos, bestAction.target, ctx);
                 if (nextStep) {
                     const d = sandbox.directionTo(ctx.myPos, nextStep);
+                    console.log(`  Path NextStep: [${nextStep}] -> Need Turn/Move Dir: ${d}`);
                 }
             }
 
@@ -452,15 +455,15 @@ async function main() {
             // Divergence Detection
             // Clean up both action strings to compare them roughly
             const clean = (str) => str.toLowerCase().replace(/\s+/g, '');
-            const actionMatches = clean(meActualActionStr).includes(clean(queuedAction.split('|')[0])) || 
-                                  (clean(meActualActionStr) === "staystill" && clean(queuedAction) === "staystill");
+            const actionMatches = clean(meActualActionStr).includes(clean(queuedAction.split('|')[0])) ||
+                (clean(meActualActionStr) === "staystill" && clean(queuedAction) === "staystill");
 
             if (!actionMatches) {
                 console.log(`  ⚠️ [Diverged] Local Code Action differs from Replay!`);
                 console.log(`     -> Replay Action: ${meActualActionStr}`);
                 console.log(`     -> Local Code   : ${queuedAction}`);
             }
-        } catch(e) {
+        } catch (e) {
             console.error("Error executing local onIdle:", e);
         }
     }

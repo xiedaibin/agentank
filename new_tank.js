@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.93 - Extreme Frame Cache)
- * V12.93: 引入 A* 双层帧内缓存与防隐身潜在枪线前瞻避弹，重构 1步吃星临门一脚，修复高消耗 runtime 虚拟机异常。
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.92 - Star Walking Time-check Rescue)
+ * V12.92: 修复领先时空账退化导致盲目吃星送死的逻辑漏洞
  */
 
 
@@ -45,7 +45,6 @@ var G_History = {
 var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAMES: 3 };
 var G_SafeCache = {};
 var G_DangerTiles = {};
-var G_AStarCache = {}; // 帧内 A* 路径缓存，使用防御性拷贝防止共享数组修改
 
 /**
  * 核心决策入口函数，引擎在坦克没有动作队列时每帧调用一次
@@ -67,7 +66,6 @@ function onIdle(me, enemy, game) {
 
         G_History.frame = game.frames || 0;
         G_SafeCache = {};
-        G_AStarCache = {};
         if (G_History.lastTeleportTarget && G_History.frame === G_History.lastTeleportFrame + 1) {
             if (samePos(me.tank.position, G_History.lastTeleportPos)) {
                 if (!G_History.failedTeleportSpots) G_History.failedTeleportSpots = {};
@@ -80,7 +78,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.93: 极速帧内缓存");
+            me.speak("V12.92: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -387,9 +385,8 @@ function buildExecutionContext(me, enemy, game) {
     var predictedEnemyPos = currentEnemyPos ? currentEnemyPos.slice() : null;
     var predictedEnemyDir = currentEnemyDir;
 
-    // 当敌人不可见且曾经出现过星星时，推算其朝向星星前行的推导位置
-    var starTarget = game.star || G_History.lastStarPos;
-    if (!visible && currentEnemyPos && starTarget) {
+    // 当敌人不可见且场上有星星时，推算其朝向星星前行的推导位置
+    if (!visible && currentEnemyPos && game.star) {
         var invisibleFrames = G_History.enemyInvisibleFrames;
         if (invisibleFrames > 0 && invisibleFrames <= 30) {
             var enemySpeed = 1;
@@ -403,8 +400,8 @@ function buildExecutionContext(me, enemy, game) {
             var totalSteps = invisibleFrames * enemySpeed;
             var tempPos = currentEnemyPos.slice();
             for (var step = 0; step < totalSteps; step++) {
-                if (samePos(tempPos, starTarget)) break;
-                var nextDir = directionTo(tempPos, starTarget);
+                if (samePos(tempPos, game.star)) break;
+                var nextDir = directionTo(tempPos, game.star);
                 var d = delta(nextDir);
                 tempPos = [tempPos[0] + d[0], tempPos[1] + d[1]];
                 predictedEnemyDir = nextDir;
@@ -713,8 +710,10 @@ function evalStarCollection(ctx) {
 
     var nextStep = getNextStep(ctx.myPos, ctx.starPos, ctx) || ctx.starPos;
 
+    var isLastWalking = (G_History.frame >= 126 && ctx.meStars <= ctx.enemyStars && getDist(ctx.myPos, ctx.starPos) === 1);
+
     var safeForWalking = true;
-    if (newlyTeleported && isUrgentAndLosing) {
+    if ((newlyTeleported && isUrgentAndLosing) || isLastWalking) {
         score = 25000;
     } else {
         safeForWalking = isSafeForStarWalking(nextStep, ctx);
@@ -774,25 +773,18 @@ function evalStarGuard(ctx) {
         }
     }
 
-    var dirToStar = directionTo(ctx.myPos, ctx.starPos);
-
-    if (ctx.me.bullet || ctx.meStatus.fireLocked) {
+    if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
+        var dirToStar = directionTo(ctx.myPos, ctx.starPos);
         if (ctx.myDir === dirToStar) {
-            // 已正对星星，原地待机等弹，不乱转
-            return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
+            ctx.me.speak("守星开火");
+            return { action: "fire", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
         } else {
             ctx.me.speak("守星转向");
             return { action: "turn", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
         }
     }
 
-    if (ctx.myDir === dirToStar) {
-        ctx.me.speak("守星开火");
-        return { action: "fire", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
-    } else {
-        ctx.me.speak("守星转向");
-        return { action: "turn", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
-    }
+    return null;
 }
 
 /**
@@ -1165,37 +1157,20 @@ function tacticalDefense(me, ctx) {
         if (isSafe(G_History.lastDefenseTarget, ctx, true)) return { action: "move", target: G_History.lastDefenseTarget, score: 30000 };
     }
 
-    // 定义前瞻威胁坐标与朝向，当敌方隐身时使用预测值
-    var threatPos = ctx.predictedEnemyPos || ctx.enemyPos;
-    var threatDir = ctx.predictedEnemyDir || ctx.enemyDir;
-
     // [方案B v2] 幽灵子弹轴线预判（收窄脱敏版）：减少误触发
     // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时）
-    if (!ctx.enemyBullet && threatPos && !me.bullet) {
+    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet) {
         var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 6);
-
         if (recentlySeen || ctx.enemyCloaked) {
-            var ghostDist = getDist(ctx.myPos, threatPos);
+            var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
             if (ghostDist <= 7) {
                 var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-
-                // 防隐身增强规避：非草丛空地情况下，如果敌方隐身且在附近，
-                // 计算自消失以来敌人可能移动的曼哈顿半径，防范其潜行到共轴位置对我们开火
-                var isUnsafeCloakLine = false;
-                if (ctx.enemyCloaked && !myPosInGrass) {
-                    var elapsed = G_History.frame - G_History.lastEnemySeenFrame;
-                    var deltaX = Math.abs(ctx.myPos[0] - threatPos[0]);
-                    var deltaY = Math.abs(ctx.myPos[1] - threatPos[1]);
-                    if (deltaX === 0 || deltaY === 0 || deltaX <= elapsed + 1 || deltaY <= elapsed + 1) {
-                        isUnsafeCloakLine = true;
-                    }
-                }
 
                 // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地或敌方已开启超载，才防范超宽枪线
                 var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
                 var needCheckOverload = !myPosInGrass || activeOverload;
-                var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload, threatPos, threatDir) || isUnsafeCloakLine;
-                if (!myPosInGrass || activeOverload || (ghostDist <= 2 && onEnemyLine) || (ctx.enemyCloaked && isUnsafeCloakLine)) {
+                var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
+                if (!myPosInGrass || activeOverload || (ghostDist <= 2 && onEnemyLine)) {
                     if (onEnemyLine) {
                         var ghostEscape = findOffAxisMove(ctx);
                         if (ghostEscape) {
@@ -1212,7 +1187,7 @@ function tacticalDefense(me, ctx) {
     }
 
     // 幽灵子弹轴线预判扩展：如果我们在潜在的敌方草丛共轴枪线上，且在open ground
-    if (!ctx.enemyBullet && threatPos && !me.bullet && !ctx.enemyVisible) {
+    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet && !ctx.enemyVisible) {
         var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
         if (!myPosInGrass) {
             if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[ctx.myPos[0] + "," + ctx.myPos[1]]) {
@@ -1228,13 +1203,13 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    var enemySeenRecently = threatPos && (G_History.frame - G_History.lastEnemySeenFrame < 35);
-    if (threatPos && (ctx.enemyVisible || enemySeenRecently) && !ctx.enemyFireLocked) {
-        var d = getDist(ctx.myPos, threatPos);
+    var enemySeenRecently = ctx.enemyPos && (G_History.frame - G_History.lastEnemySeenFrame < 35);
+    if (ctx.enemyPos && (ctx.enemyVisible || enemySeenRecently) && !ctx.enemyFireLocked) {
+        var d = getDist(ctx.myPos, ctx.enemyPos);
         var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
         var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
         var needCheckOverload = !myPosInGrass || activeOverload;
-        var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload, threatPos, threatDir);
+        var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
 
         if (onLine && d <= 8) {
             if (!myPosInGrass || d <= 2 || activeOverload) {
@@ -1277,29 +1252,27 @@ function isEnemyOverloadActive(ctx, pos) {
 /**
  * 判断某个格子位置是否暴露在敌方的当前直视枪线或双枪线超载范围内
  */
-function isOnEnemyGunLine(pos, ctx, checkOverload, customEnemyPos, customEnemyDir) {
-    var ePosBase = customEnemyPos || ctx.enemyPos;
-    var eDirBase = customEnemyDir || ctx.enemyDir;
-    if (!ePosBase || !eDirBase) return false;
-    var d = delta(eDirBase);
+function isOnEnemyGunLine(pos, ctx, checkOverload) {
+    if (!ctx.enemyPos || !ctx.enemyDir) return false;
+    var d = delta(ctx.enemyDir);
     if (d[0] === 0 && d[1] === 0) return false;
 
     // 前瞻评估：当前位置 (k=0)、前行 1 格 (k=1)、前行 2 格 (k=2)
     for (var k = 0; k <= 2; k++) {
-        var ePos = [ePosBase[0] + k * d[0], ePosBase[1] + k * d[1]];
+        var ePos = [ctx.enemyPos[0] + k * d[0], ctx.enemyPos[1] + k * d[1]];
 
         // 如果前行路径上遇到了硬墙或土堆，敌人无法继续前行，中断前瞻
         if (k > 0 && !isPassable(ePos, ctx.map)) break;
 
         // 1. 评估在该位置的主枪线
         var mainOrigin = addPos(ePos, d);
-        if (isLoS(mainOrigin, pos, eDirBase, ctx.map)) return true;
+        if (isLoS(mainOrigin, pos, ctx.enemyDir, ctx.map)) return true;
 
         // 2. 评估在该位置的过载双枪线
         if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
-            var rightDir = overloadRightDir(eDirBase);
+            var rightDir = overloadRightDir(ctx.enemyDir);
             var rightOrigin = addPos(mainOrigin, delta(rightDir));
-            if (isLoS(rightOrigin, pos, eDirBase, ctx.map)) return true;
+            if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;
         }
     }
     return false;
@@ -1337,16 +1310,15 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
                 } else {
                     var limit = G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" ? 40 : 35;
                     var enemySeenRecently = (G_History.frame - G_History.lastEnemySeenFrame < limit);
-                    // 针对隐身/草丛敌人，防守安全区推导优先使用前瞻预测坐标与方向
-                    var realEnemyPos = ctx.predictedEnemyPos || G_History.lastEnemyPos;
-                    var realEnemyDir = ctx.predictedEnemyDir || G_History.lastEnemyDir;
+                    var realEnemyPos = G_History.lastEnemyPos;
                     var dReal = realEnemyPos ? getDist(pos, realEnemyPos) : d;
-                    var dRealReal = G_History.lastEnemyPos ? getDist(pos, G_History.lastEnemyPos) : dReal;
-                    if (dRealReal <= 2) return false;
+                    if (dReal <= 2) return false;
                     if (enemySeenRecently) {
+
+
                         var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
 
-                        // 针对草丛格子，如果与敌人消失点或预测位置在中近距离（≤8格）共轴且无墙壁阻挡，在我们即将移入该格时判定为不安全
+                        // 针对草丛格子，如果与敌人最后真实消失点在中近距离（≤8格）共轴且无墙壁阻挡，在我们即将移入该格时判定为不安全
                         if (inGrass && !samePos(pos, ctx.myPos) && realEnemyPos) {
                             var isCoAxial = (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1]);
                             if (isCoAxial && dReal <= 8 && canShoot(realEnemyPos, pos, ctx.map) !== false) {
@@ -1358,12 +1330,9 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
                             if (strict && dReal <= 3) return false;
                             if (realEnemyPos) {
                                 var backupPos = ctx.enemyPos;
-                                var backupDir = ctx.enemyDir;
                                 ctx.enemyPos = realEnemyPos;
-                                ctx.enemyDir = realEnemyDir;
-                                var onGun = isOnEnemyGunLine(pos, ctx, true, realEnemyPos, realEnemyDir);
+                                var onGun = isOnEnemyGunLine(pos, ctx, true);
                                 ctx.enemyPos = backupPos;
-                                ctx.enemyDir = backupDir;
                                 if (onGun) return false;
                             }
                             if (realEnemyPos && (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1])) {
@@ -1463,20 +1432,10 @@ function getEnemyBulletArrivalTime(pos, ctx) {
 
 function isSafeForStarWalking(pos, ctx) {
     if (!ctx.enemyPos) return true;
-    
-    var myDist = getDist(ctx.myPos, pos);
-    // 如果我方就在星格旁边（距离为1），放宽对星格的安全要求：仅防范1-2帧内即达的致命子弹，不因潜在隐身枪线退缩
-    if (myDist === 1) {
-        if (ctx.enemyBullet) {
-            var keyStr = pos[0] + "," + pos[1];
-            var fH = G_DangerTiles[keyStr];
-            if (fH !== undefined && fH <= 2) return false;
-        }
-    } else {
-        var useStrict = true;
-        if (!isSafe(pos, ctx, useStrict)) return false;
-    }
+    // 任何时候，抢星目标格必须首先满足严格安全性（避开敌人枪口和超载覆盖），防止抢先踩点却被卡死在死角
+    if (!isSafe(pos, ctx, true)) return false;
 
+    var myDist = getDist(ctx.myPos, pos);
     var enemyDist = getDist(ctx.predictedEnemyPos || ctx.enemyPos, pos);
 
     // Calculate enemy bullet arrival time at the star
@@ -1489,27 +1448,13 @@ function isSafeForStarWalking(pos, ctx) {
     // If we can reach it before their bullet can hit it, it's safe
     var requiredBuffer = ctx.canTeleport ? 0 : 1;
     if (T_me + requiredBuffer < T_bullet) {
-        if (myDist === 1) {
-            if (ctx.enemyVisible && enemyDist <= 2 && isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) {
-                return false;
-            }
-            return true;
-        }
-        if (myDist > 1 && enemyDist <= 3) return false;
+        if (enemyDist <= 3) return false;
         var bulletFH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
         if (bulletFH <= T_me) return false;
         return true;
-    } else {
-        // 新增安全阈值保护：如果不能确保在对方子弹前抢先拿星，且敌人能够打到该星格
-        if (T_bullet !== Infinity) {
-            // 在我方领先或平局状态下，安全第一，绝对不抢这颗来不及的星
-            if (ctx.meStars >= ctx.enemyStars) {
-                return false;
-            }
-        }
     }
 
-    return (myDist === 1) ? true : isSafe(pos, ctx, useStrict);
+    return isSafe(pos, ctx, true);
 }
 
 /**
@@ -1528,11 +1473,6 @@ function isSafeForAntiCloak(pos, ctx) {
  * A* 寻路核心实现（计入转向耗时、土堆惩罚、不安全轨道和飞行子弹迎头避让）
  */
 function aStar(start, goal, ctx) {
-    var cacheKey = start[0] + "," + start[1] + "|" + goal[0] + "," + goal[1] + "|" + (ctx.enemyVisible ? 1 : 0);
-    if (G_AStarCache.hasOwnProperty(cacheKey)) {
-        var cached = G_AStarCache[cacheKey];
-        return cached ? cached.slice() : null;
-    }
     var open = [{ pos: start, g: 0, h: getDist(start, goal), path: [], dir: ctx.myDir }], closed = {}, nodes = 0;
     var t = G_Blueprint.Tactics;
     while (open.length > 0 && nodes < t.MAX_NODES) {
@@ -1544,10 +1484,7 @@ function aStar(start, goal, ctx) {
         }
         var curr = open[bestIdx];
         open.splice(bestIdx, 1);
-        if (samePos(curr.pos, goal)) {
-            G_AStarCache[cacheKey] = curr.path.slice();
-            return curr.path;
-        }
+        if (samePos(curr.pos, goal)) return curr.path;
         if (closed[key(curr.pos)] && closed[key(curr.pos)] <= curr.g) continue;
         closed[key(curr.pos)] = curr.g; nodes++;
         var dirs = ["up", "right", "down", "left"];
@@ -1590,7 +1527,6 @@ function aStar(start, goal, ctx) {
             }
         }
     }
-    G_AStarCache[cacheKey] = null;
     return null;
 }
 
@@ -1728,15 +1664,7 @@ function getNextStep(start, goal, ctx) {
         }
     }
 
-    var resSafe = true;
-    if (res) {
-        if (ctx.starPos && samePos(res, ctx.starPos)) {
-            resSafe = isSafeForStarWalking(res, ctx);
-        } else {
-            resSafe = isSafe(res, ctx, true);
-        }
-    }
-    if (res && !resSafe && isSafe(start, ctx, true)) {
+    if (res && !isSafe(res, ctx, true) && isSafe(start, ctx, true)) {
         // 放宽空地阻断：如果当前位置不是草丛，且无5帧内即击中子弹威胁，不执行待机阻断
         var myPosInGrass = G_Blueprint.mapVision.grass[start[0] + "," + start[1]];
         var shouldBlock = myPosInGrass;
