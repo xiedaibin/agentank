@@ -707,10 +707,8 @@ function evalStarCollection(ctx) {
     var cdRemaining = ctx.me.skill && ctx.me.skill.remainingCooldownFrames;
     var newlyTeleported = cdRemaining && (40 - cdRemaining >= 1 && 40 - cdRemaining <= 4);
     var isUrgentAndLosing = ctx.isUrgentStarGrab && (ctx.meStars < ctx.enemyStars);
-
-    var nextStep = getNextStep(ctx.myPos, ctx.starPos, ctx) || ctx.starPos;
-
     var isLastWalking = (G_History.frame >= 126 && ctx.meStars <= ctx.enemyStars && getDist(ctx.myPos, ctx.starPos) === 1);
+    var nextStep = getNextStep(ctx.myPos, ctx.starPos, ctx) || ctx.starPos;
 
     var safeForWalking = true;
     if ((newlyTeleported && isUrgentAndLosing) || isLastWalking) {
@@ -1067,7 +1065,7 @@ function evalGrassAmbushAndSurvival(ctx) {
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
             // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
-            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 3;
+            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 4;
             if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
                 // 不在此处 return，让它fall-through到下面的grass寻路
             } else {
@@ -1297,7 +1295,7 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
             var d = getDist(pos, ctx.enemyPos);
             if (ctx.enemyVisible) {
                 var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 3;
+                var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 4;
                 var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
                 var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
                 if (gunLineDodge) return false;
@@ -1436,6 +1434,7 @@ function isSafeForStarWalking(pos, ctx) {
     if (!isSafe(pos, ctx, true)) return false;
 
     var myDist = getDist(ctx.myPos, pos);
+
     var enemyDist = getDist(ctx.predictedEnemyPos || ctx.enemyPos, pos);
 
     // Calculate enemy bullet arrival time at the star
@@ -1452,6 +1451,14 @@ function isSafeForStarWalking(pos, ctx) {
         var bulletFH = getFramesToHit(pos, ctx.enemyBullet, ctx.map);
         if (bulletFH <= T_me) return false;
         return true;
+    } else {
+        // 新增安全阈值保护：如果不能确保在对方子弹前抢先拿星，且敌人能够打到该星格
+        if (T_bullet !== Infinity) {
+            // 在我方领先或平局状态下，安全第一，绝对不抢这颗来不及的星
+            if (ctx.meStars >= ctx.enemyStars) {
+                return false;
+            }
+        }
     }
 
     return isSafe(pos, ctx, true);
