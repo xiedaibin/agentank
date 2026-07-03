@@ -30,5 +30,17 @@
       "action": "fire",
       "target": [14, 7]
     }
+  },
+  {
+    "id": "TC-003",
+    "matchId": "mat_CeGL4Gbl1B2Iezbgc",
+    "description": "Frame 128 - 紧急抢星且我方落后，且刚传送落地，必须做出 go() 踩星夺冠",
+    "frame": 128,
+    "setupHistory": {
+      "starTeleportFrame": 125
+    },
+    "expected": {
+      "action": "move"
+    }
   }
 ]

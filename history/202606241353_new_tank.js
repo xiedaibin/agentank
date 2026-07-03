@@ -1084,7 +1084,7 @@ function isOnEnemyGunLine(pos, ctx, checkOverload) {
     if (!ctx.enemyPos || !ctx.enemyDir) return false;
     if (isLoS(ctx.enemyPos, pos, ctx.enemyDir, ctx.map)) return true;
     if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
-        // Overload 枪线为 2 格宽：主线 + 右偏
+        // Overload 枪线为 2 格宽：主线 + (右和下)
         var rightDir = { up: "right", right: "down", down: "left", left: "up" }[ctx.enemyDir];
         var rightOrigin = addPos(ctx.enemyPos, delta(rightDir));
         if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;

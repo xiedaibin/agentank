@@ -682,8 +682,19 @@ function evalStarCollection(ctx) {
         }
     }
 
-    var safeForWalking = isSafeForStarWalking(ctx.starPos, ctx);
-    if (!safeForWalking) score = Math.min(score - 1200, -500);
+    var cdRemaining = ctx.me.skill && ctx.me.skill.remainingCooldownFrames;
+    var newlyTeleported = cdRemaining && (40 - cdRemaining >= 1 && 40 - cdRemaining <= 4);
+    var isUrgentAndLosing = ctx.isUrgentStarGrab && (ctx.meStars < ctx.enemyStars);
+
+    var nextStep = getNextStep(ctx.myPos, ctx.starPos, ctx) || ctx.starPos;
+
+    var safeForWalking = true;
+    if (newlyTeleported && isUrgentAndLosing) {
+        score = 25000;
+    } else {
+        safeForWalking = isSafeForStarWalking(nextStep, ctx);
+        if (!safeForWalking) score = Math.min(score - 1200, -500);
+    }
     return { action: "move", target: ctx.starPos, score: score, type: "star" };
 }
 
