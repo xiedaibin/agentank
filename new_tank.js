@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.94 - Overload safe quadrant constraints)
- * V12.94: 针对超载坦克实施全局左上象限过滤，在预瞄、伏击和选择安全草丛时，禁止选择敌方的右下偏置威胁区
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.95 - Overload distance-5 quadrant constraints)
+ * V12.95: 针对超载坦克微调偏置威胁过滤条件，当距离<=5且处于右下区时，放弃预瞄、通道伏击开火并强制在草丛内起跑逃生
  */
 
 
@@ -80,7 +80,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.94: 预判背杀");
+            me.speak("V12.95: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -600,10 +600,11 @@ function evalPreAim(ctx) {
         return null;
     }
 
-    // 防范超载坦克的非对称弹道。如果在超载坦克的右/下威胁区，放弃预瞄
+    // 防范超载坦克的非对称弹道。如果在超载坦克的右/下威胁区且中近距离（≤5），放弃预瞄
     var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
     if (isEnemyOverload && ctx.enemyPos) {
-        if (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1]) {
+        var d = getDist(ctx.myPos, ctx.enemyPos);
+        if (d <= 5 && (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1])) {
             return null;
         }
     }
@@ -973,6 +974,15 @@ function evalPathAmbush(ctx) {
 function evalPathAmbushFire(ctx) {
     if (!ctx.enemyPos || !ctx.enemy) return null;
 
+    // 防范超载坦克的非对称弹道。如果在超载坦克的右/下威胁区且中近距离（≤5），放弃通道伏击开火，让位给防御逃生
+    var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
+    if (isEnemyOverload && ctx.enemyPos) {
+        var d = getDist(ctx.myPos, ctx.enemyPos);
+        if (d <= 5 && (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1])) {
+            return null;
+        }
+    }
+
     // 必须在伏击草丛内
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     if (!isCurrentlyInGrass) return null;
@@ -1073,9 +1083,12 @@ function evalGrassAmbushAndSurvival(ctx) {
         //if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
-            // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
+            // Overload 近距离：即使在草丛里也要检查是否在枪线上，或者是否处于右下威胁区且中近距离（≤5），禁止待机被击
+            var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
+            var overloadDist = ctx.enemyPos ? getDist(ctx.myPos, ctx.enemyPos) : 999;
+            var inOverloadThreatZone = isEnemyOverload && ctx.enemyPos && (overloadDist <= 5) && (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1]);
             var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 4;
-            if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
+            if (inOverloadThreatZone || (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true))) {
                 // 不在此处 return，让它fall-through到下面的grass寻路
             } else {
                 // 金蝉脱壳：进入草丛首帧进行位置转移以欺骗盲射

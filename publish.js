@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.94 - 针对超载坦克实施全局左上象限过滤，在预瞄、伏击和选择安全草丛时，禁止选择敌方的右下偏置威胁区",
+            notes: "XDB V12.95 - 针对超载坦克微调偏置威胁过滤条件，当距离<=5且处于右下区时，放弃预瞄、通道伏击开火并强制在草丛内起跑逃生",
             submittedBy: "Gemini"
         })
 
