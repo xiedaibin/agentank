@@ -272,3 +272,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 80.00% | Adopted | 20.00% |
 | V12 | 2026-07-06 | Close Range Teleport Evasion | Close Range Teleport Evasion (自动生成) | 70.00% | Adopted | 15.00% |
 | V12 | 2026-07-06 | Overload safe quadrant constraints | Overload safe quadrant constraints (自动生成) | 68.97% | Pending | -1.03% |
+| V12 | 2026-07-06 | Overload distance-5 quadrant constraints | Overload distance-5 quadrant constraints (自动生成) | 56.67% | Rejected | -12.33% |

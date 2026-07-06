@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.95 - Overload distance-5 quadrant constraints)
- * V12.95: 针对超载坦克微调偏置威胁过滤条件，当距离<=5且处于右下区时，放弃预瞄、通道伏击开火并强制在草丛内起跑逃生
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.96 - Close Range Overload Defense desensitization bypass)
+ * V12.96: 移除了草丛内盲目跑出草地的强控，转而在近距离（<=3）且技能就绪时，直接越过草丛脱敏，将超载枪线纳入幽灵避弹和安全规避判定
  */
 
 
@@ -80,7 +80,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.95: 预判背杀");
+            me.speak("V12.96: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1083,12 +1083,9 @@ function evalGrassAmbushAndSurvival(ctx) {
         //if (ctx.enemyBullet && getFramesToHit(ctx.myPos, ctx.enemyBullet, ctx.map) < 10) score -= 1000;
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
-            // Overload 近距离：即使在草丛里也要检查是否在枪线上，或者是否处于右下威胁区且中近距离（≤5），禁止待机被击
-            var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
-            var overloadDist = ctx.enemyPos ? getDist(ctx.myPos, ctx.enemyPos) : 999;
-            var inOverloadThreatZone = isEnemyOverload && ctx.enemyPos && (overloadDist <= 5) && (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1]);
+            // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
             var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 4;
-            if (inOverloadThreatZone || (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true))) {
+            if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
                 // 不在此处 return，让它fall-through到下面的grass寻路
             } else {
                 // 金蝉脱壳：进入草丛首帧进行位置转移以欺骗盲射
@@ -1178,16 +1175,18 @@ function tacticalDefense(me, ctx) {
     }
 
     // [方案B v2] 幽灵子弹轴线预判（收窄脱敏版）：减少误触发
-    // 触发条件收紧：6帧内见过 + ≤7格近距 + 我方无子弹飞行（更需谨慎时）
-    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet) {
+    // 触发条件收紧：6帧内见过 + ≤7格近距
+    if (!ctx.enemyBullet && ctx.enemyPos) {
         var recentlySeen = (G_History.frame - G_History.lastEnemySeenFrame < 6);
         if (recentlySeen || ctx.enemyCloaked) {
             var ghostDist = getDist(ctx.myPos, ctx.enemyPos);
             if (ghostDist <= 7) {
                 var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
 
-                // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地或敌方已开启超载，才防范超宽枪线
-                var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
+                // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地、敌方已开启超载，或敌方是超载坦克且技能就绪、距离极近（<=3），才防范超宽枪线
+                var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
+                var enemyReadyClose = isEnemyOverload && ctx.enemySkillReady && ghostDist <= 3;
+                var activeOverload = (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) || enemyReadyClose;
                 var needCheckOverload = !myPosInGrass || activeOverload;
                 var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
                 if (!myPosInGrass || activeOverload || (ghostDist <= 2 && onEnemyLine)) {
@@ -1215,7 +1214,7 @@ function tacticalDefense(me, ctx) {
     }
 
     // 幽灵子弹轴线预判扩展：如果我们在潜在的敌方草丛共轴枪线上，且在open ground
-    if (!ctx.enemyBullet && ctx.enemyPos && !me.bullet && !ctx.enemyVisible) {
+    if (!ctx.enemyBullet && ctx.enemyPos && !ctx.enemyVisible) {
         var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
         if (!myPosInGrass) {
             if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[ctx.myPos[0] + "," + ctx.myPos[1]]) {
@@ -1243,7 +1242,9 @@ function tacticalDefense(me, ctx) {
     if (ctx.enemyPos && (ctx.enemyVisible || enemySeenRecently) && !ctx.enemyFireLocked) {
         var d = getDist(ctx.myPos, ctx.enemyPos);
         var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-        var activeOverload = ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded;
+        var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
+        var enemyReadyClose = isEnemyOverload && ctx.enemySkillReady && d <= 3;
+        var activeOverload = (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) || enemyReadyClose;
         var needCheckOverload = !myPosInGrass || activeOverload;
         var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
 

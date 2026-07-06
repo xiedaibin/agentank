@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.95 - 针对超载坦克微调偏置威胁过滤条件，当距离<=5且处于右下区时，放弃预瞄、通道伏击开火并强制在草丛内起跑逃生",
+            notes: "XDB V12.96 - 移除了草丛内盲目跑出草地的强控，转而在近距离（<=3）且技能就绪时，直接越过草丛脱敏，将超载枪线纳入幽灵避弹和安全规避判定",
             submittedBy: "Gemini"
         })
 
