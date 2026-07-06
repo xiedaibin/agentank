@@ -1175,33 +1175,10 @@ function tacticalDefense(me, ctx) {
         }
     }
 
-    // 防御锁 + 落点截击预瞄（合并版）：
-    // 1. 若尚未到达目标点且目标安全 → 继续移动
-    // 2. 若已经到达目标点（一步即达或多步后到达）→ 立即尝试截击预瞄，无需等下一帧
+    // 防御锁检测置顶：若无迫在眉睫的真实子弹威胁，且上一帧已经锁定了逃跑规避方向，坚持走完，防止原地转向抖动
     if (G_History.defenseLockTicks > 0 && G_History.lastDefenseTarget) {
         G_History.defenseLockTicks--;
-        var defTarget = G_History.lastDefenseTarget;
-
-        // 尚未到达目标点：继续走
-        if (!samePos(ctx.myPos, defTarget) && isSafe(defTarget, ctx, true)) {
-            return { action: "move", target: defTarget, score: 30000 };
-        }
-
-        // 已到达目标点（一步即达或目标不安全时）：尝试截击预瞄
-        // 触发条件：我方在敌方左上方（myX < eX && myY < eY）
-        var iEPos = ctx.enemyPos || G_History.lastEnemyPos;
-        var iEDir = ctx.enemyDir || G_History.lastEnemyDir;
-        if (iEPos && iEDir && ctx.myPos[0] < iEPos[0] && ctx.myPos[1] < iEPos[1]) {
-            // 敌方垂直运动（up/down）→ 截击轴为水平 → 我方转右（敌在我右侧）
-            // 敌方水平运动（left/right）→ 截击轴为垂直 → 我方转下（敌在我下方）
-            var interceptDir = (iEDir === "up" || iEDir === "down") ? "right" : "down";
-            if (ctx.myDir !== interceptDir) {
-                me.speak("截击预瞄");
-                G_History.lastDefenseTarget = null;
-                return { action: "turn", target: interceptDir, score: 18000 };
-            }
-        }
-        G_History.lastDefenseTarget = null; // 条件不满足时清零，恢复自由决策
+        if (isSafe(G_History.lastDefenseTarget, ctx, true)) return { action: "move", target: G_History.lastDefenseTarget, score: 30000 };
     }
 
     // [方案B v2] 幽灵子弹轴线预判（收窄脱敏版）：减少误触发
