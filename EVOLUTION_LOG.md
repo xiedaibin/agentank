@@ -270,3 +270,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 50.00% | Rejected | -10.00% |
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 63.33% | Pending | 3.33% |
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 80.00% | Adopted | 20.00% |
+| V12 | 2026-07-06 | Close Range Teleport Evasion | Close Range Teleport Evasion (自动生成) | 70.00% | Adopted | 15.00% |
