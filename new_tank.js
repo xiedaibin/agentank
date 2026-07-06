@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.93 - Close Evasion Teleport Rescue)
- * V12.93: 优化近距离过载/枪线下的幽灵/安全闪避规避逻辑，在需要转身且传送就绪时强制以传送逃生，避免转向硬直被秒杀
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.94 - Overload safe quadrant constraints)
+ * V12.94: 针对超载坦克实施全局左上象限过滤，在预瞄、伏击和选择安全草丛时，禁止选择敌方的右下偏置威胁区
  */
 
 
@@ -80,7 +80,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.93: 预判背杀");
+            me.speak("V12.94: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -600,6 +600,14 @@ function evalPreAim(ctx) {
         return null;
     }
 
+    // 防范超载坦克的非对称弹道。如果在超载坦克的右/下威胁区，放弃预瞄
+    var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
+    if (isEnemyOverload && ctx.enemyPos) {
+        if (ctx.myPos[0] > ctx.enemyPos[0] || ctx.myPos[1] > ctx.enemyPos[1]) {
+            return null;
+        }
+    }
+
     var targetVisible = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass || ctx.isTeleportAmbushStream;
     if (!ctx.shootingEnemyPos || !targetVisible || !ctx.enemyDir) {
         G_History.preAimTicks = 0;
@@ -874,8 +882,7 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
 
                 if (hasLoS) {
                     var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
-                    var isBigAdvantage = ctx.meStars >= (ctx.enemyStars + 2);
-                    if (isBigAdvantage && isEnemyOverload) {
+                    if (isEnemyOverload) {
                         var relativeLeft = (g[0] < node.pos[0]) && (g[1] === node.pos[1]);
                         var relativeUp = (g[1] < node.pos[1]) && (g[0] === node.pos[0]);
                         if (!relativeLeft && !relativeUp) continue;
@@ -1819,8 +1826,12 @@ function findOffAxisMove(ctx) {
 function findSafeGrassSpot(ctx) {
     var grass = [];
     var list = G_Blueprint.mapVision.grassList || [];
+    var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
     for (var i = 0; i < list.length; i++) {
         var p = list[i];
+        if (isEnemyOverload && ctx.enemyPos) {
+            if (p[0] > ctx.enemyPos[0] || p[1] > ctx.enemyPos[1]) continue;
+        }
         if (isSafe(p, ctx, true) && getDist(p, ctx.enemyPos) > 10) grass.push(p);
     }
     if (grass.length === 0) return null;
@@ -1847,8 +1858,12 @@ function findNearestGrass(pos) {
 function findNearestSafeGrass(pos, ctx) {
     var best = null, minDist = 999;
     var list = G_Blueprint.mapVision.grassList || [];
+    var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
     for (var i = 0; i < list.length; i++) {
         var p = list[i];
+        if (isEnemyOverload && ctx.enemyPos) {
+            if (p[0] > ctx.enemyPos[0] || p[1] > ctx.enemyPos[1]) continue;
+        }
         if (!isSafe(p, ctx, true)) continue;
         if (ctx.enemyPos && getDist(p, ctx.enemyPos) <= 2) continue;
         var d = getDist(pos, p);

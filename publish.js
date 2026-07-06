@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.93 - 优化近距离过载/枪线下的幽灵/安全闪避规避逻辑，在需要转身且传送就绪时强制以传送逃生，避免转向硬直被秒杀",
+            notes: "XDB V12.94 - 针对超载坦克实施全局左上象限过滤，在预瞄、伏击和选择安全草丛时，禁止选择敌方的右下偏置威胁区",
             submittedBy: "Gemini"
         })
 
