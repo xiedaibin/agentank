@@ -273,3 +273,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-06 | Close Range Overload desensitization bypass | Close Range Overload desensitization bypass (自动生成) | 66.67% | Adopted | -2.33% |
 | V12 | 2026-07-06 | Performance optimization caching | 引入 canShoot, isLoS 以及 isOnEnemyGunLine 的帧内缓存优化，降低运行开销 | 58.00% | Adopted | -8.67% |
 | V12 | 2026-07-06 | 未命名策略 | 未命名策略 (自动生成) | 73.33% | Adopted | 13.33% |
+| V12 | 2026-07-06 | 未命名策略 | 未命名策略 (自动生成) | 55.17% | Rejected | -9.83% |
+| V12 | 2026-07-06 | 未命名策略 | 未命名策略 (自动生成) | 63.33% | Pending | -1.67% |

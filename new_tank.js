@@ -931,6 +931,7 @@ function findPathAmbushSpot(enemyPath, myPos, starPos, map, ctx) {
  */
 function evalPathAmbush(ctx) {
     if (!ctx.starPos || !ctx.enemyPos || !ctx.enemy) return null;
+    if (G_Blueprint.enemyProfile && (G_Blueprint.enemyProfile.hasOverload || G_Blueprint.enemyProfile.skillType == "teleport")) return null;
 
     // 优势判定：我方星星 >= 敌方星星 + 2
     var advantage = ctx.meStars >= (ctx.enemyStars + 2);
