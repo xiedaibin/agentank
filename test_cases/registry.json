@@ -101,5 +101,15 @@
       "action": "turn",
       "direction": "right"
     }
+  },
+  {
+    "id": "TC-008",
+    "matchId": "mat_GO1obLSrJBH1fySqz",
+    "description": "Frame 78 - XDB处于近距离敌方过载枪线上，且逃生需转向，有传送CD，必须触发幽灵闪避传送而非普通移动",
+    "frame": 78,
+    "setupHistory": {},
+    "expected": {
+      "action": "teleport"
+    }
   }
 ]

@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.92 - Star Walking Time-check Rescue)
- * V12.92: 修复领先时空账退化导致盲目吃星送死的逻辑漏洞
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.93 - Close Evasion Teleport Rescue)
+ * V12.93: 优化近距离过载/枪线下的幽灵/安全闪避规避逻辑，在需要转身且传送就绪时强制以传送逃生，避免转向硬直被秒杀
  */
 
 
@@ -80,7 +80,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.92: 预判背杀");
+            me.speak("V12.93: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1174,6 +1174,14 @@ function tacticalDefense(me, ctx) {
                     if (onEnemyLine) {
                         var ghostEscape = findOffAxisMove(ctx);
                         if (ghostEscape) {
+                            var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
+                            if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
+                                var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                                if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
+                                    me.speak("幽灵闪避传送");
+                                    return { action: "teleport", target: esc, score: 99999 };
+                                }
+                            }
                             me.speak("幽灵避弹");
                             ghostEscape.score = 22000;
                             G_History.defenseLockTicks = 2;
@@ -1193,6 +1201,14 @@ function tacticalDefense(me, ctx) {
             if (ctx.unsafeCoAxialTiles && ctx.unsafeCoAxialTiles[ctx.myPos[0] + "," + ctx.myPos[1]]) {
                 var ghostEscape = findOffAxisMove(ctx);
                 if (ghostEscape) {
+                    var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
+                    if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
+                        var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                        if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
+                            me.speak("共轴闪避传送");
+                            return { action: "teleport", target: esc, score: 99999 };
+                        }
+                    }
                     me.speak("共轴避弹");
                     ghostEscape.score = 22000;
                     G_History.defenseLockTicks = 2;
@@ -1215,6 +1231,14 @@ function tacticalDefense(me, ctx) {
             if (!myPosInGrass || d <= 2 || activeOverload) {
                 var escape = findOffAxisMove(ctx);
                 if (escape) {
+                    var needTurn = directionTo(ctx.myPos, escape.target) !== ctx.myDir;
+                    if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
+                        var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                        if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
+                            me.speak("安全闪避传送");
+                            return { action: "teleport", target: esc, score: 99999 };
+                        }
+                    }
                     me.speak("安全规避");
                     escape.score = 25000;
                     G_History.defenseLockTicks = 2;
