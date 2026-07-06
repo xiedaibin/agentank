@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.96 - 移除了草丛内盲目跑出草地的强控，转而在近距离（<=3）且技能就绪时，直接越过草丛脱敏，将超载枪线纳入幽灵避弹和安全规避判定",
+            notes: "XDB V12.97 - 引入 canShoot, isLoS 以及 isOnEnemyGunLine 的帧内缓存优化，降低运行开销以规避平局 runtime 判定劣势",
             submittedBy: "Gemini"
         })
 

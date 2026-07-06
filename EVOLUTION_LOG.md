@@ -270,6 +270,5 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 50.00% | Rejected | -10.00% |
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 63.33% | Pending | 3.33% |
 | V12 | 2026-07-03 | 未命名策略 | 未命名策略 (自动生成) | 80.00% | Adopted | 20.00% |
-| V12 | 2026-07-06 | Close Range Teleport Evasion | Close Range Teleport Evasion (自动生成) | 70.00% | Adopted | 15.00% |
-| V12 | 2026-07-06 | Overload safe quadrant constraints | Overload safe quadrant constraints (自动生成) | 68.97% | Pending | -1.03% |
-| V12 | 2026-07-06 | Overload distance-5 quadrant constraints | Overload distance-5 quadrant constraints (自动生成) | 56.67% | Rejected | -12.33% |
+| V12 | 2026-07-06 | Close Range Overload desensitization bypass | Close Range Overload desensitization bypass (自动生成) | 66.67% | Adopted | -2.33% |
+| V12 | 2026-07-06 | Performance optimization caching | 引入 canShoot, isLoS 以及 isOnEnemyGunLine 的帧内缓存优化，降低运行开销 | 58.00% | Adopted | -8.67% |

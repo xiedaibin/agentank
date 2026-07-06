@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.96 - Close Range Overload Defense desensitization bypass)
- * V12.96: 移除了草丛内盲目跑出草地的强控，转而在近距离（<=3）且技能就绪时，直接越过草丛脱敏，将超载枪线纳入幽灵避弹和安全规避判定
+ * AgenTank AI Agent - XDB (Strategic Assassin V12.97 - Performance optimization caching)
+ * V12.97: 引入 canShoot, isLoS 以及 isOnEnemyGunLine 的帧内缓存优化，降低运行开销以规避平局 runtime 判定劣势
  */
 
 
@@ -46,6 +46,9 @@ var CONFIG = { KILL_PRIO: 10000, STAR_PRIO: 800, TURN_COST: 0.8, BLIND_FIRE_FRAM
 var G_SafeCache = {};
 var G_DangerTiles = {};
 var G_AStarCache = {};  // 帧内 A* 路径缓存：同一帧相同 (start,goal) 直接复用结果，避免重复寻路
+var G_CanShootCache = {};
+var G_LoSCache = {};
+var G_OnGunLineCache = {};
 
 /**
  * 核心决策入口函数，引擎在坦克没有动作队列时每帧调用一次
@@ -68,6 +71,9 @@ function onIdle(me, enemy, game) {
         G_History.frame = game.frames || 0;
         G_SafeCache = {};
         G_AStarCache = {};
+        G_CanShootCache = {};
+        G_LoSCache = {};
+        G_OnGunLineCache = {};
         if (G_History.lastTeleportTarget && G_History.frame === G_History.lastTeleportFrame + 1) {
             if (samePos(me.tank.position, G_History.lastTeleportPos)) {
                 if (!G_History.failedTeleportSpots) G_History.failedTeleportSpots = {};
@@ -80,7 +86,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.96: 预判背杀");
+            me.speak("V12.97: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1298,29 +1304,37 @@ function isEnemyOverloadActive(ctx, pos) {
  * 判断某个格子位置是否暴露在敌方的当前直视枪线或双枪线超载范围内
  */
 function isOnEnemyGunLine(pos, ctx, checkOverload) {
-    if (!ctx.enemyPos || !ctx.enemyDir) return false;
-    var d = delta(ctx.enemyDir);
-    if (d[0] === 0 && d[1] === 0) return false;
+    if (!pos || !ctx.enemyPos || !ctx.enemyDir) return false;
+    var cacheKey = pos[0] + "," + pos[1] + "|" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "|" + ctx.enemyDir + "|" + (checkOverload ? 1 : 0);
+    if (G_OnGunLineCache[cacheKey] !== undefined) return G_OnGunLineCache[cacheKey];
 
-    // 前瞻评估：当前位置 (k=0)、前行 1 格 (k=1)、前行 2 格 (k=2)
-    for (var k = 0; k <= 2; k++) {
-        var ePos = [ctx.enemyPos[0] + k * d[0], ctx.enemyPos[1] + k * d[1]];
+    var res = (function () {
+        var d = delta(ctx.enemyDir);
+        if (d[0] === 0 && d[1] === 0) return false;
 
-        // 如果前行路径上遇到了硬墙或土堆，敌人无法继续前行，中断前瞻
-        if (k > 0 && !isPassable(ePos, ctx.map)) break;
+        // 前瞻评估：当前位置 (k=0)、前行 1 格 (k=1)、前行 2 格 (k=2)
+        for (var k = 0; k <= 2; k++) {
+            var ePos = [ctx.enemyPos[0] + k * d[0], ctx.enemyPos[1] + k * d[1]];
 
-        // 1. 评估在该位置的主枪线
-        var mainOrigin = addPos(ePos, d);
-        if (isLoS(mainOrigin, pos, ctx.enemyDir, ctx.map)) return true;
+            // 如果前行路径上遇到了硬墙或土堆，敌人无法继续前行，中断前瞻
+            if (k > 0 && !isPassable(ePos, ctx.map)) break;
 
-        // 2. 评估在该位置的过载双枪线
-        if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
-            var rightDir = overloadRightDir(ctx.enemyDir);
-            var rightOrigin = addPos(mainOrigin, delta(rightDir));
-            if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;
+            // 1. 评估在该位置的主枪线
+            var mainOrigin = addPos(ePos, d);
+            if (isLoS(mainOrigin, pos, ctx.enemyDir, ctx.map)) return true;
+
+            // 2. 评估在该位置的过载双枪线
+            if (checkOverload && isEnemyOverloadActive(ctx, pos)) {
+                var rightDir = overloadRightDir(ctx.enemyDir);
+                var rightOrigin = addPos(mainOrigin, delta(rightDir));
+                if (isLoS(rightOrigin, pos, ctx.enemyDir, ctx.map)) return true;
+            }
         }
-    }
-    return false;
+        return false;
+    })();
+
+    G_OnGunLineCache[cacheKey] = res;
+    return res;
 }
 
 /**
@@ -1890,35 +1904,53 @@ function findNearestSafeGrass(pos, ctx) {
  * 视线追踪（LoS）：在给定的朝向上，起点和终点之间是否没有任何硬墙和土堆遮挡
  */
 function isLoS(s, e, dir, map) {
-    if (!s || !e || (s[0] !== e[0] && s[1] !== e[1])) return false;
-    if (samePos(s, e)) return true;
-    if (directionTo(s, e) !== dir) return false;
-    var st = delta(dir);
-    if (st[0] === 0 && st[1] === 0) return false;
-    var p = addPos(s, st), safety = 0;
-    while (!samePos(p, e) && safety < 30) {
-        var t = getTile(p, map);
-        if (t === "x" || t === "m") return false;
-        p = addPos(p, st); safety++;
-    }
-    return samePos(p, e);
+    if (!s || !e) return false;
+    var cacheKey = s[0] + "," + s[1] + "|" + e[0] + "," + e[1] + "|" + dir;
+    if (G_LoSCache[cacheKey] !== undefined) return G_LoSCache[cacheKey];
+
+    var res = (function () {
+        if (s[0] !== e[0] && s[1] !== e[1]) return false;
+        if (samePos(s, e)) return true;
+        if (directionTo(s, e) !== dir) return false;
+        var st = delta(dir);
+        if (st[0] === 0 && st[1] === 0) return false;
+        var p = addPos(s, st), safety = 0;
+        while (!samePos(p, e) && safety < 30) {
+            var t = getTile(p, map);
+            if (t === "x" || t === "m") return false;
+            p = addPos(p, st); safety++;
+        }
+        return samePos(p, e);
+    })();
+
+    G_LoSCache[cacheKey] = res;
+    return res;
 }
 
 /**
  * 直线射击轨道畅通性测试，返回 true（直通）、"mound"（阻挡 1 土堆）或 false（硬墙）
  */
 function canShoot(a, b, map) {
-    if (!a || !b || samePos(a, b) || (a[0] !== b[0] && a[1] !== b[1])) return false;
-    var d = directionTo(a, b), st = delta(d);
-    if (st[0] === 0 && st[1] === 0) return false;
-    var p = addPos(a, st), blockedByMound = false, safety = 0;
-    while (!samePos(p, b) && safety < 30) {
-        var t = getTile(p, map);
-        if (t === "x") return false;
-        if (t === "m") blockedByMound = true;
-        p = addPos(p, st); safety++;
-    }
-    return samePos(p, b) ? (blockedByMound ? "mound" : true) : false;
+    if (!a || !b) return false;
+    var cacheKey = a[0] + "," + a[1] + "|" + b[0] + "," + b[1];
+    if (G_CanShootCache[cacheKey] !== undefined) return G_CanShootCache[cacheKey];
+
+    var res = (function () {
+        if (samePos(a, b) || (a[0] !== b[0] && a[1] !== b[1])) return false;
+        var d = directionTo(a, b), st = delta(d);
+        if (st[0] === 0 && st[1] === 0) return false;
+        var p = addPos(a, st), blockedByMound = false, safety = 0;
+        while (!samePos(p, b) && safety < 30) {
+            var t = getTile(p, map);
+            if (t === "x") return false;
+            if (t === "m") blockedByMound = true;
+            p = addPos(p, st); safety++;
+        }
+        return samePos(p, b) ? (blockedByMound ? "mound" : true) : false;
+    })();
+
+    G_CanShootCache[cacheKey] = res;
+    return res;
 }
 
 /**

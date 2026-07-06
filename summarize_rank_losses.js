@@ -23,42 +23,27 @@ function summarize() {
     files.forEach(file => {
         try {
             const data = JSON.parse(fs.readFileSync(path.join(replayDir, file), 'utf8'));
-            const replay = data.replayData?.replay || data.replay;
-            if (!replay) return;
-
-            const records = replay.records || [];
-            if (records.length === 0) return;
-
-            const lastFrame = records[records.length - 1];
-            const firstFrame = records[0];
-
-            // Identify me and enemy
-            const challenger = data.participants.challenger;
-            const defender = data.participants.defender;
+            const match = data.match || {};
+            const sum = data.summary || {};
+            const p = data.participants || {};
+            const challenger = p.challenger || {};
+            const defender = p.defender || {};
             const isChallenger = challenger.tankName === 'XDB' || challenger.tankId === 230;
-            
-            // Find tank object IDs from frame 1 (usually where they move first)
-            const frame1 = records[1] || [];
-            const tankActions = frame1.filter(a => a.type === 'tank' && a.action === 'go');
-            // This is a bit heuristic, might need better way to link objectId to participant
-            
-            let deathReason = 'Timeout/Other';
-            
-            // Look for crash/destroy in last few frames
-            for (let i = records.length - 1; i >= Math.max(0, records.length - 5); i--) {
-                const frame = records[i];
-                const tankCrash = frame.find(a => a.type === 'tank' && (a.action === 'crashed' || a.action === 'destroyed'));
-                if (tankCrash) {
-                    deathReason = 'Killed';
-                    break;
-                }
-            }
+            const enemyName = isChallenger ? defender.tankName : challenger.tankName;
+
+            const myStats = isChallenger ? sum.tanks?.XDB : sum.tanks?.[challenger.tankName];
+            const enemyStats = isChallenger ? sum.tanks?.[defender.tankName] : sum.tanks?.XDB;
 
             summary.cases.push({
                 filename: file,
-                duration: records.length,
-                enemyName: isChallenger ? defender.tankName : challenger.tankName,
-                deathReason: deathReason
+                matchId: match.urlId,
+                winner: match.winnerTankName,
+                reason: match.resultReason,
+                duration: sum.framesTotal,
+                myStars: myStats?.stars || 0,
+                enemyStars: enemyStats?.stars || 0,
+                myDiagnosis: myStats?.diagnosis || 'N/A',
+                enemyDiagnosis: enemyStats?.diagnosis || 'N/A'
             });
         } catch (e) {
             console.error(`Error processing ${file}: ${e.message}`);
