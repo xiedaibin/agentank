@@ -19,7 +19,7 @@ async function main() {
         },
         body: JSON.stringify({
             code: code,
-            notes: "XDB V12.65 - 增加对方传送 speak 喊话调试，且具备防重复 speak 机制",
+            notes: "XDB V12.93 - 优化近距离过载/枪线下的幽灵/安全闪避规避逻辑，在需要转身且传送就绪时强制以传送逃生，避免转向硬直被秒杀",
             submittedBy: "Gemini"
         })
 
