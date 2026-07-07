@@ -111,5 +111,18 @@
     "expected": {
       "action": "teleport"
     }
+  },
+  {
+    "id": "TC-009",
+    "matchId": "mat_EnjEorsEWeaAtfaNT",
+    "description": "Frame 2 - 刚传送降落在星格旁边，车头已对准星星时，必须保持为 move/抢星动作，禁止预瞄扭头打断吃星",
+    "frame": 2,
+    "setupHistory": {
+      "starTeleportFrame": 1,
+      "postTeleportFrames": 1
+    },
+    "expected": {
+      "action": "idle"
+    }
   }
 ]
