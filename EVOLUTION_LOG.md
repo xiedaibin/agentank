@@ -290,3 +290,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V12 | 2026-07-07 | 嘴边星防预瞄抢戏漏洞与测试追加 | 嘴边星防预瞄抢戏漏洞与测试追加 (自动生成) | 72.41% | Pending | 2.41% |
 | V12 | 2026-07-07 | 金蝉脱壳共轴拦截与预瞄保护细化 | 金蝉脱壳共轴拦截与预瞄保护细化 (自动生成) | 83.33% | Adopted | 11.33% |
 | V12 | 2026-07-07 | TestAuto | TestAuto (自动生成) | 100.00% | Adopted | 15.00% |
+| V12 | 2026-07-07 | TestCompat | TestCompat (自动生成) | 100.00% | Adopted | 15.00% |
