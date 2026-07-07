@@ -349,7 +349,7 @@ function buildExecutionContext(me, enemy, game) {
     }
 
     var unsafeCoAxialTiles = {};
-    var limit = G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" ? 40 : 35;
+    var limit = G_Blueprint.Tactics.STANCE === "ANTI_CLOAK" ? 60 : 55;
     // Fix P0-1: 传送预判模式下禁止触发coAxial标记（lastEnemyPos是推算坐标非真实消失点）
     var skipCoAxial = G_History.isEnemyPosPredicted;
     if (!skipCoAxial && !visible && G_History.lastEnemyPos && (G_History.frame - G_History.lastEnemySeenFrame < limit)) {
