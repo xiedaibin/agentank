@@ -1853,7 +1853,7 @@ function findOffAxisMove(ctx) {
                             if (n[1] > ctx.enemyPos[1] + 1) isSafeSide = true;
                         }
                     }
-                    if (isSafeSide) s += 0.1;
+                    if (isSafeSide) s += 0.01;
                 }
 
                 if (s > maxS) { maxS = s; best = n; }
@@ -1890,7 +1890,7 @@ function findOffAxisMove(ctx) {
                                 if (n2[1] > ctx.enemyPos[1] + 1) isSafeSide = true;
                             }
                         }
-                        if (isSafeSide) s += 0.1;
+                        if (isSafeSide) s += 0.01;
                     }
 
                     if (s > maxS) { maxS = s; best = n; }
