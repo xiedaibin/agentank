@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.40 - Turn Delay Penalty)
- * V13.40: 在 findOffAxisMove 中对转向和掉头进行了重罚，强力避免高危下的原地转向抖动，并优先选择直行避险
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.30 - Double-Layer Star Grab Exemption)
+ * V13.30: 在 isSafeForStarWalking 中引入了抢星免死金牌与共轴距离双层防线拦截，完美解决了嘴边星星在非共轴和远程共轴危险下的抢先踩星避险
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.40: 预判背杀");
+            me.speak("V13.30: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1333,8 +1333,7 @@ function tacticalDefense(me, ctx) {
                         var ghostEscape = findOffAxisMove(ctx);
                         if (ghostEscape) {
                             var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
-                            var isNextStepUnsafe = !isSafe(ghostEscape.target, ctx, false);
-                            if ((needTurn || isNextStepUnsafe) && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
+                            if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
                                 var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                                 if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                                     me.speak("幽灵闪避传送");
@@ -1361,8 +1360,7 @@ function tacticalDefense(me, ctx) {
                 var ghostEscape = findOffAxisMove(ctx);
                 if (ghostEscape) {
                     var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
-                    var isNextStepUnsafe = !isSafe(ghostEscape.target, ctx, false);
-                    if ((needTurn || isNextStepUnsafe) && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
+                    if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
                         var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
                         if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                             me.speak("共轴闪避传送");
@@ -1640,7 +1638,7 @@ function isSafeForStarWalking(pos, ctx) {
         if (canDirectGrab) {
             // 【安全强化双层防线限制】：若星星格与敌人共轴（含超载偏移轴），必须大于 6 格才允许放行，否则极不安全
             var isCoAxial = (pos[0] === ctx.enemyPos[0] || pos[1] === ctx.enemyPos[1]);
-            
+
             var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
             var isOverloadCoAxial = false;
             if (isEnemyOverload && ctx.enemyDir) {
@@ -1939,7 +1937,7 @@ function getNextStep(start, goal, ctx) {
  * 寻找偏轴避让格（让出轴线、避开盲区共轴射线并朝星星微调偏头）
  */
 function findOffAxisMove(ctx) {
-    var neighbors = ["up", "right", "down", "left"], best = null, maxS = -99999;
+    var neighbors = ["up", "right", "down", "left"], best = null, maxS = -1;
     for (var i = 0; i < neighbors.length; i++) {
         var dir = neighbors[i];
         var n = addPos(ctx.myPos, delta(dir));
@@ -1949,19 +1947,7 @@ function findOffAxisMove(ctx) {
                 var s = getDist(n, ctx.enemyPos);
                 var isNeighborOnAxis = (n[0] === ctx.enemyPos[0] || n[1] === ctx.enemyPos[1]);
                 if (!isNeighborOnAxis) s += 0.5;
-
-                // 转向耗时重罚（直行 0 > 转弯 1 > 掉头 2）
-                var moveDir = directionTo(ctx.myPos, n);
-                var turnSteps = 0;
-                if (moveDir !== ctx.myDir) {
-                    var dirs = ["up", "right", "down", "left"];
-                    var idx1 = dirs.indexOf(ctx.myDir);
-                    var idx2 = dirs.indexOf(moveDir);
-                    var diff = Math.abs(idx1 - idx2);
-                    turnSteps = (diff === 2) ? 2 : 1;
-                }
-                s -= turnSteps * 2.0;
-
+                if (directionTo(ctx.myPos, n) === ctx.myDir) s += 0.1;
                 if (ctx.starPos) {
                     s += Math.max(0, (50 - getDist(n, ctx.starPos)) * 0.001);
                 }
