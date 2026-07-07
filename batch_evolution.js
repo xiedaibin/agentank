@@ -7,6 +7,77 @@ async function delay(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
 
+async function fetchJson(url, options = {}) {
+    const res = await fetch(url, options);
+    const text = await res.text();
+    let data = null;
+
+    if (text) {
+        try {
+            data = JSON.parse(text);
+        } catch (e) {
+            data = { raw: text };
+        }
+    }
+
+    if (!res.ok) {
+        const message = data && data.raw ? data.raw : text;
+        throw new Error(`HTTP ${res.status}: ${message}`);
+    }
+
+    return data;
+}
+
+async function getTankContext(token) {
+    return fetchJson('https://agentank.ai/api/agent/tank', {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+}
+
+function normalizeMapList(maps) {
+    if (!maps) return [];
+
+    if (Array.isArray(maps)) {
+        return maps
+            .map(map => {
+                if (typeof map === 'string') return map;
+                return map.id || map.mapId || map.slug || map.name;
+            })
+            .filter(Boolean);
+    }
+
+    if (typeof maps === 'object') {
+        return Object.entries(maps)
+            .map(([key, map]) => {
+                if (typeof map === 'string') return map;
+                if (map && typeof map === 'object') {
+                    return map.id || map.mapId || map.slug || map.name || key;
+                }
+                return key;
+            })
+            .filter(Boolean);
+    }
+
+    return [];
+}
+
+function extractMapIds(context) {
+    const candidates = [
+        context && context.maps,
+        context && context.availableMaps,
+        context && context.mapList,
+        context && context.availableMapList
+    ];
+
+    for (const candidate of candidates) {
+        const ids = normalizeMapList(candidate);
+        if (ids.length > 0) return ids;
+    }
+
+    return ['classic'];
+}
+
+
 function getFormattedTime() {
     const now = new Date();
     const yyyy = now.getFullYear();
@@ -58,8 +129,26 @@ async function main() {
         console.error("Error: AGENTANK_TOKEN not found in environment or .env file.");
         process.exit(1);
     }
-    const totalMatches = parseInt(process.argv[4]) || 30;
 
+    let mapMode = 'classic';
+    let totalMatches = 30;
+
+    // 解析参数 3 (argv[4]) 和 参数 4 (argv[5])
+    if (process.argv[4]) {
+        const arg4 = process.argv[4].toLowerCase();
+        if (arg4 === 'auto' || arg4 === 'classic') {
+            mapMode = arg4;
+            if (process.argv[5]) {
+                totalMatches = parseInt(process.argv[5], 10) || 30;
+            }
+        } else {
+            // 兼容以前的用法，如果第三个参数是数字，则为 totalMatches
+            const num = parseInt(process.argv[4], 10);
+            if (!isNaN(num)) {
+                totalMatches = num;
+            }
+        }
+    }
 
     let baselineWinRate = parseFloat(process.argv[2]);
     if (isNaN(baselineWinRate)) {
@@ -72,11 +161,24 @@ async function main() {
     const replayDir = 'batch_evolution_replays';
 
     if (process.argv.length < 3 && !baselineWinRate) {
-        console.log("用法: node batch_evolution.js <基准胜率> [策略名称]");
+        console.log("用法: node batch_evolution.js <基准胜率> [策略名称] [地图模式: classic|auto] [对战数量]");
         return;
     }
 
+    let mapIds = ['classic'];
+    if (mapMode === 'auto') {
+        try {
+            console.log("[系统] 正在获取可用地图列表...");
+            const tankContext = await getTankContext(token);
+            mapIds = extractMapIds(tankContext);
+            console.log(`[系统] 获取到可用地图: ${mapIds.join(', ')}`);
+        } catch (e) {
+            console.warn(`[警告] 无法获取可用地图列表，回退至 classic: ${e.message}`);
+        }
+    }
+
     console.log(`\n=== 启动进化流程: ${currentVersion} - ${strategyName} ===`);
+    console.log(`地图模式: ${mapMode} (使用地图: ${mapIds.join(', ')})`);
     console.log(`目标基准胜率: ${(baselineWinRate * 100).toFixed(2)}%`);
 
     // 0. 清理
@@ -86,6 +188,7 @@ async function main() {
 
     // 1. 发布前自检 (Simulation)
     console.log("\n[第一步] 执行代码自检 (模拟运行)...");
+    const simMapId = mapMode === 'auto' ? (mapIds[0] || 'classic') : 'classic';
     const simRes = await fetch('https://agentank.ai/api/agent/tank/simulate', {
         method: 'POST',
         headers: {
@@ -95,7 +198,7 @@ async function main() {
         body: JSON.stringify({
             code: code,
             opponentId: 'nova-scout', // 使用基础机器人进行语法和逻辑自检
-            mapId: 'classic'
+            mapId: simMapId
         })
     });
 
@@ -142,7 +245,10 @@ async function main() {
     let myTankId = null;
 
     for (let i = 1; i <= totalMatches; i++) {
-        process.stdout.write(`[场次 ${i}/${totalMatches}] 对战中... `);
+        const currentMapId = mapMode === 'auto' 
+            ? mapIds[(i - 1) % mapIds.length] 
+            : 'classic';
+        process.stdout.write(`[场次 ${i}/${totalMatches}] 对战中 [地图: ${currentMapId}]... `);
         try {
             const res = await fetch('https://agentank.ai/api/agent/tank/challenge', {
                 method: 'POST',
@@ -150,7 +256,7 @@ async function main() {
                     'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ randomOpponent: true, mapId: 'classic' })
+                body: JSON.stringify({ randomOpponent: true, mapId: currentMapId })
             });
 
             if (!res.ok) {
