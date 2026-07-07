@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V12.99 - Cache evalPathAmbushFire)
- * V12.99: 优化 evalPathAmbushFire 帧内缓存，避免同一帧内重复推演和 LoS 遍历，降低运行开销
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.00 - Unified Assassination Logic)
+ * V13.00: 重构与统一 evalAssassination 和 evalAssassinationPreAim，消除了重复寻找暗杀点的计算并添加了帧内缓存
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V12.99: 预判背杀");
+            me.speak("V13.00: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -553,29 +553,64 @@ function evalPanicTeleport(ctx) {
  * 传送暗杀动作评估：在满足暗杀时机、且确保我方子弹与火控就绪的前提下，寻找敌方侧后方的安全落点进行背杀
  * @param {Object} ctx 动态上下文
  */
-function evalAssassination(ctx) {
-    if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
-    if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
+/**
+ * 统一刺杀落点与战术场景判定（支持帧内缓存，杜绝重复计算与不一致动作）
+ */
+function getUnifiedAssassinSpot(ctx) {
+    if (ctx._cachedAssassinSpot !== undefined) {
+        return ctx._cachedAssassinSpot;
+    }
 
-    // 新增：暗杀前必须确保我方子弹与火控均就绪，避免空弹瞬移送命
-    if (ctx.me.bullet || ctx.meStatus.fireLocked) return null;
+    if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) {
+        return ctx._cachedAssassinSpot = null;
+    }
+    if (ctx.enemyCloaked && !ctx.enemyFireLocked) {
+        return ctx._cachedAssassinSpot = null;
+    }
+    if (ctx.me.bullet || ctx.meStatus.fireLocked) {
+        return ctx._cachedAssassinSpot = null;
+    }
 
+    // 场景条件统一
     var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-    if (isTeleportAmbushStream || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
-        if (isTeleportAmbushStream) {
-            var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
-            if (!enemyInGrass) return null;
+    var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
+    
+    var shouldAttempt = isTeleportAmbushStream || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady);
+    if (!shouldAttempt) {
+        return ctx._cachedAssassinSpot = null;
+    }
+
+    if (isTeleportAmbushStream || isEnemyAmbushing) {
+        var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
+        if (!enemyInGrass) {
+            return ctx._cachedAssassinSpot = null;
         }
-        var spot = findAssassinSpot(ctx);
-        if (spot && !samePos(spot, ctx.myPos) && isTeleportPassable(spot, ctx) && isSafeForStarTeleport(spot, ctx, true)) {
-            var fireDir = directionTo(spot, ctx.enemyPos);
-            if (ctx.myDir !== fireDir) {
-                ctx.me.speak("刺杀预瞄");
-                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
-            }
-            ctx.me.speak("刺杀埋伏: [" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "]");
-            return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
+    }
+
+    var spot = findAssassinSpot(ctx);
+    if (spot && !samePos(spot, ctx.myPos) && isTeleportPassable(spot, ctx) && isSafeForStarTeleport(spot, ctx, true)) {
+        return ctx._cachedAssassinSpot = spot;
+    }
+
+    return ctx._cachedAssassinSpot = null;
+}
+
+/**
+ * 传送暗杀动作评估：在满足暗杀时机、且确保我方子弹与火控就绪的前提下，寻找敌方侧后方的安全落点进行背杀
+ * @param {Object} ctx 动态上下文
+ */
+function evalAssassination(ctx) {
+    if (!ctx.canTeleport) return null;
+
+    var spot = getUnifiedAssassinSpot(ctx);
+    if (spot) {
+        var fireDir = directionTo(spot, ctx.enemyPos);
+        if (ctx.myDir !== fireDir) {
+            ctx.me.speak("刺杀预瞄");
+            return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
         }
+        ctx.me.speak("刺杀埋伏: [" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "]");
+        return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
     }
     return null;
 }
@@ -2419,17 +2454,9 @@ function findGrassOnGunLine(myPos, myDir, map, maxDist) {
  * @param {Object} ctx 动态上下文
  */
 function evalAssassinationPreAim(ctx) {
-    if (!ctx.enemyPos || (ctx.enemy && ctx.enemy.status && ctx.enemy.status.shielded)) return null;
-    if (ctx.enemyCloaked && !ctx.enemyFireLocked) return null;
-
-    // 新增：预瞄前必须确保我方子弹与火控均就绪
-    if (ctx.me.bullet || ctx.meStatus.fireLocked) return null;
-
     var cooldown = ctx.me.skill ? ctx.me.skill.remainingCooldownFrames : 99;
-    var isPreAimFrame = false;
-    if (cooldown === 1) {
-        isPreAimFrame = true;
-    } else if (cooldown === 0) {
+    var isPreAimFrame = (cooldown === 1);
+    if (cooldown === 0) {
         var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames === 4;
         if (isTeleportAmbushStream) {
             isPreAimFrame = true;
@@ -2437,20 +2464,12 @@ function evalAssassinationPreAim(ctx) {
     }
     if (!isPreAimFrame) return null;
 
-    var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
-
-    if (ctx.enemyFireLocked || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady)) {
-        if (isEnemyAmbushing && ctx.enemyPos) {
-            var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
-            if (!enemyInGrass) return null;
-        }
-        var spot = findAssassinSpot(ctx);
-        if (spot && !samePos(spot, ctx.myPos) && isPassable(spot, ctx.map) && isSafeForStarTeleport(spot, ctx, true)) {
-            var fireDir = directionTo(spot, ctx.enemyPos);
-            if (ctx.myDir !== fireDir) {
-                ctx.me.speak("刺杀预瞄");
-                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO - 50, type: "assassinate" };
-            }
+    var spot = getUnifiedAssassinSpot(ctx);
+    if (spot) {
+        var fireDir = directionTo(spot, ctx.enemyPos);
+        if (ctx.myDir !== fireDir) {
+            ctx.me.speak("刺杀预瞄");
+            return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO - 50, type: "assassinate" };
         }
     }
     return null;
