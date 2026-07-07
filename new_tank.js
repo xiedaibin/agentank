@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.00 - Unified Assassination Logic)
- * V13.00: 重构与统一 evalAssassination 和 evalAssassinationPreAim，消除了重复寻找暗杀点的计算并添加了帧内缓存
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.10 - Consolidated Assassination)
+ * V13.10: 彻底合并并统一了 evalAssassination 和 evalAssassinationPreAim 的条件判定与状态机分流
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.00: 预判背杀");
+            me.speak("V13.10: 预判背杀");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -199,12 +199,12 @@ function strategicInit(enemy, map) {
         } else if (sType === "overload") {
             G_Blueprint.Tactics = {
                 STANCE: "DEFAULT", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 2000,
-                ENABLE_ASSASSINATION: true, MAX_NODES: 250
+                ENABLE_ASSASSINATION: false, MAX_NODES: 250
             };
         } else if (sType === "shield") {
             G_Blueprint.Tactics = {
                 STANCE: "DEFAULT", DANGER_RADIUS: 2, ASTAR_UNSAFE_PENALTY: 2000,
-                ENABLE_ASSASSINATION: true, MAX_NODES: 250
+                ENABLE_ASSASSINATION: false, MAX_NODES: 250
             };
         } else if (sType === "teleport") {
             G_Blueprint.Tactics = {
@@ -214,7 +214,7 @@ function strategicInit(enemy, map) {
         } else if (sType === "cloak") {
             G_Blueprint.Tactics = {
                 STANCE: "ANTI_CLOAK", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 1500,
-                ENABLE_ASSASSINATION: true, MAX_NODES: 200, JITTER: true
+                ENABLE_ASSASSINATION: false, MAX_NODES: 200, JITTER: true
             };
         } else {
             G_Blueprint.Tactics = {
@@ -511,19 +511,19 @@ function buildExecutionContext(me, enemy, game) {
  */
 function tacticalAnalysis(ctx) {
     var rawCandidates = [];
+
     if (ctx.canTeleport) {
-        if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) rawCandidates.push(evalAssassination(ctx));
         if (G_Blueprint.Tactics.STANCE === "ANTI_CLOAK") rawCandidates.push(evalPanicTeleport(ctx));
-    }
-    if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) {
-        rawCandidates.push(evalAssassinationPreAim(ctx));
     }
     rawCandidates.push(evalShooting(ctx));
     rawCandidates.push(evalPreAim(ctx));
     rawCandidates.push(evalStarCollection(ctx));
     rawCandidates.push(evalStarGuard(ctx));
+    if (G_Blueprint.Tactics.ENABLE_ASSASSINATION) {
+        rawCandidates.push(evalAssassination(ctx));
+    }
     rawCandidates.push(evalPathAmbushFire(ctx));
-    rawCandidates.push(evalPathAmbush(ctx));
+    //rawCandidates.push(evalPathAmbush(ctx));
     rawCandidates.push(evalGrassAmbushAndSurvival(ctx));
 
     var candidates = [];
@@ -571,16 +571,18 @@ function getUnifiedAssassinSpot(ctx) {
         return ctx._cachedAssassinSpot = null;
     }
 
-    // 场景条件统一
+    // 场景条件统一（取两原版场景过滤的并集，防范敌方开火锁定等逻辑黑洞）
     var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
     var isEnemyAmbushing = !ctx.enemyVisible && ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames > 0;
-    
-    var shouldAttempt = isTeleportAmbushStream || isEnemyAmbushing || (ctx.meStars < ctx.enemyStars && !ctx.enemySkillReady);
+
+    var shouldAttempt = isTeleportAmbushStream ||
+        isEnemyAmbushing ||
+        (ctx.meStars <= ctx.enemyStars - 2 && !ctx.enemySkillReady);
     if (!shouldAttempt) {
         return ctx._cachedAssassinSpot = null;
     }
 
-    if (isTeleportAmbushStream || isEnemyAmbushing) {
+    if ((isTeleportAmbushStream || isEnemyAmbushing) && ctx.enemyPos) {
         var enemyInGrass = G_Blueprint.mapVision && G_Blueprint.mapVision.grass[ctx.enemyPos[0] + "," + ctx.enemyPos[1]];
         if (!enemyInGrass) {
             return ctx._cachedAssassinSpot = null;
@@ -596,21 +598,38 @@ function getUnifiedAssassinSpot(ctx) {
 }
 
 /**
- * 传送暗杀动作评估：在满足暗杀时机、且确保我方子弹与火控就绪的前提下，寻找敌方侧后方的安全落点进行背杀
+ * 传送暗杀动作评估：统一传送落地与前置预瞄，通过冷却状态机智能分流
  * @param {Object} ctx 动态上下文
  */
 function evalAssassination(ctx) {
-    if (!ctx.canTeleport) return null;
+    var cooldown = ctx.me.skill ? ctx.me.skill.remainingCooldownFrames : 99;
+    var state = null; // "tp" 或 "pre_aim"
+
+    if (cooldown === 0) {
+        state = "tp";
+    } else if (cooldown === 1) {
+        state = "pre_aim";
+    }
+    if (!state) return null;
 
     var spot = getUnifiedAssassinSpot(ctx);
     if (spot) {
         var fireDir = directionTo(spot, ctx.enemyPos);
-        if (ctx.myDir !== fireDir) {
-            ctx.me.speak("刺杀预瞄");
-            return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
+        if (state === "tp") {
+            if (ctx.myDir !== fireDir) {
+                ctx.me.speak("刺杀预瞄");
+                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
+            }
+            if (ctx.canTeleport) {
+                ctx.me.speak("刺杀埋伏: [" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "]");
+                return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
+            }
+        } else if (state === "pre_aim") {
+            if (ctx.myDir !== fireDir) {
+                ctx.me.speak("刺杀预瞄");
+                return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO - 50, type: "assassinate" };
+            }
         }
-        ctx.me.speak("刺杀埋伏: [" + ctx.enemyPos[0] + "," + ctx.enemyPos[1] + "]");
-        return { action: "teleport", target: spot, score: CONFIG.KILL_PRIO + 100, type: "assassinate" };
     }
     return null;
 }
@@ -1061,7 +1080,7 @@ function evalPathAmbushFire(ctx) {
         return ctx._cachedPathAmbushFire;
     }
 
-    var result = (function() {
+    var result = (function () {
         if (!ctx.enemyPos || !ctx.enemy) return null;
 
         // 防范超载坦克的非对称弹道。如果在超载坦克的右/下威胁区且中近距离（≤5），放弃通道伏击开火，让位给防御逃生
@@ -2449,31 +2468,7 @@ function findGrassOnGunLine(myPos, myDir, map, maxDist) {
     return null;
 }
 
-/**
- * 刺杀预瞄动作评估：在传送冷却即将归零的倒数第 1 帧，若确定子弹就绪且暗杀路线安全，提前原地转向对齐击杀轨道
- * @param {Object} ctx 动态上下文
- */
-function evalAssassinationPreAim(ctx) {
-    var cooldown = ctx.me.skill ? ctx.me.skill.remainingCooldownFrames : 99;
-    var isPreAimFrame = (cooldown === 1);
-    if (cooldown === 0) {
-        var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames === 4;
-        if (isTeleportAmbushStream) {
-            isPreAimFrame = true;
-        }
-    }
-    if (!isPreAimFrame) return null;
-
-    var spot = getUnifiedAssassinSpot(ctx);
-    if (spot) {
-        var fireDir = directionTo(spot, ctx.enemyPos);
-        if (ctx.myDir !== fireDir) {
-            ctx.me.speak("刺杀预瞄");
-            return { action: "turn", target: addPos(ctx.myPos, delta(fireDir)), score: CONFIG.KILL_PRIO - 50, type: "assassinate" };
-        }
-    }
-    return null;
-}
+// 注：evalAssassinationPreAim 已于 V13.10 合并至 evalAssassination，进行统一的状态分流处理
 
 /**
  * 核心开火控制器，强制检查子弹数量和火控锁，并记录预判射击的防抖历史
