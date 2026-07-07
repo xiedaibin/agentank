@@ -188,22 +188,27 @@ function strategicInit(enemy, map) {
         };
         if (sType === "freeze") {
             G_Blueprint.Tactics = {
-                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 9, ASTAR_UNSAFE_PENALTY: 3000,
+                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 8, ASTAR_UNSAFE_PENALTY: 3000,
                 ENABLE_ASSASSINATION: false, MAX_NODES: 200
             };
         } else if (sType === "stun") {
             G_Blueprint.Tactics = {
-                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 5, ASTAR_UNSAFE_PENALTY: 3000,
+                STANCE: "ANTI_CONTROL", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 3000,
                 ENABLE_ASSASSINATION: false, MAX_NODES: 200
             };
         } else if (sType === "overload") {
             G_Blueprint.Tactics = {
-                STANCE: "DEFAULT", DANGER_RADIUS: 5, ASTAR_UNSAFE_PENALTY: 2000,
+                STANCE: "DEFAULT", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 2000,
                 ENABLE_ASSASSINATION: true, MAX_NODES: 250
             };
         } else if (sType === "shield") {
             G_Blueprint.Tactics = {
-                STANCE: "DEFAULT", DANGER_RADIUS: 3, ASTAR_UNSAFE_PENALTY: 2000,
+                STANCE: "DEFAULT", DANGER_RADIUS: 2, ASTAR_UNSAFE_PENALTY: 2000,
+                ENABLE_ASSASSINATION: true, MAX_NODES: 250
+            };
+        } else if (sType === "teleport") {
+            G_Blueprint.Tactics = {
+                STANCE: "DEFAULT", DANGER_RADIUS: 1, ASTAR_UNSAFE_PENALTY: 2000,
                 ENABLE_ASSASSINATION: true, MAX_NODES: 250
             };
         } else if (sType === "cloak") {
