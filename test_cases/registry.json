@@ -135,5 +135,21 @@
     "expected": {
       "action": "move"
     }
+  },
+  {
+    "id": "TC-011",
+    "matchId": "mat_2J5jzPK93oD2ss5Ci",
+    "description": "Frame 110 - 敌方在同列草丛瞄准并超载开火，我方虽有防御锁但该草丛格不安全，必须正确执行偏轴规避移动",
+    "frame": 110,
+    "setupHistory": {
+      "defenseLockTicks": 1,
+      "lastDefenseTarget": [12, 10],
+      "lastEnemyOverloadedFrame": 108
+    },
+    "expected": {
+      "action": "move"
+    }
   }
 ]
+
+

@@ -1518,11 +1518,21 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
 
                         var inGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
 
-                        // 针对草丛格子，如果与敌人最后真实消失点在中近距离（≤8格）共轴且无墙壁阻挡，在我们即将移入该格时判定为不安全
-                        if (inGrass && !samePos(pos, ctx.myPos) && realEnemyPos) {
-                            var isCoAxial = (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1]);
-                            if (isCoAxial && dReal <= 8 && canShoot(realEnemyPos, pos, ctx.map) !== false) {
-                                return false;
+                        // 针对草丛格子，如果与敌人最后真实消失点在中近距离（≤8格）
+                        if (inGrass && realEnemyPos) {
+                            // 无论是否是当前站立格子，一旦落入敌方枪口正对的直射线，判定为不安全
+                            var backupPos = ctx.enemyPos;
+                            ctx.enemyPos = realEnemyPos;
+                            var onGun = isOnEnemyGunLine(pos, ctx, true);
+                            ctx.enemyPos = backupPos;
+                            if (onGun) return false;
+
+                            // 针对即将移入的邻格，如果共轴且能被射击，判定为不安全
+                            if (!samePos(pos, ctx.myPos)) {
+                                var isCoAxial = (pos[0] === realEnemyPos[0] || pos[1] === realEnemyPos[1]);
+                                if (isCoAxial && dReal <= 8 && canShoot(realEnemyPos, pos, ctx.map) !== false) {
+                                    return false;
+                                }
                             }
                         }
 
