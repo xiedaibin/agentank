@@ -123,5 +123,17 @@
     "expected": {
       "action": "idle"
     }
+  },
+  {
+    "id": "TC-010",
+    "matchId": "mat_D9hEAIYSXML95jBua",
+    "description": "Frame 67 - 敌方超载刚开火，我方在草丛中仍处于同轴威胁，必须识别出近期超载威胁，执行偏轴规避移动而非原地待机",
+    "frame": 67,
+    "setupHistory": {
+      "lastEnemyOverloadedFrame": 66
+    },
+    "expected": {
+      "action": "move"
+    }
   }
 ]

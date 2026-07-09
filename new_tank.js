@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.80 - Anti-Teleport Evasion)
- * V13.80: 针对传送突脸新增同轴强力幽灵避弹闪避，清理冗余废弃逻辑，集成寻路剪枝
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.81 - Overload Evasion Fix)
+ * V13.81: 修复草丛中因敌方超载状态失效导致路径判定拦截并阻断物理规避的Bug，将超载威胁距离扩大至8格
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.80: 避让闪现突脸");
+            me.speak("V13.81: 修复草丛超载避弹");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -875,7 +875,7 @@ function evalStarGuard(ctx) {
             var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!isCurrentlyInGrass) {
                 // 新增：如果对方坦克离星只有一格，我方坦克原地静守不发子弹且保持对准星
-                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) === 1 && !ctx.isUrgentStarGrab) {
+                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && !ctx.isUrgentStarGrab) {
                     ctx.me.speak("静守守星");
                     return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
                 }
@@ -1304,7 +1304,7 @@ function tacticalDefense(me, ctx) {
                 // 【草丛脱敏优化】：若身处草丛，且敌方尚未实际激活超载，则仅防范敌方普通主枪线；若在空地、敌方已开启超载，或敌方是超载坦克且技能就绪、距离极近（<=3），才防范超宽枪线
                 var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
                 var enemyReadyClose = isEnemyOverload && ctx.enemySkillReady && ghostDist <= 3;
-                var activeOverload = (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) || enemyReadyClose;
+                var activeOverload = isEnemyOverloadActive(ctx, ctx.myPos);
                 var needCheckOverload = !myPosInGrass || activeOverload;
                 var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
 
@@ -1369,7 +1369,7 @@ function tacticalDefense(me, ctx) {
         var myPosInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
         var isEnemyOverload = G_Blueprint.enemyProfile && G_Blueprint.enemyProfile.hasOverload;
         var enemyReadyClose = isEnemyOverload && ctx.enemySkillReady && d <= 3;
-        var activeOverload = (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) || enemyReadyClose;
+        var activeOverload = isEnemyOverloadActive(ctx, ctx.myPos);
         var needCheckOverload = !myPosInGrass || activeOverload;
         var onLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
 
@@ -1413,7 +1413,14 @@ function tacticalDefense(me, ctx) {
  */
 function isEnemyOverloadActive(ctx, pos) {
     if (!G_Blueprint.enemyProfile || !G_Blueprint.enemyProfile.hasOverload) return false;
-    var recentlyOverloaded = G_History.lastEnemyOverloadedFrame && (G_History.frame - G_History.lastEnemyOverloadedFrame < 8);
+
+    // 动态根据距离计算子弹飞抵的最大时间窗口，加上 1 帧的转向/位移缓冲
+    var d = ctx.enemyPos ? getDist(pos || ctx.myPos, ctx.enemyPos) : 8;
+    var maxBulletTravelFrames = Math.ceil(d / 2) + 1;
+
+    var recentlyOverloaded = G_History.lastEnemyOverloadedFrame &&
+        (G_History.frame - G_History.lastEnemyOverloadedFrame < maxBulletTravelFrames);
+
     return (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) ||
         (ctx.enemySkillReady) ||
         recentlyOverloaded;
@@ -1475,7 +1482,7 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
             var d = getDist(pos, ctx.enemyPos);
             if (ctx.enemyVisible) {
                 var isGrass = G_Blueprint.mapVision.grass[pos[0] + "," + pos[1]];
-                var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 4;
+                var overloadNearby = isEnemyOverloadActive(ctx, pos) && d <= 8;
                 var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
                 var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
                 if (gunLineDodge) return false;
