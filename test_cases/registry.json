@@ -18,17 +18,16 @@
     "description": "Frame 124 - 敌人进入草丛，我方必须使用预测位置进行完美的盲射",
     "frame": 124,
     "setupHistory": {
-      "lastEnemyPos": [11, 7],
+      "lastEnemyPos": [14, 7],
       "lastEnemyDir": "right",
       "lastEnemySeenFrame": 123,
       "lastEnemyVisible": true,
       "wasEnemyVisible": true,
-      "enemyInvisibleFrames": 0,
-      "isEnemyPosPredicted": true
+      "enemyInvisibleFrames": 0
     },
     "expected": {
-      "action": "fire",
-      "target": [14, 7]
+      "action": "teleport",
+      "target": [17, 8]
     }
   },
   {

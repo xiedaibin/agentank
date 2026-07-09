@@ -330,8 +330,8 @@ function runTestCase(caseInfo, replayData, newTankCode) {
     };
 
     const gameObj = { map: simState.map, star: simState.starPos ? simState.starPos.slice() : null, frames: f };
-
     const ctx = sandbox.buildExecutionContext(meObj, enemyObj, gameObj);
+
 
 
     // 运行 XDB 的 onIdle 入口

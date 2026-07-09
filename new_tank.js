@@ -1875,6 +1875,12 @@ function getNextStep(start, goal, ctx) {
         return null;
     }
 
+    if (ctx.starPos && samePos(goal, ctx.starPos) && !isSafe(goal, ctx, true)) {
+        G_History.path = [];
+        G_History.pathTarget = null;
+        return null;
+    }
+
     var useCache = false;
     if (G_History.path && G_History.path.length > 0 && samePos(G_History.pathTarget, goal)) {
         // 如果当前位置已经到达了路径的第一个节点，就把它弹出，迈向下一个节点

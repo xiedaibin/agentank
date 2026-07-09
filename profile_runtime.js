@@ -200,8 +200,7 @@ async function main() {
             var _getNextStep = getNextStep;
             getNextStep = _wrap('getNextStep', _getNextStep);
 
-            var _recalculateAmbushPrediction = recalculateAmbushPrediction;
-            recalculateAmbushPrediction = _wrap('recalculateAmbushPrediction', _recalculateAmbushPrediction);
+
 
 
             sandbox.onIdle = onIdle;
