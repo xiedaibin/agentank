@@ -174,7 +174,7 @@ function strategicInit(enemy, map) {
         } else {
             G_Blueprint.Tactics = {
                 STANCE: "DEFAULT", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 2000,
-                ENABLE_ASSASSINATION: true, MAX_NODES: 250
+                ENABLE_ASSASSINATION: false, MAX_NODES: 250
             };
         }
     }
