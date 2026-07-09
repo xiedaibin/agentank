@@ -445,7 +445,10 @@ async function main() {
         const meSandboxObj = Object.assign({}, me, {
             go: function (steps) { queuedAction = `go(${steps || 1})`; },
             turn: function (dir) { queuedAction = `turn("${dir}")`; },
-            fire: function () { queuedAction = `fire()`; },
+            fire: function () { 
+                queuedAction = `fire()`; 
+                console.log("[FIRE_STACK_DEBUG] me.fire() called from stack:\n", new Error().stack);
+            },
             speak: function (text) { queuedAction = `${queuedAction === "stay still" ? "" : queuedAction + " | "}speak("${text}")`; },
             teleport: function (x, y) { queuedAction = `teleport(${x}, ${y})`; }
         });
@@ -456,11 +459,18 @@ async function main() {
             if (!sandbox.G_Blueprint.initialized || (enemy.tank && !sandbox.G_Blueprint.enemySeen)) {
                 sandbox.strategicInit(enemy, game.map);
             }
-            const ctx = sandbox.buildExecutionContext(meSandboxObj, enemy, game);
-            const bestAction = sandbox.tacticalAnalysis(ctx);
+            sandbox.G_History.lastChosenAction = null;
+
+            const t0 = performance.now();
+            sandbox.onIdle(meSandboxObj, enemy, game);
+            const t1 = performance.now();
+            const elapsed = t1 - t0;
+
+            const bestAction = sandbox.G_History.lastChosenAction;
             console.log(`[Local Simulation Evaluation]`);
             console.log(`  Chosen Target: ${JSON.stringify(bestAction)}`);
             if (bestAction && bestAction.action === "move") {
+                const ctx = sandbox.buildExecutionContext(meSandboxObj, enemy, game);
                 const nextStep = sandbox.getNextStep(ctx.myPos, bestAction.target, ctx);
                 if (nextStep) {
                     const d = sandbox.directionTo(ctx.myPos, nextStep);
@@ -468,10 +478,6 @@ async function main() {
                 }
             }
 
-            const t0 = performance.now();
-            sandbox.onIdle(meSandboxObj, enemy, game);
-            const t1 = performance.now();
-            const elapsed = t1 - t0;
             console.log(`  🤖 Local Code Action: ${queuedAction} (Time: ${elapsed.toFixed(3)}ms)`);
             if (elapsed > 5) {
                 console.log(`  ⚠️ [SLOW FRAME] Frame ${f} took ${elapsed.toFixed(3)}ms`);

@@ -1777,6 +1777,7 @@ function aStar(start, goal, ctx) {
  */
 function executeAction(me, act, ctx) {
     if (!act) return;
+    G_History.lastChosenAction = act;
 
     // 1. 更新卡死计数器：仅在上一帧尝试迈步位移且实际坐标没有改变时才累加
     if (G_History.lastAttemptedStep && G_History.lastPos && samePos(ctx.myPos, G_History.lastPos)) {
@@ -1810,9 +1811,14 @@ function executeAction(me, act, ctx) {
     // 4. 执行具体行动
     if (act.action === "fire") {
         var d = directionTo(ctx.myPos, act.target);
-        if (ctx.myDir === d) { fireGun(me, ctx); } else me.turn(d);
+        if (d) {
+            if (ctx.myDir === d) { fireGun(me, ctx); } else me.turn(d);
+        }
     }
-    else if (act.action === "turn") { me.turn(directionTo(ctx.myPos, act.target)); }
+    else if (act.action === "turn") {
+        var d = directionTo(ctx.myPos, act.target);
+        if (d) me.turn(d);
+    }
     else if (act.action === "teleport") {
         me.teleport(act.target[0], act.target[1]);
         G_History.postTeleportFrames = 8;
@@ -2317,7 +2323,7 @@ function delta(d) { return { up: [0, -1], down: [0, 1], left: [-1, 0], right: [1
 /**
  * 计算从坐标 a 到坐标 b 对应的绝对朝向字符串
  */
-function directionTo(a, b) { if (b[0] > a[0]) return "right"; if (b[0] < a[0]) return "left"; if (b[1] > a[1]) return "down"; return "up"; }
+function directionTo(a, b) { if (!a || !b || samePos(a, b)) return null; if (b[0] > a[0]) return "right"; if (b[0] < a[0]) return "left"; if (b[1] > a[1]) return "down"; return "up"; }
 /**
  * 获取给定方向的反方向朝向字符串
  */
