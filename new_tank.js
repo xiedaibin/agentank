@@ -1159,8 +1159,8 @@ function evalPathAmbushFire(ctx) {
         }
 
         if (bestInterception) {
-            if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
-                ctx.me.speak("通道预判: " + bestInterception.T_enemy + "帧");
+            ctx.me.speak("通道预判: " + bestInterception.T_enemy + "帧");
+            if (!ctx.me.bullet && !ctx.meStatus.fireLocked && bestInterception.T_enemy > 1) {
                 return { action: "fire", target: bestInterception.targetPos, score: 2200, type: "ambush_fire" };
             }
         }
