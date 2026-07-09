@@ -6,7 +6,16 @@ batch_evolution_replays/
 rank_replays/
 targeted_evolution_replays/
 rank_reports/
+battle_first/
 scratch/*.json
 .env
 .env.local
 *.json
+
+# Ignore local simulation logs
+scratch/
+logs/
+temp/
+temp_sim*.txt
+sim*.log
+sim*.txt

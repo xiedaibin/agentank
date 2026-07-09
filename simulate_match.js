@@ -2,6 +2,31 @@ const fs = require('fs');
 const path = require('path');
 const { getToken } = require('./config');
 
+// 劫持 console.log / console.error 以便将日志自动保存到 temp/sim/ 目录下
+const originalLog = console.log;
+const originalError = console.error;
+const logBuffer = [];
+console.log = function(...args) {
+    originalLog.apply(console, args);
+    const msg = args.map(arg => {
+        if (typeof arg === 'object') {
+            try { return JSON.stringify(arg); } catch (e) { return String(arg); }
+        }
+        return String(arg);
+    }).join(' ');
+    logBuffer.push(msg);
+};
+console.error = function(...args) {
+    originalError.apply(console, args);
+    const msg = args.map(arg => {
+        if (typeof arg === 'object') {
+            try { return JSON.stringify(arg); } catch (e) { return String(arg); }
+        }
+        return String(arg);
+    }).join(' ');
+    logBuffer.push("[ERROR] " + msg);
+};
+
 const matchId = process.argv[2];
 if (!matchId) {
     console.log("Usage: node simulate_match.js <MatchID>");
@@ -470,4 +495,20 @@ async function main() {
     console.log(`================================================================================`);
 }
 
-main();
+main().catch(err => {
+    console.error("Simulation failed:", err);
+}).finally(() => {
+    // 自动保存日志到 temp/sim 目录下
+    const simDir = path.join(__dirname, 'temp/sim');
+    if (!fs.existsSync(simDir)) {
+        fs.mkdirSync(simDir, { recursive: true });
+    }
+    const logPath = path.join(simDir, `sim_${matchId}.txt`);
+    const logPathLatest = path.join(simDir, `sim_out.txt`);
+    const fileContent = logBuffer.join('\n');
+    fs.writeFileSync(logPath, fileContent, 'utf8');
+    fs.writeFileSync(logPathLatest, fileContent, 'utf8');
+    originalLog(`\n[Simulator] Logs saved to:`);
+    originalLog(`  - ${logPath}`);
+    originalLog(`  - ${logPathLatest}`);
+});
