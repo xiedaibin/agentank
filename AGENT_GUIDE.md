@@ -314,8 +314,6 @@ function onIdle(me, enemy, game) {
 
 ```http
 POST /api/agent/tank/code
-Content-Type: application/json
-Authorization: Bearer <tank_key>
 ```
 
 ```json
