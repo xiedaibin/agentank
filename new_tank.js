@@ -198,7 +198,7 @@ function strategicInit(enemy, map) {
             };
         } else if (sType === "overload") {
             G_Blueprint.Tactics = {
-                STANCE: "DEFAULT", DANGER_RADIUS: 4, ASTAR_UNSAFE_PENALTY: 2000,
+                STANCE: "DEFAULT", DANGER_RADIUS: 5, ASTAR_UNSAFE_PENALTY: 2000,
                 ENABLE_ASSASSINATION: false, MAX_NODES: 250
             };
         } else if (sType === "shield") {
@@ -1189,7 +1189,7 @@ function evalGrassAmbushAndSurvival(ctx) {
 
         if (isCurrentlyInGrass && (!ctx.starPos || starUnsafe)) {
             // Overload 近距离：即使在草丛里也要检查是否在枪线上，禁止待机被击
-            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 4;
+            var overloadNearby = ctx.enemyPos && isEnemyOverloadActive(ctx, ctx.myPos) && getDist(ctx.myPos, ctx.enemyPos) <= 5;
             if (overloadNearby && isOnEnemyGunLine(ctx.myPos, ctx, true)) {
                 // 不在此处 return，让它fall-through到下面的grass寻路
             } else {
