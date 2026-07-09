@@ -320,3 +320,8 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V13 | 2026-07-09 | auto | auto (自动生成) | 65.00% | Adopted | 5.00% |
 | V13 | 2026-07-09 | 未命名策略 | 未命名策略 (自动生成) | 76.67% | Adopted | 11.67% |
 | V13 | 2026-07-09 | auto | auto (自动生成) | 65.00% | Adopted | 5.00% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 42.11% | Rejected | -27.89% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 50.00% | Rejected | -20.00% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 63.16% | Pending | 3.16% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 45.00% | Rejected | -15.00% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 75.00% | Adopted | 15.00% |
