@@ -312,3 +312,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V13 | 2026-07-09 | V13.80: 避让闪现突脸 | V13.80: 避让闪现突脸 (自动生成) | 47.37% | Rejected | -17.63% |
 | V13 | 2026-07-09 | V13.80: 重新验证避让闪现突脸 | V13.80: 重新验证避让闪现突脸 (自动生成) | 55.00% | Rejected | -10.00% |
 | V13 | 2026-07-09 | 测试当前胜率 | 测试当前胜率 (自动生成) | 60.00% | Pending | 0.00% |
+| V13 | 2026-07-09 | auto | auto (自动生成) | 80.00% | Adopted | 20.00% |
