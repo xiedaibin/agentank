@@ -183,8 +183,10 @@ async function main() {
             var _evalShooting = evalShooting;
             evalShooting = _wrap('evalShooting', _evalShooting);
 
-            var _evalAssassinationPreAim = evalAssassinationPreAim;
-            evalAssassinationPreAim = _wrap('evalAssassinationPreAim', _evalAssassinationPreAim);
+            if (typeof evalAssassinationPreAim !== 'undefined') {
+                var _evalAssassinationPreAim = evalAssassinationPreAim;
+                evalAssassinationPreAim = _wrap('evalAssassinationPreAim', _evalAssassinationPreAim);
+            }
 
             var _findAssassinSpot = findAssassinSpot;
             findAssassinSpot = _wrap('findAssassinSpot', _findAssassinSpot);
