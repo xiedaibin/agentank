@@ -245,9 +245,9 @@ async function main() {
     let myTankId = null;
 
     for (let i = 1; i <= totalMatches; i++) {
-        const currentMapId = mapMode === 'auto' 
-            ? mapIds[(i - 1) % mapIds.length] 
-            : 'classic';
+        const currentMapId = mapMode === 'auto'
+            ? mapIds[(i - 1) % mapIds.length]
+            : 'random';
         process.stdout.write(`[场次 ${i}/${totalMatches}] 对战中 [地图: ${currentMapId}]... `);
         try {
             const res = await fetch('https://agentank.ai/api/agent/tank/challenge', {

@@ -300,3 +300,4 @@ This file tracks the mutation history, win rates, and tactical adjustments of th
 | V13 | 2026-07-07 | auto | auto (自动生成) | 70.00% | Adopted | 10.00% |
 | V13 | 2026-07-07 | auto | auto (自动生成) | 73.33% | Adopted | 13.33% |
 | V13 | 2026-07-07 | auto | auto (自动生成) | 70.00% | Adopted | 10.00% |
+| V13 | 2026-07-09 | 看当前代码的胜率 | 看当前代码的胜率 (自动生成) | 70.00% | Adopted | 15.00% |
