@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.81 - Overload Evasion Fix)
- * V13.81: 修复草丛中因敌方超载状态失效导致路径判定拦截并阻断物理规避的Bug，将超载威胁距离扩大至8格
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.82 - Star Teleport Refinement)
+ * V13.82: 优化吃星踱步限制下移释放传送选项，修改 TC-001 用例以适配 bestInterception.T_enemy > 1 新规
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.81: 修复草丛超载避弹");
+            me.speak("V13.82: 释放吃星传送");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -743,16 +743,6 @@ function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
 
-    // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃抢星，坚守伏击防止抽搐
-    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-    var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
-    if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
-        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
-        if (preAimDir && ctx.myDir === preAimDir) {
-            if (dist > 1) return null;
-        }
-    }
-
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
@@ -792,6 +782,16 @@ function evalStarCollection(ctx) {
         if (teleportTarget && !samePos(teleportTarget, ctx.myPos) && isTeleportPassable(teleportTarget, ctx)) {
             var teleportScore = ctx.isUrgentStarGrab ? 20000 : (CONFIG.STAR_PRIO + 1000);
             return { action: "teleport", target: teleportTarget, score: teleportScore, type: "star" };
+        }
+    }
+
+    // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃走路抢星，坚守伏击防止抽搐
+    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+    var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
+    if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
+        if (preAimDir && ctx.myDir === preAimDir) {
+            if (dist > 1) return null;
         }
     }
 

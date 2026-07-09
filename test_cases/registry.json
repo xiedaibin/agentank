@@ -2,14 +2,13 @@
   {
     "id": "TC-001",
     "matchId": "mat_BVebIlAw5CD9zXqOI",
-    "description": "Frame 55 - 敌方抢星前夕，我方必须执行通道伏击预判开火，打掉 [6,8] 星格",
+    "description": "Frame 55 - 敌方抢星前夕，根据 bestInterception.T_enemy > 1 新规，踩点为1时防空火控锁，原地待机预瞄",
     "frame": 55,
     "setupHistory": {
       "lastPreAimTurnFrame": null
     },
     "expected": {
-      "action": "fire",
-      "target": [6, 8]
+      "action": "idle"
     }
   },
   {
@@ -165,6 +164,16 @@
     },
     "expected": {
       "action": "fire"
+    }
+  },
+  {
+    "id": "TC-013",
+    "matchId": "mat_1ZTUXaGPkZr29lVzO",
+    "description": "Frame 127 - 终盘抢星且传送CD就绪时，即使在草丛中瞄准预瞄也必须果断执行传送吃星赢下比赛",
+    "frame": 127,
+    "expected": {
+      "action": "teleport",
+      "target": [16, 11]
     }
   }
 ]

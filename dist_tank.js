@@ -586,14 +586,6 @@ function evalPreAim(ctx) {
 function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
-    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
-    var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
-    if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
-        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
-        if (preAimDir && ctx.myDir === preAimDir) {
-            if (dist > 1) return null;
-        }
-    }
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
@@ -620,6 +612,14 @@ function evalStarCollection(ctx) {
         if (teleportTarget && !samePos(teleportTarget, ctx.myPos) && isTeleportPassable(teleportTarget, ctx)) {
             var teleportScore = ctx.isUrgentStarGrab ? 20000 : (CONFIG.STAR_PRIO + 1000);
             return { action: "teleport", target: teleportTarget, score: teleportScore, type: "star" };
+        }
+    }
+    var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
+    var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
+    if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
+        var preAimDir = findPreAimDir(ctx.myPos, ctx.shootingEnemyPos, ctx.enemyDir, ctx.map);
+        if (preAimDir && ctx.myDir === preAimDir) {
+            if (dist > 1) return null;
         }
     }
     var cdRemaining = ctx.me.skill && ctx.me.skill.remainingCooldownFrames;
