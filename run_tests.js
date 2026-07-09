@@ -142,7 +142,11 @@ function simulateToFrame(replayRaw, targetFrame) {
             if (isMe) {
                 if (ev.action === "go" || ev.event === "move") { mePos = (ev.position || ev.to).slice(); }
                 else if (ev.action === "turn" || ev.event === "turn") { meDir = getNewDirection(meDir, ev.direction); }
-                else if (ev.action === "applied" && ev.skillType === "teleport") { mePos = ev.to.slice(); meStatus.fireLocked = true; meFireLockTimer = 2; }
+                else if (ev.action === "applied" && ev.skillType === "teleport") { 
+                    mePos = ev.to.slice(); 
+                    var d = Math.abs(mePos[0] - enemyPos[0]) + Math.abs(mePos[1] - enemyPos[1]);
+                    if (d <= 4) { meStatus.fireLocked = true; meFireLockTimer = 2; } 
+                }
                 else if (ev.action === "applied" && ev.skillType === "boost") { meStatus.boosted = true; }
                 else if (ev.event === "boost_ended") { meStatus.boosted = false; }
                 else if (ev.action === "applied" && ev.skillType === "overload") { meStatus.overloaded = true; }
@@ -150,7 +154,11 @@ function simulateToFrame(replayRaw, targetFrame) {
             } else if (isEnemy) {
                 if (ev.action === "go" || ev.event === "move") { enemyPos = (ev.position || ev.to).slice(); }
                 else if (ev.action === "turn" || ev.event === "turn") { enemyDir = getNewDirection(enemyDir, ev.direction); }
-                else if (ev.action === "applied" && ev.skillType === "teleport") { enemyPos = ev.to.slice(); enemyStatus.fireLocked = true; enemyFireLockTimer = 2; }
+                else if (ev.action === "applied" && ev.skillType === "teleport") { 
+                    enemyPos = ev.to.slice(); 
+                    var d = Math.abs(mePos[0] - enemyPos[0]) + Math.abs(mePos[1] - enemyPos[1]);
+                    if (d <= 4) { enemyStatus.fireLocked = true; enemyFireLockTimer = 2; } 
+                }
                 else if (ev.action === "applied" && ev.skillType === "boost") { enemyStatus.boosted = true; }
                 else if (ev.event === "boost_ended") { enemyStatus.boosted = false; }
                 else if (ev.action === "applied" && ev.skillType === "overload") { enemyStatus.overloaded = true; }
@@ -273,12 +281,17 @@ function runTestCase(caseInfo, replayData, newTankCode) {
         }
     }
 
+    let finalMeDir = simState.meDir;
+    if (caseInfo.setupHistory && caseInfo.setupHistory._overrideMeDir) {
+        finalMeDir = caseInfo.setupHistory._overrideMeDir;
+    }
+
     const meStars = (caseInfo.setupStars && caseInfo.setupStars.me !== undefined) ? caseInfo.setupStars.me : 3;
     const enemyStars = (caseInfo.setupStars && caseInfo.setupStars.enemy !== undefined) ? caseInfo.setupStars.enemy : 3;
 
     // 重构对战对象并运行 buildExecutionContext
     const meObj = {
-        tank: { id: simState.meId, position: simState.mePos.slice(), direction: simState.meDir, crashed: false },
+        tank: { id: simState.meId, position: simState.mePos.slice(), direction: finalMeDir, crashed: false },
         stars: meStars,
         bullet: simState.meBullet,
         skill: { type: simState.meSkillType, cooldownFrames: 40, remainingCooldownFrames: simState.meSkillCD },

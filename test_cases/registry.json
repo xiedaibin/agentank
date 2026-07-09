@@ -149,6 +149,23 @@
     "expected": {
       "action": "move"
     }
+  },
+  {
+    "id": "TC-012",
+    "matchId": "mat_1bXatOJ222x0aQwyT",
+    "description": "Frame 48 - 刺杀传送落地的第1帧，即使敌人在草丛中不可见，也必须对目标实施盲射开火",
+    "frame": 48,
+    "setupHistory": {
+      "lastAssassinateTPFrame": 47,
+      "lastEnemyPos": [6, 7],
+      "lastEnemyDir": "down",
+      "lastEnemySeenFrame": 46,
+      "enemyInvisibleFrames": 1,
+      "_overrideMeDir": "right"
+    },
+    "expected": {
+      "action": "fire"
+    }
   }
 ]
 
