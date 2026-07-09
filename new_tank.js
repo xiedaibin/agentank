@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.70 - Early Pruning & Teleport Clean)
- * V13.70: 清理废弃传送预判逻辑，并引入星格不安全 A* 寻路早剪枝优化，降低性能开销
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.80 - Anti-Teleport Evasion)
+ * V13.80: 针对传送突脸新增同轴强力幽灵避弹闪避，清理冗余废弃逻辑，集成寻路剪枝
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.70: 剪枝与传送清理");
+            me.speak("V13.80: 避让闪现突脸");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1302,7 +1302,12 @@ function tacticalDefense(me, ctx) {
                 var activeOverload = (ctx.enemy && ctx.enemy.status && ctx.enemy.status.overloaded) || enemyReadyClose;
                 var needCheckOverload = !myPosInGrass || activeOverload;
                 var onEnemyLine = isOnEnemyGunLine(ctx.myPos, ctx, needCheckOverload);
-                if (!myPosInGrass || activeOverload || (ghostDist <= 2 && onEnemyLine)) {
+
+                var didEnemyJustTeleport = ctx.enemy && ctx.enemy.skill && ctx.enemy.skill.type === "teleport" && ctx.enemy.skill.remainingCooldownFrames >= 38;
+                var isCoAxial = ctx.enemyPos && (ctx.myPos[0] === ctx.enemyPos[0] || ctx.myPos[1] === ctx.enemyPos[1]);
+                var threatTeleport = didEnemyJustTeleport && isCoAxial && onEnemyLine;
+
+                if (!myPosInGrass || activeOverload || threatTeleport || (ghostDist <= 2 && onEnemyLine)) {
                     if (onEnemyLine) {
                         var ghostEscape = findOffAxisMove(ctx);
                         if (ghostEscape) {
