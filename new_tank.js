@@ -531,7 +531,7 @@ function tacticalAnalysis(ctx) {
  */
 function evalPanicTeleport(ctx) {
     if (ctx.enemyCloaked && !isSafeForAntiCloak(ctx.myPos, ctx)) {
-        var esc = findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
+        var esc = findSafeEscapeTeleportTarget(ctx);
         if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) return { action: "teleport", target: esc, score: 99999 };
     }
     return null;
@@ -1243,7 +1243,7 @@ function evalGrassAmbushAndSurvival(ctx) {
     }
 
     // Default survival fallback
-    var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx) || [9, 7];
+    var esc = findBestStarTeleportTarget(ctx, true) || findSafeGrassSpot(ctx) || findEscapeSpot(ctx) || [9, 7];
     var fallbackScore = 100;
     if (G_History.lastActionType === "survival") {
         fallbackScore += (!isCurrentlyInGrass) ? 800 : 150;
@@ -1293,7 +1293,7 @@ function tacticalDefense(me, ctx) {
             var tooClose = fH <= 2 || (fH <= 3 && needTurn);
 
             if (ctx.canTeleport && (tooClose || !dodge)) {
-                var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                var esc = findSafeEscapeTeleportTarget(ctx);
                 if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                     me.speak("紧急避弹传送");
                     return { action: "teleport", target: esc, score: 99999 };
@@ -1336,7 +1336,7 @@ function tacticalDefense(me, ctx) {
                             var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
                             var isNextStepUnsafe = !isSafe(ghostEscape.target, ctx, false);
                             if ((needTurn || isNextStepUnsafe) && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
-                                var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                                var esc = findSafeEscapeTeleportTarget(ctx);
                                 if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                                     me.speak("幽灵闪避传送");
                                     return { action: "teleport", target: esc, score: 99999 };
@@ -1364,7 +1364,7 @@ function tacticalDefense(me, ctx) {
                     var needTurn = directionTo(ctx.myPos, ghostEscape.target) !== ctx.myDir;
                     var isNextStepUnsafe = !isSafe(ghostEscape.target, ctx, false);
                     if ((needTurn || isNextStepUnsafe) && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
-                        var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                        var esc = findSafeEscapeTeleportTarget(ctx);
                         if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                             me.speak("共轴闪避传送");
                             return { action: "teleport", target: esc, score: 99999 };
@@ -1396,7 +1396,7 @@ function tacticalDefense(me, ctx) {
                 if (escape) {
                     var needTurn = directionTo(ctx.myPos, escape.target) !== ctx.myDir;
                     if (needTurn && ctx.canTeleport && getDist(ctx.myPos, ctx.enemyPos) <= 2) {
-                        var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                        var esc = findSafeEscapeTeleportTarget(ctx);
                         if (esc && !samePos(esc, ctx.myPos) && isTeleportPassable(esc, ctx)) {
                             me.speak("安全闪避传送");
                             return { action: "teleport", target: esc, score: 99999 };
@@ -1409,7 +1409,7 @@ function tacticalDefense(me, ctx) {
                     return escape;
                 }
                 if (ctx.canTeleport) {
-                    var esc = findSafeGrassSpot(ctx) || findEscapeSpot(ctx);
+                    var esc = findSafeEscapeTeleportTarget(ctx);
                     if (esc) return { action: "teleport", target: esc, score: 99999 };
                 }
             }
@@ -1571,8 +1571,8 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
 /**
  * 评估普通传送（如抢星）或暗杀传送目标点的高级安全度校验
  */
-function isSafeForStarTeleport(pos, ctx, isAssassinationSpot) {
-    if (ctx.isUrgentStarGrab && ctx.meStars < ctx.enemyStars) {
+function isSafeForStarTeleport(pos, ctx, isAssassinationSpot, forceStrict) {
+    if (!forceStrict && ctx.isUrgentStarGrab && ctx.meStars < ctx.enemyStars) {
         if (ctx.enemyPos && getDist(pos, ctx.enemyPos) < 2) return false;
         return true;
     }
@@ -2483,7 +2483,7 @@ function findTargetGrassForBlindFire(myPos, myDir, enemyPrevPos, map) {
 /**
  * 计算最适宜瞬移的星星相邻安全格子（优先选择草丛及能直接前进吃星的格子）
  */
-function findBestStarTeleportTarget(ctx) {
+function findBestStarTeleportTarget(ctx, forceStrict) {
     if (!ctx.starPos) return null;
     var star = ctx.starPos;
     // 4相邻格子: 上、下、左、右
@@ -2497,7 +2497,7 @@ function findBestStarTeleportTarget(ctx) {
     var candidates = [];
     for (var i = 0; i < adjs.length; i++) {
         var p = adjs[i];
-        if (isPassable(p, ctx.map) && isSafeForStarTeleport(p, ctx)) {
+        if (isPassable(p, ctx.map) && isSafeForStarTeleport(p, ctx, false, forceStrict)) {
             var score = 0;
             // 1. 优先选择安全草丛
             if (G_Blueprint.mapVision.grass[p[0] + "," + p[1]]) {
@@ -2519,6 +2519,14 @@ function findBestStarTeleportTarget(ctx) {
     });
 
     return candidates[0].pos;
+}
+
+/**
+ * 寻找安全的紧急传送逃生落点（优先绝对安全的吃星格，其次安全草丛，最后四象限安全格/普通逃生格）
+ * @param {Object} ctx 上下文
+ */
+function findSafeEscapeTeleportTarget(ctx) {
+    return findBestStarTeleportTarget(ctx, true) || findSafeGrassSpot(ctx) || findSafeQuadrantSpot(ctx);
 }
 
 /**
