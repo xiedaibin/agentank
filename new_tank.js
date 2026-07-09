@@ -129,7 +129,8 @@ function onIdle(me, enemy, game) {
 
         // 1. 绝杀与 Mound 压制
         var isTeleportAmbushStream = G_History.isAmbushStreamDetected && G_History.enemyInvisibleFrames >= 5;
-        if ((isTeleportAmbushStream || ctx.enemyVisible) && !ctx.enemyShielded) {
+        var isAssassinatePostTP = G_History.lastAssassinateTPFrame && (G_History.frame - G_History.lastAssassinateTPFrame <= 2);
+        if ((isTeleportAmbushStream || ctx.enemyVisible || isAssassinatePostTP) && !ctx.enemyShielded) {
             var cs = canShoot(ctx.myPos, ctx.enemyPos, ctx.map);
             if (cs === true || (cs === "mound" && getDist(ctx.myPos, ctx.enemyPos) <= 7)) {
                 var dir = directionTo(ctx.myPos, ctx.enemyPos);
@@ -626,7 +627,8 @@ function evalAssassination(ctx) {
  * @param {Object} ctx 上下文
  */
 function evalShooting(ctx) {
-    var targetVisible = ctx.enemyVisible || ctx.isTeleportAmbushStream;
+    var isAssassinatePostTP = G_History.lastAssassinateTPFrame && (G_History.frame - G_History.lastAssassinateTPFrame <= 2);
+    var targetVisible = ctx.enemyVisible || ctx.isTeleportAmbushStream || isAssassinatePostTP;
     if (!ctx.shootingEnemyPos || !targetVisible) return null;
 
     var cs = canShoot(ctx.myPos, ctx.shootingEnemyPos, ctx.map);
@@ -644,13 +646,13 @@ function evalShooting(ctx) {
             if (onEnemyAxis && !ctx.enemyFireLocked) {
                 var dist = getDist(ctx.myPos, ctx.shootingEnemyPos);
                 var isLoSDanger = isLoS(ctx.shootingEnemyPos, ctx.myPos, ctx.enemyDir, ctx.map);
-                var isCloseDanger = dist <= 8 && canShoot(ctx.shootingEnemyPos, ctx.myPos, ctx.map) === true && !ctx.enemyVisible;
+                var isCloseDanger = dist <= 8 && canShoot(ctx.shootingEnemyPos, ctx.myPos, ctx.map) === true && !ctx.enemyVisible && !isAssassinatePostTP;
                 var isControlDanger = (G_Blueprint.Tactics.STANCE === "ANTI_CONTROL") && ctx.enemySkillReady && dist <= G_Blueprint.Tactics.DANGER_RADIUS;
                 if (isLoSDanger || isCloseDanger || isControlDanger) {
                     return null;
                 }
             }
-            if (ctx.meStars < ctx.enemyStars && !ctx.canTeleport) {
+            if (ctx.meStars < ctx.enemyStars && !ctx.canTeleport && !isAssassinatePostTP) {
                 return null; // 放弃扭头对枪，优先让直行吃星胜出
             }
             return { action: "turn", target: ctx.shootingEnemyPos, score: CONFIG.KILL_PRIO - 100, type: "shoot" };
