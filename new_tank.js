@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.82 - Star Teleport Refinement)
- * V13.82: 优化吃星踱步限制下移释放传送选项，修改 TC-001 用例以适配 bestInterception.T_enemy > 1 新规
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.83 - Guard Star Fire Control Refinement)
+ * V13.83: 限制主动守星开火至128帧防被抓火控硬直，优化子弹在场时车头偏正防守星断档
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.82: 释放吃星传送");
+            me.speak("V13.83: 守星火控优化");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -871,13 +871,21 @@ function evalStarGuard(ctx) {
         }
     }
 
-    if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
-        var dirToStar = directionTo(ctx.myPos, ctx.starPos);
+    var dirToStar = directionTo(ctx.myPos, ctx.starPos);
+    if (ctx.me.bullet || ctx.meStatus.fireLocked) {
+        if (ctx.myDir === dirToStar) {
+            ctx.me.speak("静守守星");
+            return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
+        } else {
+            ctx.me.speak("守星转向");
+            return { action: "turn", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
+        }
+    } else {
         if (ctx.myDir === dirToStar) {
             var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!isCurrentlyInGrass) {
-                // 新增：如果对方坦克离星只有一格，我方坦克原地静守不发子弹且保持对准星
-                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && !ctx.isUrgentStarGrab) {
+                // 加强限制：如果敌方离星近（<= 4），我方原地静守保持威慑，直到128帧才主动开枪，防止开火硬直被对方趁机吃星
+                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && G_History.frame < 128) {
                     ctx.me.speak("静守守星");
                     return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
                 }
