@@ -132,7 +132,7 @@
       "lastEnemyOverloadedFrame": 66
     },
     "expected": {
-      "action": "move"
+      "action": "turn"
     }
   },
   {
@@ -174,6 +174,19 @@
     "expected": {
       "action": "teleport",
       "target": [16, 11]
+    }
+  },
+  {
+    "id": "TC-014",
+    "matchId": "mat_28JiHlh2aRB9xsdup",
+    "description": "Frame 124 - 终盘平局守星，我方指着星格且敌方已贴脸，必须静守威慑不能提前开火，防开火硬直被对方趁机抢星",
+    "frame": 123,
+    "setupStars": {
+      "me": 0,
+      "enemy": 0
+    },
+    "expected": {
+      "action": "idle"
     }
   }
 ]

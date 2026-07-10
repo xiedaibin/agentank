@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.83 - Guard Star Fire Control Refinement)
- * V13.83: 限制主动守星开火至128帧防被抓火控硬直，优化子弹在场时车头偏正防守星断档
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.84 - Anti-Control Stance Differentiate)
+ * V13.84: 限制 strict 技能就绪危险半径判定仅在 ANTI_CONTROL 控制 stance 下生效，避免被非控制技能无端吓退
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.83: 守星火控优化");
+            me.speak("V13.84: 控制防线优化");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -1511,7 +1511,7 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
                 var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
                 var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
                 if (gunLineDodge) return false;
-                if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
+                if (strict && G_Blueprint.Tactics.STANCE === "ANTI_CONTROL" && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
                 if (d < 2) return false;
             } else {
                 if (isAssassinationSpot) {

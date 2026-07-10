@@ -12,43 +12,44 @@ async function getReplay(matchId, token) {
         fs.mkdirSync(replaysDir, { recursive: true });
     }
     const replayPath = path.join(replaysDir, `${matchId}.json`);
+    
+    // 如果本地存在且包含了 participants 属性，则直接读取
     if (fs.existsSync(replayPath)) {
-        return JSON.parse(fs.readFileSync(replayPath, 'utf8'));
+        try {
+            const local = JSON.parse(fs.readFileSync(replayPath, 'utf8'));
+            if (local.participants) {
+                return local;
+            }
+        } catch (e) {
+            // Ignore parse error and re-download
+        }
     }
 
-    console.log(`[XDB-Registry] 本地未找到原始录像 ${matchId}，正在拉取并缓存...`);
-    return new Promise((resolve, reject) => {
-        const options = {
-            hostname: 'agentank.ai',
-            path: `/api/matches/${matchId}/agent.json?view=raw`,
-            headers: {
-                'Authorization': `Bearer ${token}`
-            }
-        };
+    console.log(`[XDB-Registry] 正在拉取并合并缓存录像 ${matchId}...`);
+    if (!token) {
+        throw new Error("AGENTANK_TOKEN 未配置，无法网络下载录像。");
+    }
 
-        https.get(options, (res) => {
-            if (res.statusCode !== 200) {
-                reject(new Error(`API 请求失败，HTTP 状态码: ${res.statusCode}`));
-                return;
-            }
-            let data = '';
-            res.on('data', chunk => data += chunk);
-            res.on('end', () => {
-                try {
-                    const parsed = JSON.parse(data);
-                    if (!parsed.replayData || !parsed.replayData.replay) {
-                        reject(new Error(`录像 ${matchId} 未包含 replayData，可能是无效对局。`));
-                        return;
-                    }
-                    fs.writeFileSync(replayPath, JSON.stringify(parsed, null, 2), 'utf8');
-                    console.log(`[XDB-Registry] 原始录像 ${matchId} 缓存成功。`);
-                    resolve(parsed);
-                } catch (e) {
-                    reject(new Error(`解析录像 ${matchId} 失败: ` + e.message));
-                }
-            });
-        }).on('error', reject);
+    // 1. 获取 summary
+    const summaryRes = await fetch(`https://agentank.ai/api/matches/${matchId}/agent.json`, {
+        headers: { 'Authorization': `Bearer ${token}` }
     });
+    if (!summaryRes.ok) throw new Error(`拉取 summary 失败: HTTP ${summaryRes.status}`);
+    const summaryJson = await summaryRes.json();
+
+    // 2. 获取 raw replay
+    const rawRes = await fetch(`https://agentank.ai/api/matches/${matchId}/agent.json?view=raw`, {
+        headers: { 'Authorization': `Bearer ${token}` }
+    });
+    if (!rawRes.ok) throw new Error(`拉取 raw replay 失败: HTTP ${rawRes.status}`);
+    const rawJson = await rawRes.json();
+
+    // 3. 合并 participants 并保存
+    rawJson.participants = summaryJson.participants;
+    
+    fs.writeFileSync(replayPath, JSON.stringify(rawJson, null, 2), 'utf8');
+    console.log(`[XDB-Registry] 录像 ${matchId} 缓存合并保存成功。`);
+    return rawJson;
 }
 
 function getNewDirection(currentDir, turn) {
@@ -166,11 +167,26 @@ function simulateToFrame(replayRaw, targetFrame) {
             }
 
             if (ev.type === "bullet") {
-                if (ev.action === "created" && ev.position) {
-                    bulletsMap.set(ev.objectId, { position: ev.position.slice(), direction: ev.direction || "up" });
-                } else if (ev.action === "go" && ev.position) {
+                if (ev.action === "created") {
+                    const bPos = ev.position || (ev.tank ? ev.tank.position : null);
+                    if (bPos) {
+                        bulletsMap.set(ev.objectId, { 
+                            position: bPos.slice(), 
+                            direction: ev.direction || "up",
+                            shooterId: ev.tank ? ev.tank.id : null
+                        });
+                    }
+                } else if (ev.action === "go") {
+                    const bPos = ev.position || (ev.tank ? ev.tank.position : null);
                     let b = bulletsMap.get(ev.objectId);
-                    if (b) { b.position = ev.position.slice(); if (ev.direction) b.direction = ev.direction; }
+                    if (!b && bPos) {
+                        b = { position: bPos.slice(), direction: ev.direction || "up", shooterId: ev.tank ? ev.tank.id : null };
+                        bulletsMap.set(ev.objectId, b);
+                    } else if (b) {
+                        if (bPos) b.position = bPos.slice();
+                        if (ev.direction) b.direction = ev.direction;
+                        if (ev.tank && ev.tank.id) b.shooterId = ev.tank.id;
+                    }
                 } else if (ev.action === "crashed") {
                     bulletsMap.delete(ev.objectId);
                 }
@@ -195,9 +211,12 @@ function simulateToFrame(replayRaw, targetFrame) {
     let meBullet = null;
     let enemyBullet = null;
     for (const [bid, b] of bulletsMap.entries()) {
-        // 由于 events 缺乏子弹发射者归属字段，这里简单依据方向和距离判断归属，或者不作区分
-        // 对战中绝大多数情况下只需要把飞弹归入 buildExecutionContext 的 bullet 属性即可
-        meBullet = { position: b.position, direction: b.direction }; // 供避弹等需要子弹参数的场景
+        const bulletInfo = { position: b.position.slice(), direction: b.direction };
+        if (b.shooterId === meId) {
+            meBullet = bulletInfo;
+        } else if (b.shooterId === enemyId) {
+            enemyBullet = bulletInfo;
+        }
     }
 
     return {
