@@ -1,6 +1,6 @@
 /**
- * AgenTank AI Agent - XDB (Strategic Assassin V13.84 - Anti-Control Stance Differentiate)
- * V13.84: 限制 strict 技能就绪危险半径判定仅在 ANTI_CONTROL 控制 stance 下生效，避免被非控制技能无端吓退
+ * AgenTank AI Agent - XDB (Strategic Assassin V13.81 - Overload Evasion Fix)
+ * V13.81: 修复草丛中因敌方超载状态失效导致路径判定拦截并阻断物理规避的Bug，将超载威胁距离扩大至8格
  */
 
 
@@ -89,7 +89,7 @@ function onIdle(me, enemy, game) {
             G_History.lastEnemyOverloadedFrame = G_History.frame;
         }
         if (G_History.frame <= 1 && !G_History.hasSpokenInit) {
-            me.speak("V13.84: 控制防线优化");
+            me.speak("V13.81: 修复草丛超载避弹");
             G_History.hasSpokenInit = true;
         }
         if (G_History.postTeleportFrames > 0) G_History.postTeleportFrames--;
@@ -743,6 +743,8 @@ function evalStarCollection(ctx) {
     if (!ctx.starPos) return null;
     var dist = getDist(ctx.myPos, ctx.starPos);
 
+
+
     var score = CONFIG.STAR_PRIO - dist;
     if (G_History.frame < 80) score += 600;
     if (ctx.enemy && ctx.meStars <= ctx.enemy.stars) score += 400;
@@ -785,7 +787,7 @@ function evalStarCollection(ctx) {
         }
     }
 
-    // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃走路抢星，坚守伏击防止抽搐
+    // 如果我们在草丛里已经对准了伏击枪线，且星格距离大于 1，放弃抢星，坚守伏击防止抽搐
     var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
     var shouldStayAmbush = ctx.enemyVisible || ctx.isEnemyRecentlyInvisibleInGrass;
     if (isCurrentlyInGrass && ctx.shootingEnemyPos && ctx.enemyDir && shouldStayAmbush) {
@@ -871,20 +873,12 @@ function evalStarGuard(ctx) {
         }
     }
 
-    var dirToStar = directionTo(ctx.myPos, ctx.starPos);
-    if (ctx.me.bullet || ctx.meStatus.fireLocked) {
-        if (ctx.myDir === dirToStar) {
-            ctx.me.speak("静守守星");
-            return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
-        } else {
-            ctx.me.speak("守星转向");
-            return { action: "turn", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
-        }
-    } else {
+    if (!ctx.me.bullet && !ctx.meStatus.fireLocked) {
+        var dirToStar = directionTo(ctx.myPos, ctx.starPos);
         if (ctx.myDir === dirToStar) {
             var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!isCurrentlyInGrass) {
-                // 加强限制：如果敌方离星近（<= 4），我方原地静守保持威慑，直到128帧才主动开枪，防止开火硬直被对方趁机吃星
+                // 新增：如果对方坦克离星只有一格，我方坦克原地静守不发子弹且保持对准星
                 if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && G_History.frame < 128) {
                     ctx.me.speak("静守守星");
                     return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
@@ -1511,7 +1505,7 @@ function isSafe(pos, ctx, strict, isAssassinationSpot) {
                 var bulletPassable = canShoot(ctx.enemyPos, pos, ctx.map) === true;
                 var gunLineDodge = isOnEnemyGunLine(pos, ctx, true) && (!isGrass || overloadNearby || bulletPassable);
                 if (gunLineDodge) return false;
-                if (strict && G_Blueprint.Tactics.STANCE === "ANTI_CONTROL" && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
+                if (strict && ctx.enemySkillReady && d <= G_Blueprint.Tactics.DANGER_RADIUS) return false;
                 if (d < 2) return false;
             } else {
                 if (isAssassinationSpot) {
