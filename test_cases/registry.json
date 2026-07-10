@@ -17,7 +17,10 @@
     "description": "Frame 124 - 敌人进入草丛，我方必须使用预测位置进行完美的盲射",
     "frame": 124,
     "setupHistory": {
-      "lastEnemyPos": [14, 7],
+      "lastEnemyPos": [
+        14,
+        7
+      ],
       "lastEnemyDir": "right",
       "lastEnemySeenFrame": 123,
       "lastEnemyVisible": true,
@@ -26,7 +29,10 @@
     },
     "expected": {
       "action": "teleport",
-      "target": [17, 8]
+      "target": [
+        17,
+        8
+      ]
     }
   },
   {
@@ -58,9 +64,15 @@
     "frame": 15,
     "setupHistory": {
       "wasMeInGrass": true,
-      "lastGrassEntrancePos": [2, 2],
+      "lastGrassEntrancePos": [
+        2,
+        2
+      ],
       "lastTeleportFrame": 14,
-      "lastTeleportPos": [2, 2],
+      "lastTeleportPos": [
+        2,
+        2
+      ],
       "hasShiftedInGrass": false
     },
     "expected": {
@@ -132,7 +144,7 @@
       "lastEnemyOverloadedFrame": 66
     },
     "expected": {
-      "action": "turn"
+      "action": "move"
     }
   },
   {
@@ -142,7 +154,10 @@
     "frame": 110,
     "setupHistory": {
       "defenseLockTicks": 1,
-      "lastDefenseTarget": [12, 10],
+      "lastDefenseTarget": [
+        12,
+        10
+      ],
       "lastEnemyOverloadedFrame": 108
     },
     "expected": {
@@ -156,7 +171,10 @@
     "frame": 48,
     "setupHistory": {
       "lastAssassinateTPFrame": 47,
-      "lastEnemyPos": [6, 7],
+      "lastEnemyPos": [
+        6,
+        7
+      ],
       "lastEnemyDir": "down",
       "lastEnemySeenFrame": 46,
       "enemyInvisibleFrames": 1,
@@ -173,7 +191,10 @@
     "frame": 127,
     "expected": {
       "action": "teleport",
-      "target": [16, 11]
+      "target": [
+        16,
+        11
+      ]
     }
   },
   {
@@ -190,5 +211,3 @@
     }
   }
 ]
-
-

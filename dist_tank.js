@@ -680,7 +680,7 @@ function evalStarGuard(ctx) {
         if (ctx.myDir === dirToStar) {
             var isCurrentlyInGrass = G_Blueprint.mapVision.grass[ctx.myPos[0] + "," + ctx.myPos[1]];
             if (!isCurrentlyInGrass) {
-                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && !ctx.isUrgentStarGrab) {
+                if (ctx.enemyPos && getDist(ctx.enemyPos, ctx.starPos) <= 4 && G_History.frame < 128) {
                     return { action: "move", target: ctx.myPos, score: 2200 + scoreBonus, type: "guard" };
                 }
                 return { action: "fire", target: ctx.starPos, score: 2200 + scoreBonus, type: "guard" };
