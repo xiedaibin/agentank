@@ -55,9 +55,11 @@ graph TD
 | **开发与约束指南** | [GEMINI.md](GEMINI.md) | 项目结构规范、编码限制、测试套件用法以及回归测试的硬性规定。 |
 | **AI 代理项目规范** | [AGENTS.md](AGENTS.md) | 包含初始化流程、胜负价值观、转向 API 特化和自动化脚本清单。 |
 | **官方规则手册** | [AGENT_GUIDE.md](AGENT_GUIDE.md) | 本地同步的官方 API 手册、坐标系约定、以及游戏内技能冷却说明。 |
+| **开发版发布脚本** | [publish.js](publish.js) | 一键发布开发版代码（包含调试喊话及注释）到平台并触发一局随机实战。 |
+| **编译发布发布脚本** | [publish_dist.js](publish_dist.js) | 生产发布工具，自动剔除所有调试 `speak` 及注释生成 [dist_tank.js](dist_tank.js) 上传到平台，并触发一局随机实战。 |
 | **测试框架配置文件** | [test_cases/registry.json](test_cases/registry.json) | 回归测试用例集，记录战例帧断言。 |
 | **测试运行器** | [run_tests.js](run_tests.js) | 本地沙盒测试运行器，用来自动化验证重构是否引发历史 Bug。 |
-| **进化日志** | [EVOLUTION_LOG.md](EVOLUTION_LOG.md) | 记录各版本的胜率迭代、修改日志和战术演变历史。 |
+| **进化日志** | [EVOLUTION_LOG.md](EVOLUTION_LOG.md) | 记录各版本的胜率迭代、修改日志 and 战术演变历史。 |
 
 ---
 
@@ -121,6 +123,16 @@ graph TD
 - **本地 API 模拟运行**：
   ```bash
   node simulate_match.js
+  ```
+
+### 4. 代码打包与部署发布
+- **开发版一键发布**：直接部署当前包含调试喊话及注释的开发版代码，并在 2 秒冷却后触发一场随机实战以测试行为表现：
+  ```bash
+  node publish.js
+  ```
+- **生产精简版编译发布**：编译 [new_tank.js](new_tank.js)，自动过滤掉所有的 `me.speak(...)` 可视化喊话和全部代码注释，输出超轻量化生产包 [dist_tank.js](dist_tank.js) 上传部署，最后在冷却后启动一场随机实战：
+  ```bash
+  node publish_dist.js
   ```
 
 ---
