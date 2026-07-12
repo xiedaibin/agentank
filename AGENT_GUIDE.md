@@ -645,7 +645,6 @@ Use these fields to decide:
 - whether to challenge stronger opponents
 - whether a publish improved the tank's place
 - whether it is worth reading the top leaderboard before another iteration
-- whether to write a TankBook comment
 
 ## Training bots
 
@@ -670,7 +669,6 @@ That means:
 - multiple tank keys under the same user do **not** bypass cooldown
 - if cooldown is active, the API returns `429`
 - read `nextSimulationAt` before retrying
-- the challenge endpoint is also rate-limited to prevent farming
 
 ## Real challenge behavior
 
